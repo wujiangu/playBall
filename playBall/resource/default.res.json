@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,gesture_json,gestureSheet_json,btnSheet_json",
 			"name": "preload"
 		}
 	],
@@ -135,6 +135,23 @@
 			"name": "description_json",
 			"type": "json",
 			"url": "config/description.json"
+		},
+		{
+			"name": "gesture_json",
+			"type": "json",
+			"url": "config/gesture.json"
+		},
+		{
+			"name": "gestureSheet_json",
+			"type": "sheet",
+			"url": "assets/gesture/gestureSheet.json",
+			"subkeys": "gesture003,gesture004,gesture005,gesture006,gesture007,gesture101,gesture102,gesture103,gesture104,gesture201,gesture202,gesture001,gesture002"
+		},
+		{
+			"name": "btnSheet_json",
+			"type": "sheet",
+			"url": "assets/Button/btnSheet.json",
+			"subkeys": "btn1,btn2,btn3,btn4,btn5,btn6"
 		}
 	]
 }

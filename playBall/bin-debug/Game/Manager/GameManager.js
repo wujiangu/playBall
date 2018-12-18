@@ -1,0 +1,72 @@
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
+/**
+ * 游戏管理
+ */
+var GameManager = (function (_super) {
+    __extends(GameManager, _super);
+    function GameManager() {
+        return _super.call(this) || this;
+    }
+    Object.defineProperty(GameManager, "Instance", {
+        get: function () {
+            if (this._Instance == null) {
+                this._Instance = new GameManager();
+            }
+            return this._Instance;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    GameManager.prototype.Init = function () {
+        // this.Start()
+        PanelManager.initPanel();
+        // this._bgMusic = RES.getRes("bgMusic_mp3")
+        Common.dispatchEvent(MainNotify.openGameStartPanel);
+        Common.dispatchEvent(MainNotify.openBottomBtnPanel);
+        // this._bgMusic.load(AudioManager.bgMusic)
+        // Common.dispatchEvent(MainNotify.openGamePanel)
+    };
+    GameManager.prototype.Stop = function () {
+    };
+    GameManager.prototype.Start = function () {
+        this._time = 0;
+        this._gameState = EGameState.Start;
+        this._startTime = egret.getTimer();
+        this._lastTime = this._startTime;
+    };
+    GameManager.prototype.Continue = function () {
+        this._gameState = EGameState.Start;
+        this._startTime = egret.getTimer();
+        this._lastTime = this._startTime;
+    };
+    GameManager.prototype.Update = function () {
+        if (this._gameState != EGameState.Start) {
+            return;
+        }
+        // this._startTime = egret.getTimer()
+        // if (PanelManager.gamePanel != null) {
+        // 	PanelManager.gamePanel.Update(this._startTime - this._lastTime)
+        // }
+        // // this._map.Update(this._startTime - this._lastTime)
+        // this._lastTime = this._startTime
+    };
+    Object.defineProperty(GameManager.prototype, "GameState", {
+        set: function (value) {
+            this._gameState = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return GameManager;
+}(egret.Sprite));
+__reflect(GameManager.prototype, "GameManager");
+//# sourceMappingURL=GameManager.js.map
