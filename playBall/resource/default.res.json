@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,gesture_json,gestureSheet_json,btnSheet_json",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,gesture_json,gestureSheet_json,btnSheet_json,itemIcon_json,backBg1_png,backBg2_png,backBg3_png,backBg4_png,backBg5_png,backBg6_png,common1_png,effect_png,beiziguai_tex_png,beiziguai_ske_dbbin,beiziguai_tex_json",
 			"name": "preload"
 		}
 	],
@@ -152,6 +152,67 @@
 			"type": "sheet",
 			"url": "assets/Button/btnSheet.json",
 			"subkeys": "btn1,btn2,btn3,btn4,btn5,btn6"
+		},
+		{
+			"name": "itemIcon_json",
+			"type": "sheet",
+			"url": "assets/Icon/itemIcon.json",
+			"subkeys": "icon03,icon04,icon05,icon06,icon01,icon02"
+		},
+		{
+			"name": "backBg1_png",
+			"type": "image",
+			"url": "assets/backpack/backBg1.png"
+		},
+		{
+			"name": "backBg2_png",
+			"type": "image",
+			"url": "assets/backpack/backBg2.png"
+		},
+		{
+			"name": "backBg3_png",
+			"type": "image",
+			"url": "assets/backpack/backBg3.png"
+		},
+		{
+			"name": "backBg4_png",
+			"type": "image",
+			"url": "assets/backpack/backBg4.png"
+		},
+		{
+			"name": "backBg5_png",
+			"type": "image",
+			"url": "assets/backpack/backBg5.png"
+		},
+		{
+			"name": "backBg6_png",
+			"type": "image",
+			"url": "assets/backpack/backBg6.png"
+		},
+		{
+			"name": "common1_png",
+			"type": "image",
+			"url": "assets/common/common1.png"
+		},
+		{
+			"name": "effect_png",
+			"type": "image",
+			"url": "assets/common/effect.png"
+		},
+		{
+			"name": "beiziguai_tex_png",
+			"type": "image",
+			"url": "assets/bones/beiziguai_tex.png"
+		},
+		{
+			"name": "beiziguai_ske_dbbin",
+			"type": "dbbin",
+			"url": "assets/bones/beiziguai_ske.dbbin"
+		},
+		{
+			"name": "beiziguai_tex_json",
+			"type": "json",
+			"url": "assets/bones/beiziguai_tex.json"
 		}
 	]
 }
