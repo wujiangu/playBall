@@ -61,6 +61,9 @@ class BottomBtnPanel extends BasePanel{
 	}
 
 	private _OnHideBtn() {
+		GameManager.Instance.Start()
+		Common.dispatchEvent(MainNotify.closeGameStartPanel)
+		Common.dispatchEvent(MainNotify.openGamePanel)
 		Common.gameScene().mainUILayer.removeChild(this)
 	}
 

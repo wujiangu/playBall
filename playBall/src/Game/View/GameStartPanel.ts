@@ -42,7 +42,7 @@ class GameStartPanel extends BasePanel {
 		
 	// }
 	private _OnStartGame() {
-		Common.dispatchEvent(MainNotify.closeGameStartPanel)
+		this.touchChildren = false
 		Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
 	}
 

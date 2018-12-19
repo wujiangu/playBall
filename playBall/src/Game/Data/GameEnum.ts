@@ -2,8 +2,9 @@
 enum EGameState
 {
     Ready = 0,
-    Start = 1,
-    End = 2,
+    Start,
+    Pause,
+    End,
 }
 
 // 游戏面板动画
@@ -19,8 +20,8 @@ enum EPanelAnimation
     CenterZoomOut = 7,
 }
 
-// 狼的状态
-enum EWolfState
+// 怪物的状态
+enum EMonsterState
 {
     Ready = 0,
     Run = 1,
@@ -64,4 +65,11 @@ enum EThiefState
 {
     Revival = 1,
     Dead = 2,
+}
+
+// 怪物的类型
+enum EMonsterType {
+    Normal = 1,
+    Elite,
+    Boss,
 }

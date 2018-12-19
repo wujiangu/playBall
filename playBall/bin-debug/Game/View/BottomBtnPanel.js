@@ -56,6 +56,9 @@ var BottomBtnPanel = (function (_super) {
         egret.Tween.get(this).to({ alpha: 1.0, y: Config.stageHeight - this.height }, 500, egret.Ease.backIn).call(this._OnShowBtn, this);
     };
     BottomBtnPanel.prototype._OnHideBtn = function () {
+        GameManager.Instance.Start();
+        Common.dispatchEvent(MainNotify.closeGameStartPanel);
+        Common.dispatchEvent(MainNotify.openGamePanel);
         Common.gameScene().mainUILayer.removeChild(this);
     };
     BottomBtnPanel.prototype._HideBtn = function () {

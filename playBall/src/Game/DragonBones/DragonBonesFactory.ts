@@ -47,10 +47,15 @@ class DragonBonesFactory {
         return result;
     }
 
+
+    public buildArmature(name:string, dragonBonesName?:string) {
+        return this.factory.buildArmature(name, dragonBonesName)
+    }
+
     /**
      * 创建WorldClock
      */
-    private createWorldClock(playSpeed:number):dragonBones.WorldClock {
+    public createWorldClock(playSpeed:number):dragonBones.WorldClock {
         for (let i = 0; i < this.clockLen; i++) {
             if (this.clocks[i].timeScale == playSpeed) {
                 return this.clocks[i]
@@ -66,8 +71,9 @@ class DragonBonesFactory {
     /**
      * 注册并启动一个定时器
      */
-    public startTimer() {
-        TimerManager.getInstance().doFrame(1, 0, this.onStartTick, this);
+    public Update(timeElapsed:number) {
+        this.onStartTick(timeElapsed)
+        // TimerManager.getInstance().doFrame(1, 0, this.onStartTick, this);
         // egret.startTick(this.onStartTick, this);
     }
 
@@ -94,9 +100,9 @@ class DragonBonesFactory {
     /**
      * 清除计数器
      */
-    public removeTimer() {
-        TimerManager.getInstance().removeAll();
-    }
+    // public removeTimer() {
+    //     TimerManager.getInstance().removeAll();
+    // }
 
     public static _instance:DragonBonesFactory;
     private factory:dragonBones.EgretFactory;

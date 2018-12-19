@@ -44,7 +44,7 @@ class Main extends eui.UILayer {
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
             context.onUpdate = () => {
-
+                GameManager.Instance.Update()
             }
         })
 

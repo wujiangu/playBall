@@ -89,6 +89,7 @@ var Main = (function (_super) {
         egret.lifecycle.addLifecycleListener(function (context) {
             // custom lifecycle plugin
             context.onUpdate = function () {
+                GameManager.Instance.Update();
             };
         });
         egret.lifecycle.onPause = function () {

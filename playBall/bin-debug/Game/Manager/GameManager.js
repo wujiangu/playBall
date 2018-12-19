@@ -30,10 +30,9 @@ var GameManager = (function (_super) {
         // this.Start()
         PanelManager.initPanel();
         // this._bgMusic = RES.getRes("bgMusic_mp3")
+        this._gameState = EGameState.Ready;
         Common.dispatchEvent(MainNotify.openGameStartPanel);
         Common.dispatchEvent(MainNotify.openBottomBtnPanel);
-        // this._bgMusic.load(AudioManager.bgMusic)
-        // Common.dispatchEvent(MainNotify.openGamePanel)
     };
     GameManager.prototype.Stop = function () {
     };
@@ -52,14 +51,19 @@ var GameManager = (function (_super) {
         if (this._gameState != EGameState.Start) {
             return;
         }
-        // this._startTime = egret.getTimer()
-        // if (PanelManager.gamePanel != null) {
-        // 	PanelManager.gamePanel.Update(this._startTime - this._lastTime)
-        // }
-        // // this._map.Update(this._startTime - this._lastTime)
-        // this._lastTime = this._startTime
+        this._startTime = egret.getTimer();
+        var timeElapsed = this._startTime - this._lastTime;
+        if (PanelManager.m_gameScenePanel != null) {
+            PanelManager.m_gameScenePanel.Update(timeElapsed);
+        }
+        DragonBonesFactory.getInstance().Update(timeElapsed);
+        // this._map.Update(this._startTime - this._lastTime)
+        this._lastTime = this._startTime;
     };
     Object.defineProperty(GameManager.prototype, "GameState", {
+        get: function () {
+            return this._gameState;
+        },
         set: function (value) {
             this._gameState = value;
         },

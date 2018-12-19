@@ -3,7 +3,8 @@ var EGameState;
 (function (EGameState) {
     EGameState[EGameState["Ready"] = 0] = "Ready";
     EGameState[EGameState["Start"] = 1] = "Start";
-    EGameState[EGameState["End"] = 2] = "End";
+    EGameState[EGameState["Pause"] = 2] = "Pause";
+    EGameState[EGameState["End"] = 3] = "End";
 })(EGameState || (EGameState = {}));
 // 游戏面板动画
 var EPanelAnimation;
@@ -17,15 +18,15 @@ var EPanelAnimation;
     EPanelAnimation[EPanelAnimation["DownToUp"] = 6] = "DownToUp";
     EPanelAnimation[EPanelAnimation["CenterZoomOut"] = 7] = "CenterZoomOut";
 })(EPanelAnimation || (EPanelAnimation = {}));
-// 狼的状态
-var EWolfState;
-(function (EWolfState) {
-    EWolfState[EWolfState["Ready"] = 0] = "Ready";
-    EWolfState[EWolfState["Run"] = 1] = "Run";
-    EWolfState[EWolfState["FallDown"] = 2] = "FallDown";
-    EWolfState[EWolfState["Dead"] = 3] = "Dead";
-    EWolfState[EWolfState["Stop"] = 4] = "Stop";
-})(EWolfState || (EWolfState = {}));
+// 怪物的状态
+var EMonsterState;
+(function (EMonsterState) {
+    EMonsterState[EMonsterState["Ready"] = 0] = "Ready";
+    EMonsterState[EMonsterState["Run"] = 1] = "Run";
+    EMonsterState[EMonsterState["FallDown"] = 2] = "FallDown";
+    EMonsterState[EMonsterState["Dead"] = 3] = "Dead";
+    EMonsterState[EMonsterState["Stop"] = 4] = "Stop";
+})(EMonsterState || (EMonsterState = {}));
 // 狼的类型
 var EWolfType;
 (function (EWolfType) {
@@ -58,4 +59,11 @@ var EThiefState;
     EThiefState[EThiefState["Revival"] = 1] = "Revival";
     EThiefState[EThiefState["Dead"] = 2] = "Dead";
 })(EThiefState || (EThiefState = {}));
+// 怪物的类型
+var EMonsterType;
+(function (EMonsterType) {
+    EMonsterType[EMonsterType["Normal"] = 1] = "Normal";
+    EMonsterType[EMonsterType["Elite"] = 2] = "Elite";
+    EMonsterType[EMonsterType["Boss"] = 3] = "Boss";
+})(EMonsterType || (EMonsterType = {}));
 //# sourceMappingURL=GameEnum.js.map

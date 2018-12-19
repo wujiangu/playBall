@@ -4,40 +4,48 @@
  */
 var PanelManager;
 (function (PanelManager) {
-    var m_gameStartPanel;
-    var m_bottomBtnPanel;
-    var m_backpackPanel;
     function _OpenBottomBtnPanel() {
-        if (m_bottomBtnPanel == null) {
-            m_bottomBtnPanel = new BottomBtnPanel();
+        if (PanelManager.m_bottomBtnPanel == null) {
+            PanelManager.m_bottomBtnPanel = new BottomBtnPanel();
         }
-        m_bottomBtnPanel.onEnter();
+        PanelManager.m_bottomBtnPanel.onEnter();
     }
     function _CloseBottomBtnPanel() {
-        if (m_bottomBtnPanel != null) {
-            m_bottomBtnPanel.onExit();
+        if (PanelManager.m_bottomBtnPanel != null) {
+            PanelManager.m_bottomBtnPanel.onExit();
         }
     }
     function _OpenGameStartPanel() {
-        if (m_gameStartPanel == null) {
-            m_gameStartPanel = new GameStartPanel();
+        if (PanelManager.m_gameStartPanel == null) {
+            PanelManager.m_gameStartPanel = new GameStartPanel();
         }
-        m_gameStartPanel.onEnter();
+        PanelManager.m_gameStartPanel.onEnter();
     }
     function _CloseGameStartPanel() {
-        if (m_gameStartPanel != null) {
-            m_gameStartPanel.onExit();
+        if (PanelManager.m_gameStartPanel != null) {
+            PanelManager.m_gameStartPanel.onExit();
         }
     }
     function _OpenBackpackPanel() {
-        if (m_backpackPanel == null) {
-            m_backpackPanel = new BackpackPanel();
+        if (PanelManager.m_backpackPanel == null) {
+            PanelManager.m_backpackPanel = new BackpackPanel();
         }
-        m_backpackPanel.onEnter();
+        PanelManager.m_backpackPanel.onEnter();
     }
     function _CloseBackpackPanel() {
-        if (m_backpackPanel != null) {
-            m_backpackPanel.onExit();
+        if (PanelManager.m_backpackPanel != null) {
+            PanelManager.m_backpackPanel.onExit();
+        }
+    }
+    function _OpenGameScenePanel() {
+        if (PanelManager.m_gameScenePanel == null) {
+            PanelManager.m_gameScenePanel = new GameScenePanel();
+        }
+        PanelManager.m_gameScenePanel.onEnter();
+    }
+    function _CloseGameScenePanel() {
+        if (PanelManager.m_gameScenePanel != null) {
+            PanelManager.m_gameScenePanel.onExit();
         }
     }
     function initPanel() {
@@ -47,6 +55,8 @@ var PanelManager;
         Common.addEventListener(MainNotify.closeBottomBtnPanel, _CloseBottomBtnPanel, PanelManager);
         Common.addEventListener(MainNotify.openBackpackPanel, _OpenBackpackPanel, PanelManager);
         Common.addEventListener(MainNotify.closeBackpackPanel, _CloseBackpackPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGamePanel, _OpenGameScenePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGamePanel, _CloseGameScenePanel, PanelManager);
     }
     PanelManager.initPanel = initPanel;
 })(PanelManager || (PanelManager = {}));

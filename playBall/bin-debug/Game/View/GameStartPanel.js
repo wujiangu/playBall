@@ -43,7 +43,7 @@ var GameStartPanel = (function (_super) {
     // private _OnBtnRank() {
     // }
     GameStartPanel.prototype._OnStartGame = function () {
-        Common.dispatchEvent(MainNotify.closeGameStartPanel);
+        this.touchChildren = false;
         Common.dispatchEvent(MainNotify.closeBottomBtnPanel);
     };
     GameStartPanel.prototype.onComplete = function () {

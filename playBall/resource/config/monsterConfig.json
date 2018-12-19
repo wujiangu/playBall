@@ -1,0 +1,12 @@
+[
+  {
+    "ID": 1001,
+    "Type": 1,
+    "Name": "杯子怪",
+    "Animation": "beiziguai",
+    "Prob": 30,
+    "Speed": 12,
+    "Score": 1,
+    "Power": 1
+  }
+]

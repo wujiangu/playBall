@@ -3,9 +3,10 @@
  * 
  */
 namespace PanelManager {
-	var m_gameStartPanel:GameStartPanel
-	var m_bottomBtnPanel:BottomBtnPanel
-	var m_backpackPanel:BackpackPanel
+	export var m_gameStartPanel:GameStartPanel
+	export var m_bottomBtnPanel:BottomBtnPanel
+	export var m_backpackPanel:BackpackPanel
+	export var m_gameScenePanel:GameScenePanel
 
 	function _OpenBottomBtnPanel() {
 		if (m_bottomBtnPanel == null) {
@@ -46,6 +47,19 @@ namespace PanelManager {
 		}
 	}
 
+	function _OpenGameScenePanel() {
+		if (m_gameScenePanel == null) {
+			m_gameScenePanel = new GameScenePanel()
+		}
+		m_gameScenePanel.onEnter()
+	}
+
+	function _CloseGameScenePanel() {
+		if (m_gameScenePanel != null){
+			m_gameScenePanel.onExit()
+		}
+	}
+
 	
 	export function initPanel(){
 		Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager)
@@ -54,5 +68,7 @@ namespace PanelManager {
 		Common.addEventListener(MainNotify.closeBottomBtnPanel, _CloseBottomBtnPanel, PanelManager)
 		Common.addEventListener(MainNotify.openBackpackPanel, _OpenBackpackPanel, PanelManager)
 		Common.addEventListener(MainNotify.closeBackpackPanel, _CloseBackpackPanel, PanelManager)
+		Common.addEventListener(MainNotify.openGamePanel, _OpenGameScenePanel, PanelManager)
+		Common.addEventListener(MainNotify.closeGamePanel, _CloseGameScenePanel, PanelManager)
 	}
 }

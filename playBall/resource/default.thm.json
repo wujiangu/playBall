@@ -31,6 +31,7 @@
 		"resource/eui_skins/VSliderSkin.exml",
 		"resource/game_skins/backpackPanel.exml",
 		"resource/game_skins/bottomBtn.exml",
+		"resource/game_skins/gameScenePanel.exml",
 		"resource/game_skins/gameStart.exml"
 	],
 	"path": "resource/default.thm.json"

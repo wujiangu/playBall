@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="backpackPanel" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="m_imgBg" width="640" height="1136" horizontalCenter="0" top="0"/>
-	<e:Image id="m_imgMaskBg" width="760" height="1050" horizontalCenter="0" top="0" x="10" y="10" source="backBg2_png"/>
-	<e:Image id="m_imgGround" width="860" height="470" horizontalCenter="0" x="20" y="958" source="backBg3_png"/>
-	<e:Image id="m_imgTree" width="860" height="580" x="-142" y="499" source="backBg6_png"/>
-	<e:Image id="m_imgCurtain" width="820" height="1300" x="-90" y="-70" source="common1_png"/>
-	<e:Image id="m_imgLine" width="840" height="50" horizontalCenter="0" x="50" source="backBg5_png" top="-5"/>
+	<e:Image id="m_imgBg" width="640" height="1394" source="backBg2_jpg" horizontalCenter="0" bottom="0"/>
+	<e:Image id="m_imgMaskBg" width="640" height="1050" horizontalCenter="0" top="0" x="10" y="10" source="backBg2_png" visible="false"/>
+	<e:Image id="m_imgCurtain" width="640" height="1240" source="common1_png" horizontalCenter="0" bottom="135"/>
+	<e:Image id="m_imgLine" width="840" height="50" horizontalCenter="0" x="50" source="backBg5_png" top="-22"/>
 	<e:Label id="m_labItemName" text="名字" fontFamily="Microsoft JhengHei" anchorOffsetX="0" width="363" anchorOffsetY="0" height="39" verticalAlign="middle" textAlign="center" horizontalCenter="3.5" verticalCenter="-7.5"/>
 	<e:Label id="m_labItemDesc" text="说明" fontFamily="Microsoft JhengHei" anchorOffsetX="0" width="455" anchorOffsetY="0" height="108" verticalAlign="top" textAlign="left" size="20" horizontalCenter="0.5" verticalCenter="66"/>
 	<e:Button id="m_btnReturn" label="返回" right="15" top="24"/>
