@@ -51,4 +51,3 @@ var TipsData = (function () {
     return TipsData;
 }());
 __reflect(TipsData.prototype, "TipsData");
-//# sourceMappingURL=Tips.js.map

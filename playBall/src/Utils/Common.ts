@@ -294,5 +294,117 @@ namespace Common {
             newObj[key] = typeof val === 'object' ? cloneObj(val): val;  
         }  
         return newObj;  
-    }; 
+    }
+
+    /**得到圆角矩形*/
+    export function getRoundRect(w:number,h:number,c:number=0,ew:number=5,eh:number=5,x:number=0,y:number=0):egret.Sprite
+    {
+        var s:egret.Sprite=new egret.Sprite()
+        s.graphics.beginFill(c);
+        s.graphics.drawRoundRect(x,y,w,h,ew,eh);
+        s.graphics.endFill();
+        return s;
+    }
+    /**得到圆形*/
+    export function getCircle(r:number,c:number=0,x:number=0,y:number=0):egret.Sprite
+    {
+        var s:egret.Sprite=new egret.Sprite();
+        s.graphics.beginFill(c);
+        s.graphics.drawCircle(x,y,r);
+        s.graphics.endFill();
+        return s;
+    }
+
+    /**得到矩形*/
+    export function getRect(w:number,h:number,c:number=0,x:number=0,y:number=0):egret.Sprite
+    {
+        var s:egret.Sprite=new egret.Sprite()
+        s.graphics.beginFill(c);
+        s.graphics.drawRect(x,y,w,h);
+        s.graphics.endFill();
+        return s;
+    }
+
+    export class Const{
+		/**布局 横版*/
+		public static readonly HORIZONTAL:string="horizontal";
+		/**布局 竖版*/
+		public static readonly VERTICAL:string="vertical";
+
+		/**形状 方块*/
+		public static readonly SHAPE_RECT:string="shape rect";
+		/**形状 圆角方块*/
+		public static readonly SHAPE_RECT_ROUND:string="shape rect round";
+		/**形状 圆块*/
+		public static readonly SHAPE_CIRCLE:string="shape circle";
+		/**版本 调试*/
+		public static readonly VER_DEBUG:string="debug";
+		/**版本 发布*/
+		public static readonly VER_RELEASE:string="release";
+	}
+
+    export class MoonDisplayObject extends egret.Sprite
+	{
+		private _type:string=Const.SHAPE_RECT;
+		private _color:number=0;
+		private _data:any;
+		private _hasBg:boolean;
+		private display:egret.Sprite;
+		private bg:egret.Sprite;
+		public constructor()
+		{
+			super();
+			this.display=new egret.Sprite;
+			this.bg=new egret.Sprite;
+		}
+		set type(value:string){this._type=value}
+		get type():string{return this._type}
+		set color(value:number){this._color=value;this._data.c=value;this.draw();}
+		get color():number{return this._color}
+		/**{w:1,h:1,r:1,c:1,ew:1,eh:1} */
+		set data(value:Object){this._data=value;this.draw();}
+		protected draw():void
+		{
+			this._color=this._data.c;
+			this.display.graphics.clear();
+			this.display=this.getDisplay(this._data);
+			this.addChild(this.display);
+			this.setPosition();
+		}
+		protected setPosition():void
+		{
+			if(this._hasBg&&this.type!=Const.SHAPE_CIRCLE){
+				this.display.x=(this.bg.width-this.display.width)>>1;
+				this.display.y=(this.bg.height-this.display.height)>>1;
+			}
+		}
+		public setBackground(color:number,side:number=1)
+		{
+			this._hasBg=true;
+			var d:any=this._data;
+			var o:any={};
+			for(var i in d){
+				o[i]=d[i];
+			}
+			o.c=color;
+			if(o.w) o.w=o.w+side*2;
+			if(o.h) o.h=o.h+side*2;
+			if(o.r) o.r=o.r+side;
+			this.bg.graphics.clear();
+			this.bg=this.getDisplay(o);
+			this.addChildAt(this.bg,0);
+			this.setPosition();
+		}
+		protected getDisplay(o:any):egret.Sprite
+		{
+			switch(this.type){
+				case Const.SHAPE_RECT:
+				return Common.getRect(o.w,o.h,o.c);
+				case Const.SHAPE_RECT_ROUND:
+				return Common.getRoundRect(o.w,o.h,o.c,o.ew,o.eh);
+				case Const.SHAPE_CIRCLE:
+				return Common.getCircle(o.r,o.c);
+			}
+		}
+	}
 }

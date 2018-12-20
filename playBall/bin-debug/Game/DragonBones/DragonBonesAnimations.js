@@ -8,7 +8,7 @@ var DragonBonesAnimations = (function () {
     DragonBonesAnimations.Dead = "dead";
     DragonBonesAnimations.Run = "run";
     DragonBonesAnimations.Hurt = "hurt";
+    DragonBonesAnimations.Explore = "explore";
     return DragonBonesAnimations;
 }());
 __reflect(DragonBonesAnimations.prototype, "DragonBonesAnimations");
-//# sourceMappingURL=DragonBonesAnimations.js.map

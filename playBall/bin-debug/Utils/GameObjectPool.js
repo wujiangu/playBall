@@ -69,4 +69,3 @@ var GameObjectPool = (function () {
     return GameObjectPool;
 }());
 __reflect(GameObjectPool.prototype, "GameObjectPool");
-//# sourceMappingURL=GameObjectPool.js.map

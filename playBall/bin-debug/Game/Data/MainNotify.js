@@ -30,4 +30,3 @@ var MainNotify;
     MainNotify.openBackpackPanel = "openBackpackPanel";
     MainNotify.closeBackpackPanel = "closeBackpackPanel";
 })(MainNotify || (MainNotify = {}));
-//# sourceMappingURL=MainNotify.js.map

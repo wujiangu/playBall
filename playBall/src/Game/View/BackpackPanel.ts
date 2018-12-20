@@ -17,6 +17,7 @@ class BackpackPanel extends BasePanel {
 
     // 进入面板
     public onEnter():void{
+		Common.curPanel = PanelManager.m_backpackPanel
 		this.touchChildren = true
         Common.gameScene().uiLayer.addChild(this)
     }

@@ -5,6 +5,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 		this.m_armatureContainer = new DragonBonesArmatureContainer()
 		this.addChild(this.m_armatureContainer)
 
+		this.m_gestureData = new Array()
+
 		var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
 		var angle:number = 45;              /// 阴影的角度，0 到 360 度
 		var color:number = 0x000000;        /// 阴影的颜色，不包含透明度
@@ -44,4 +46,5 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_type:EMonsterType
 	protected m_dropShadowFilter:egret.DropShadowFilter
 	protected m_armature:DragonBonesArmature
+	protected m_gestureData:Array<any>
 }

@@ -10,4 +10,3 @@ var Common;
     }
     Common.gameScene = gameScene;
 })(Common || (Common = {}));
-//# sourceMappingURL=GameCommon.js.map

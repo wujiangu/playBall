@@ -91,4 +91,3 @@ var DragonBonesFactory = (function () {
     return DragonBonesFactory;
 }());
 __reflect(DragonBonesFactory.prototype, "DragonBonesFactory");
-//# sourceMappingURL=DragonBonesFactory.js.map

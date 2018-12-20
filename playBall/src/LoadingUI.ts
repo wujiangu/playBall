@@ -29,23 +29,206 @@
 
 class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
 
-    public constructor() {
+     public constructor() {
         super();
-        this.createView();
+        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.addToStage,this);
+        this.CreatLoadingUI()
     }
 
-    private textField: egret.TextField;
+    private CreatLoadingUI():void {
+        // this.createBgGradientFill()
+        let bg = Common.createBitmap("loading_01_png")
+        bg.width = Config.stageWidth
+        bg.height = Config.stageHeight
+        this.addChild(bg)
 
-    private createView(): void {
-        this.textField = new egret.TextField();
-        this.addChild(this.textField);
-        this.textField.y = 300;
-        this.textField.width = 480;
-        this.textField.height = 100;
-        this.textField.textAlign = "center";
+        var container:egret.Sprite=new egret.Sprite()
+        this.addChild(container);
+        var sw:number=Config.stageWidth
+        var sh:number=Config.stageHeight
+        var w:number=80;
+        // var loadbg:egret.Sprite=Common.getRoundRect(sw-100,w,0XFCE59D,100,100);
+        let loadbg = Common.createBitmap("loading_04_png")
+        loadbg.x=(sw-loadbg.width)>>1;
+        loadbg.y=(sh-loadbg.height)>>1;
+        container.addChild(loadbg);
+
+        //--------
+        // var progress:egret.Sprite=Common.getRoundRect(sw-120,w-10,this.color);
+        let progress = Common.createBitmap("loading_02_png")
+        progress.x=(sw-progress.width)>>1;
+        progress.y=(sh-progress.height)>>1;
+        container.addChild(progress);
+        this.proWidth=progress.width;
+
+        // var mask:egret.Sprite=Common.getRoundRect(sw-120,w-10,0,100,100);
+        // mask.x=(sw-mask.width)>>1;
+        // mask.y=(sh-mask.height)>>1;
+        // progress.mask=mask;
+        this.progress=progress;
+        
+        //--------
+        var txtbg:Common.MoonDisplayObject=new Common.MoonDisplayObject();
+        txtbg.type=Common.Const.SHAPE_CIRCLE
+        txtbg.data={r:w/2,c:0XE18E0D};
+        txtbg.setBackground(0XFFFFFF,5);
+        this.addChild(txtbg);
+        txtbg.x=loadbg.x+loadbg.width-w/2;
+        txtbg.y=loadbg.y+w/2 -10;
+        this.txtLoadPos=new egret.Point(txtbg.x, txtbg.y);
+        
+        var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0xa56016);
+        this.txtLoad=txtExp;
+        this.addChild(txtExp)
+        //--------
+        var txtTip:egret.TextField=Common.createText("游戏加载", 0, 0, 40, 0xa56016);
+        txtTip.x=(sw-txtTip.width)>>1;
+        txtTip.y=txtbg.y + txtTip.height
+        this.addChild(txtTip)
+        
+        // var txtName:egret.TextField=Common.createText("", 0, 0);
+        // txtName.size=40;
+        // this.txtName=txtName;
+        // this.addChild(txtName)
+        // this.updateName("敬请期待");
+        //--------
+        this.createAirFan();
+        this.airFan.x=this.txtLoadPos.x
+        this.airFan.y=this.txtLoadPos.y
+
+        // this.createLogo();
+
+        let logo = Common.createBitmap("loading_03_png")
+        logo.anchorOffsetX = logo.width>>1
+        logo.anchorOffsetY = logo.height>>1
+        logo.x = Config.stageHalfWidth
+        logo.y = Config.stageHalfHeight - logo.height
+        this.addChild(logo)
+
+        this.update(0);
+        this.play()
+    }
+
+    public updateName(name:string):void
+    {
+        // this.txtName.text=name;
+        // this.txtName.x=(Config.stageWidth-this.txtName.width)>>1;
+        // this.txtName.y=Config.stageHeight/2+this.txtName.height*2;
+    }
+
+    protected createLogo():void
+    {
+        var sw:number=Config.stageWidth
+        var sh:number=Config.stageHeight
+        var logo:Common.MoonDisplayObject=new Common.MoonDisplayObject();
+        logo.type=Common.Const.SHAPE_CIRCLE;
+        logo.data={r:50,c:0XE18E0D};
+        logo.setBackground(0XFFFFFF,2);
+        logo.x=sw>>1;
+        logo.y=logo.height;
+        this.addChild(logo);
+
+        var txtName:egret.TextField=Common.createText("GALE", 0, 0);
+        txtName.size=40;
+        txtName.x=logo.x-(txtName.width>>1);
+        txtName.y=logo.y-(txtName.height>>1)-15;
+        this.addChild(txtName)
+
+        txtName=Common.createText("GAME", 0, 0);
+        txtName.size=30;
+        txtName.x=logo.x-(txtName.width>>1);
+        txtName.y=logo.y-(txtName.height>>1)+15;
+        this.addChild(txtName)
+
+        txtName=Common.createText("孢子游戏", 0, 0);
+        txtName.size=40;
+        txtName.textColor=0XE09F21;
+        txtName.x=sw-txtName.width-10;
+        txtName.y=sh-txtName.height-10;
+        this.addChild(txtName)
+
+    }
+
+    private createAirFan():void
+    {
+        this.airFan=new egret.Sprite()
+        this.addChild(this.airFan);
+        for (var i:number=0; i<4; i++)  
+        {  
+            var shape:egret.Sprite=new egret.Sprite();  
+            this.airFan.addChild(shape);  
+            shape.graphics.lineStyle(0);  
+            shape.graphics.beginFill(0xFFFFFF);  
+            shape.graphics.cubicCurveTo(-29,-28,29,-28,0,0);  
+            shape.graphics.endFill();  
+            shape.rotation = i * 90;  
+        }  
+    }
+
+    public update(value:number):void
+    {
+        if(value>1) return;
+        if(value>0.99) this.stop();
+        this.progress.width = 500 * value
+        var txtExp:egret.TextField=this.txtLoad;
+        var pos:egret.Point=this.txtLoadPos;
+        txtExp.text=Math.ceil(value*100)+"%";
+        txtExp.x=(Config.stageWidth-txtExp.width)>>1;
+        txtExp.y=pos.y-txtExp.height/2;
+        var exp:egret.Sprite=Common.getCircle(5+Math.random()*5,this.color,pos.x,pos.y);
+        exp.y=10-Math.random()*20;
+        this.addChildAt(exp,2);
+        // egret.Tween.get(exp).to({x:-this.proWidth,alpha:0},1000);
+    }
+
+    protected play():void
+    {
+        this.stop();
+        egret.startTick(this.loop, this);
+    }
+
+    protected stop():void
+    {
+        egret.stopTick(this.loop, this);
+    }
+
+    protected loop(n:number):boolean
+    {
+        this.airFan.rotation+=3;
+        return true;
+    }
+
+    private addToStage():void {
+        this.removeEventListener(egret.Event.ADDED_TO_STAGE,this.addToStage,this);
+        
     }
 
     public onProgress(current: number, total: number): void {
-        this.textField.text = `Loading...${current}/${total}`;
+        this.update(current/total)
+        // this.gameLoad.update(current/total);
     }
+
+
+    /**创建渐变色背景 */
+    protected createBgGradientFill(c1:number=0XFDD559,c2:number=0XE09F21):egret.Sprite
+    {
+        var w:number=Config.stageWidth
+        var h:number=Config.stageHeight
+        var matrix:egret.Matrix = new egret.Matrix();
+        matrix.createGradientBox(w*2,h*2,Math.PI/2);
+        var sprite:egret.Sprite=new egret.Sprite()
+        sprite.graphics.beginGradientFill(egret.GradientType.RADIAL,[c1,c2],[1,1],[0,255],matrix);
+        sprite.graphics.drawRect(0,0,w,h);
+        this.addChild(sprite);
+        return sprite;
+    }
+
+    private txtLoad:egret.TextField;
+    // private txtName:egret.TextField;
+    // private progress:egret.Sprite;
+    private progress:egret.Bitmap;
+    private txtLoadPos:egret.Point;
+    private color:number=0XF9AB03;
+    private proWidth:number;
+    private airFan:egret.Sprite;
 }

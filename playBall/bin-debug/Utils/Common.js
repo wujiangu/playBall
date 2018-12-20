@@ -1,6 +1,16 @@
 /**
 * 游戏公用常量和方法
 */
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var Common;
 (function (Common) {
     /**全局字体颜色 */
@@ -335,6 +345,138 @@ var Common;
         return newObj;
     }
     Common.cloneObj = cloneObj;
-    ;
+    /**得到圆角矩形*/
+    function getRoundRect(w, h, c, ew, eh, x, y) {
+        if (c === void 0) { c = 0; }
+        if (ew === void 0) { ew = 5; }
+        if (eh === void 0) { eh = 5; }
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        var s = new egret.Sprite();
+        s.graphics.beginFill(c);
+        s.graphics.drawRoundRect(x, y, w, h, ew, eh);
+        s.graphics.endFill();
+        return s;
+    }
+    Common.getRoundRect = getRoundRect;
+    /**得到圆形*/
+    function getCircle(r, c, x, y) {
+        if (c === void 0) { c = 0; }
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        var s = new egret.Sprite();
+        s.graphics.beginFill(c);
+        s.graphics.drawCircle(x, y, r);
+        s.graphics.endFill();
+        return s;
+    }
+    Common.getCircle = getCircle;
+    /**得到矩形*/
+    function getRect(w, h, c, x, y) {
+        if (c === void 0) { c = 0; }
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
+        var s = new egret.Sprite();
+        s.graphics.beginFill(c);
+        s.graphics.drawRect(x, y, w, h);
+        s.graphics.endFill();
+        return s;
+    }
+    Common.getRect = getRect;
+    var Const = (function () {
+        function Const() {
+        }
+        /**布局 横版*/
+        Const.HORIZONTAL = "horizontal";
+        /**布局 竖版*/
+        Const.VERTICAL = "vertical";
+        /**形状 方块*/
+        Const.SHAPE_RECT = "shape rect";
+        /**形状 圆角方块*/
+        Const.SHAPE_RECT_ROUND = "shape rect round";
+        /**形状 圆块*/
+        Const.SHAPE_CIRCLE = "shape circle";
+        /**版本 调试*/
+        Const.VER_DEBUG = "debug";
+        /**版本 发布*/
+        Const.VER_RELEASE = "release";
+        return Const;
+    }());
+    Common.Const = Const;
+    __reflect(Const.prototype, "Common.Const");
+    var MoonDisplayObject = (function (_super) {
+        __extends(MoonDisplayObject, _super);
+        function MoonDisplayObject() {
+            var _this = _super.call(this) || this;
+            _this._type = Const.SHAPE_RECT;
+            _this._color = 0;
+            _this.display = new egret.Sprite;
+            _this.bg = new egret.Sprite;
+            return _this;
+        }
+        Object.defineProperty(MoonDisplayObject.prototype, "type", {
+            get: function () { return this._type; },
+            set: function (value) { this._type = value; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MoonDisplayObject.prototype, "color", {
+            get: function () { return this._color; },
+            set: function (value) { this._color = value; this._data.c = value; this.draw(); },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(MoonDisplayObject.prototype, "data", {
+            /**{w:1,h:1,r:1,c:1,ew:1,eh:1} */
+            set: function (value) { this._data = value; this.draw(); },
+            enumerable: true,
+            configurable: true
+        });
+        MoonDisplayObject.prototype.draw = function () {
+            this._color = this._data.c;
+            this.display.graphics.clear();
+            this.display = this.getDisplay(this._data);
+            this.addChild(this.display);
+            this.setPosition();
+        };
+        MoonDisplayObject.prototype.setPosition = function () {
+            if (this._hasBg && this.type != Const.SHAPE_CIRCLE) {
+                this.display.x = (this.bg.width - this.display.width) >> 1;
+                this.display.y = (this.bg.height - this.display.height) >> 1;
+            }
+        };
+        MoonDisplayObject.prototype.setBackground = function (color, side) {
+            if (side === void 0) { side = 1; }
+            this._hasBg = true;
+            var d = this._data;
+            var o = {};
+            for (var i in d) {
+                o[i] = d[i];
+            }
+            o.c = color;
+            if (o.w)
+                o.w = o.w + side * 2;
+            if (o.h)
+                o.h = o.h + side * 2;
+            if (o.r)
+                o.r = o.r + side;
+            this.bg.graphics.clear();
+            this.bg = this.getDisplay(o);
+            this.addChildAt(this.bg, 0);
+            this.setPosition();
+        };
+        MoonDisplayObject.prototype.getDisplay = function (o) {
+            switch (this.type) {
+                case Const.SHAPE_RECT:
+                    return Common.getRect(o.w, o.h, o.c);
+                case Const.SHAPE_RECT_ROUND:
+                    return Common.getRoundRect(o.w, o.h, o.c, o.ew, o.eh);
+                case Const.SHAPE_CIRCLE:
+                    return Common.getCircle(o.r, o.c);
+            }
+        };
+        return MoonDisplayObject;
+    }(egret.Sprite));
+    Common.MoonDisplayObject = MoonDisplayObject;
+    __reflect(MoonDisplayObject.prototype, "Common.MoonDisplayObject");
 })(Common || (Common = {}));
-//# sourceMappingURL=Common.js.map

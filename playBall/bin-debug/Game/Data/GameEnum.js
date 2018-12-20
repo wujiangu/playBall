@@ -66,4 +66,3 @@ var EMonsterType;
     EMonsterType[EMonsterType["Elite"] = 2] = "Elite";
     EMonsterType[EMonsterType["Boss"] = 3] = "Boss";
 })(EMonsterType || (EMonsterType = {}));
-//# sourceMappingURL=GameEnum.js.map

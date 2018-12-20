@@ -34,9 +34,10 @@ var BottomBtnPanel = (function (_super) {
         this._HideBtn();
     };
     BottomBtnPanel.prototype._OnBtnItem = function () {
-        Common.dispatchEvent(MainNotify.closeGameStartPanel);
-        Common.dispatchEvent(MainNotify.openBackpackPanel);
-        // TipsManager.Show(GameTips.test)
+        if (Common.curPanel != PanelManager.m_backpackPanel) {
+            Common.dispatchEvent(MainNotify.closeGameStartPanel);
+            Common.dispatchEvent(MainNotify.openBackpackPanel);
+        }
     };
     BottomBtnPanel.prototype._OnBtnAchieve = function () {
     };
@@ -56,9 +57,6 @@ var BottomBtnPanel = (function (_super) {
         egret.Tween.get(this).to({ alpha: 1.0, y: Config.stageHeight - this.height }, 500, egret.Ease.backIn).call(this._OnShowBtn, this);
     };
     BottomBtnPanel.prototype._OnHideBtn = function () {
-        GameManager.Instance.Start();
-        Common.dispatchEvent(MainNotify.closeGameStartPanel);
-        Common.dispatchEvent(MainNotify.openGamePanel);
         Common.gameScene().mainUILayer.removeChild(this);
     };
     BottomBtnPanel.prototype._HideBtn = function () {
@@ -70,4 +68,3 @@ var BottomBtnPanel = (function (_super) {
     return BottomBtnPanel;
 }(BasePanel));
 __reflect(BottomBtnPanel.prototype, "BottomBtnPanel");
-//# sourceMappingURL=BottomBtnPanel.js.map

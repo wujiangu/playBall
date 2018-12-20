@@ -14,12 +14,11 @@ var Monster = (function (_super) {
         var _this = _super.call(this) || this;
         _this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001");
         return _this;
-        // this.addChild(this.m_gesture)
     }
     Monster.prototype.Init = function () {
         this.m_sumWeight = 0;
         for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
-            this.m_sumWeight += GameConfig.monsterConfig[i].prob;
+            this.m_sumWeight += GameConfig.monsterConfig[i].Prob;
             GameConfig.monsterConfig[i].weight = this.m_sumWeight;
         }
         this.m_data = this._RandomMonsterData();
@@ -32,7 +31,7 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.InitData = function () {
-        var name = this.m_data.name;
+        var name = this.m_data.Animation;
         var armature = DragonBonesFactory.getInstance().buildArmature(name, name);
         var clock = DragonBonesFactory.getInstance().createWorldClock(10.0);
         if (this.m_armature == null) {
@@ -49,30 +48,22 @@ var Monster = (function (_super) {
             DragonBonesAnimations.Hurt,
         ]);
         this.m_state = EMonsterState.Ready;
-        this.m_speedY = GameConfig.baseFallSpeed + this.m_data.speed;
+        this.m_speedY = GameConfig.baseFallSpeed + this.m_data.Speed / 100;
         this.m_speedX = 0.2;
+        this.m_gestureData.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            this.m_gestureData.push(GameConfig.gestureConfig[i]);
+        }
     };
     Monster.prototype.InitGraph = function () {
         this.y = 0;
-        this.x = MathUtils.getRandom(Config.stageWidth - this.width);
         this.filters = [this.m_dropShadowFilter];
-        var slot = this.m_armature.Armature.getSlot("小怪1_06");
-        this.m_gesture.texture = RES.getRes("gestureSheet_json.gesture001");
-        this.m_gesture.x = slot.display.x;
-        this.m_gesture.y = slot.display.y;
-        this.m_gesture.anchorOffsetX = this.m_gesture.width / 2;
-        this.m_gesture.anchorOffsetY = this.m_gesture.height / 2;
-        slot.setDisplay(this.m_gesture);
-        // slot.display.texture = RES.getRes("gestureSheet_json.gesture001")
-        // this.m_gesture.anchorOffsetX = this.m_gesture.width / 2
-        // this.m_gesture.anchorOffsetY = this.m_gesture.height / 2
-        // this.m_gesture.x = -50
-        // this.m_gesture.y = -75
+        this.UpdateSignSlot();
         this.GotoIdle();
+        this.x = MathUtils.getRandom(this.m_armatureContainer.width / 2, Config.stageWidth - this.m_armatureContainer.width / 2);
     };
     Monster.prototype.GotoIdle = function () {
         this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
-        Common.log("播放", DragonBonesAnimations.Idle, this.m_armatureContainer.width);
     };
     Monster.prototype.GotoHurt = function () {
         if (this.m_type != EMonsterType.Normal) {
@@ -80,13 +71,17 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.GotoDead = function () {
-        if (this.m_type != EMonsterType.Normal) {
-            this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0);
+        if (this.y >= 100) {
+            this.Destroy();
+            PanelManager.m_gameScenePanel.RemoveMonster(this);
+            PanelManager.m_gameScenePanel.Power += this.m_data.Power;
         }
+        // if (this.m_type != EMonsterType.Normal) {
+        // 	this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0)
+        // }
     };
     Monster.prototype.GotoRun = function () {
         this.m_armatureContainer.play(DragonBonesAnimations.Run, 0);
-        Common.log("播放", DragonBonesAnimations.Run, this.m_armatureContainer.width);
     };
     Monster.prototype.Update = function (timeElapsed) {
         if (this.m_state == EMonsterState.Ready) {
@@ -112,6 +107,30 @@ var Monster = (function (_super) {
         this.m_armatureContainer.clear();
         GameObjectPool.getInstance().destroyObject(this);
     };
+    /**
+     * 更新符号槽位
+     */
+    Monster.prototype.UpdateSignSlot = function () {
+        var random = MathUtils.getRandom(this.m_gestureData.length - 1);
+        var slot = this.m_armature.Armature.getSlot("Sign");
+        this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path);
+        this.m_gesture.x = slot.display.x;
+        this.m_gesture.y = slot.display.y;
+        this.m_gesture.anchorOffsetX = this.m_gesture.width / 2;
+        this.m_gesture.anchorOffsetY = this.m_gesture.height / 2;
+        slot.setDisplay(this.m_gesture);
+        this.m_gestureType = this.m_gestureData[random].type;
+    };
+    Object.defineProperty(Monster.prototype, "GestureType", {
+        get: function () {
+            return this.m_gestureType;
+        },
+        set: function (value) {
+            this.m_gestureType = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Monster.prototype._RandomMonsterData = function () {
         var random = MathUtils.getRandom(1, this.m_sumWeight);
         for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
@@ -124,4 +143,3 @@ var Monster = (function (_super) {
     return Monster;
 }(BaseActor));
 __reflect(Monster.prototype, "Monster");
-//# sourceMappingURL=Monster.js.map

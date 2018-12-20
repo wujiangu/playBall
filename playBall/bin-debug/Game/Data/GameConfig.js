@@ -9,4 +9,3 @@ var GameConfig = (function () {
     return GameConfig;
 }());
 __reflect(GameConfig.prototype, "GameConfig");
-//# sourceMappingURL=GameConfig.js.map

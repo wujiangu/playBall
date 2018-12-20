@@ -1,6 +1,8 @@
 class Gesture
 {
     private _layer:egret.Shape
+    private _group:eui.Group
+    private _isDown:boolean
     private _gestureRes:Array<any>
     private _gestureData:Array<any>
     // private _gestureSound:egret.Sound
@@ -30,21 +32,30 @@ class Gesture
         return this._gestureRes
     }
 
-    public addEvent(layer:egret.Shape)
+    public addEvent(layer:egret.Shape, group:eui.Group)
     {
-        this._layer = layer;
-
-        egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
-        egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
-        egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+        this._layer = layer
+        this._group = group
+        // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
+        // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
+        // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.mouseUp,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
     }
     public removeEvent()
     {
         this._layer.graphics.clear()
         // PanelManager.gamePanel.SetParticle(false, 0, 0)
-        egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
-        egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
-        egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+        // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
+        // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
+        // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.mouseUp,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
     }
 
     private _mouseDatas:egret.Point[];
@@ -52,6 +63,7 @@ class Gesture
     private _currentPoint:egret.Point;
     private mouseDown(evt:egret.TouchEvent)
     {
+        this._isDown = true
         this._layer.graphics.clear();
         this._mouseDatas = [];
         this._lineData = []
@@ -66,6 +78,7 @@ class Gesture
     }
     private mouseMove(evt:egret.TouchEvent)
     {
+        if (!this._isDown) return
         // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
         var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
         p.x = evt.stageX
@@ -81,6 +94,8 @@ class Gesture
     }
     private mouseUp(evt:egret.TouchEvent)
     {
+        if (!this._isDown) return
+        this._isDown = false
         var p:egret.Point = new egret.Point(evt.stageX,evt.stageY);
         this._mouseDatas.push(p);
         this._lineData.push(p)
@@ -102,7 +117,7 @@ class Gesture
         _arr.push(this._mouseDatas[currentIndex]);
         for(var i:number=0; i<len; i++)
         {
-            if( egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i])>40 )
+            if( egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i])>20 )
             {
                 currentIndex = i;
                 _arr.push(this._mouseDatas[currentIndex]);
@@ -147,10 +162,10 @@ class Gesture
 
     private disEvent(type:number)
     {
-		// Config.GestureType = type
+		GameConfig.gestureType = type
         if(type != -1)
         {
-            // Common.dispatchEvent(MainNotify.gestureAction)
+            Common.dispatchEvent(MainNotify.gestureAction)
             for (let i = 0; i < this._gestureRes.length; i++) {
                 if (type == this._gestureRes[i].type) {
                     this._layer.graphics.moveTo(this._lineData[0].x,this._lineData[0].y)

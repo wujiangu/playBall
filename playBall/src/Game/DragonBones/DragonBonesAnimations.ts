@@ -3,4 +3,5 @@ class DragonBonesAnimations {
 	public static Dead = "dead"
 	public static Run = "run"
 	public static Hurt = "hurt"
+	public static Explore = "explore"
 }

@@ -3,7 +3,7 @@
   "compilerVersion": "5.2.13",
   "template": {},
   "target": {
-    "current": "web"
+    "current": "android"
   },
   "modules": [
     {
@@ -31,7 +31,7 @@
   "targets": {
     "android": {
       "appname": "testBallAPP",
-      "packagename": "com.companyname"
+      "packagename": "baozi.com"
     }
   }
 }

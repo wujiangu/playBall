@@ -14,6 +14,7 @@ var BaseActor = (function (_super) {
         var _this = _super.call(this) || this;
         _this.m_armatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this.m_armatureContainer);
+        _this.m_gestureData = new Array();
         var distance = 20; /// 阴影的偏移距离，以像素为单位
         var angle = 45; /// 阴影的角度，0 到 360 度
         var color = 0x000000; /// 阴影的颜色，不包含透明度
@@ -40,4 +41,3 @@ var BaseActor = (function (_super) {
     return BaseActor;
 }(egret.DisplayObjectContainer));
 __reflect(BaseActor.prototype, "BaseActor");
-//# sourceMappingURL=BaseActor.js.map

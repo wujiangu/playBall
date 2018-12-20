@@ -29,9 +29,10 @@ class BottomBtnPanel extends BasePanel{
     }
 
 	private _OnBtnItem(){
-		Common.dispatchEvent(MainNotify.closeGameStartPanel)
-		Common.dispatchEvent(MainNotify.openBackpackPanel)
-		// TipsManager.Show(GameTips.test)
+		if (Common.curPanel != PanelManager.m_backpackPanel) {
+			Common.dispatchEvent(MainNotify.closeGameStartPanel)
+			Common.dispatchEvent(MainNotify.openBackpackPanel)
+		}
 	}
 
 	private _OnBtnAchieve() {
@@ -61,9 +62,6 @@ class BottomBtnPanel extends BasePanel{
 	}
 
 	private _OnHideBtn() {
-		GameManager.Instance.Start()
-		Common.dispatchEvent(MainNotify.closeGameStartPanel)
-		Common.dispatchEvent(MainNotify.openGamePanel)
 		Common.gameScene().mainUILayer.removeChild(this)
 	}
 

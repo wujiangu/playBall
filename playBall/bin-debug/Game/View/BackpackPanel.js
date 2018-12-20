@@ -24,6 +24,7 @@ var BackpackPanel = (function (_super) {
     };
     // 进入面板
     BackpackPanel.prototype.onEnter = function () {
+        Common.curPanel = PanelManager.m_backpackPanel;
         this.touchChildren = true;
         Common.gameScene().uiLayer.addChild(this);
     };
@@ -55,4 +56,3 @@ var BackpackPanel = (function (_super) {
     return BackpackPanel;
 }(BasePanel));
 __reflect(BackpackPanel.prototype, "BackpackPanel");
-//# sourceMappingURL=BackpackPanel.js.map

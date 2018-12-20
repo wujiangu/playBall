@@ -73,4 +73,3 @@ var GameManager = (function (_super) {
     return GameManager;
 }(egret.Sprite));
 __reflect(GameManager.prototype, "GameManager");
-//# sourceMappingURL=GameManager.js.map

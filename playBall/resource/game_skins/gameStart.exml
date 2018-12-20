@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="gameStart" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image id="m_imgBg" source="bg_jpg" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="m_imgCloth" source="backBg4_png" width="640" height="1240" horizontalCenter="0" anchorOffsetY="0" y="-239"/>
+	<e:Image id="m_imgCurtain" width="640" height="1240" horizontalCenter="0" bottom="135" source="common1_png" touchEnabled="false"/>
+	<e:Image id="m_imgLine" source="backBg5_png" horizontalCenter="0" top="-22"/>
 </e:Skin>
