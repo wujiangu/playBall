@@ -1,0 +1,237 @@
+{
+	"groups": [
+		{
+			"keys": "backBg1_png,backBg2_jpg,backBg4_png,backBg5_png,bg_jpg,beiziguai_ske_json,beiziguai_tex_json,beiziguai_tex_png,btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,common1_png,egret_icon_png,gestureSheet_json,itemIcon_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json",
+			"name": "enter"
+		},
+		{
+			"keys": "loading_04_png,loading_03_png,loading_02_png,loading_01_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/backpack/backBg1.png",
+			"type": "image",
+			"name": "backBg1_png"
+		},
+		{
+			"url": "assets/backpack/backBg2.jpg",
+			"type": "image",
+			"name": "backBg2_jpg"
+		},
+		{
+			"url": "assets/backpack/backBg4.png",
+			"type": "image",
+			"name": "backBg4_png"
+		},
+		{
+			"url": "assets/backpack/backBg5.png",
+			"type": "image",
+			"name": "backBg5_png"
+		},
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "assets/bones/beiziguai_ske.json",
+			"type": "json",
+			"name": "beiziguai_ske_json"
+		},
+		{
+			"url": "assets/bones/beiziguai_tex.json",
+			"type": "json",
+			"name": "beiziguai_tex_json"
+		},
+		{
+			"url": "assets/bones/beiziguai_tex.png",
+			"type": "image",
+			"name": "beiziguai_tex_png"
+		},
+		{
+			"url": "assets/Button/btnSheet.json",
+			"type": "sheet",
+			"name": "btnSheet_json",
+			"subkeys": "btn1,btn10,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9"
+		},
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_disabled.png",
+			"type": "image",
+			"name": "checkbox_select_disabled_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_down.png",
+			"type": "image",
+			"name": "checkbox_select_down_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_up.png",
+			"type": "image",
+			"name": "checkbox_select_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_unselect.png",
+			"type": "image",
+			"name": "checkbox_unselect_png"
+		},
+		{
+			"url": "assets/common/common1.png",
+			"type": "image",
+			"name": "common1_png"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"url": "assets/gesture/gestureSheet.json",
+			"type": "sheet",
+			"name": "gestureSheet_json",
+			"subkeys": "gesture001,gesture002,gesture003,gesture004,gesture005,gesture006,gesture007,gesture101,gesture102,gesture103,gesture104,gesture201,gesture202"
+		},
+		{
+			"url": "assets/Icon/itemIcon.json",
+			"type": "sheet",
+			"name": "itemIcon_json",
+			"subkeys": "icon01,icon02,icon03,icon04,icon05,icon06"
+		},
+		{
+			"url": "assets/ItemRenderer/selected.png",
+			"type": "image",
+			"name": "selected_png"
+		},
+		{
+			"url": "assets/Panel/border.png",
+			"type": "image",
+			"name": "border_png"
+		},
+		{
+			"url": "assets/Panel/header.png",
+			"type": "image",
+			"name": "header_png"
+		},
+		{
+			"url": "assets/preload/loading_01.png",
+			"type": "image",
+			"name": "loading_01_png"
+		},
+		{
+			"url": "assets/preload/loading_02.png",
+			"type": "image",
+			"name": "loading_02_png"
+		},
+		{
+			"url": "assets/preload/loading_03.png",
+			"type": "image",
+			"name": "loading_03_png"
+		},
+		{
+			"url": "assets/preload/loading_04.png",
+			"type": "image",
+			"name": "loading_04_png"
+		},
+		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_disabled.png",
+			"type": "image",
+			"name": "radiobutton_select_disabled_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_down.png",
+			"type": "image",
+			"name": "radiobutton_select_down_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_up.png",
+			"type": "image",
+			"name": "radiobutton_select_up_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_unselect.png",
+			"type": "image",
+			"name": "radiobutton_unselect_png"
+		},
+		{
+			"url": "assets/ScrollBar/roundthumb.png",
+			"type": "image",
+			"name": "roundthumb_png"
+		},
+		{
+			"url": "assets/ScrollBar/track_sb.png",
+			"type": "image",
+			"name": "track_sb_png"
+		},
+		{
+			"url": "assets/Slider/thumb.png",
+			"type": "image",
+			"name": "thumb_png"
+		},
+		{
+			"url": "assets/Slider/track.png",
+			"type": "image",
+			"name": "track_png"
+		},
+		{
+			"url": "assets/Slider/tracklight.png",
+			"type": "image",
+			"name": "tracklight_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/handle.png",
+			"type": "image",
+			"name": "handle_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/off.png",
+			"type": "image",
+			"name": "off_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/on.png",
+			"type": "image",
+			"name": "on_png"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "config/gesture.json",
+			"type": "json",
+			"name": "gesture_json"
+		},
+		{
+			"url": "config/itemConfig.json",
+			"type": "json",
+			"name": "itemConfig_json"
+		},
+		{
+			"url": "config/monsterConfig.json",
+			"type": "json",
+			"name": "monsterConfig_json"
+		}
+	]
+}
