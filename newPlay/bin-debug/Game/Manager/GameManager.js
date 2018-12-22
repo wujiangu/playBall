@@ -26,6 +26,7 @@ var GameManager = (function (_super) {
     });
     GameManager.prototype.Init = function () {
         // this.Start()
+        GameConfig.Init();
         PanelManager.initPanel();
         // this._bgMusic = RES.getRes("bgMusic_mp3")
         this._gameState = EGameState.Ready;

@@ -11,11 +11,11 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var DragonBonesArmature = (function (_super) {
     __extends(DragonBonesArmature, _super);
-    function DragonBonesArmature(armature, clock) {
+    function DragonBonesArmature(armature, armatureDisplay) {
         var _this = _super.call(this) || this;
         _this._armature = armature;
-        _this._clock = clock;
-        _this._armatureDisplay = _this._armature.getDisplay();
+        // this._clock = clock;
+        _this._armatureDisplay = armatureDisplay;
         _this.addChild(_this._armatureDisplay);
         _this._frameCalls = [];
         _this._completeCalls = [];
@@ -26,15 +26,15 @@ var DragonBonesArmature = (function (_super) {
      * 增加动画监听
      */
     DragonBonesArmature.prototype.addListeners = function () {
-        this._armature.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armature.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        this._armatureDisplay.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+        this._armatureDisplay.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
     };
     /**
      * 移除动画监听
      */
     DragonBonesArmature.prototype.removeLiteners = function () {
-        this._armature.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armature.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        this._armatureDisplay.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+        this._armatureDisplay.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
     };
     /**
      * 增加动画完成函数
@@ -113,10 +113,10 @@ var DragonBonesArmature = (function (_super) {
         if (timeScale === void 0) { timeScale = 1; }
         this.start();
         if (playTimes == undefined) {
-            this._armature.animation.play(action).timeScale = timeScale;
+            this._armatureDisplay.animation.play(action).timeScale = timeScale;
         }
         else {
-            this._armature.animation.play(action, playTimes).timeScale = timeScale;
+            this._armatureDisplay.animation.play(action, playTimes).timeScale = timeScale;
         }
     };
     /**
@@ -126,36 +126,36 @@ var DragonBonesArmature = (function (_super) {
         if (timeScale === void 0) { timeScale = 1; }
         this.start();
         if (playTimes == undefined) {
-            this._armature.animation.gotoAndPlayByFrame(action, frame).timeScale = timeScale;
+            this._armatureDisplay.animation.gotoAndPlayByFrame(action, frame).timeScale = timeScale;
         }
         else {
-            this._armature.animation.gotoAndPlayByFrame(action, frame, playTimes).timeScale = timeScale;
+            this._armatureDisplay.animation.gotoAndPlayByFrame(action, frame, playTimes).timeScale = timeScale;
         }
     };
     /**
      * 淡入播放动画
      */
     DragonBonesArmature.prototype.fadeIn = function (animationName, fadeInTime, playTimes, layer, group) {
-        this._armature.animation.fadeIn(animationName, fadeInTime, playTimes, layer, group, 2 /* SameGroup */);
+        this._armatureDisplay.animation.fadeIn(animationName, fadeInTime, playTimes, layer, group, 2 /* SameGroup */);
     };
     /**
      * 暂停播放动画
      */
     DragonBonesArmature.prototype.pause = function (action) {
-        this._armature.animation.stop(action);
+        this._armatureDisplay.animation.stop(action);
     };
     /**
      * 设置动画的播放速度
      */
     DragonBonesArmature.prototype.setTimeScale = function (action, value) {
-        this._armature.animation.play(action).timeScale = value;
+        this._armatureDisplay.animation.play(action).timeScale = value;
     };
     /**
      * 播放到指定帧结束
      */
     DragonBonesArmature.prototype.stopByFrame = function (action, frame) {
         this.start();
-        this._armature.animation.gotoAndStopByFrame(action, frame);
+        this._armatureDisplay.animation.gotoAndStopByFrame(action, frame);
     };
     /**
      * 混合动画
@@ -170,27 +170,27 @@ var DragonBonesArmature = (function (_super) {
      * 不淡出动画
      */
     DragonBonesArmature.prototype.fadeOut = function (action) {
-        var animationState = this._armature.animation.getState(action);
+        var animationState = this._armatureDisplay.animation.getState(action);
         animationState.fadeOut(0, false);
     };
     /**
      * 获取状态
      */
     DragonBonesArmature.prototype.getState = function (action) {
-        return this._armature.animation.getState(action);
+        return this._armatureDisplay.animation.getState(action);
     };
     /**
      * 开始播放
      */
     DragonBonesArmature.prototype.start = function () {
-        this._clock.add(this._armature);
+        // this._clock.add(this._armature);
         this.addListeners();
     };
     /**
      * 停止播放
      */
     DragonBonesArmature.prototype.stop = function () {
-        this._clock.remove(this._armature);
+        // this._clock.remove(this._armature);
         this.removeLiteners();
     };
     DragonBonesArmature.prototype.removeArmatureDisplay = function () {
@@ -204,18 +204,19 @@ var DragonBonesArmature = (function (_super) {
         },
         set: function (value) {
             this._armature = value;
-            this._armatureDisplay = this._armature.getDisplay();
-            this.addChild(this._armatureDisplay);
+            // this._armatureDisplay = this._armature.display
+            // this.addChild(this._armatureDisplay)
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DragonBonesArmature.prototype, "Clock", {
+    Object.defineProperty(DragonBonesArmature.prototype, "ArmatureDisplay", {
         get: function () {
-            return this._clock;
+            return this._armatureDisplay;
         },
         set: function (value) {
-            this._clock = value;
+            this._armatureDisplay = value;
+            this.addChild(this._armatureDisplay);
         },
         enumerable: true,
         configurable: true

@@ -2,7 +2,8 @@ class Monster extends BaseActor {
 	public constructor() {
 		super()
 
-		this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001")
+		// this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001")
+		this.m_balloons = new Array()
 	}
 
 	public Init() {
@@ -23,12 +24,13 @@ class Monster extends BaseActor {
 	public InitData() {
 		let name = this.m_data.Animation
 		let armature = DragonBonesFactory.getInstance().buildArmature(name, name)
-		let clock = DragonBonesFactory.getInstance().createWorldClock(10.0)
+		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
+		// let clock = DragonBonesFactory.getInstance().createWorldClock(10.0)
 		if (this.m_armature == null) {
-			this.m_armature = new DragonBonesArmature(armature, clock)
+			this.m_armature = new DragonBonesArmature(armature, armatureDisplay)
 		}
 		this.m_armature.Armature = armature
-		this.m_armature.Clock = clock
+		this.m_armature.ArmatureDisplay = armatureDisplay
 		// this.m_armatureContainer.scaleX = 0.5
 		// this.m_armatureContainer.scaleY = 0.5
 
@@ -43,10 +45,11 @@ class Monster extends BaseActor {
 		this.m_speedX = 0.2
 
 		this.m_gestureData.length = 0
-
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			this.m_gestureData.push(GameConfig.gestureConfig[i])
 		}
+
+		this.m_sumBalloon = 0
 	}
 
 	public InitGraph() {
@@ -84,6 +87,7 @@ class Monster extends BaseActor {
 	}
 
 	public GotoRun() {
+		this._DestroyBalloon()
 		this.m_armatureContainer.play(DragonBonesAnimations.Run, 0)
 	}
 
@@ -109,6 +113,7 @@ class Monster extends BaseActor {
 	}
 
 	public Destroy() {
+		this._DestroyBalloon()
 		this.m_armatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
 	}
@@ -118,26 +123,74 @@ class Monster extends BaseActor {
 	 * 更新符号槽位
 	 */
 	public UpdateSignSlot() {
+		this._DestroyBalloon()
+		this.m_sumBalloon = 1
 
-		let random = MathUtils.getRandom(this.m_gestureData.length - 1)
+		// let random = MathUtils.getRandom(this.m_gestureData.length - 1)
 
-		let slot = this.m_armature.Armature.getSlot("Sign")
-        this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path)
-		this.m_gesture.x = slot.display.x;
-        this.m_gesture.y = slot.display.y;
-        this.m_gesture.anchorOffsetX = this.m_gesture.width/2;
-        this.m_gesture.anchorOffsetY = this.m_gesture.height/2;
-		slot.setDisplay(this.m_gesture)
+		// let slot = this.m_armature.Armature.getSlot("Sign")
+        // this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path)
+		// this.m_gesture.x = slot.display.x;
+        // this.m_gesture.y = slot.display.y;
+        // this.m_gesture.anchorOffsetX = this.m_gesture.width/2;
+        // this.m_gesture.anchorOffsetY = this.m_gesture.height/2;
+		// slot.setDisplay(this.m_gesture)
 
-		this.m_gestureType = this.m_gestureData[random].type
+		// this.m_gestureType = this.m_gestureData[random].type
+
+		for (let i = 0; i < this.m_sumBalloon; i++) {
+			let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
+			balloon.Init(this.m_gestureData, this)
+			this._SetBallonPosition(balloon, this.m_sumBalloon, i)
+			this.addChild(balloon)
+			this.m_score += balloon.Score
+			this.m_balloons.push(balloon)
+		}
 	}
 
-	public get GestureType() {
-		return this.m_gestureType
+	public get Score() {
+		return this.m_score
 	}
 
-	public set GestureType(value:number) {
-		this.m_gestureType = value
+	public set Score(value:number) {
+		this.m_score = value
+	}
+
+	public _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {
+		if (count == 1) {
+			balloon.x = this.m_armatureContainer.width / 2
+			balloon.y = this.m_armatureContainer.height
+			// if (this.m_data.type == EWolfType.Red) {
+			// 	balloon.y = 100
+			// }
+			balloon.SetLine()
+		}
+		else if (count == 2) {
+			balloon.x = 25 + value * balloon.width
+			balloon.y = 40
+			// if (this.m_data.type == EWolfType.Red) {
+			// 	balloon.x = 40 + value * balloon.width
+			// 	balloon.y = 100
+			// }
+			balloon.SetLine(count, value)
+		}
+		else if (count == 3) {
+			if (value == 0) {
+				balloon.x = this.width / 2 + 10
+				balloon.y = 40 - balloon.height * 0.7
+				// if (this.m_data.type == EWolfType.Red) {
+				// 	balloon.y = 100 - balloon.height * 0.7
+				// 	balloon.x = this.width / 2 - 8
+				// }
+			}else{
+				balloon.x = 18 + (value - 1) * (balloon.width + 32)
+				balloon.y = 40
+				// if (this.m_data.type == EWolfType.Red) {
+				// 	balloon.y = 100
+				// }
+			}
+			balloon.SetLine(count, value)
+		}
 	}
 
 	private _RandomMonsterData():any {
@@ -152,6 +205,15 @@ class Monster extends BaseActor {
 		return null
 	}
 
+	private _DestroyBalloon() {
+		this.m_sumBalloon = 0
+		while(this.m_balloons.length > 0) {
+			let balloon:Balloon = this.m_balloons.pop()
+			GameObjectPool.getInstance().destroyObject(balloon)
+			this.removeChild(balloon)
+		}
+	}
+
 	private m_sumWeight:number
 	private m_data:any
 	private m_state:EMonsterState
@@ -159,6 +221,8 @@ class Monster extends BaseActor {
 	private m_speedX:number
 
 	//////////////////////////////////////////////////////////////////
-	private m_gesture:egret.Bitmap
-	private m_gestureType:number
+	// private m_gesture:egret.Bitmap
+	private m_balloons:Array<Balloon>
+	private m_sumBalloon:number
+	private m_score:number
 }

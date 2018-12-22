@@ -3,7 +3,9 @@
  */
 var MathUtils;
 (function (MathUtils) {
-    /**获取从n~m之间的随机数 */
+    /**获取从n~m之间的随机数
+     * 没有参数(0~1) 一个参数n(0~n的整数) 两个参数m,n(m~n的整数)
+     */
     function getRandom() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {

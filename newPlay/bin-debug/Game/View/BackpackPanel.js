@@ -31,6 +31,9 @@ var BackpackPanel = (function (_super) {
         this.touchChildren = false;
         Common.gameScene().uiLayer.removeChild(this);
     };
+    BackpackPanel.prototype._UpdateItemInfo = function (a_itemId) {
+        var id = a_itemId.toString();
+    };
     BackpackPanel.prototype._OnBtnReturn = function () {
         Common.dispatchEvent(MainNotify.closeBackpackPanel);
         Common.dispatchEvent(MainNotify.openGameStartPanel);

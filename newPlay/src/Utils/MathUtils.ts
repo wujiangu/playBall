@@ -2,7 +2,9 @@
  * 数学计算相关
  */
 namespace MathUtils {
-    /**获取从n~m之间的随机数 */
+    /**获取从n~m之间的随机数
+     * 没有参数(0~1) 一个参数n(0~n的整数) 两个参数m,n(m~n的整数)
+     */
     export function getRandom(...args:any[]) {
         let argsLen:number = args.length;
         let random:number;

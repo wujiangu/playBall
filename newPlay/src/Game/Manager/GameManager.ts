@@ -17,6 +17,7 @@ class GameManager extends egret.Sprite{
 	public Init()
 	{
 		// this.Start()
+		GameConfig.Init()
 		PanelManager.initPanel()
 		// this._bgMusic = RES.getRes("bgMusic_mp3")
 		this._gameState = EGameState.Ready

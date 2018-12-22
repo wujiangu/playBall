@@ -10,7 +10,8 @@ var Monster = (function (_super) {
     __extends(Monster, _super);
     function Monster() {
         var _this = _super.call(this) || this;
-        _this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001");
+        // this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001")
+        _this.m_balloons = new Array();
         return _this;
     }
     Monster.prototype.Init = function () {
@@ -31,12 +32,13 @@ var Monster = (function (_super) {
     Monster.prototype.InitData = function () {
         var name = this.m_data.Animation;
         var armature = DragonBonesFactory.getInstance().buildArmature(name, name);
-        var clock = DragonBonesFactory.getInstance().createWorldClock(10.0);
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name);
+        // let clock = DragonBonesFactory.getInstance().createWorldClock(10.0)
         if (this.m_armature == null) {
-            this.m_armature = new DragonBonesArmature(armature, clock);
+            this.m_armature = new DragonBonesArmature(armature, armatureDisplay);
         }
         this.m_armature.Armature = armature;
-        this.m_armature.Clock = clock;
+        this.m_armature.ArmatureDisplay = armatureDisplay;
         // this.m_armatureContainer.scaleX = 0.5
         // this.m_armatureContainer.scaleY = 0.5
         this.m_armatureContainer.register(this.m_armature, [
@@ -52,6 +54,7 @@ var Monster = (function (_super) {
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             this.m_gestureData.push(GameConfig.gestureConfig[i]);
         }
+        this.m_sumBalloon = 0;
     };
     Monster.prototype.InitGraph = function () {
         this.y = 0;
@@ -79,6 +82,7 @@ var Monster = (function (_super) {
         // }
     };
     Monster.prototype.GotoRun = function () {
+        this._DestroyBalloon();
         this.m_armatureContainer.play(DragonBonesAnimations.Run, 0);
     };
     Monster.prototype.Update = function (timeElapsed) {
@@ -100,6 +104,7 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.Destroy = function () {
+        this._DestroyBalloon();
         this.m_armatureContainer.clear();
         GameObjectPool.getInstance().destroyObject(this);
     };
@@ -107,26 +112,67 @@ var Monster = (function (_super) {
      * 更新符号槽位
      */
     Monster.prototype.UpdateSignSlot = function () {
-        var random = MathUtils.getRandom(this.m_gestureData.length - 1);
-        var slot = this.m_armature.Armature.getSlot("Sign");
-        this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path);
-        this.m_gesture.x = slot.display.x;
-        this.m_gesture.y = slot.display.y;
-        this.m_gesture.anchorOffsetX = this.m_gesture.width / 2;
-        this.m_gesture.anchorOffsetY = this.m_gesture.height / 2;
-        slot.setDisplay(this.m_gesture);
-        this.m_gestureType = this.m_gestureData[random].type;
+        this._DestroyBalloon();
+        this.m_sumBalloon = 1;
+        // let random = MathUtils.getRandom(this.m_gestureData.length - 1)
+        // let slot = this.m_armature.Armature.getSlot("Sign")
+        // this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path)
+        // this.m_gesture.x = slot.display.x;
+        // this.m_gesture.y = slot.display.y;
+        // this.m_gesture.anchorOffsetX = this.m_gesture.width/2;
+        // this.m_gesture.anchorOffsetY = this.m_gesture.height/2;
+        // slot.setDisplay(this.m_gesture)
+        // this.m_gestureType = this.m_gestureData[random].type
+        for (var i = 0; i < this.m_sumBalloon; i++) {
+            var balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon");
+            balloon.Init(this.m_gestureData, this);
+            this._SetBallonPosition(balloon, this.m_sumBalloon, i);
+            this.addChild(balloon);
+            this.m_score += balloon.Score;
+            this.m_balloons.push(balloon);
+        }
     };
-    Object.defineProperty(Monster.prototype, "GestureType", {
+    Object.defineProperty(Monster.prototype, "Score", {
         get: function () {
-            return this.m_gestureType;
+            return this.m_score;
         },
         set: function (value) {
-            this.m_gestureType = value;
+            this.m_score = value;
         },
         enumerable: true,
         configurable: true
     });
+    Monster.prototype._SetBallonPosition = function (balloon, count, value) {
+        if (value === void 0) { value = 0; }
+        if (count == 1) {
+            balloon.x = this.m_armatureContainer.width / 2;
+            balloon.y = this.m_armatureContainer.height;
+            // if (this.m_data.type == EWolfType.Red) {
+            // 	balloon.y = 100
+            // }
+            balloon.SetLine();
+        }
+        else if (count == 2) {
+            balloon.x = 25 + value * balloon.width;
+            balloon.y = 40;
+            // if (this.m_data.type == EWolfType.Red) {
+            // 	balloon.x = 40 + value * balloon.width
+            // 	balloon.y = 100
+            // }
+            balloon.SetLine(count, value);
+        }
+        else if (count == 3) {
+            if (value == 0) {
+                balloon.x = this.width / 2 + 10;
+                balloon.y = 40 - balloon.height * 0.7;
+            }
+            else {
+                balloon.x = 18 + (value - 1) * (balloon.width + 32);
+                balloon.y = 40;
+            }
+            balloon.SetLine(count, value);
+        }
+    };
     Monster.prototype._RandomMonsterData = function () {
         var random = MathUtils.getRandom(1, this.m_sumWeight);
         for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
@@ -135,6 +181,14 @@ var Monster = (function (_super) {
             }
         }
         return null;
+    };
+    Monster.prototype._DestroyBalloon = function () {
+        this.m_sumBalloon = 0;
+        while (this.m_balloons.length > 0) {
+            var balloon = this.m_balloons.pop();
+            GameObjectPool.getInstance().destroyObject(balloon);
+            this.removeChild(balloon);
+        }
     };
     return Monster;
 }(BaseActor));

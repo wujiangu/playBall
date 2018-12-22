@@ -37,19 +37,23 @@ class DragonBonesFactory {
     /**
      * 创建一个动画
      */
-    public makeArmature(name:string, dragonBonesName?:string, playSpeed:number = -1):DragonBonesArmature {
-        let armature:dragonBones.Armature = this.factory.buildArmature(name, dragonBonesName);
-        if (!armature) {
-            return null;
-        }
-        let clock:dragonBones.WorldClock = this.createWorldClock(playSpeed);
-        let result:DragonBonesArmature = new DragonBonesArmature(armature, clock);
-        return result;
-    }
+    // public makeArmature(name:string, dragonBonesName?:string, playSpeed:number = -1):DragonBonesArmature {
+    //     let armature:dragonBones.Armature = this.factory.buildArmature(name, dragonBonesName);
+    //     if (!armature) {
+    //         return null;
+    //     }
+    //     // let clock:dragonBones.WorldClock = this.createWorldClock(playSpeed);
+    //     // let result:DragonBonesArmature = new DragonBonesArmature(armature, clock);
+    //     return result;
+    // }
 
 
     public buildArmature(name:string, dragonBonesName?:string) {
         return this.factory.buildArmature(name, dragonBonesName)
+    }
+
+    public buildArmatureDisplay(name:string, dragonBonesName?:string) {
+        return this.factory.buildArmatureDisplay(name, dragonBonesName)
     }
 
     /**

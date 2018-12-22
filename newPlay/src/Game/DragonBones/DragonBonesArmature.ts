@@ -2,11 +2,11 @@
  * Armature封装类
  */
 class DragonBonesArmature extends egret.DisplayObjectContainer {
-    public constructor(armature:dragonBones.Armature, clock:dragonBones.WorldClock) {
+    public constructor(armature:dragonBones.Armature, armatureDisplay:dragonBones.EgretArmatureDisplay) {
         super();
         this._armature = armature;
-        this._clock = clock;
-        this._armatureDisplay = this._armature.getDisplay();
+        // this._clock = clock;
+        this._armatureDisplay = armatureDisplay
         this.addChild(this._armatureDisplay);
 
         this._frameCalls = [];
@@ -18,16 +18,16 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 增加动画监听
      */
     public addListeners():void {
-        this._armature.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armature.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        this._armatureDisplay.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+        this._armatureDisplay.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
     }
 
     /**
      * 移除动画监听
      */
     public removeLiteners():void {
-        this._armature.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armature.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        this._armatureDisplay.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+        this._armatureDisplay.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
     }
 
     /**
@@ -110,9 +110,9 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
     public play(action:string, playTimes:number = undefined, timeScale:number = 1):void {
         this.start();
         if (playTimes == undefined) {
-            this._armature.animation.play(action).timeScale = timeScale;
+            this._armatureDisplay.animation.play(action).timeScale = timeScale;
         }else{
-            this._armature.animation.play(action, playTimes).timeScale = timeScale;
+            this._armatureDisplay.animation.play(action, playTimes).timeScale = timeScale;
         }
     }
 
@@ -122,9 +122,9 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
     public playByFrame(action:string, frame:number, playTimes:number, timeScale:number = 1):void {
         this.start();
         if (playTimes == undefined) {
-            this._armature.animation.gotoAndPlayByFrame(action, frame).timeScale = timeScale;
+            this._armatureDisplay.animation.gotoAndPlayByFrame(action, frame).timeScale = timeScale;
         }else{
-            this._armature.animation.gotoAndPlayByFrame(action, frame, playTimes).timeScale = timeScale;
+            this._armatureDisplay.animation.gotoAndPlayByFrame(action, frame, playTimes).timeScale = timeScale;
         }
     }
 
@@ -132,21 +132,28 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 淡入播放动画
      */
     public fadeIn(animationName:string, fadeInTime:number, playTimes:number, layer:number, group:string) {
-        this._armature.animation.fadeIn(animationName, fadeInTime, playTimes, layer, group, dragonBones.AnimationFadeOutMode.SameGroup);
+        this._armatureDisplay.animation.fadeIn(animationName, fadeInTime, playTimes, layer, group, dragonBones.AnimationFadeOutMode.SameGroup);
     }
 
     /**
      * 暂停播放动画
      */
     public pause(action:string):void {
-        this._armature.animation.stop(action);
+        this._armatureDisplay.animation.stop(action);
     }
 
     /**
      * 设置动画的播放速度
      */
     public setTimeScale(action:string, value:number):void {
-        this._armature.animation.play(action).timeScale = value;
+        this._armatureDisplay.animation.play(action).timeScale = value;
+    }
+
+    /**
+     * 设置骨骼的播放速度
+     */
+    public setDBTimeScale(value:number):void {
+        this._armatureDisplay.animation.timeScale = value
     }
 
     /**
@@ -154,7 +161,7 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      */
     public stopByFrame(action:string, frame:number):void {
         this.start();
-        this._armature.animation.gotoAndStopByFrame(action, frame);
+        this._armatureDisplay.animation.gotoAndStopByFrame(action, frame);
     }
 
     /**
@@ -171,7 +178,7 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 不淡出动画
      */
     public fadeOut(action:string) {
-        let animationState = this._armature.animation.getState(action);
+        let animationState = this._armatureDisplay.animation.getState(action);
         animationState.fadeOut(0, false);
     }
 
@@ -179,14 +186,14 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 获取状态
      */
     public getState(action:string):dragonBones.AnimationState {
-        return this._armature.animation.getState(action);
+        return this._armatureDisplay.animation.getState(action);
     }
 
     /**
      * 开始播放
      */
     public start():void {
-        this._clock.add(this._armature);
+        // this._clock.add(this._armature);
         this.addListeners();
     }
 
@@ -194,7 +201,7 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 停止播放
      */
     public stop():void {
-        this._clock.remove(this._armature);
+        // this._clock.remove(this._armature);
         this.removeLiteners();
     }
 
@@ -210,25 +217,34 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
 
     public set Armature(value:dragonBones.Armature) {
         this._armature = value
-        this._armatureDisplay = this._armature.getDisplay()
+        // this._armatureDisplay = this._armature.display
+        // this.addChild(this._armatureDisplay)
+    }
+
+    public get ArmatureDisplay() {
+        return this._armatureDisplay
+    }
+
+    public set ArmatureDisplay(value:dragonBones.EgretArmatureDisplay) {
+        this._armatureDisplay = value
         this.addChild(this._armatureDisplay)
     }
 
-    public get Clock():dragonBones.WorldClock {
-        return this._clock
-    }
+    // public get Clock():dragonBones.WorldClock {
+    //     return this._clock
+    // }
 
-    public set Clock(value:dragonBones.WorldClock) {
-        this._clock = value
-    }
+    // public set Clock(value:dragonBones.WorldClock) {
+    //     this._clock = value
+    // }
 
     // public get ArmatureData() {
     //     return this._armature._armatureData.defaultSkin.displays
     // }
 
     private _armature:dragonBones.Armature;
-    private _clock:dragonBones.WorldClock;
-    private _armatureDisplay:any;
+    // private _clock:dragonBones.WorldClock;
+    private _armatureDisplay:dragonBones.EgretArmatureDisplay
     private _curAnimationState:dragonBones.AnimationState;
 
     /**帧事件处理的集合 */

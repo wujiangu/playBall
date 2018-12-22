@@ -98,9 +98,9 @@ class GameScenePanel extends BasePanel {
         if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
-                if (monster.GestureType == GameConfig.gestureType) {
-                    monster.GotoDead()
-                }
+                // if (monster.GestureType == GameConfig.gestureType) {
+                //     monster.GotoDead()
+                // }
             }
         }
     }

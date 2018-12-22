@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_03_png,loading_02_png,loading_01_png",
+			"keys": "loading_04_png,loading_03_png,loading_02_png,loading_01_png,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,imgRop_png",
 			"name": "preload"
 		}
 	],
@@ -232,6 +232,91 @@
 			"url": "config/monsterConfig.json",
 			"type": "json",
 			"name": "monsterConfig_json"
+		},
+		{
+			"name": "balloonYellow_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonYellow.png"
+		},
+		{
+			"name": "balloonBlue_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonBlue.json"
+		},
+		{
+			"name": "balloonBlue_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonBlue.png"
+		},
+		{
+			"name": "balloonGray_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonGray.json"
+		},
+		{
+			"name": "balloonGray_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonGray.png"
+		},
+		{
+			"name": "balloonGreen_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonGreen.json"
+		},
+		{
+			"name": "balloonGreen_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonGreen.png"
+		},
+		{
+			"name": "balloonOrange_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonOrange.json"
+		},
+		{
+			"name": "balloonOrange_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonOrange.png"
+		},
+		{
+			"name": "balloonPink_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonPink.json"
+		},
+		{
+			"name": "balloonPink_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonPink.png"
+		},
+		{
+			"name": "balloonPurple_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonPurple.json"
+		},
+		{
+			"name": "balloonPurple_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonPurple.png"
+		},
+		{
+			"name": "balloonRed_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonRed.json"
+		},
+		{
+			"name": "balloonRed_png",
+			"type": "image",
+			"url": "assets/movieClip/balloonRed.png"
+		},
+		{
+			"name": "balloonYellow_json",
+			"type": "json",
+			"url": "assets/movieClip/balloonYellow.json"
+		},
+		{
+			"name": "imgRop_png",
+			"type": "image",
+			"url": "assets/game/imgRop.png"
 		}
 	]
 }

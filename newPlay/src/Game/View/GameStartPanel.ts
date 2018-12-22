@@ -23,6 +23,7 @@ class GameStartPanel extends BasePanel {
 		this.m_imgCloth.y = Config.stageHeight - 1375
 
         Common.gameScene().uiLayer.addChild(this)
+
     }
 
     // 退出面板

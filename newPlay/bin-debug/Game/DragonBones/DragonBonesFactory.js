@@ -35,18 +35,20 @@ var DragonBonesFactory = (function () {
     /**
      * 创建一个动画
      */
-    DragonBonesFactory.prototype.makeArmature = function (name, dragonBonesName, playSpeed) {
-        if (playSpeed === void 0) { playSpeed = -1; }
-        var armature = this.factory.buildArmature(name, dragonBonesName);
-        if (!armature) {
-            return null;
-        }
-        var clock = this.createWorldClock(playSpeed);
-        var result = new DragonBonesArmature(armature, clock);
-        return result;
-    };
+    // public makeArmature(name:string, dragonBonesName?:string, playSpeed:number = -1):DragonBonesArmature {
+    //     let armature:dragonBones.Armature = this.factory.buildArmature(name, dragonBonesName);
+    //     if (!armature) {
+    //         return null;
+    //     }
+    //     // let clock:dragonBones.WorldClock = this.createWorldClock(playSpeed);
+    //     // let result:DragonBonesArmature = new DragonBonesArmature(armature, clock);
+    //     return result;
+    // }
     DragonBonesFactory.prototype.buildArmature = function (name, dragonBonesName) {
         return this.factory.buildArmature(name, dragonBonesName);
+    };
+    DragonBonesFactory.prototype.buildArmatureDisplay = function (name, dragonBonesName) {
+        return this.factory.buildArmatureDisplay(name, dragonBonesName);
     };
     /**
      * 创建WorldClock

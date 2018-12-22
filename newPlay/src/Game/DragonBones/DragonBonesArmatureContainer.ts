@@ -146,6 +146,10 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
         }
     }
 
+    public setDBTimeScale(value:number) {
+        
+    }
+
     public fadeIn(action:string, fadeInTime:number, playTimes:number, layer:number, group:string) {
          if (this.actions[action] == null) {
             return;

@@ -28,6 +28,11 @@ class BackpackPanel extends BasePanel {
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
+	private _UpdateItemInfo(a_itemId:number) {
+		let id = a_itemId.toString()
+
+	}
+
 	private _OnBtnReturn() {
 		Common.dispatchEvent(MainNotify.closeBackpackPanel)
 		Common.dispatchEvent(MainNotify.openGameStartPanel)
