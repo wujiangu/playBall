@@ -32,8 +32,10 @@
     "resource/eui_skins/gamePower.exml",
     "resource/game_skins/backpackPanel.exml",
     "resource/game_skins/bottomBtn.exml",
+    "resource/game_skins/gameOverPanel.exml",
     "resource/game_skins/gameScenePanel.exml",
-    "resource/game_skins/gameStart.exml"
+    "resource/game_skins/gameStart.exml",
+    "resource/game_skins/settingPanel.exml"
   ],
   "path": "resource/default.thm.json"
 }

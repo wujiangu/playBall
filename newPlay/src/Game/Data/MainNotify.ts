@@ -34,6 +34,10 @@ module MainNotify {
 	//背包面板
 	export var openBackpackPanel:string = "openBackpackPanel"
 	export var closeBackpackPanel:string = "closeBackpackPanel"
+
+	//设置面板
+	export var openSettingPanel:string = "openSettingPanel"
+	export var closeSettingPanel:string = "closeSettingPanel"
 }
 
 

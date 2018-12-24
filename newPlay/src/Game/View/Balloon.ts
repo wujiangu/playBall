@@ -2,10 +2,10 @@ class Balloon extends egret.Sprite {
 	public name = "Balloon"
 	public constructor() {
 		super()
-		let data = RES.getRes("balloonBlue_json")
-        let texture = RES.getRes("balloonBlue_png")
-		this._balloonData = new egret.MovieClipDataFactory(data, texture)
-        this._balloon = new egret.MovieClip(this._balloonData.generateMovieClipData("balloonBlue"))
+		// let data = RES.getRes("balloonBlue_json")
+        // let texture = RES.getRes("balloonBlue_png")
+		this._balloonData = new egret.MovieClipDataFactory()
+        this._balloon = new egret.MovieClip()
 		// this._balloon = Common.createBitmap("balloon_png")
 		this.addChild(this._balloon)
 		this._balloon.anchorOffsetX = this._balloon.width / 2
@@ -29,6 +29,7 @@ class Balloon extends egret.Sprite {
 		let random = MathUtils.getRandom(data.length - 1)
 		this._ChangeBalloonAnimate(data[random].balloon)
 		this._balloon.gotoAndStop(1)
+		this._balloon.anchorOffsetX = this._balloon.width / 2
 		this._balloon.anchorOffsetY = this._balloon.height
 		this._balloon.x = -20
 		this._gesture.texture = RES.getRes(data[random].path)
@@ -78,6 +79,10 @@ class Balloon extends egret.Sprite {
 		this._gesture.visible = false
 		this._balloon.play(1)
 		
+
+		if (PanelManager.m_gameScenePanel != null) {
+			PanelManager.m_gameScenePanel.Score += this._score
+		}
 		if (this._root.State == EMonsterState.Ready) {
 			let posY = this._root.y - 20
 			egret.Tween.get(this._root).to({y:posY}, 50)
@@ -122,7 +127,7 @@ class Balloon extends egret.Sprite {
 	private _OnBalloonComplete(e:egret.Event) {
 		this._root.BalloonExploreHandle()
 		GameObjectPool.getInstance().destroyObject(this)
-		this._root.removeChild(this)
+		this._root.RemoveBalloon(this)
 	}
 
 	private _ChangeBalloonAnimate(name:string) {

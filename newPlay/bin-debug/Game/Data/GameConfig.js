@@ -19,7 +19,8 @@ var GameConfig = (function () {
     };
     return GameConfig;
 }());
+GameConfig.game = "HT";
+GameConfig.isWebView = true;
 GameConfig.baseFallSpeed = 0.1;
 GameConfig.monsterAddDelay = 1500;
 __reflect(GameConfig.prototype, "GameConfig");
-//# sourceMappingURL=GameConfig.js.map

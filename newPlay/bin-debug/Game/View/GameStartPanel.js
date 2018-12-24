@@ -24,7 +24,7 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameStartPanel;
         this.touchChildren = true;
-        this.m_imgCloth.y = Config.stageHeight - 1375;
+        // this.m_imgCloth.y = Config.stageHeight - 1375
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -39,12 +39,25 @@ var GameStartPanel = (function (_super) {
     };
     GameStartPanel.prototype._OnStartGame = function () {
         this.touchChildren = false;
-        egret.Tween.get(this.m_imgCloth).to({ y: -this.m_imgCloth.height }, 1000, egret.Ease.backOut).call(this._OnHideCloth, this);
-        Common.dispatchEvent(MainNotify.closeBottomBtnPanel);
+        this._OnHideCloth();
+        // egret.Tween.get(this.m_imgCloth).to({y:-this.m_imgCloth.height}, 1000, egret.Ease.backOut).call(this._OnHideCloth, this)
+        // Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
+    };
+    GameStartPanel.prototype._OnBtnSetting = function () {
+        Common.dispatchEvent(MainNotify.openSettingPanel);
+    };
+    GameStartPanel.prototype._OnBtnRank = function () {
+        Common.UpdateMaxScore(10);
+    };
+    GameStartPanel.prototype._OnBtnProc = function () {
     };
     GameStartPanel.prototype.onComplete = function () {
-        this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this);
+        // this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
         this._OnResize();
+        this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this);
+        this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this);
+        this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this);
+        this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }
@@ -52,4 +65,3 @@ var GameStartPanel = (function (_super) {
     return GameStartPanel;
 }(BasePanel));
 __reflect(GameStartPanel.prototype, "GameStartPanel");
-//# sourceMappingURL=GameStartPanel.js.map

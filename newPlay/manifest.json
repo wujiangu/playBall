@@ -10,9 +10,9 @@
 		"promise/bin/promise.js"
 	],
 	"game": [
-		"bin-debug/Game/View/BasePanel.js",
 		"bin-debug/Game/View/BaseActor.js",
-		"bin-debug/Component/Tips.js",
+		"bin-debug/Game/View/BasePanel.js",
+		"bin-debug/Game/View/BottomBtnPanel.js",
 		"bin-debug/Game/Data/GameConfig.js",
 		"bin-debug/Game/Data/GameEnum.js",
 		"bin-debug/Game/Data/GameTips.js",
@@ -30,11 +30,13 @@
 		"bin-debug/Game/View/BackpackPanel.js",
 		"bin-debug/Game/View/Balloon.js",
 		"bin-debug/AssetAdapter.js",
+		"bin-debug/Component/Tips.js",
 		"bin-debug/Component/RingScrollView.js",
-		"bin-debug/Game/View/BottomBtnPanel.js",
+		"bin-debug/Game/View/GameOverPanel.js",
 		"bin-debug/Game/View/GameScenePanel.js",
 		"bin-debug/Game/View/GameStartPanel.js",
 		"bin-debug/Game/View/Monster.js",
+		"bin-debug/Game/View/SettingPanel.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/Net/HttpRequest.js",
@@ -49,6 +51,7 @@
 		"bin-debug/Utils/LListener.js",
 		"bin-debug/Utils/MathUtils.js",
 		"bin-debug/Utils/md5.js",
+		"bin-debug/Utils/NativeApi.js",
 		"bin-debug/Utils/ShakeTools.js"
 	]
 }

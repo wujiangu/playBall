@@ -29,5 +29,7 @@ var MainNotify;
     //背包面板
     MainNotify.openBackpackPanel = "openBackpackPanel";
     MainNotify.closeBackpackPanel = "closeBackpackPanel";
+    //设置面板
+    MainNotify.openSettingPanel = "openSettingPanel";
+    MainNotify.closeSettingPanel = "closeSettingPanel";
 })(MainNotify || (MainNotify = {}));
-//# sourceMappingURL=MainNotify.js.map

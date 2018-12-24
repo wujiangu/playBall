@@ -59,7 +59,7 @@ var Monster = (function (_super) {
     };
     Monster.prototype.InitGraph = function () {
         this.y = 0;
-        this.filters = [this.m_dropShadowFilter];
+        // this.filters = [this.m_dropShadowFilter]
         this.GotoIdle();
         this.UpdateSignSlot();
         this.x = MathUtils.getRandom(this.m_rect.width / 2, Config.stageWidth - this.m_rect.width / 2);
@@ -116,6 +116,9 @@ var Monster = (function (_super) {
             balloon.BalloonExplore();
         }
     };
+    Monster.prototype.RemoveBalloon = function (a_ball) {
+        this.m_groupBalloon.removeChild(a_ball);
+    };
     Monster.prototype.BalloonExploreHandle = function () {
         if (this.m_balloons.length <= 0) {
             this.m_sumBalloon = 0;
@@ -139,8 +142,8 @@ var Monster = (function (_super) {
                 }
                 for (var i = 0; i < this.m_balloons.length; i++) {
                     var balloon = this.m_balloons[i];
-                    var posX = i * balloon.width - this.m_rect.width / 2;
-                    var posY = -this.m_rect.height;
+                    var posX = i * balloon.width - this.m_rect.width / 3;
+                    var posY = -this.m_rect.height + 40;
                     var rotation = 90 * i - 45;
                     // if (this.m_data.type == EWolfType.Red) {
                     // 	posY = 100
@@ -193,7 +196,7 @@ var Monster = (function (_super) {
             var balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon");
             balloon.Init(this.m_gestureData, this);
             this._SetBallonPosition(balloon, this.m_sumBalloon, i);
-            this.addChild(balloon);
+            this.m_groupBalloon.addChild(balloon);
             this.m_score += balloon.Score;
             this.m_balloons.push(balloon);
         }
@@ -230,7 +233,7 @@ var Monster = (function (_super) {
             balloon.SetLine();
         }
         else if (count == 2) {
-            balloon.x = value * balloon.width - this.m_rect.width / 2;
+            balloon.x = value * balloon.width - this.m_rect.width / 3;
             balloon.y = -this.m_rect.height;
             balloon.SetLine(count, value);
         }
@@ -260,10 +263,9 @@ var Monster = (function (_super) {
         while (this.m_balloons.length > 0) {
             var balloon = this.m_balloons.pop();
             GameObjectPool.getInstance().destroyObject(balloon);
-            this.removeChild(balloon);
+            this.m_groupBalloon.removeChild(balloon);
         }
     };
     return Monster;
 }(BaseActor));
 __reflect(Monster.prototype, "Monster");
-//# sourceMappingURL=Monster.js.map

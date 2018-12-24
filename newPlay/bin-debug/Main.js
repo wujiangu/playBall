@@ -91,6 +91,7 @@ var Main = (function (_super) {
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+        NativeApi.setLocalData("webView", "1");
         RES.loadGroup("preload", 0);
     };
     /**
@@ -125,6 +126,10 @@ var Main = (function (_super) {
     };
     Main.prototype.createScene = function () {
         if (this.isThemeLoadEnd && this.isResourceLoadEnd) {
+            if (NativeApi.getLocalData("webView") == null) {
+                GameConfig.isWebView = false;
+            }
+            Common.GetMaxScore();
             this.startCreateScene();
         }
     };
@@ -165,4 +170,3 @@ var Main = (function (_super) {
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
-//# sourceMappingURL=Main.js.map

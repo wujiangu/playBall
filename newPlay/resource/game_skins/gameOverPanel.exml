@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="victoryPanel" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image left="0" right="0" top="0" bottom="0" source="mask_png"/>
+	<e:Button id="m_btnReturn" label="返回" left="20" top="21"/>
+	<e:Group id="m_groupGameOver" width="445" height="500" horizontalCenter="0" verticalCenter="0" anchorOffsetX="0" anchorOffsetY="0">
+		<e:Button id="m_btnAgain" label="Again" x="172" y="421"/>
+		<e:Image source="backBg4_png" height="388" anchorOffsetY="0" left="0" right="0" top="0"/>
+		<e:Image left="0" right="0" source="backBg4_png" height="43" y="0" anchorOffsetY="0"/>
+		<e:Label id="m_labTitle" text="本次得分" x="162.5" y="6.5" fontFamily="Microsoft YaHei"/>
+		<e:Label id="m_labScore" text="56" x="198.5" y="174" fontFamily="Microsoft YaHei" size="40"/>
+		<e:Label id="m_labHistory" text="历史最高分：" x="65.5" y="341.5" fontFamily="Microsoft YaHei"/>
+		<e:Label id="m_labHistoryScore" text="1000" x="256" y="341.5" fontFamily="Microsoft YaHei" textAlign="left"/>
+	</e:Group>
+</e:Skin>

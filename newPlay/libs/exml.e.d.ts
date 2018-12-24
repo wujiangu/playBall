@@ -56,7 +56,11 @@ declare class backpackPanel extends eui.Skin{
 }
 declare class bottomBtn extends eui.Skin{
 }
+declare class victoryPanel extends eui.Skin{
+}
 declare class gameScenePanel extends eui.Skin{
 }
 declare class gameStart extends eui.Skin{
+}
+declare class settingPanel extends eui.Skin{
 }

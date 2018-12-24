@@ -20,7 +20,7 @@ class GameStartPanel extends BasePanel {
 		Common.curPanel = PanelManager.m_gameStartPanel
 		this.touchChildren = true
 
-		this.m_imgCloth.y = Config.stageHeight - 1375
+		// this.m_imgCloth.y = Config.stageHeight - 1375
 
         Common.gameScene().uiLayer.addChild(this)
 
@@ -40,13 +40,31 @@ class GameStartPanel extends BasePanel {
 
 	private _OnStartGame() {
 		this.touchChildren = false
-		egret.Tween.get(this.m_imgCloth).to({y:-this.m_imgCloth.height}, 1000, egret.Ease.backOut).call(this._OnHideCloth, this)
-		Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
+		this._OnHideCloth()
+		// egret.Tween.get(this.m_imgCloth).to({y:-this.m_imgCloth.height}, 1000, egret.Ease.backOut).call(this._OnHideCloth, this)
+		// Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
+	}
+
+	private _OnBtnSetting() {
+		Common.dispatchEvent(MainNotify.openSettingPanel)
+	}
+
+	private _OnBtnRank() {
+		Common.UpdateMaxScore(10)
+	}
+
+	private _OnBtnProc() {
+
 	}
 
 	private onComplete() {
-		this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
+		// this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
 		this._OnResize()
+
+		this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
+		this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this)
+		this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this)
+		this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this)
 	}
 
     protected _OnResize(event:egret.Event = null)
@@ -55,5 +73,9 @@ class GameStartPanel extends BasePanel {
     }
 
 	private m_imgBg:eui.Image
-	private m_imgCloth:eui.Image
+	// private m_imgCloth:eui.Image
+	private m_btnSetting:eui.Button
+	private m_btnGameStart:eui.Button
+	private m_btnRank:eui.Button
+	private m_btnProc:eui.Button
 }

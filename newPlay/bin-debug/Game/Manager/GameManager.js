@@ -31,7 +31,7 @@ var GameManager = (function (_super) {
         // this._bgMusic = RES.getRes("bgMusic_mp3")
         this._gameState = EGameState.Ready;
         Common.dispatchEvent(MainNotify.openGameStartPanel);
-        Common.dispatchEvent(MainNotify.openBottomBtnPanel);
+        // Common.dispatchEvent(MainNotify.openBottomBtnPanel)
     };
     GameManager.prototype.Stop = function () {
     };
@@ -72,4 +72,3 @@ var GameManager = (function (_super) {
     return GameManager;
 }(egret.Sprite));
 __reflect(GameManager.prototype, "GameManager");
-//# sourceMappingURL=GameManager.js.map

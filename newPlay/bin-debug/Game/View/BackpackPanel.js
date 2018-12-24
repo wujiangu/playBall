@@ -57,4 +57,3 @@ var BackpackPanel = (function (_super) {
     return BackpackPanel;
 }(BasePanel));
 __reflect(BackpackPanel.prototype, "BackpackPanel");
-//# sourceMappingURL=BackpackPanel.js.map

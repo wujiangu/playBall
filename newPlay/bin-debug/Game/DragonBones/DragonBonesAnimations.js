@@ -12,4 +12,3 @@ DragonBonesAnimations.Run = "run";
 DragonBonesAnimations.Hurt = "hurt";
 DragonBonesAnimations.Explore = "explore";
 __reflect(DragonBonesAnimations.prototype, "DragonBonesAnimations");
-//# sourceMappingURL=DragonBonesAnimations.js.map

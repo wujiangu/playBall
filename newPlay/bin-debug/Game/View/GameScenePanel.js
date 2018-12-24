@@ -31,7 +31,8 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype.initData = function () {
         GameConfig.gestureType = 0;
         this.m_monsterAddDelay = 0;
-        this.Score = 0;
+        this.m_score = GameConfig.maxScore;
+        this.m_labScore.text = this.m_score.toString();
         this.m_proPower.value = 0;
     };
     // 进入面板
@@ -80,10 +81,18 @@ var GameScenePanel = (function (_super) {
         set: function (value) {
             this.m_score = value;
             this.m_labScore.text = this.m_score.toString();
+            this.m_labScore.anchorOffsetX = this.m_labScore.width / 2;
+            this.m_labScore.anchorOffsetY = this.m_labScore.height / 2;
+            this.m_labScore.x = 81 + this.m_labScore.anchorOffsetX;
+            this.m_labScore.y = this.m_groupScore.height / 2;
+            egret.Tween.get(this.m_labScore).to({ scaleX: 2.0, scaleY: 2.0 }, 100, egret.Ease.backIn).call(this._OnScoreBigger, this);
         },
         enumerable: true,
         configurable: true
     });
+    GameScenePanel.prototype._OnScoreBigger = function () {
+        egret.Tween.get(this.m_labScore).to({ scaleX: 1.0, scaleY: 1.0 }, 100, egret.Ease.backOut);
+    };
     Object.defineProperty(GameScenePanel.prototype, "Power", {
         get: function () {
             return this.m_proPower.value;
@@ -101,8 +110,6 @@ var GameScenePanel = (function (_super) {
                 for (var j = 0; j < monster.Balloons.length; j++) {
                     var balloon = monster.Balloons[j];
                     if (balloon.type == GameConfig.gestureType) {
-                        // b_dispatch = true
-                        // wolf.BallExplosion(balloon)
                         monster.BallExplosion(balloon);
                     }
                 }
@@ -139,4 +146,3 @@ var GameScenePanel = (function (_super) {
     return GameScenePanel;
 }(BasePanel));
 __reflect(GameScenePanel.prototype, "GameScenePanel");
-//# sourceMappingURL=GameScenePanel.js.map

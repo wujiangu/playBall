@@ -89,6 +89,8 @@ class Main extends eui.UILayer {
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+
+        NativeApi.setLocalData("webView", "1")
         RES.loadGroup("preload", 0);
     }
     private isThemeLoadEnd: boolean = false;
@@ -125,6 +127,10 @@ class Main extends eui.UILayer {
     }
     private createScene() {
         if (this.isThemeLoadEnd && this.isResourceLoadEnd) {
+            if (NativeApi.getLocalData("webView") == null) {
+			    GameConfig.isWebView = false
+		    }
+            Common.GetMaxScore()
             this.startCreateScene();
         }
     }

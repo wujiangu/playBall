@@ -57,7 +57,7 @@ class Monster extends BaseActor {
 	public InitGraph() {
 		this.y = 0
 
-		this.filters = [this.m_dropShadowFilter]
+		// this.filters = [this.m_dropShadowFilter]
 
 		this.GotoIdle()
 		this.UpdateSignSlot()
@@ -126,6 +126,10 @@ class Monster extends BaseActor {
 		}
 	}
 
+	public RemoveBalloon(a_ball:Balloon) {
+		this.m_groupBalloon.removeChild(a_ball)
+	}
+
 	public BalloonExploreHandle() {
 		if (this.m_balloons.length <= 0) {
 			this.m_sumBalloon = 0
@@ -158,8 +162,8 @@ class Monster extends BaseActor {
 				}
 				for (let i = 0; i < this.m_balloons.length; i++) {
 					let balloon:Balloon = this.m_balloons[i]
-					let posX = i * balloon.width - this.m_rect.width / 2
-					let posY = -this.m_rect.height
+					let posX = i * balloon.width - this.m_rect.width / 3
+					let posY = -this.m_rect.height + 40
 					let rotation = 90 * i - 45
 					// if (this.m_data.type == EWolfType.Red) {
 					// 	posY = 100
@@ -222,7 +226,7 @@ class Monster extends BaseActor {
 			let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
 			balloon.Init(this.m_gestureData, this)
 			this._SetBallonPosition(balloon, this.m_sumBalloon, i)
-			this.addChild(balloon)
+			this.m_groupBalloon.addChild(balloon)
 			this.m_score += balloon.Score
 			this.m_balloons.push(balloon)
 		}
@@ -251,7 +255,7 @@ class Monster extends BaseActor {
 			balloon.SetLine()
 		}
 		else if (count == 2) {
-			balloon.x = value * balloon.width - this.m_rect.width / 2
+			balloon.x = value * balloon.width - this.m_rect.width / 3
 			balloon.y = -this.m_rect.height
 			balloon.SetLine(count, value)
 		}
@@ -284,7 +288,7 @@ class Monster extends BaseActor {
 		while(this.m_balloons.length > 0) {
 			let balloon:Balloon = this.m_balloons.pop()
 			GameObjectPool.getInstance().destroyObject(balloon)
-			this.removeChild(balloon)
+			this.m_groupBalloon.removeChild(balloon)
 		}
 	}
 

@@ -22,7 +22,7 @@ class GameManager extends egret.Sprite{
 		// this._bgMusic = RES.getRes("bgMusic_mp3")
 		this._gameState = EGameState.Ready
 		Common.dispatchEvent(MainNotify.openGameStartPanel)
-		Common.dispatchEvent(MainNotify.openBottomBtnPanel)
+		// Common.dispatchEvent(MainNotify.openBottomBtnPanel)
 	}
 
 	public Stop():void

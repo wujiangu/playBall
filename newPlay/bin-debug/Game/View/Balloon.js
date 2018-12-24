@@ -11,10 +11,10 @@ var Balloon = (function (_super) {
     function Balloon() {
         var _this = _super.call(this) || this;
         _this.name = "Balloon";
-        var data = RES.getRes("balloonBlue_json");
-        var texture = RES.getRes("balloonBlue_png");
-        _this._balloonData = new egret.MovieClipDataFactory(data, texture);
-        _this._balloon = new egret.MovieClip(_this._balloonData.generateMovieClipData("balloonBlue"));
+        // let data = RES.getRes("balloonBlue_json")
+        // let texture = RES.getRes("balloonBlue_png")
+        _this._balloonData = new egret.MovieClipDataFactory();
+        _this._balloon = new egret.MovieClip();
         // this._balloon = Common.createBitmap("balloon_png")
         _this.addChild(_this._balloon);
         _this._balloon.anchorOffsetX = _this._balloon.width / 2;
@@ -36,6 +36,7 @@ var Balloon = (function (_super) {
         var random = MathUtils.getRandom(data.length - 1);
         this._ChangeBalloonAnimate(data[random].balloon);
         this._balloon.gotoAndStop(1);
+        this._balloon.anchorOffsetX = this._balloon.width / 2;
         this._balloon.anchorOffsetY = this._balloon.height;
         this._balloon.x = -20;
         this._gesture.texture = RES.getRes(data[random].path);
@@ -85,6 +86,9 @@ var Balloon = (function (_super) {
         this._rop.scaleY = 0;
         this._gesture.visible = false;
         this._balloon.play(1);
+        if (PanelManager.m_gameScenePanel != null) {
+            PanelManager.m_gameScenePanel.Score += this._score;
+        }
         if (this._root.State == EMonsterState.Ready) {
             var posY = this._root.y - 20;
             egret.Tween.get(this._root).to({ y: posY }, 50);
@@ -136,7 +140,7 @@ var Balloon = (function (_super) {
     Balloon.prototype._OnBalloonComplete = function (e) {
         this._root.BalloonExploreHandle();
         GameObjectPool.getInstance().destroyObject(this);
-        this._root.removeChild(this);
+        this._root.RemoveBalloon(this);
     };
     Balloon.prototype._ChangeBalloonAnimate = function (name) {
         this._balloonData.mcDataSet = RES.getRes(name + "_json");
@@ -146,4 +150,3 @@ var Balloon = (function (_super) {
     return Balloon;
 }(egret.Sprite));
 __reflect(Balloon.prototype, "Balloon");
-//# sourceMappingURL=Balloon.js.map

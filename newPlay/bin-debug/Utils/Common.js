@@ -478,4 +478,3 @@ var Common;
     Common.MoonDisplayObject = MoonDisplayObject;
     __reflect(MoonDisplayObject.prototype, "Common.MoonDisplayObject");
 })(Common || (Common = {}));
-//# sourceMappingURL=Common.js.map
