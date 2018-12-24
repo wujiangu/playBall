@@ -2,9 +2,9 @@
  * Armature封装类
  */
 class DragonBonesArmature extends egret.DisplayObjectContainer {
-    public constructor(armature:dragonBones.Armature, armatureDisplay:dragonBones.EgretArmatureDisplay) {
+    public constructor(armatureDisplay:dragonBones.EgretArmatureDisplay) {
         super();
-        this._armature = armature;
+        this._armature = armatureDisplay.armature
         // this._clock = clock;
         this._armatureDisplay = armatureDisplay
         this.addChild(this._armatureDisplay);
@@ -227,6 +227,7 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
 
     public set ArmatureDisplay(value:dragonBones.EgretArmatureDisplay) {
         this._armatureDisplay = value
+        this._armature = value.armature
         this.addChild(this._armatureDisplay)
     }
 

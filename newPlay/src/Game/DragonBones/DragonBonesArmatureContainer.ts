@@ -117,7 +117,6 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
             this.addChild(newArmature);
             this.curArmatureIndex = newArmatureIndex;
             if (type == 1) {
-                Common.log("播放动作---->"+action);
                 newArmature.play(action, playTimes, timeScale);
             }else{
                 newArmature.playByFrame(action, frame, playTimes, timeScale);
@@ -147,7 +146,7 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
     }
 
     public setDBTimeScale(value:number) {
-        
+
     }
 
     public fadeIn(action:string, fadeInTime:number, playTimes:number, layer:number, group:string) {

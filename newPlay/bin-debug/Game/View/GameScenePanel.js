@@ -98,6 +98,14 @@ var GameScenePanel = (function (_super) {
         if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
             for (var i = 0; i < this.m_monsters.length; i++) {
                 var monster = this.m_monsters[i];
+                for (var j = 0; j < monster.Balloons.length; j++) {
+                    var balloon = monster.Balloons[j];
+                    if (balloon.type == GameConfig.gestureType) {
+                        // b_dispatch = true
+                        // wolf.BallExplosion(balloon)
+                        monster.BallExplosion(balloon);
+                    }
+                }
             }
         }
     };

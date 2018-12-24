@@ -20,6 +20,12 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 		this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,
     	strength, quality, inner, knockout)
+
+		this.m_rect = new egret.Rectangle()
+
+		// this.m_shape = new egret.Shape()
+		// this.addChild(this.m_shape)
+		// this.m_shape.graphics.beginFill( 0xff0000, 0.5);
 	}
 
 	public GotoIdle() {
@@ -47,4 +53,6 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_dropShadowFilter:egret.DropShadowFilter
 	protected m_armature:DragonBonesArmature
 	protected m_gestureData:Array<any>
+	protected m_rect:egret.Rectangle
+	protected m_shape:egret.Shape
 }

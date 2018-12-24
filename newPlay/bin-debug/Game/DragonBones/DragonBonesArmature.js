@@ -11,9 +11,9 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var DragonBonesArmature = (function (_super) {
     __extends(DragonBonesArmature, _super);
-    function DragonBonesArmature(armature, armatureDisplay) {
+    function DragonBonesArmature(armatureDisplay) {
         var _this = _super.call(this) || this;
-        _this._armature = armature;
+        _this._armature = armatureDisplay.armature;
         // this._clock = clock;
         _this._armatureDisplay = armatureDisplay;
         _this.addChild(_this._armatureDisplay);
@@ -151,6 +151,12 @@ var DragonBonesArmature = (function (_super) {
         this._armatureDisplay.animation.play(action).timeScale = value;
     };
     /**
+     * 设置骨骼的播放速度
+     */
+    DragonBonesArmature.prototype.setDBTimeScale = function (value) {
+        this._armatureDisplay.animation.timeScale = value;
+    };
+    /**
      * 播放到指定帧结束
      */
     DragonBonesArmature.prototype.stopByFrame = function (action, frame) {
@@ -216,6 +222,7 @@ var DragonBonesArmature = (function (_super) {
         },
         set: function (value) {
             this._armatureDisplay = value;
+            this._armature = value.armature;
             this.addChild(this._armatureDisplay);
         },
         enumerable: true,

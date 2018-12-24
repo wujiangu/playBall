@@ -98,6 +98,14 @@ class GameScenePanel extends BasePanel {
         if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
+                for (let j = 0; j < monster.Balloons.length; j++) {
+						let balloon:Balloon = monster.Balloons[j]
+						if (balloon.type == GameConfig.gestureType) {
+							// b_dispatch = true
+							// wolf.BallExplosion(balloon)
+                            monster.BallExplosion(balloon)
+						}
+					}
                 // if (monster.GestureType == GameConfig.gestureType) {
                 //     monster.GotoDead()
                 // }

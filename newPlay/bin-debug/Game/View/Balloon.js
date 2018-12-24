@@ -68,10 +68,9 @@ var Balloon = (function (_super) {
             }
         }
         else if (count == 3) {
-            this._rop.scaleY = 60;
+            this._rop.scaleY = 80;
             if (value == 0) {
                 this._rop.rotation = 0;
-                this._rop.scaleY = 90;
             }
             else if (value == 1) {
                 this._rop.rotation = -60;
@@ -86,10 +85,10 @@ var Balloon = (function (_super) {
         this._rop.scaleY = 0;
         this._gesture.visible = false;
         this._balloon.play(1);
-        // if (this._root.State == EWolfState.Ready) {
-        // 	let posY = this._root.y - 20
-        // 	egret.Tween.get(this._root).to({y:posY}, 50)
-        // }
+        if (this._root.State == EMonsterState.Ready) {
+            var posY = this._root.y - 20;
+            egret.Tween.get(this._root).to({ y: posY }, 50);
+        }
         // egret.setTimeout(this._OnBalloonBoom, this, 200)
     };
     Balloon.prototype._OnBalloonBoom = function () {
@@ -135,9 +134,9 @@ var Balloon = (function (_super) {
         configurable: true
     });
     Balloon.prototype._OnBalloonComplete = function (e) {
-        // this._root.BalloonExploreHandle()
-        // GameObjectPool.getInstance().destroyObject(this)
-        // this._root.removeChild(this)
+        this._root.BalloonExploreHandle();
+        GameObjectPool.getInstance().destroyObject(this);
+        this._root.removeChild(this);
     };
     Balloon.prototype._ChangeBalloonAnimate = function (name) {
         this._balloonData.mcDataSet = RES.getRes(name + "_json");

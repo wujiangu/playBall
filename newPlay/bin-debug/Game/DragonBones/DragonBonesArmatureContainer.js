@@ -121,7 +121,6 @@ var DragonBonesArmatureContainer = (function (_super) {
             this.addChild(newArmature);
             this.curArmatureIndex = newArmatureIndex;
             if (type == 1) {
-                Common.log("播放动作---->" + action);
                 newArmature.play(action, playTimes, timeScale);
             }
             else {
@@ -147,6 +146,8 @@ var DragonBonesArmatureContainer = (function (_super) {
             this.curArmatureIndex = newArmatureIndex;
             newArmature.setTimeScale(action, value);
         }
+    };
+    DragonBonesArmatureContainer.prototype.setDBTimeScale = function (value) {
     };
     DragonBonesArmatureContainer.prototype.fadeIn = function (action, fadeInTime, playTimes, layer, group) {
         if (this.actions[action] == null) {

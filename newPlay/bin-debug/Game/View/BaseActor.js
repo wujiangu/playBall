@@ -24,7 +24,11 @@ var BaseActor = (function (_super) {
         var inner = false; /// 指定发光是否为内侧发光
         var knockout = false; /// 指定对象是否具有挖空效果
         _this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY, strength, quality, inner, knockout);
+        _this.m_rect = new egret.Rectangle();
         return _this;
+        // this.m_shape = new egret.Shape()
+        // this.addChild(this.m_shape)
+        // this.m_shape.graphics.beginFill( 0xff0000, 0.5);
     }
     BaseActor.prototype.GotoIdle = function () {
     };
