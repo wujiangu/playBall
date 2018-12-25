@@ -24,6 +24,17 @@ namespace Animations {
         animate();
     }
 
+    export function floatUpDown(target:any, time:number = 1000, beginY:number = 0, endY:number = 0) {
+        var animate = function() {
+            egret.Tween.get(target).to({y:endY}, time/2).call(()=>{
+                egret.Tween.get(target).to({y:beginY}, time/2).call(()=>{
+                    animate()
+                })
+            })
+        }
+        animate()
+    }
+
     /**弹窗弹出动画 */
     export function popupOut(target:any, time:number=500, func:Function=null) {
         target.scaleX = 0;

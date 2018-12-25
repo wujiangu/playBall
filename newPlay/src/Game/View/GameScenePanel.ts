@@ -18,6 +18,11 @@ class GameScenePanel extends BasePanel {
         this.m_gestureShape = new egret.Shape()
         this.m_gesture = new Gesture()
 		this.m_gesture.Init()
+
+        this.m_cloud1Speed = 1
+		this.m_cloud2Speed = 0.6
+		this.m_cloud3Speed = 0.3
+		this.m_imgWaters = new Array()
     }
 
     // 初始化面板数据
@@ -27,8 +32,6 @@ class GameScenePanel extends BasePanel {
 
         this.m_score = GameConfig.maxScore
         this.m_labScore.text = this.m_score.toString()
-
-        this.m_proPower.value = 0
     }
 
     // 进入面板
@@ -64,6 +67,25 @@ class GameScenePanel extends BasePanel {
         for (let i = 0; i < this.m_monsters.length; i++) {
             this.m_monsters[i].Update(timeElapsed)
         }
+
+
+        if (this.m_cloud1.x >= -this.m_cloud1.width) {
+			this.m_cloud1.x -= this.m_cloud1Speed
+		}else{
+			this.m_cloud1.x = Config.stageWidth
+		}
+
+		if (this.m_cloud2.x >= -this.m_cloud2.width) {
+			this.m_cloud2.x -= this.m_cloud2Speed
+		}else{
+			this.m_cloud2.x = Config.stageWidth
+		}
+
+		if (this.m_cloud3.x <= Config.stageWidth + this.m_cloud3.width) {
+			this.m_cloud3.x += this.m_cloud1Speed
+		}else{
+			this.m_cloud3.x = -this.m_cloud3.width
+		}
     }
 
     public RemoveMonster(a_monster:Monster) {
@@ -96,14 +118,6 @@ class GameScenePanel extends BasePanel {
         egret.Tween.get(this.m_labScore).to({scaleX:1.0, scaleY:1.0}, 100, egret.Ease.backOut)
     }
 
-    public get Power() {
-        return this.m_proPower.value
-    }
-
-    public set Power(value:number) {
-        this.m_proPower.value = value
-    }
-
     private _OnGesture() {
         if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
             for (let i = 0; i < this.m_monsters.length; i++) {
@@ -125,9 +139,33 @@ class GameScenePanel extends BasePanel {
 
     }
 
+    private _WaterAnimate(target:eui.Image) {
+		Animations.floatUpDown(target, 2000, 10, 0)
+	}
+
+    private _OnTweenGroupComplete() {
+		this.powerGroup.play(0)
+	}
+
 	private onComplete() {
+
+
+        this.m_imgWaters.push(this.m_imgWater0)
+		this.m_imgWaters.push(this.m_imgWater1)
+		this.m_imgWaters.push(this.m_imgWater2)
+		this.m_imgWaters.push(this.m_imgWater3)
+		this.m_imgWaters.push(this.m_imgWater4)
+		this.m_imgWaters.push(this.m_imgWater5)
+		this.m_imgWaters.push(this.m_imgWater6)
+
+		for (let i = 0; i < this.m_imgWaters.length; i++) {
+			this.m_imgWaters[i].y = 10
+			egret.setTimeout(this._WaterAnimate, this, i*200, this.m_imgWaters[i])
+		}
+
         this.addChild( this.m_gestureShape )
 		this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this)
+        this.powerGroup.addEventListener('complete', this._OnTweenGroupComplete, this)
 		this._OnResize()
 	}
 
@@ -172,5 +210,28 @@ class GameScenePanel extends BasePanel {
     private m_groupGesture:eui.Group
     private m_gestureShape:egret.Shape
 	private m_gesture:Gesture
-    private m_proPower:eui.ProgressBar
+
+
+
+    /**云朵 */
+	private m_cloud1:eui.Image
+	private m_cloud2:eui.Image
+	private m_cloud3:eui.Image
+	private m_cloud1Speed:number
+	private m_cloud2Speed:number
+	private m_cloud3Speed:number
+
+	/**水面 */
+	private m_imgWater0:eui.Image
+	private m_imgWater1:eui.Image
+	private m_imgWater2:eui.Image
+	private m_imgWater3:eui.Image
+	private m_imgWater4:eui.Image
+	private m_imgWater5:eui.Image
+	private m_imgWater6:eui.Image
+	private m_imgWaters:Array<eui.Image>
+
+    /**能量释放组 */
+    private m_groupPower:eui.Group
+    private powerGroup:egret.tween.TweenGroup
 }

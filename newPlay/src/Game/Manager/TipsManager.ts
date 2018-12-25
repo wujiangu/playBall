@@ -17,7 +17,7 @@ namespace TipsManager {
         tips.anchorOffsetX = tips.width / 2
         tips.anchorOffsetY = tips.height / 2
         tips.x = a_x
-        tips.y = a_y
+        tips.y = a_y - 200
 
         _tips.push(tips)
         Common.gameScene().tipsLayer.addChild(tips)

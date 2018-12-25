@@ -86,3 +86,4 @@ var PanelManager;
     }
     PanelManager.initPanel = initPanel;
 })(PanelManager || (PanelManager = {}));
+//# sourceMappingURL=PanelManager.js.map

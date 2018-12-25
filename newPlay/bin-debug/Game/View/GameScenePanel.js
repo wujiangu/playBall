@@ -26,6 +26,10 @@ var GameScenePanel = (function (_super) {
         this.m_gestureShape = new egret.Shape();
         this.m_gesture = new Gesture();
         this.m_gesture.Init();
+        this.m_cloud1Speed = 1;
+        this.m_cloud2Speed = 0.6;
+        this.m_cloud3Speed = 0.3;
+        this.m_imgWaters = new Array();
     };
     // 初始化面板数据
     GameScenePanel.prototype.initData = function () {
@@ -33,7 +37,6 @@ var GameScenePanel = (function (_super) {
         this.m_monsterAddDelay = 0;
         this.m_score = GameConfig.maxScore;
         this.m_labScore.text = this.m_score.toString();
-        this.m_proPower.value = 0;
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -62,6 +65,24 @@ var GameScenePanel = (function (_super) {
         }
         for (var i = 0; i < this.m_monsters.length; i++) {
             this.m_monsters[i].Update(timeElapsed);
+        }
+        if (this.m_cloud1.x >= -this.m_cloud1.width) {
+            this.m_cloud1.x -= this.m_cloud1Speed;
+        }
+        else {
+            this.m_cloud1.x = Config.stageWidth;
+        }
+        if (this.m_cloud2.x >= -this.m_cloud2.width) {
+            this.m_cloud2.x -= this.m_cloud2Speed;
+        }
+        else {
+            this.m_cloud2.x = Config.stageWidth;
+        }
+        if (this.m_cloud3.x <= Config.stageWidth + this.m_cloud3.width) {
+            this.m_cloud3.x += this.m_cloud1Speed;
+        }
+        else {
+            this.m_cloud3.x = -this.m_cloud3.width;
         }
     };
     GameScenePanel.prototype.RemoveMonster = function (a_monster) {
@@ -93,16 +114,6 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype._OnScoreBigger = function () {
         egret.Tween.get(this.m_labScore).to({ scaleX: 1.0, scaleY: 1.0 }, 100, egret.Ease.backOut);
     };
-    Object.defineProperty(GameScenePanel.prototype, "Power", {
-        get: function () {
-            return this.m_proPower.value;
-        },
-        set: function (value) {
-            this.m_proPower.value = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     GameScenePanel.prototype._OnGesture = function () {
         if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
             for (var i = 0; i < this.m_monsters.length; i++) {
@@ -118,7 +129,21 @@ var GameScenePanel = (function (_super) {
     };
     GameScenePanel.prototype._OnBtnPause = function () {
     };
+    GameScenePanel.prototype._WaterAnimate = function (target) {
+        Animations.floatUpDown(target, 2000, 10, 0);
+    };
     GameScenePanel.prototype.onComplete = function () {
+        this.m_imgWaters.push(this.m_imgWater0);
+        this.m_imgWaters.push(this.m_imgWater1);
+        this.m_imgWaters.push(this.m_imgWater2);
+        this.m_imgWaters.push(this.m_imgWater3);
+        this.m_imgWaters.push(this.m_imgWater4);
+        this.m_imgWaters.push(this.m_imgWater5);
+        this.m_imgWaters.push(this.m_imgWater6);
+        for (var i = 0; i < this.m_imgWaters.length; i++) {
+            this.m_imgWaters[i].y = 10;
+            egret.setTimeout(this._WaterAnimate, this, i * 200, this.m_imgWaters[i]);
+        }
         this.addChild(this.m_gestureShape);
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
         this._OnResize();
@@ -146,3 +171,4 @@ var GameScenePanel = (function (_super) {
     return GameScenePanel;
 }(BasePanel));
 __reflect(GameScenePanel.prototype, "GameScenePanel");
+//# sourceMappingURL=GameScenePanel.js.map

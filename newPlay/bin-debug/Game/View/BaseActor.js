@@ -28,10 +28,10 @@ var BaseActor = (function (_super) {
         // this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,
         // strength, quality, inner, knockout)
         _this.m_rect = new egret.Rectangle();
+        _this.m_shape = new egret.Shape();
+        _this.addChild(_this.m_shape);
+        _this.m_shape.graphics.beginFill(0xff0000, 0.5);
         return _this;
-        // this.m_shape = new egret.Shape()
-        // this.addChild(this.m_shape)
-        // this.m_shape.graphics.beginFill( 0xff0000, 0.5);
     }
     BaseActor.prototype.GotoIdle = function () {
     };
@@ -46,3 +46,4 @@ var BaseActor = (function (_super) {
     return BaseActor;
 }(egret.DisplayObjectContainer));
 __reflect(BaseActor.prototype, "BaseActor");
+//# sourceMappingURL=BaseActor.js.map

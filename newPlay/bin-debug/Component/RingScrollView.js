@@ -45,3 +45,4 @@ var RingContent = (function (_super) {
     return RingContent;
 }(egret.DisplayObjectContainer));
 __reflect(RingContent.prototype, "RingContent");
+//# sourceMappingURL=RingScrollView.js.map

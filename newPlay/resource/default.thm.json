@@ -30,6 +30,7 @@
     "resource/eui_skins/VScrollBarSkin.exml",
     "resource/eui_skins/VSliderSkin.exml",
     "resource/eui_skins/gamePower.exml",
+    "resource/eui_skins/gameSettingSlider.exml",
     "resource/game_skins/backpackPanel.exml",
     "resource/game_skins/bottomBtn.exml",
     "resource/game_skins/gameOverPanel.exml",

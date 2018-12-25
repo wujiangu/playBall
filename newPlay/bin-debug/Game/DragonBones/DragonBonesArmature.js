@@ -231,3 +231,4 @@ var DragonBonesArmature = (function (_super) {
     return DragonBonesArmature;
 }(egret.DisplayObjectContainer));
 __reflect(DragonBonesArmature.prototype, "DragonBonesArmature");
+//# sourceMappingURL=DragonBonesArmature.js.map

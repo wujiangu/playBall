@@ -321,3 +321,4 @@ var Gesture = (function () {
     return Gesture;
 }());
 __reflect(Gesture.prototype, "Gesture");
+//# sourceMappingURL=Gesture.js.map

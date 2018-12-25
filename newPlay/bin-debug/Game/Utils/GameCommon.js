@@ -63,3 +63,4 @@ var Common;
     }
     Common.UpdateMaxScore = UpdateMaxScore;
 })(Common || (Common = {}));
+//# sourceMappingURL=GameCommon.js.map

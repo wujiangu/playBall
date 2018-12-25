@@ -52,6 +52,10 @@ declare module skins{
 }
 declare class gamePower extends eui.Skin{
 }
+declare module skins{
+	class gameSettingSlider extends eui.Skin{
+	}
+}
 declare class backpackPanel extends eui.Skin{
 }
 declare class bottomBtn extends eui.Skin{

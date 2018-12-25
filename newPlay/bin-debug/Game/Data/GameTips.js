@@ -8,3 +8,4 @@ var GameTips = (function () {
 }());
 GameTips.test = "测试提示";
 __reflect(GameTips.prototype, "GameTips");
+//# sourceMappingURL=GameTips.js.map

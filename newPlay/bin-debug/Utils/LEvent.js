@@ -44,3 +44,4 @@ var lcp;
     lcp.LEvent = LEvent;
     __reflect(LEvent.prototype, "lcp.LEvent");
 })(lcp || (lcp = {}));
+//# sourceMappingURL=LEvent.js.map

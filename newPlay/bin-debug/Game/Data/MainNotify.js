@@ -33,3 +33,4 @@ var MainNotify;
     MainNotify.openSettingPanel = "openSettingPanel";
     MainNotify.closeSettingPanel = "closeSettingPanel";
 })(MainNotify || (MainNotify = {}));
+//# sourceMappingURL=MainNotify.js.map

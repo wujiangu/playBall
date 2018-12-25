@@ -47,6 +47,11 @@ var GameManager = (function (_super) {
         this._lastTime = this._startTime;
     };
     GameManager.prototype.Update = function () {
+        if (this._gameState == EGameState.Ready) {
+            if (PanelManager.m_gameStartPanel != null) {
+                PanelManager.m_gameStartPanel.Update();
+            }
+        }
         if (this._gameState != EGameState.Start) {
             return;
         }
@@ -72,3 +77,4 @@ var GameManager = (function (_super) {
     return GameManager;
 }(egret.Sprite));
 __reflect(GameManager.prototype, "GameManager");
+//# sourceMappingURL=GameManager.js.map

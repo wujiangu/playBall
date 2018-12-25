@@ -25,3 +25,4 @@ AudioManager.thief = "resource/assets/voice/thief.mp3"; // 小偷出现
 AudioManager.thunder = "resource/assets/voice/thunder.mp3"; // 雷电
 AudioManager.wolfFallDown = "resource/assets/voice/wolfFallDown.mp3"; // 狼掉落
 __reflect(AudioManager.prototype, "AudioManager");
+//# sourceMappingURL=AudioManager.js.map

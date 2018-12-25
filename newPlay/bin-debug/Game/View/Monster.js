@@ -39,8 +39,6 @@ var Monster = (function (_super) {
         }
         // this.m_armature.Armature = armature
         this.m_armature.ArmatureDisplay = armatureDisplay;
-        // this.m_armature.scaleX = 0.5
-        // this.m_armature.scaleY = 0.5
         this.m_armatureContainer.register(this.m_armature, [
             DragonBonesAnimations.Idle,
             DragonBonesAnimations.Dead,
@@ -51,6 +49,10 @@ var Monster = (function (_super) {
         this.m_state = EMonsterState.Ready;
         this.m_speedY = GameConfig.baseFallSpeed + this.m_data.Speed / 100;
         this.m_speedX = 0.2;
+        this.m_armatureContainer.scaleX = this.m_data.Scale;
+        this.m_armatureContainer.scaleY = this.m_data.Scale;
+        this.m_rect.width = this.m_data.Width;
+        this.m_rect.height = this.m_data.Height;
         this.m_gestureData.length = 0;
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             this.m_gestureData.push(GameConfig.gestureConfig[i]);
@@ -67,10 +69,12 @@ var Monster = (function (_super) {
     Monster.prototype.GotoIdle = function () {
         this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
         // this.m_armature.ArmatureDisplay.getBounds(this.m_rect, true)
-        this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect);
+        // this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect)
+        // this.m_rect.width *= this.m_data.Scale
+        // this.m_rect.height *= this.m_data.Scale
         // this.m_shape.graphics.drawRect(0, 0, this.m_rect.width, this.m_rect.height)
         // this.m_shape.graphics.endFill()
-        // Common.log("GotoIdle宽度", this.m_rect.width)
+        // Common.log("GotoIdle宽度", this.m_data.Name, this.m_rect.width, this.m_rect.height)
     };
     Monster.prototype.GotoHurt = function () {
         if (this.m_type != EMonsterType.Normal) {
@@ -82,7 +86,7 @@ var Monster = (function (_super) {
         this.m_state = EMonsterState.Dead;
         this.Destroy();
         PanelManager.m_gameScenePanel.RemoveMonster(this);
-        PanelManager.m_gameScenePanel.Power += this.m_data.Power;
+        // PanelManager.m_gameScenePanel.Power += this.m_data.Power
         // }
         // if (this.m_type != EMonsterType.Normal) {
         // 	this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0)
@@ -91,7 +95,7 @@ var Monster = (function (_super) {
     Monster.prototype.GotoRun = function () {
         this._DestroyBalloon();
         this.m_armatureContainer.play(DragonBonesAnimations.Run, 0);
-        this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect);
+        // this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect)
         // this.m_shape.graphics.drawRect(0, 0, this.m_rect.width, this.m_rect.height)
         // this.m_shape.graphics.endFill()
         // Common.log("GotoRun", this.m_rect.width)
@@ -142,8 +146,8 @@ var Monster = (function (_super) {
                 }
                 for (var i = 0; i < this.m_balloons.length; i++) {
                     var balloon = this.m_balloons[i];
-                    var posX = i * balloon.width - this.m_rect.width / 3;
-                    var posY = -this.m_rect.height + 40;
+                    var posX = i * balloon.width - this.m_rect.width / 2;
+                    var posY = -this.m_rect.height * 0.8;
                     var rotation = 90 * i - 45;
                     // if (this.m_data.type == EWolfType.Red) {
                     // 	posY = 100
@@ -157,8 +161,8 @@ var Monster = (function (_super) {
     Monster.prototype.Update = function (timeElapsed) {
         if (this.m_state == EMonsterState.Ready) {
             this.y += timeElapsed * this.m_speedY;
-            if (this.y >= Config.stageHeight - 120) {
-                this.y = Config.stageHeight - 120;
+            if (this.y >= Config.stageHeight - 150) {
+                this.y = Config.stageHeight - 150;
                 this.m_state = EMonsterState.Run;
                 this.GotoRun();
             }
@@ -229,12 +233,12 @@ var Monster = (function (_super) {
         if (value === void 0) { value = 0; }
         if (count == 1) {
             balloon.x = 0;
-            balloon.y = -this.m_rect.height;
+            balloon.y = -this.m_rect.height * 0.8;
             balloon.SetLine();
         }
         else if (count == 2) {
-            balloon.x = value * balloon.width - this.m_rect.width / 3;
-            balloon.y = -this.m_rect.height;
+            balloon.x = value * balloon.width - this.m_rect.width / 2;
+            balloon.y = -this.m_rect.height * 0.8;
             balloon.SetLine(count, value);
         }
         else if (count == 3) {
@@ -243,8 +247,8 @@ var Monster = (function (_super) {
                 balloon.y = -this.m_rect.height;
             }
             else {
-                balloon.x = (value - 1) * (balloon.width + 60) - this.m_rect.width / 2 + 5;
-                balloon.y = -this.m_rect.height + 40;
+                balloon.x = (value - 1) * (balloon.width + 66) - this.m_rect.width * 0.9;
+                balloon.y = -this.m_rect.height * 0.7;
             }
             balloon.SetLine(count, value);
         }
@@ -269,3 +273,4 @@ var Monster = (function (_super) {
     return Monster;
 }(BaseActor));
 __reflect(Monster.prototype, "Monster");
+//# sourceMappingURL=Monster.js.map

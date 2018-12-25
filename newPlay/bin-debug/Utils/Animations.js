@@ -31,6 +31,20 @@ var Animations;
         animate();
     }
     Animations.flash = flash;
+    function floatUpDown(target, time, beginY, endY) {
+        if (time === void 0) { time = 1000; }
+        if (beginY === void 0) { beginY = 0; }
+        if (endY === void 0) { endY = 0; }
+        var animate = function () {
+            egret.Tween.get(target).to({ y: endY }, time / 2).call(function () {
+                egret.Tween.get(target).to({ y: beginY }, time / 2).call(function () {
+                    animate();
+                });
+            });
+        };
+        animate();
+    }
+    Animations.floatUpDown = floatUpDown;
     /**弹窗弹出动画 */
     function popupOut(target, time, func) {
         if (time === void 0) { time = 500; }
@@ -112,3 +126,4 @@ var Animations;
     }
     Animations.fadeOutIn = fadeOutIn;
 })(Animations || (Animations = {}));
+//# sourceMappingURL=Animations.js.map

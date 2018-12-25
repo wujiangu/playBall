@@ -23,3 +23,4 @@ Config.stageHeight = 0;
 Config.stageHalfWidth = 0;
 Config.stageHalfHeight = 0;
 __reflect(Config.prototype, "Config");
+//# sourceMappingURL=Config.js.map
