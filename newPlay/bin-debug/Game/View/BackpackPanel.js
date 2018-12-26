@@ -101,14 +101,19 @@ var BackpackPanel = (function (_super) {
         if (GameConfig.itemUseTable.length < 2) {
             var currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID;
             var strId = currentId.toString();
-            if (GameConfig.itemTable[strId].IsUse == 1) {
-                TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！");
+            if (GameConfig.itemTable[strId].Open) {
+                if (GameConfig.itemTable[strId].IsUse == 1) {
+                    TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！");
+                }
+                else {
+                    GameConfig.itemTable[strId].IsUse = 1;
+                    GameConfig.itemUseTable.push(currentId);
+                    this.m_labUse.visible = true;
+                    this._UpdateBtnItem(strId);
+                }
             }
             else {
-                GameConfig.itemTable[strId].IsUse = 1;
-                GameConfig.itemUseTable.push(currentId);
-                this.m_labUse.visible = true;
-                this._UpdateBtnItem(strId);
+                TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！");
             }
         }
         else {

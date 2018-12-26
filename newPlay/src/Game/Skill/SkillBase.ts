@@ -1,0 +1,4 @@
+class SkillBase {
+	public constructor() {
+	}
+}

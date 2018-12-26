@@ -200,9 +200,11 @@ var DragonBonesArmature = (function (_super) {
         this.removeLiteners();
     };
     DragonBonesArmature.prototype.removeArmatureDisplay = function () {
+        this.removeLiteners();
         if (this._armatureDisplay != null) {
             this.removeChild(this._armatureDisplay);
         }
+        this._armatureDisplay = null;
     };
     Object.defineProperty(DragonBonesArmature.prototype, "Armature", {
         get: function () {

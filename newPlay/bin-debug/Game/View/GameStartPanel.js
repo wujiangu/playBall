@@ -20,9 +20,7 @@ var GameStartPanel = (function (_super) {
         this.m_cloud2Speed = 0.6;
         this.m_cloud3Speed = 0.3;
         this.m_imgWaters = new Array();
-        this.m_progress = new egret.Shape();
-        this.addChild(this.m_progress);
-        this.m_angle = 200;
+        this.m_isInit = false;
     };
     // 初始化面板数据
     GameStartPanel.prototype.initData = function () {
@@ -31,6 +29,14 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameStartPanel;
         this.touchChildren = true;
+        if (!this.m_isInit) {
+            this.touchChildren = false;
+            this.InitGroup.play(0);
+            this.m_isInit = true;
+        }
+        else {
+            this.m_groupStart.alpha = 1;
+        }
         // this.m_imgCloth.y = Config.stageHeight - 1375
         Common.gameScene().uiLayer.addChild(this);
     };
@@ -63,32 +69,28 @@ var GameStartPanel = (function (_super) {
         Animations.floatUpDown(target, 2000, 10, 0);
     };
     GameStartPanel.prototype._OnHideCloth = function () {
-        GameManager.Instance.Start();
+        // GameManager.Instance.Start()
         Common.dispatchEvent(MainNotify.closeGameStartPanel);
         Common.dispatchEvent(MainNotify.openGamePanel);
     };
     GameStartPanel.prototype._OnStartGame = function () {
         this.touchChildren = false;
-        this._OnHideCloth();
-        // egret.Tween.get(this.m_imgCloth).to({y:-this.m_imgCloth.height}, 1000, egret.Ease.backOut).call(this._OnHideCloth, this)
-        // Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
+        this.CloseGroup.play(0);
     };
     GameStartPanel.prototype._OnBtnSetting = function () {
         Common.dispatchEvent(MainNotify.openSettingPanel);
     };
-    GameStartPanel.prototype._UpdateProgress = function (angle) {
-        this.m_progress.graphics.clear();
-        this.m_progress.graphics.lineStyle(2, 0x0000ff, 1);
-        this.m_progress.graphics.drawArc(50, 50, 50, Math.PI, angle * Math.PI / 180, false);
-        this.m_progress.graphics.endFill();
-    };
     GameStartPanel.prototype._OnBtnRank = function () {
-        this.m_angle += 2;
-        this._UpdateProgress(this.m_angle);
     };
     GameStartPanel.prototype._OnBtnProc = function () {
         Common.dispatchEvent(MainNotify.closeGameStartPanel);
         Common.dispatchEvent(MainNotify.openBackpackPanel);
+    };
+    GameStartPanel.prototype._OnInitComplete = function () {
+        this.touchChildren = true;
+    };
+    GameStartPanel.prototype._OnCloseComplete = function () {
+        this._OnHideCloth();
     };
     GameStartPanel.prototype.onComplete = function () {
         // this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
@@ -108,6 +110,8 @@ var GameStartPanel = (function (_super) {
         this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this);
         this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this);
         this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this);
+        this.InitGroup.addEventListener('complete', this._OnInitComplete, this);
+        this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

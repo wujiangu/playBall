@@ -16,7 +16,7 @@ var GameScenePanel = (function (_super) {
         GameConfig.gestureConfig = RES.getRes("gesture_json");
         for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
             var data = GameConfig.monsterConfig[i];
-            _this._InitBattleDragonBones(data.Animation);
+            GameConfig.InitBattleDragonBones(data.Animation);
         }
         _this.m_monsters = new Array();
         return _this;
@@ -30,41 +30,77 @@ var GameScenePanel = (function (_super) {
         this.m_cloud2Speed = 0.6;
         this.m_cloud3Speed = 0.3;
         this.m_imgWaters = new Array();
+        this.m_progress = new egret.Shape();
+    };
+    GameScenePanel.prototype.Init = function () {
+        this.ClearAllActor();
+        this.touchChildren = false;
+        this.readyAnimate.play(0);
+        this.initData();
+        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
+        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
+    };
+    GameScenePanel.prototype.Exit = function () {
+        this.touchChildren = false;
+        this.m_gesture.removeEvent();
+        Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this);
     };
     // 初始化面板数据
     GameScenePanel.prototype.initData = function () {
         GameConfig.gestureType = 0;
         this.m_monsterAddDelay = 0;
-        this.m_score = GameConfig.maxScore;
+        this.m_angle = 180;
+        this.Power = 0;
+        this.m_score = 0;
         this.m_labScore.text = this.m_score.toString();
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameScenePanel;
-        this.touchChildren = true;
         Common.gameScene().uiLayer.addChild(this);
-        this.initData();
+        this.m_groupPower.visible = true;
+        if (GameConfig.itemUseTable.length <= 0) {
+            this.m_groupPower.visible = false;
+            this.m_curItemData = null;
+        }
+        else {
+            if (this.m_curItemData == null) {
+                var id = GameConfig.itemUseTable[0].toString();
+                this.m_curItemData = GameConfig.itemTable[id];
+            }
+            var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+            var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(effectData.name, effectData.name);
+            if (this.m_itemArmature == null) {
+                this.m_itemArmature = new DragonBonesArmature(armatureDisplay);
+            }
+            this.m_itemArmature.ArmatureDisplay = armatureDisplay;
+            this.m_itemArmatureContainer.register(this.m_itemArmature, [
+                effectData.name
+            ]);
+            this.m_itemArmatureContainer.play(effectData.name, 0);
+        }
+        this.Init();
         // this._CreateMonster()
-        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
-        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
     };
     // 退出面板
     GameScenePanel.prototype.onExit = function () {
-        this.touchChildren = false;
+        this.ClearAllActor();
+        this.m_itemArmatureContainer.clear();
         Common.gameScene().uiLayer.removeChild(this);
-        this.m_gesture.removeEvent();
-        Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this);
+        this.Exit();
     };
     GameScenePanel.prototype.Update = function (timeElapsed) {
         if (GameManager.Instance.GameState != EGameState.Pause) {
             this.m_monsterAddDelay += timeElapsed;
         }
-        if (this.m_monsterAddDelay >= GameConfig.monsterAddDelay) {
+        if (GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= GameConfig.monsterAddDelay) {
             this.m_monsterAddDelay = 0;
             this._CreateMonster();
         }
-        for (var i = 0; i < this.m_monsters.length; i++) {
-            this.m_monsters[i].Update(timeElapsed);
+        if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
+            for (var i = 0; i < this.m_monsters.length; i++) {
+                this.m_monsters[i].Update(timeElapsed);
+            }
         }
         if (this.m_cloud1.x >= -this.m_cloud1.width) {
             this.m_cloud1.x -= this.m_cloud1Speed;
@@ -95,6 +131,13 @@ var GameScenePanel = (function (_super) {
             }
         }
     };
+    GameScenePanel.prototype.ClearAllActor = function () {
+        while (this.m_monsters.length > 0) {
+            var monster = this.m_monsters.pop();
+            monster.Destroy();
+            this.m_groupGame.removeChild(monster);
+        }
+    };
     Object.defineProperty(GameScenePanel.prototype, "Score", {
         get: function () {
             return this.m_score;
@@ -111,6 +154,31 @@ var GameScenePanel = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameScenePanel.prototype, "Power", {
+        get: function () {
+            return this.m_power;
+        },
+        set: function (value) {
+            this.m_power = value;
+            this.m_angle = 180 + value * 2;
+            this.m_angle = Math.min(this.m_angle, 360);
+            this._UpdateProgress(this.m_angle);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    GameScenePanel.prototype._UpdateProgress = function (angle) {
+        var r = this.m_imgPower.height / 2;
+        this.m_progress.graphics.clear();
+        this.m_progress.graphics.beginFill(0x00ffff);
+        this.m_progress.graphics.moveTo(r, r);
+        this.m_progress.graphics.lineTo(2 * r, r);
+        this.m_progress.graphics.drawArc(r, r, r, Math.PI, angle * Math.PI / 180, false);
+        this.m_progress.graphics.lineTo(r, r);
+        this.m_progress.graphics.endFill();
+        this.m_progress.x = 0;
+        this.m_progress.y = 20;
+    };
     GameScenePanel.prototype._OnScoreBigger = function () {
         egret.Tween.get(this.m_labScore).to({ scaleX: 1.0, scaleY: 1.0 }, 100, egret.Ease.backOut);
     };
@@ -132,6 +200,19 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype._WaterAnimate = function (target) {
         Animations.floatUpDown(target, 2000, 10, 0);
     };
+    GameScenePanel.prototype._OnReadyComplete = function () {
+        this.touchChildren = true;
+        GameManager.Instance.Start();
+    };
+    GameScenePanel.prototype._OnChangeItem = function () {
+        Common.log("切换道具");
+        // for (let i = 0; i < this.m_monsters.length; i++) {
+        //     let monster:Monster = this.m_monsters[i]
+        //     if (monster.State == EMonsterState.Ready && monster.y >= 100) {
+        //         this._CreateBullete(monster)
+        //     }
+        // }
+    };
     GameScenePanel.prototype.onComplete = function () {
         this.m_imgWaters.push(this.m_imgWater0);
         this.m_imgWaters.push(this.m_imgWater1);
@@ -144,9 +225,24 @@ var GameScenePanel = (function (_super) {
             this.m_imgWaters[i].y = 10;
             egret.setTimeout(this._WaterAnimate, this, i * 200, this.m_imgWaters[i]);
         }
+        this.m_itemArmatureContainer = new DragonBonesArmatureContainer();
+        this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2;
+        this.m_itemArmatureContainer.y = this.m_groupIcon.height;
+        this.m_groupIcon.addChild(this.m_itemArmatureContainer);
         this.addChild(this.m_gestureShape);
+        this.m_imgPower.mask = this.m_progress;
+        this.m_groupPower.addChild(this.m_progress);
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
+        this.readyAnimate.addEventListener('complete', this._OnReadyComplete, this);
+        this.m_groupIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnChangeItem, this);
         this._OnResize();
+    };
+    GameScenePanel.prototype._CreateBullete = function (target) {
+        var bullet = GameObjectPool.getInstance().createObject(Bullet, "Bullet");
+        var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+        if (effectData.bullet.length != "") {
+            bullet.Init(target, effectData.bullet);
+        }
     };
     GameScenePanel.prototype._CreateMonster = function () {
         var monster = GameObjectPool.getInstance().createObject(Monster, "Monster");
@@ -155,15 +251,6 @@ var GameScenePanel = (function (_super) {
         for (var i = this.m_monsters.length - 1; i >= 0; i--) {
             this.m_groupGame.addChild(this.m_monsters[i]);
         }
-    };
-    /**
-     * 初始化骨骼的动画数据
-     */
-    GameScenePanel.prototype._InitBattleDragonBones = function (name) {
-        var skeletonData = RES.getRes(name + "_ske_json");
-        var textureData = RES.getRes(name + "_tex_json");
-        var texture = RES.getRes(name + "_tex_png");
-        DragonBonesFactory.getInstance().initDragonBonesArmatureFile(skeletonData, textureData, texture);
     };
     GameScenePanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

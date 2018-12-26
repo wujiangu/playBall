@@ -17,21 +17,19 @@ class GameOverPanel extends BasePanel {
 
     // 进入面板
     public onEnter():void{
-		// Common.curPanel = PanelManager.m_backpackPanel
-		
+		this.touchChildren = false
+		this.m_isAgain = false
+		this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString()
+		this.m_labHistoryScore.text = GameConfig.maxScore.toString()
+		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
+		this.Show.play(0)
         Common.gameScene().uiLayer.addChild(this)
-
-		this.m_btnReturn.enabled = false
-		Animations.popupOut(this.m_groupGameOver, 300, function(){
-			this.m_btnReturn.enabled = true
-		}.bind(this))
     }
 
     // 退出面板
     public onExit():void{
-		Animations.popupIn(this.m_groupGameOver, 300, function(){
-			Common.gameScene().uiLayer.removeChild(this)
-		}.bind(this))
+		this.touchChildren = false
+		this.Hide.play(0)
     }
 
 	private _OnBtnReturn() {
@@ -39,7 +37,24 @@ class GameOverPanel extends BasePanel {
 	}
 
 	private _OnBtnAgain() {
+		this.m_isAgain = true
+		this.Hide.play(0)
+	}
 
+	private _OnShow() {
+		this.touchChildren = true
+	}
+
+	private _OnHide() {
+		Common.gameScene().uiLayer.removeChild(this)
+		if (this.m_isAgain) {
+			GameManager.Instance.Start()
+			PanelManager.m_gameScenePanel.Init()
+		}else{
+			GameManager.Instance.GameState = EGameState.Ready
+			Common.dispatchEvent(MainNotify.closeGamePanel)
+			Common.dispatchEvent(MainNotify.openGameStartPanel)
+		}
 	}
 
 	private onComplete() {
@@ -48,6 +63,8 @@ class GameOverPanel extends BasePanel {
 
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
 		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this)
+		this.Show.addEventListener('complete', this._OnShow, this)
+		this.Hide.addEventListener('complete', this._OnHide, this)
 	}
 
     protected _OnResize(event:egret.Event = null)
@@ -58,9 +75,13 @@ class GameOverPanel extends BasePanel {
 	private m_btnReturn:eui.Button
 	private m_btnAgain:eui.Button
 	private m_groupGameOver:eui.Group
+	private m_isAgain:boolean
 
 	/**本次得分 */
 	private m_labScore:eui.Label
 	/**历史最高分 */
 	private m_labHistoryScore:eui.Label
+
+	private Show:egret.tween.TweenGroup
+	private Hide:egret.tween.TweenGroup
 }

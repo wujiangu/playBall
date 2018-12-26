@@ -22,28 +22,47 @@ var GameOverPanel = (function (_super) {
     };
     // 进入面板
     GameOverPanel.prototype.onEnter = function () {
-        // Common.curPanel = PanelManager.m_backpackPanel
+        this.touchChildren = false;
+        this.m_isAgain = false;
+        this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString();
+        this.m_labHistoryScore.text = GameConfig.maxScore.toString();
+        Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
+        this.Show.play(0);
         Common.gameScene().uiLayer.addChild(this);
-        this.m_btnReturn.enabled = false;
-        Animations.popupOut(this.m_groupGameOver, 300, function () {
-            this.m_btnReturn.enabled = true;
-        }.bind(this));
     };
     // 退出面板
     GameOverPanel.prototype.onExit = function () {
-        Animations.popupIn(this.m_groupGameOver, 300, function () {
-            Common.gameScene().uiLayer.removeChild(this);
-        }.bind(this));
+        this.touchChildren = false;
+        this.Hide.play(0);
     };
     GameOverPanel.prototype._OnBtnReturn = function () {
         Common.dispatchEvent(MainNotify.closeGameOverPanel);
     };
     GameOverPanel.prototype._OnBtnAgain = function () {
+        this.m_isAgain = true;
+        this.Hide.play(0);
+    };
+    GameOverPanel.prototype._OnShow = function () {
+        this.touchChildren = true;
+    };
+    GameOverPanel.prototype._OnHide = function () {
+        Common.gameScene().uiLayer.removeChild(this);
+        if (this.m_isAgain) {
+            GameManager.Instance.Start();
+            PanelManager.m_gameScenePanel.Init();
+        }
+        else {
+            GameManager.Instance.GameState = EGameState.Ready;
+            Common.dispatchEvent(MainNotify.closeGamePanel);
+            Common.dispatchEvent(MainNotify.openGameStartPanel);
+        }
     };
     GameOverPanel.prototype.onComplete = function () {
         this._OnResize();
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this);
         this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this);
+        this.Show.addEventListener('complete', this._OnShow, this);
+        this.Hide.addEventListener('complete', this._OnHide, this);
     };
     GameOverPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

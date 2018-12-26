@@ -34,6 +34,11 @@ var GameManager = (function (_super) {
         // Common.dispatchEvent(MainNotify.openBottomBtnPanel)
     };
     GameManager.prototype.Stop = function () {
+        if (this._gameState == EGameState.Start) {
+            this._gameState = EGameState.End;
+            PanelManager.m_gameScenePanel.Exit();
+            Common.dispatchEvent(MainNotify.openGameOverPanel);
+        }
     };
     GameManager.prototype.Start = function () {
         this._time = 0;
@@ -51,10 +56,12 @@ var GameManager = (function (_super) {
             if (PanelManager.m_gameStartPanel != null) {
                 PanelManager.m_gameStartPanel.Update();
             }
-        }
-        if (this._gameState != EGameState.Start) {
             return;
         }
+        // if (this._gameState != EGameState.Start)
+        // {
+        // 	return
+        // }
         this._startTime = egret.getTimer();
         var timeElapsed = this._startTime - this._lastTime;
         if (PanelManager.m_gameScenePanel != null) {

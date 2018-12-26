@@ -14,6 +14,8 @@ var BaseActor = (function (_super) {
         _this.addChild(_this.m_groupBalloon);
         _this.m_armatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this.m_armatureContainer);
+        _this.m_effectArmatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this.m_effectArmatureContainer);
         _this.m_gestureData = new Array();
         // var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
         // var angle:number = 45;              /// 阴影的角度，0 到 360 度
@@ -28,10 +30,10 @@ var BaseActor = (function (_super) {
         // this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,
         // strength, quality, inner, knockout)
         _this.m_rect = new egret.Rectangle();
-        _this.m_shape = new egret.Shape();
-        _this.addChild(_this.m_shape);
-        _this.m_shape.graphics.beginFill(0xff0000, 0.5);
         return _this;
+        // this.m_shape = new egret.Shape()
+        // this.addChild(this.m_shape)
+        // this.m_shape.graphics.beginFill( 0xff0000, 0.5);
     }
     BaseActor.prototype.GotoIdle = function () {
     };

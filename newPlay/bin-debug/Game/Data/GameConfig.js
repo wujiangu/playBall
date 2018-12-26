@@ -4,6 +4,15 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var GameConfig = (function () {
     function GameConfig() {
     }
+    /**
+     * 初始化骨骼的动画数据
+     */
+    GameConfig.InitBattleDragonBones = function (name) {
+        var skeletonData = RES.getRes(name + "_ske_json");
+        var textureData = RES.getRes(name + "_tex_json");
+        var texture = RES.getRes(name + "_tex_png");
+        DragonBonesFactory.getInstance().initDragonBonesArmatureFile(skeletonData, textureData, texture);
+    };
     GameConfig.Init = function () {
         this.itemConfig = RES.getRes("itemConfig_json");
         this.itemTable = {};
@@ -16,9 +25,25 @@ var GameConfig = (function () {
             data["Desc"] = config.Desc;
             data["GrayIcon"] = config.GrayIcon;
             data["Icon"] = config.Icon;
+            data["Open"] = config.Open;
+            data["Effect"] = config.Effect;
             data["IsUse"] = 0;
             this.itemTable[config.ID.toString()] = data;
         }
+        var effectConfig = RES.getRes("effectConfig_json");
+        this.effectTable = {};
+        for (var i = 0; i < effectConfig.length; i++) {
+            var config = effectConfig[i];
+            var data = {};
+            data["ID"] = config.ID;
+            data["name"] = config.name;
+            data["bullet"] = config.bullet;
+            data["step1"] = config.step1;
+            data["step2"] = config.step2;
+            this.effectTable[config.ID.toString()] = data;
+            this.InitBattleDragonBones(config.name);
+        }
+        this.itemUseTable.push(1003);
     };
     return GameConfig;
 }());

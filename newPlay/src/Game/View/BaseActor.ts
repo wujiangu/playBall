@@ -4,8 +4,12 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 		this.m_groupBalloon = new egret.DisplayObjectContainer()
 		this.addChild(this.m_groupBalloon)
+
 		this.m_armatureContainer = new DragonBonesArmatureContainer()
 		this.addChild(this.m_armatureContainer)
+
+		this.m_effectArmatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this.m_effectArmatureContainer)
 
 		this.m_gestureData = new Array()
 
@@ -25,9 +29,9 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 		this.m_rect = new egret.Rectangle()
 
-		this.m_shape = new egret.Shape()
-		this.addChild(this.m_shape)
-		this.m_shape.graphics.beginFill( 0xff0000, 0.5);
+		// this.m_shape = new egret.Shape()
+		// this.addChild(this.m_shape)
+		// this.m_shape.graphics.beginFill( 0xff0000, 0.5);
 	}
 
 	public GotoIdle() {
@@ -58,4 +62,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_gestureData:Array<any>
 	protected m_rect:egret.Rectangle
 	protected m_shape:egret.Shape
+
+	protected m_effectArmatureContainer:DragonBonesArmatureContainer
+	protected m_effectArmature:DragonBonesArmature
 }

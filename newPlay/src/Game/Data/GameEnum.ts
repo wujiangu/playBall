@@ -4,6 +4,7 @@ enum EGameState
     Ready = 0,
     Start,
     Pause,
+    Again,
     End,
 }
 

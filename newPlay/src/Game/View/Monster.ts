@@ -1,8 +1,6 @@
 class Monster extends BaseActor {
 	public constructor() {
 		super()
-
-		// this.m_gesture = Common.createBitmap("gestureSheet_json.gesture001")
 		this.m_balloons = new Array()
 	}
 
@@ -23,13 +21,10 @@ class Monster extends BaseActor {
 
 	public InitData() {
 		let name = this.m_data.Animation
-		// let armature = DragonBonesFactory.getInstance().buildArmature(name, name)
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
-		// let clock = DragonBonesFactory.getInstance().createWorldClock(10.0)
 		if (this.m_armature == null) {
 			this.m_armature = new DragonBonesArmature(armatureDisplay)
 		}
-		// this.m_armature.Armature = armature
 		this.m_armature.ArmatureDisplay = armatureDisplay
 
 		this.m_armatureContainer.register(this.m_armature,[
@@ -39,6 +34,7 @@ class Monster extends BaseActor {
 			DragonBonesAnimations.Hurt,
 			DragonBonesAnimations.Explore,
 		])
+		
 		this.m_state = EMonsterState.Ready
 		this.m_speedY = GameConfig.baseFallSpeed + this.m_data.Speed / 100
 		this.m_speedX = 0.2
@@ -86,26 +82,29 @@ class Monster extends BaseActor {
 	}
 
 	public GotoDead() {
-		// if (this.y >= 100) {
-			this.m_state = EMonsterState.Dead
-			this.Destroy()
-			PanelManager.m_gameScenePanel.RemoveMonster(this)
-
-			// PanelManager.m_gameScenePanel.Power += this.m_data.Power
-		// }
-		// if (this.m_type != EMonsterType.Normal) {
-		// 	this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0)
-		// }
+		this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1)
+		this.m_state = EMonsterState.Dead
+		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
+		PanelManager.m_gameScenePanel.Power += this.m_data.Power
 	}
 
 	public GotoRun() {
 		this._DestroyBalloon()
 		this.m_armatureContainer.play(DragonBonesAnimations.Run, 0)
-		// this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect)
+		GameManager.Instance.Stop()
+	}
 
-		// this.m_shape.graphics.drawRect(0, 0, this.m_rect.width, this.m_rect.height)
-		// this.m_shape.graphics.endFill()
-		// Common.log("GotoRun", this.m_rect.width)
+
+	/**
+	 * 更新怪物身上的特效动画
+	 */
+	public UpdateEffectArmature(name:string) {
+		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
+		if (this.m_effectArmature == null) {
+			this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+		}
+		this.m_effectArmature.ArmatureDisplay = armatureDisplay
+		this.m_effectArmatureContainer.register(this.m_effectArmature,[name])
 	}
 
 	public BallExplosion(a_ball:Balloon) {
@@ -138,22 +137,10 @@ class Monster extends BaseActor {
 		if (this.m_balloons.length <= 0) {
 			this.m_sumBalloon = 0
 			this.GotoDead()
-			// this._speedY = 0.7
-			// this._ChangeAnimate(this._data.fall)
-			// this._wolfGraph.play(-1)
-			// if (!this._isFallDown) {
-			// 	this._isFallDown = true
-			// 	this._fallDownSound.play(0, 1)
-			// 	egret.setTimeout(this._OnFallDownComplete, this, 500)
-			// 	// fall.addEventListener(egret.Event.SOUND_COMPLETE, this._OnFallDownComplete, this)
-			// }
 		}else{
 			if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
 				let balloon:Balloon = this.m_balloons[0]
 				let posx = 0
-				// if (this._data.type == EWolfType.Red) {
-				// 	posx = this.width / 2
-				// }
 				egret.Tween.get(balloon).to({x:posx}, 200, egret.Ease.circOut)
 				egret.Tween.get(balloon.rop).to({scaleY:40, rotation:0}, 200, egret.Ease.circOut)
 				this.m_sumBalloon = 1
@@ -169,9 +156,6 @@ class Monster extends BaseActor {
 					let posX = i * balloon.width - this.m_rect.width / 2
 					let posY = -this.m_rect.height * 0.8
 					let rotation = 90 * i - 45
-					// if (this.m_data.type == EWolfType.Red) {
-					// 	posY = 100
-					// }
 					egret.Tween.get(balloon).to({x:posX, y:posY}, 200, egret.Ease.circOut)
 					egret.Tween.get(balloon.rop).to({scaleY:55, rotation:rotation}, 200, egret.Ease.circOut)
 				}
@@ -189,19 +173,20 @@ class Monster extends BaseActor {
 				this.GotoRun()
 			}
 		}
-		else if (this.m_state == EMonsterState.Run) {
-			this.x -= timeElapsed * this.m_speedX
-			if (this.x <= -this.m_rect.width) {
-				this.m_state = EMonsterState.Dead
-				this.Destroy()
-				PanelManager.m_gameScenePanel.RemoveMonster(this)
-				// this.Destroy()
-				// PanelManager.gamePanel.RemoveWolf(this)
-			}
-		}
+		// else if (this.m_state == EMonsterState.Run) {
+		// 	this.x -= timeElapsed * this.m_speedX
+		// 	if (this.x <= -this.m_rect.width) {
+		// 		this.m_state = EMonsterState.Dead
+		// 		this.Destroy()
+		// 		PanelManager.m_gameScenePanel.RemoveMonster(this)
+		// 		// this.Destroy()
+		// 		// PanelManager.gamePanel.RemoveWolf(this)
+		// 	}
+		// }
 	}
 
 	public Destroy() {
+		this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
 		this._DestroyBalloon()
 		this.m_armatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
@@ -213,19 +198,7 @@ class Monster extends BaseActor {
 	 */
 	public UpdateSignSlot() {
 		this._DestroyBalloon()
-		this.m_sumBalloon = 3
-
-		// let random = MathUtils.getRandom(this.m_gestureData.length - 1)
-
-		// let slot = this.m_armature.Armature.getSlot("Sign")
-        // this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path)
-		// this.m_gesture.x = slot.display.x;
-        // this.m_gesture.y = slot.display.y;
-        // this.m_gesture.anchorOffsetX = this.m_gesture.width/2;
-        // this.m_gesture.anchorOffsetY = this.m_gesture.height/2;
-		// slot.setDisplay(this.m_gesture)
-		// this.m_gestureType = this.m_gestureData[random].type
-
+		this.m_sumBalloon = 1
 		for (let i = 0; i < this.m_sumBalloon; i++) {
 			let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
 			balloon.Init(this.m_gestureData, this)
@@ -250,6 +223,13 @@ class Monster extends BaseActor {
 
 	public get Balloons() {
 		return this.m_balloons
+	}
+
+	public _OnArmatureComplet() {
+		if (this.m_state == EMonsterState.Dead) {
+			this.Destroy()
+			PanelManager.m_gameScenePanel.RemoveMonster(this)
+		}
 	}
 
 	public _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {

@@ -27,6 +27,11 @@ class GameManager extends egret.Sprite{
 
 	public Stop():void
 	{
+		if (this._gameState == EGameState.Start) {
+			this._gameState = EGameState.End
+			PanelManager.m_gameScenePanel.Exit()
+			Common.dispatchEvent(MainNotify.openGameOverPanel)
+		}
 		
 	}
 
@@ -52,12 +57,12 @@ class GameManager extends egret.Sprite{
 			if (PanelManager.m_gameStartPanel != null) {
 				PanelManager.m_gameStartPanel.Update()
 			}
-		}
-
-		if (this._gameState != EGameState.Start)
-		{
 			return
 		}
+		// if (this._gameState != EGameState.Start)
+		// {
+		// 	return
+		// }
 
 		this._startTime = egret.getTimer()
 		let timeElapsed = this._startTime - this._lastTime

@@ -206,9 +206,11 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
     }
 
     public removeArmatureDisplay() {
+        this.removeLiteners();
         if (this._armatureDisplay != null) {
             this.removeChild(this._armatureDisplay)
         }
+        this._armatureDisplay = null
     }
 
     public get Armature():dragonBones.Armature {

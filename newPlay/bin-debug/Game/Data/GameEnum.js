@@ -4,7 +4,8 @@ var EGameState;
     EGameState[EGameState["Ready"] = 0] = "Ready";
     EGameState[EGameState["Start"] = 1] = "Start";
     EGameState[EGameState["Pause"] = 2] = "Pause";
-    EGameState[EGameState["End"] = 3] = "End";
+    EGameState[EGameState["Again"] = 3] = "Again";
+    EGameState[EGameState["End"] = 4] = "End";
 })(EGameState || (EGameState = {}));
 // 游戏面板动画
 var EPanelAnimation;

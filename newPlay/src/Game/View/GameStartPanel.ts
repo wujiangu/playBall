@@ -12,11 +12,7 @@ class GameStartPanel extends BasePanel {
 		this.m_cloud3Speed = 0.3
 		this.m_imgWaters = new Array()
 
-
-		this.m_progress = new egret.Shape()
-		this.addChild(this.m_progress)
-
-		this.m_angle = 200
+		this.m_isInit = false
     }
 
     // 初始化面板数据
@@ -28,9 +24,13 @@ class GameStartPanel extends BasePanel {
     public onEnter():void{
 		Common.curPanel = PanelManager.m_gameStartPanel
 		this.touchChildren = true
-
-		
-
+		if (!this.m_isInit) {
+			this.touchChildren = false
+			this.InitGroup.play(0)
+			this.m_isInit = true
+		}else{
+			this.m_groupStart.alpha = 1
+		}
 		// this.m_imgCloth.y = Config.stageHeight - 1375
         Common.gameScene().uiLayer.addChild(this)
 
@@ -67,37 +67,35 @@ class GameStartPanel extends BasePanel {
 	}
 
 	private _OnHideCloth() {
-		GameManager.Instance.Start()
+		// GameManager.Instance.Start()
 		Common.dispatchEvent(MainNotify.closeGameStartPanel)
 		Common.dispatchEvent(MainNotify.openGamePanel)
 	}
 
 	private _OnStartGame() {
 		this.touchChildren = false
-		this._OnHideCloth()
-		// egret.Tween.get(this.m_imgCloth).to({y:-this.m_imgCloth.height}, 1000, egret.Ease.backOut).call(this._OnHideCloth, this)
-		// Common.dispatchEvent(MainNotify.closeBottomBtnPanel)
+		this.CloseGroup.play(0)
 	}
 
 	private _OnBtnSetting() {
 		Common.dispatchEvent(MainNotify.openSettingPanel)
 	}
 
-	private _UpdateProgress(angle:number) {
-		this.m_progress.graphics.clear();
-        this.m_progress.graphics.lineStyle(2, 0x0000ff, 1);
-        this.m_progress.graphics.drawArc(50, 50, 50, Math.PI, angle * Math.PI / 180, false);
-        this.m_progress.graphics.endFill();
-	}
-
 	private _OnBtnRank() {
-		this.m_angle += 2
-		this._UpdateProgress(this.m_angle)
+		
 	}
 
 	private _OnBtnProc() {
 		Common.dispatchEvent(MainNotify.closeGameStartPanel)
 		Common.dispatchEvent(MainNotify.openBackpackPanel)
+	}
+
+	private _OnInitComplete() {
+		this.touchChildren = true
+	}
+
+	private _OnCloseComplete() {
+		this._OnHideCloth()
 	}
 
 	private onComplete() {
@@ -122,15 +120,14 @@ class GameStartPanel extends BasePanel {
 		this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this)
 		this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this)
 		this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this)
+		this.InitGroup.addEventListener('complete', this._OnInitComplete, this)
+		this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this)
 	}
 
     protected _OnResize(event:egret.Event = null)
     {
 		
     }
-
-	private m_progress:egret.Shape
-	private m_angle:number
 
 
 	private m_imgBg:eui.Image
@@ -160,4 +157,9 @@ class GameStartPanel extends BasePanel {
 
 	/**太阳 */
 	private m_imgSun:eui.Image
+
+	private m_isInit:boolean
+	private InitGroup:egret.tween.TweenGroup
+	private CloseGroup:egret.tween.TweenGroup
+	private m_groupStart:eui.Group
 }
