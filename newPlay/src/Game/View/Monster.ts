@@ -26,7 +26,8 @@ class Monster extends BaseActor {
 			this.m_armature = new DragonBonesArmature(armatureDisplay)
 		}
 		this.m_armature.ArmatureDisplay = armatureDisplay
-
+		this.m_armatureContainer.visible = true
+		this.m_effectArmatureContainer.visible = false
 		this.m_armatureContainer.register(this.m_armature,[
 			DragonBonesAnimations.Idle,
 			DragonBonesAnimations.Dead,
@@ -36,7 +37,7 @@ class Monster extends BaseActor {
 		])
 		
 		this.m_state = EMonsterState.Ready
-		this.m_speedY = GameConfig.baseFallSpeed + this.m_data.Speed / 100
+		this.m_speedY = this.m_data.Speed / 100
 		this.m_speedX = 0.2
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
@@ -44,6 +45,10 @@ class Monster extends BaseActor {
 
 		this.m_rect.width = this.m_data.Width
 		this.m_rect.height = this.m_data.Height
+		this.m_width = this.m_data.Width
+		this.m_height = this.m_data.Height
+
+		this.m_slowDelay = -1
 
 		this.m_gestureData.length = 0
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
@@ -61,7 +66,7 @@ class Monster extends BaseActor {
 		this.GotoIdle()
 		this.UpdateSignSlot()
 
-		this.x = MathUtils.getRandom(this.m_rect.width/2, Config.stageWidth - this.m_rect.width/2)
+		this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width)
 	}
 
 	public GotoIdle() {
@@ -94,28 +99,56 @@ class Monster extends BaseActor {
 		GameManager.Instance.Stop()
 	}
 
+	public GotoSlow() {
+		
+	}
+
+	public ChangeToEasy() {
+		for (let i = 0; i < this.m_balloons.length; i++) {
+			this.m_balloons[i].ChangeToEasy()
+		}
+	}
 
 	/**
 	 * 更新怪物身上的特效动画
 	 */
-	public UpdateEffectArmature(name:string) {
-		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
-		if (this.m_effectArmature == null) {
-			this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+	public UpdateEffectArmature(data:any) {
+		this.m_effectArmatureContainer.clear()
+		if (data.bullet != "") {
+			let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.step1, data.step1)
+			if (this.m_effectArmature == null) {
+				this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+			}
+			this.m_effectData = data
+			this.m_effectArmature.ArmatureDisplay = armatureDisplay
+			this.m_effectArmatureContainer.register(this.m_effectArmature,[data.step1])
+			this.m_effectArmatureContainer.visible = false
+			this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+			this.m_effectArmatureContainer.addFrameCallFunc(this._OnEffectFrame, this)
 		}
-		this.m_effectArmature.ArmatureDisplay = armatureDisplay
-		this.m_effectArmatureContainer.register(this.m_effectArmature,[name])
+	}
+
+	public PlayEffect() {
+		this.m_effectArmatureContainer.visible = true
+		this.m_effectArmatureContainer.play(this.m_effectData.step1, 1)
+		
+		if (this.m_effectData.type == EEffectType.Fire) {
+			this.m_state = EMonsterState.Stop
+		}
 	}
 
 	public BallExplosion(a_ball:Balloon) {
-		if (this.y >= 100) {
+		if (this.y >= 100 && this.m_state == EMonsterState.Ready) {
 			this.m_exploreIndex = 0
 			for (let i = 0; i < this.m_balloons.length; i++) {
 				let balloon:Balloon = this.m_balloons[i]
 				if (balloon == a_ball) {
-					balloon.BalloonExplore()
 					this.m_balloons.splice(i, 1)
+					balloon.BalloonExplore()
 					this.m_exploreIndex = i
+					if (this.m_balloons.length <= 0) {
+						this.m_state = EMonsterState.Dead
+					}
 					break
 				}
 			}
@@ -136,13 +169,13 @@ class Monster extends BaseActor {
 	public BalloonExploreHandle() {
 		if (this.m_balloons.length <= 0) {
 			this.m_sumBalloon = 0
-			this.GotoDead()
+			// this.GotoDead()
 		}else{
 			if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
 				let balloon:Balloon = this.m_balloons[0]
 				let posx = 0
 				egret.Tween.get(balloon).to({x:posx}, 200, egret.Ease.circOut)
-				egret.Tween.get(balloon.rop).to({scaleY:40, rotation:0}, 200, egret.Ease.circOut)
+				egret.Tween.get(balloon.rop).to({scaleY:20, rotation:0}, 200, egret.Ease.circOut)
 				this.m_sumBalloon = 1
 			}
 
@@ -153,13 +186,12 @@ class Monster extends BaseActor {
 				}
 				for (let i = 0; i < this.m_balloons.length; i++) {
 					let balloon:Balloon = this.m_balloons[i]
-					let posX = i * balloon.width - this.m_rect.width / 2
-					let posY = -this.m_rect.height * 0.8
+					let posX = i * (balloon.width+5) - this.m_rect.width / 2
+					let posY = -this.m_rect.height * 1.1
 					let rotation = 90 * i - 45
 					egret.Tween.get(balloon).to({x:posX, y:posY}, 200, egret.Ease.circOut)
-					egret.Tween.get(balloon.rop).to({scaleY:55, rotation:rotation}, 200, egret.Ease.circOut)
+					egret.Tween.get(balloon.rop).to({scaleY:14, rotation:rotation}, 200, egret.Ease.circOut)
 				}
-				
 			}
 		}
 	}
@@ -167,28 +199,19 @@ class Monster extends BaseActor {
 	public Update(timeElapsed:number) {
 		if (this.m_state == EMonsterState.Ready) {
 			this.y += timeElapsed * this.m_speedY
-			if (this.y >= Config.stageHeight - 150) {
-				this.y = Config.stageHeight - 150
+			if (this.y >= PanelManager.m_gameScenePanel.GroundPos) {
+				this.y = PanelManager.m_gameScenePanel.GroundPos
 				this.m_state = EMonsterState.Run
 				this.GotoRun()
 			}
 		}
-		// else if (this.m_state == EMonsterState.Run) {
-		// 	this.x -= timeElapsed * this.m_speedX
-		// 	if (this.x <= -this.m_rect.width) {
-		// 		this.m_state = EMonsterState.Dead
-		// 		this.Destroy()
-		// 		PanelManager.m_gameScenePanel.RemoveMonster(this)
-		// 		// this.Destroy()
-		// 		// PanelManager.gamePanel.RemoveWolf(this)
-		// 	}
-		// }
 	}
 
 	public Destroy() {
 		this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
 		this._DestroyBalloon()
 		this.m_armatureContainer.clear()
+		this.m_effectArmatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
 	}
 
@@ -198,7 +221,7 @@ class Monster extends BaseActor {
 	 */
 	public UpdateSignSlot() {
 		this._DestroyBalloon()
-		this.m_sumBalloon = 1
+		this.m_sumBalloon = MathUtils.getRandom(1,3)
 		for (let i = 0; i < this.m_sumBalloon; i++) {
 			let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
 			balloon.Init(this.m_gestureData, this)
@@ -225,33 +248,28 @@ class Monster extends BaseActor {
 		return this.m_balloons
 	}
 
-	public _OnArmatureComplet() {
-		if (this.m_state == EMonsterState.Dead) {
+	private _OnEffectFrame(event:dragonBones.EgretEvent) {
+		let evt:string = event.frameLabel
+		switch (evt) {
+			case "xiaoshi":
+				PanelManager.m_gameScenePanel.Power += this.m_data.Power
+				this._DestroyBalloon()
+				this.m_armatureContainer.visible = false
+			break
+		}
+	}
+
+	private _OnEffectArmatureComplete() {
+		if (this.m_state == EMonsterState.Stop) {
 			this.Destroy()
 			PanelManager.m_gameScenePanel.RemoveMonster(this)
 		}
 	}
 
-	public _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {
-		if (count == 1) {
-			balloon.x = 0
-			balloon.y = -this.m_rect.height * 0.8
-			balloon.SetLine()
-		}
-		else if (count == 2) {
-			balloon.x = value * balloon.width - this.m_rect.width / 2
-			balloon.y = -this.m_rect.height * 0.8
-			balloon.SetLine(count, value)
-		}
-		else if (count == 3) {
-			if (value == 0) {
-				balloon.x = 0
-				balloon.y = -this.m_rect.height
-			}else{
-				balloon.x = (value - 1) * (balloon.width + 66) - this.m_rect.width * 0.9
-				balloon.y = -this.m_rect.height * 0.7
-			}
-			balloon.SetLine(count, value)
+	private _OnArmatureComplet() {
+		if (this.m_state == EMonsterState.Dead) {
+			this.Destroy()
+			PanelManager.m_gameScenePanel.RemoveMonster(this)
 		}
 	}
 
@@ -277,14 +295,8 @@ class Monster extends BaseActor {
 	}
 
 	private m_sumWeight:number
-	private m_data:any
 	private m_state:EMonsterState
-	private m_speedY:number
-	private m_speedX:number
-
 	//////////////////////////////////////////////////////////////////
-	// private m_gesture:egret.Bitmap
-	private m_balloons:Array<Balloon>
 	private m_sumBalloon:number
 	private m_score:number
 	private m_exploreIndex:number

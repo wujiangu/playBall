@@ -30,7 +30,7 @@ class GameManager extends egret.Sprite{
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.End
 			PanelManager.m_gameScenePanel.Exit()
-			Common.dispatchEvent(MainNotify.openGameOverPanel)
+			ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10, this._Onshake)
 		}
 		
 	}
@@ -41,6 +41,12 @@ class GameManager extends egret.Sprite{
 		this._gameState = EGameState.Start
 		this._startTime = egret.getTimer()
 		this._lastTime = this._startTime
+	}
+
+	public Pause():void
+	{
+		this._gameState = EGameState.Pause
+		Common.dispatchEvent(MainNotify.openGamePausePanel)
 	}
 
 	public Continue():void
@@ -59,11 +65,6 @@ class GameManager extends egret.Sprite{
 			}
 			return
 		}
-		// if (this._gameState != EGameState.Start)
-		// {
-		// 	return
-		// }
-
 		this._startTime = egret.getTimer()
 		let timeElapsed = this._startTime - this._lastTime
 		if (PanelManager.m_gameScenePanel != null) {
@@ -80,6 +81,10 @@ class GameManager extends egret.Sprite{
 
 	public set GameState(value:EGameState) {
 		this._gameState = value
+	}
+
+	private _Onshake() {
+		Common.dispatchEvent(MainNotify.openGameOverPanel)
 	}
 
 	private _startTime:number

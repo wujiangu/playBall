@@ -2,6 +2,7 @@ class GameConfig {
 	public static game = "HT"
 	public static isWebView = true
 	public static monsterConfig:Array<any>
+	public static luckyConfig:Array<any>
 	public static gestureConfig:Array<any>
 	public static itemConfig:Array<any>
 
@@ -13,6 +14,8 @@ class GameConfig {
 	public static baseFallSpeed:number = 0.1
 
 	public static monsterAddDelay:number = 1500
+	public static luckyActorAddDelay:number = 20000
+	public static slowDuration:number = 3000
 
 	public static account:string
 	public static curScore:number
@@ -54,13 +57,17 @@ class GameConfig {
 			let data = {}
 			data["ID"] = config.ID
 			data["name"] = config.name
+			data["release"] = config.release
 			data["bullet"] = config.bullet
 			data["step1"] = config.step1
 			data["step2"] = config.step2
+			data["type"] = config.type
+			data["count"] = config.count
 			this.effectTable[config.ID.toString()] = data
 			this.InitBattleDragonBones(config.name)
 		}
 
-		this.itemUseTable.push(1003)
+		// this.itemUseTable.push(1002)
+		// this.itemUseTable.push(1003)
 	}
 }

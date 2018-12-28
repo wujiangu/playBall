@@ -23,6 +23,23 @@ namespace MathUtils {
     }
 
     /**
+     * 弧度制转换为角度值
+     * @param radian 弧度制
+     * @returns {number}
+     */
+    export function getAngle(radian:number):number {
+        return 180 * radian / Math.PI;
+    }
+
+    /**
+     * 角度值转换为弧度制
+     * @param angle
+     */
+    export function getRadian(angle:number):number {
+        return angle / 180 * Math.PI;
+    }
+
+    /**
      * 获取两点间距离
      * @param p1X
      * @param p1Y
@@ -34,7 +51,9 @@ namespace MathUtils {
         var disX:number = Math.round(p2X - p1X);
         var disY:number = Math.round(p2Y - p1Y);
         var disQ:number = disX * disX + disY * disY;
-        return Math.floor(disQ);
+        var temp:number = InvSqrt(disQ);
+        var dis:number = 1/temp;
+        return Math.floor(dis);
     }
 
     /**
@@ -51,5 +70,19 @@ namespace MathUtils {
         var tmp_angle:number = Math.atan2(ydis, xdis);
         var angle = parseFloat(tmp_angle.toFixed(2));
         return angle;
+    }
+
+    /**
+     * 平方根倒数
+     */
+    export function InvSqrt(n:number, precision:number = 1) {
+        let y = new Float32Array(1);
+        let i = new Int32Array(y.buffer);
+        y[0] = n;
+        i[0] = 0x5f375a86 - (i[0] >> 1);
+        for (let iter = 0; iter < precision; iter ++) {
+            y[0] = y[0] * (1.5 - ((n * 0.5) * y[0] * y[0]));
+        }
+        return y[0];
     }
 }

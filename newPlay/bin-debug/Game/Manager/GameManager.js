@@ -37,7 +37,7 @@ var GameManager = (function (_super) {
         if (this._gameState == EGameState.Start) {
             this._gameState = EGameState.End;
             PanelManager.m_gameScenePanel.Exit();
-            Common.dispatchEvent(MainNotify.openGameOverPanel);
+            ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10, this._Onshake);
         }
     };
     GameManager.prototype.Start = function () {
@@ -45,6 +45,10 @@ var GameManager = (function (_super) {
         this._gameState = EGameState.Start;
         this._startTime = egret.getTimer();
         this._lastTime = this._startTime;
+    };
+    GameManager.prototype.Pause = function () {
+        this._gameState = EGameState.Pause;
+        Common.dispatchEvent(MainNotify.openGamePausePanel);
     };
     GameManager.prototype.Continue = function () {
         this._gameState = EGameState.Start;
@@ -58,10 +62,6 @@ var GameManager = (function (_super) {
             }
             return;
         }
-        // if (this._gameState != EGameState.Start)
-        // {
-        // 	return
-        // }
         this._startTime = egret.getTimer();
         var timeElapsed = this._startTime - this._lastTime;
         if (PanelManager.m_gameScenePanel != null) {
@@ -81,6 +81,9 @@ var GameManager = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    GameManager.prototype._Onshake = function () {
+        Common.dispatchEvent(MainNotify.openGameOverPanel);
+    };
     return GameManager;
 }(egret.Sprite));
 __reflect(GameManager.prototype, "GameManager");

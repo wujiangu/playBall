@@ -8,6 +8,13 @@ enum EGameState
     End,
 }
 
+enum EGamePauseState
+{
+    Continue = 1,
+    Again,
+    Return,
+}
+
 // 游戏面板动画
 enum EPanelAnimation
 {
@@ -73,4 +80,12 @@ enum EMonsterType {
     Normal = 1,
     Elite,
     Boss,
+}
+
+// 特效的类型
+enum EEffectType {
+    Fire = 1,
+    Ice,
+    Thunder,
+    ChangeGesture,
 }

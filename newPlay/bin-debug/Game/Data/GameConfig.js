@@ -37,13 +37,17 @@ var GameConfig = (function () {
             var data = {};
             data["ID"] = config.ID;
             data["name"] = config.name;
+            data["release"] = config.release;
             data["bullet"] = config.bullet;
             data["step1"] = config.step1;
             data["step2"] = config.step2;
+            data["type"] = config.type;
+            data["count"] = config.count;
             this.effectTable[config.ID.toString()] = data;
             this.InitBattleDragonBones(config.name);
         }
-        this.itemUseTable.push(1003);
+        // this.itemUseTable.push(1002)
+        // this.itemUseTable.push(1003)
     };
     return GameConfig;
 }());
@@ -51,5 +55,7 @@ GameConfig.game = "HT";
 GameConfig.isWebView = true;
 GameConfig.baseFallSpeed = 0.1;
 GameConfig.monsterAddDelay = 1500;
+GameConfig.luckyActorAddDelay = 20000;
+GameConfig.slowDuration = 3000;
 __reflect(GameConfig.prototype, "GameConfig");
 //# sourceMappingURL=GameConfig.js.map

@@ -32,5 +32,8 @@ var MainNotify;
     //设置面板
     MainNotify.openSettingPanel = "openSettingPanel";
     MainNotify.closeSettingPanel = "closeSettingPanel";
+    //暂停
+    MainNotify.openGamePausePanel = "openGamePausePanel";
+    MainNotify.closeGamePausePanel = "closeGamePausePanel";
 })(MainNotify || (MainNotify = {}));
 //# sourceMappingURL=MainNotify.js.map

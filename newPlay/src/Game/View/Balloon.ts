@@ -2,58 +2,94 @@ class Balloon extends egret.Sprite {
 	public name = "Balloon"
 	public constructor() {
 		super()
-		// let data = RES.getRes("balloonBlue_json")
-        // let texture = RES.getRes("balloonBlue_png")
-		this._balloonData = new egret.MovieClipDataFactory()
-        this._balloon = new egret.MovieClip()
-		// this._balloon = Common.createBitmap("balloon_png")
-		this.addChild(this._balloon)
-		this._balloon.anchorOffsetX = this._balloon.width / 2
-		this._balloon.anchorOffsetY = this._balloon.height / 2
+		this._gestureData = new Array()
+
+		this._balloonArmatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this._balloonArmatureContainer)
+
+		this._animations = ["hong", "huang", "lan"]
+		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("qiqiu", "qiqiu")
+		if (this._balloonArmature == null) {
+			this._balloonArmature = new DragonBonesArmature(armatureDisplay)
+		}
+		this._balloonArmature.ArmatureDisplay = armatureDisplay
+		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
+
+		this._balloonArmatureContainer.scaleX = 0.6
+		this._balloonArmatureContainer.scaleY = 0.6
+
+		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
+
+
+
+		this._effectArmatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this._effectArmatureContainer)
+		let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua")
+		if (this._effectArmature == null) {
+			this._effectArmature = new DragonBonesArmature(effectArmatureDisplay)
+		}
+		this._effectArmature.ArmatureDisplay = effectArmatureDisplay
+		this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
+		this._effectArmatureContainer.scaleX = 1
+		this._effectArmatureContainer.scaleY = 1
+		this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+
 		this._gesture = new egret.Bitmap()
 		this.addChild(this._gesture)
 		this._rop = Common.createBitmap("imgRop_png")
 		this.addChild(this._rop)
-
-		// this._boomSound = RES.getRes("balloonBoom_mp3")
-		// this._boomSound.load(AudioManager.balloonBoom)
-
-		this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
+		this._gesture.scaleX = 0.6
+		this._gesture.scaleY = 0.6
+		// this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
 	}
 
-	public Init(data:Array<any>, actor:Monster) {
+	public Init(data:Array<any>, actor:BaseActor) {
 		this._score = 0
 		this._root = actor
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0
+		this._isChangeEasy = false
+		this.UpdateGesture(data, true)
+	}
+
+	public UpdateGesture(data:Array<any>, isInit:boolean = false) {
 		let random = MathUtils.getRandom(data.length - 1)
-		this._ChangeBalloonAnimate(data[random].balloon)
-		this._balloon.gotoAndStop(1)
-		this._balloon.anchorOffsetX = this._balloon.width / 2
-		this._balloon.anchorOffsetY = this._balloon.height
-		this._balloon.x = -20
 		this._gesture.texture = RES.getRes(data[random].path)
 		this._gesture.anchorOffsetX = this._gesture.width / 2
 		this._gesture.anchorOffsetY = this._gesture.height / 2
-		this._gesture.x = 8
+		this._gesture.x = this._balloonArmatureContainer.x
+		this._gesture.y = this._balloonArmatureContainer.y - 50
 		this._gesture.visible = true
 		this._type = data[random].type
 		this._score = data[random].count
-		this.anchorOffsetY = this.height
-
 		data.splice(random, 1)
+
+		let colorIndex = MathUtils.getRandom(2)
+		this._animationName = this._animations[colorIndex]
+		this._balloonArmatureContainer.play(this._animationName, 1)
+		this._balloonArmatureContainer.pause(this._animationName)
+	}
+
+	public ChangeToEasy() {
+		this._isChangeEasy = true
+		this.UpdateColorAndGesture()		
+	}
+
+	public UpdateColorAndGesture() {
+		this._type = 0
+		this._effectArmatureContainer.play("bianhua", 1)
 	}
 
 	public SetLine(count:number = 1, value:number = 0) {
-		this._rop.x = this._balloon.x + 30
-		this._rop.y = this._balloon.y + this._balloon.height / 2
-		this._rop.scaleX = 2
+		this._rop.x = this._balloonArmatureContainer.x
+		this._rop.y = this._balloonArmatureContainer.y
+		this._rop.scaleX = 0.5
 		if (count == 1) {
 			this._rop.rotation = 0
-			this._rop.scaleY = 40
+			this._rop.scaleY = 10
 		}
 		else if (count == 2) {
-			this._rop.scaleY = 55
+			this._rop.scaleY = 14
 			if (value == 0) {
 				this._rop.rotation = -45
 			}else{
@@ -61,7 +97,7 @@ class Balloon extends egret.Sprite {
 			}
 		}
 		else if (count == 3) {
-			this._rop.scaleY = 80
+			this._rop.scaleY = 20
 			if (value == 0) {
 				this._rop.rotation = 0
 			}
@@ -77,16 +113,20 @@ class Balloon extends egret.Sprite {
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0
 		this._gesture.visible = false
-		this._balloon.play(1)
-		
+		// this._balloon.play(1)
+		this._balloonArmatureContainer.play(this._animationName, 1)
 
 		if (PanelManager.m_gameScenePanel != null) {
 			PanelManager.m_gameScenePanel.Score += this._score
 		}
-		if (this._root.State == EMonsterState.Ready) {
-			let posY = this._root.y - 20
-			egret.Tween.get(this._root).to({y:posY}, 50)
+
+		if (this._root.Balloons.length <= 0) {
+			this._root.GotoDead()
 		}
+		// if (this._root.State == EMonsterState.Ready) {
+		// 	let posY = this._root.y - 20
+		// 	egret.Tween.get(this._root).to({y:posY}, 50)
+		// }
 
 		// egret.setTimeout(this._OnBalloonBoom, this, 200)
 	}
@@ -113,10 +153,11 @@ class Balloon extends egret.Sprite {
 	}
 
 	public get width():number {
-		return this._balloon.width
+		// return this._balloon.width
+		return 80
 	}
 
-	public get root():Monster {
+	public get root():BaseActor {
 		return this._root
 	}
 
@@ -130,18 +171,47 @@ class Balloon extends egret.Sprite {
 		this._root.RemoveBalloon(this)
 	}
 
-	private _ChangeBalloonAnimate(name:string) {
-		this._balloonData.mcDataSet = RES.getRes(name + "_json")
-		this._balloonData.texture = RES.getRes(name + "_png")
-		this._balloon.movieClipData = this._balloonData.generateMovieClipData(name)
+	private _OnEffectArmatureComplete(e:egret.Event) {
+		if (this._isChangeEasy) {
+			this._isChangeEasy = false
+			this._gestureData.length = 0
+			for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+				let data = GameConfig.gestureConfig[i]
+				if (data.difficult == 1) {
+					this._gestureData.push(data)
+				}
+			}
+			this.UpdateGesture(this._gestureData)
+		}else{
+			this.UpdateGesture(this._root.GestureData)
+		}
 	}
 
+	// private _ChangeBalloonAnimate(name:string) {
+	// 	this._balloonData.mcDataSet = RES.getRes(name + "_json")
+	// 	this._balloonData.texture = RES.getRes(name + "_png")
+	// 	this._balloon.movieClipData = this._balloonData.generateMovieClipData(name)
+	// }
+
 	private _gesture:egret.Bitmap
-	private _balloonData:egret.MovieClipDataFactory
-	private _balloon:egret.MovieClip
+	// private _balloonData:egret.MovieClipDataFactory
+	// private _balloon:egret.MovieClip
 	private _type:number
 	private _score:number
 	private _rop:egret.Bitmap
-	private _root:Monster
+	private _root:BaseActor
 	// private _boomSound:egret.Sound
+
+	private _balloonArmatureContainer:DragonBonesArmatureContainer
+	private _balloonArmature:DragonBonesArmature
+
+	private _effectArmatureContainer:DragonBonesArmatureContainer
+	private _effectArmature:DragonBonesArmature
+
+	private _animationName:string
+	private _animations:Array<string>
+
+	private _gestureData:Array<any>
+
+	private _isChangeEasy:boolean
 }

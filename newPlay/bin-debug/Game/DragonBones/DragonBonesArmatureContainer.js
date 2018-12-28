@@ -71,6 +71,15 @@ var DragonBonesArmatureContainer = (function (_super) {
         }
     };
     /**
+     * 移除帧事件处理函数
+     */
+    DragonBonesArmatureContainer.prototype.removeFrameCallFunc = function (func, target) {
+        for (var i = 0; i < this.armatures.length; i++) {
+            var armature = this.armatures[i];
+            armature.removeFrameCallFunc(func, target);
+        }
+    };
+    /**
      * 获取Bone
      */
     DragonBonesArmatureContainer.prototype.getBone = function (skeletonName, boneName, target) {
@@ -188,6 +197,11 @@ var DragonBonesArmatureContainer = (function (_super) {
     DragonBonesArmatureContainer.prototype.stopByFrame = function (action, frame) {
         var currArm = this.armatures[this.curArmatureIndex];
         if (currArm) {
+            currArm.stopByFrame(action, frame);
+        }
+        else {
+            var newArmatureIndex = this.actions[action];
+            currArm = this.armatures[newArmatureIndex];
             currArm.stopByFrame(action, frame);
         }
     };

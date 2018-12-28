@@ -38,6 +38,10 @@ module MainNotify {
 	//设置面板
 	export var openSettingPanel:string = "openSettingPanel"
 	export var closeSettingPanel:string = "closeSettingPanel"
+
+	//暂停
+	export var openGamePausePanel:string = "openGamePausePanel"
+	export var closeGamePausePanel:string = "closeGamePausePanel"
 }
 
 

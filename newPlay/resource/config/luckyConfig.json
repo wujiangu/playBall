@@ -1,0 +1,15 @@
+[
+  {
+    "ID": 1101,
+    "Type": 1,
+    "Name": "蓝脸怪",
+    "Animation": "xinyunguai",
+    "Prob": 30,
+    "Speed": 12,
+    "Score": 1,
+    "Power": 10,
+    "Scale": 1,
+    "Width": 100,
+    "Height": 100
+  }
+]

@@ -28,6 +28,23 @@ var MathUtils;
     }
     MathUtils.getRandom = getRandom;
     /**
+     * 弧度制转换为角度值
+     * @param radian 弧度制
+     * @returns {number}
+     */
+    function getAngle(radian) {
+        return 180 * radian / Math.PI;
+    }
+    MathUtils.getAngle = getAngle;
+    /**
+     * 角度值转换为弧度制
+     * @param angle
+     */
+    function getRadian(angle) {
+        return angle / 180 * Math.PI;
+    }
+    MathUtils.getRadian = getRadian;
+    /**
      * 获取两点间距离
      * @param p1X
      * @param p1Y
@@ -39,7 +56,9 @@ var MathUtils;
         var disX = Math.round(p2X - p1X);
         var disY = Math.round(p2Y - p1Y);
         var disQ = disX * disX + disY * disY;
-        return Math.floor(disQ);
+        var temp = InvSqrt(disQ);
+        var dis = 1 / temp;
+        return Math.floor(dis);
     }
     MathUtils.getDistance = getDistance;
     /**
@@ -58,5 +77,20 @@ var MathUtils;
         return angle;
     }
     MathUtils.getRadian2 = getRadian2;
+    /**
+     * 平方根倒数
+     */
+    function InvSqrt(n, precision) {
+        if (precision === void 0) { precision = 1; }
+        var y = new Float32Array(1);
+        var i = new Int32Array(y.buffer);
+        y[0] = n;
+        i[0] = 0x5f375a86 - (i[0] >> 1);
+        for (var iter = 0; iter < precision; iter++) {
+            y[0] = y[0] * (1.5 - ((n * 0.5) * y[0] * y[0]));
+        }
+        return y[0];
+    }
+    MathUtils.InvSqrt = InvSqrt;
 })(MathUtils || (MathUtils = {}));
 //# sourceMappingURL=MathUtils.js.map

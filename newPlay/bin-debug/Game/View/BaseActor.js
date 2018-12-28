@@ -43,7 +43,87 @@ var BaseActor = (function (_super) {
     };
     BaseActor.prototype.GotoRun = function () {
     };
+    BaseActor.prototype.GotoSlow = function () { };
+    Object.defineProperty(BaseActor.prototype, "w", {
+        get: function () {
+            return this.m_width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "h", {
+        get: function () {
+            return this.m_height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "Balloons", {
+        get: function () {
+            return this.m_balloons;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "GestureData", {
+        get: function () {
+            return this.m_gestureData;
+        },
+        set: function (value) {
+            this.m_gestureData = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "SpeedVertical", {
+        set: function (value) {
+            this.m_speedY = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "SpeedHorizon", {
+        set: function (value) {
+            this.m_speedX = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "ActorTableData", {
+        get: function () {
+            return this.m_data;
+        },
+        enumerable: true,
+        configurable: true
+    });
     BaseActor.prototype.Update = function (timeElapsed) {
+    };
+    BaseActor.prototype.BalloonExploreHandle = function () { };
+    BaseActor.prototype.RemoveBalloon = function (balloon) { };
+    BaseActor.prototype.PlayEffect = function () { };
+    BaseActor.prototype._SetBallonPosition = function (balloon, count, value) {
+        if (value === void 0) { value = 0; }
+        if (count == 1) {
+            balloon.x = 0;
+            balloon.y = -this.m_rect.height * 1.1;
+            balloon.SetLine();
+        }
+        else if (count == 2) {
+            balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2;
+            balloon.y = -this.m_rect.height * 1.1;
+            balloon.SetLine(count, value);
+        }
+        else if (count == 3) {
+            if (value == 0) {
+                balloon.x = 0;
+                balloon.y = -this.m_rect.height * 1.4;
+            }
+            else {
+                balloon.x = (value - 1) * (balloon.width + this.m_rect.width / 2) - this.m_rect.width * 0.7;
+                balloon.y = -this.m_rect.height;
+            }
+            balloon.SetLine(count, value);
+        }
     };
     return BaseActor;
 }(egret.DisplayObjectContainer));

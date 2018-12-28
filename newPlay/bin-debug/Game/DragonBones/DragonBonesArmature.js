@@ -74,6 +74,17 @@ var DragonBonesArmature = (function (_super) {
         this._frameCalls.push([func, target]);
     };
     /**
+     * 移除帧事件处理函数
+     */
+    DragonBonesArmature.prototype.removeFrameCallFunc = function (func, target) {
+        for (var i = 0; i < this._frameCalls.length; i++) {
+            //判断某一动画是否已经执行过complete方法
+            if ((this._frameCalls[i][0] == func) && (this._frameCalls[i][1] == target)) {
+                this._frameCalls.splice(i, 1);
+            }
+        }
+    };
+    /**
      * 获取bone
      */
     DragonBonesArmature.prototype.getBone = function (boneName, target) {
@@ -161,7 +172,7 @@ var DragonBonesArmature = (function (_super) {
      */
     DragonBonesArmature.prototype.stopByFrame = function (action, frame) {
         this.start();
-        this._armatureDisplay.animation.gotoAndStopByFrame(action, frame);
+        this._armature.animation.gotoAndStopByProgress(action, frame);
     };
     /**
      * 混合动画

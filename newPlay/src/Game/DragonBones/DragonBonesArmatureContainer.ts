@@ -68,6 +68,16 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
     }
 
     /**
+     * 移除帧事件处理函数
+     */
+    public removeFrameCallFunc(func:Function, target:any) {
+        for (let i = 0; i < this.armatures.length; i++) {
+            let armature:DragonBonesArmature = this.armatures[i];
+            armature.removeFrameCallFunc(func, target);
+        }
+    }
+
+    /**
      * 获取Bone
      */
     public getBone(skeletonName:string, boneName:string, target:any):dragonBones.Bone {
@@ -194,6 +204,10 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
         var currArm:DragonBonesArmature = this.armatures[this.curArmatureIndex];
         if (currArm) {
             currArm.stopByFrame(action, frame);
+        }else{
+            let newArmatureIndex:number = this.actions[action]
+            currArm = this.armatures[newArmatureIndex]
+            currArm.stopByFrame(action, frame)
         }
     }
 

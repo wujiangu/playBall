@@ -70,6 +70,17 @@ var PanelManager;
             PanelManager.m_gameOverPanel.onExit();
         }
     }
+    function _OpenGamePausePanel() {
+        if (PanelManager.m_gamePausetPanel == null) {
+            PanelManager.m_gamePausetPanel = new GamePausePanel();
+        }
+        PanelManager.m_gamePausetPanel.onEnter();
+    }
+    function _CloseGamePausePanel() {
+        if (PanelManager.m_gamePausetPanel != null) {
+            PanelManager.m_gamePausetPanel.onExit();
+        }
+    }
     function initPanel() {
         Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager);
         Common.addEventListener(MainNotify.closeGameStartPanel, _CloseGameStartPanel, PanelManager);
@@ -83,6 +94,8 @@ var PanelManager;
         Common.addEventListener(MainNotify.closeSettingPanel, _CloseSettingPanel, PanelManager);
         Common.addEventListener(MainNotify.openGameOverPanel, _OpenGameOverPanel, PanelManager);
         Common.addEventListener(MainNotify.closeGameOverPanel, _CloseGameOverPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGamePausePanel, _OpenGamePausePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGamePausePanel, _CloseGamePausePanel, PanelManager);
     }
     PanelManager.initPanel = initPanel;
 })(PanelManager || (PanelManager = {}));

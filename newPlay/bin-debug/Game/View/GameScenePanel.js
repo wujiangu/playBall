@@ -14,11 +14,18 @@ var GameScenePanel = (function (_super) {
         _this.skinName = "resource/game_skins/gameScenePanel.exml";
         GameConfig.monsterConfig = RES.getRes("monsterConfig_json");
         GameConfig.gestureConfig = RES.getRes("gesture_json");
+        GameConfig.luckyConfig = RES.getRes("luckyConfig_json");
         for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
             var data = GameConfig.monsterConfig[i];
             GameConfig.InitBattleDragonBones(data.Animation);
         }
+        for (var i = 0; i < GameConfig.luckyConfig.length; i++) {
+            var data = GameConfig.luckyConfig[i];
+            GameConfig.InitBattleDragonBones(data.Animation);
+        }
         _this.m_monsters = new Array();
+        _this.m_bullets = new Array();
+        _this.m_luckyActors = new Array();
         return _this;
     }
     // 初始化面板
@@ -26,9 +33,10 @@ var GameScenePanel = (function (_super) {
         this.m_gestureShape = new egret.Shape();
         this.m_gesture = new Gesture();
         this.m_gesture.Init();
-        this.m_cloud1Speed = 1;
-        this.m_cloud2Speed = 0.6;
-        this.m_cloud3Speed = 0.3;
+        this.m_cloud1Speed = 0.6;
+        this.m_cloud2Speed = 0.3;
+        this.m_cloud3Speed = 0.1;
+        this.m_currentItemId = 0;
         this.m_imgWaters = new Array();
         this.m_progress = new egret.Shape();
     };
@@ -37,10 +45,13 @@ var GameScenePanel = (function (_super) {
         this.touchChildren = false;
         this.readyAnimate.play(0);
         this.initData();
+        this.m_imgEffectMask.visible = false;
+        this.m_labScore.visible = false;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
     };
     GameScenePanel.prototype.Exit = function () {
+        this.m_imgEffectMask.visible = false;
         this.touchChildren = false;
         this.m_gesture.removeEvent();
         Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this);
@@ -49,10 +60,13 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype.initData = function () {
         GameConfig.gestureType = 0;
         this.m_monsterAddDelay = 0;
+        this.m_luckyAddDelay = 0;
         this.m_angle = 180;
         this.Power = 0;
         this.m_score = 0;
+        this.m_slowDelay = -1;
         this.m_labScore.text = this.m_score.toString();
+        ShakeTool.getInstance().setInitPos(this.x, this.y);
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -64,20 +78,15 @@ var GameScenePanel = (function (_super) {
             this.m_curItemData = null;
         }
         else {
-            if (this.m_curItemData == null) {
-                var id = GameConfig.itemUseTable[0].toString();
-                this.m_curItemData = GameConfig.itemTable[id];
+            var index = GameConfig.itemUseTable.indexOf(this.m_currentItemId);
+            var id = this.m_currentItemId;
+            if (index < 0) {
+                id = GameConfig.itemUseTable[0];
+                this.m_currentItemId = id;
             }
-            var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
-            var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(effectData.name, effectData.name);
-            if (this.m_itemArmature == null) {
-                this.m_itemArmature = new DragonBonesArmature(armatureDisplay);
-            }
-            this.m_itemArmature.ArmatureDisplay = armatureDisplay;
-            this.m_itemArmatureContainer.register(this.m_itemArmature, [
-                effectData.name
-            ]);
-            this.m_itemArmatureContainer.play(effectData.name, 0);
+            this.m_curItemData = GameConfig.itemTable[id.toString()];
+            this._UpdateItemArmature();
+            this._UpdateFullArmature();
         }
         this.Init();
         // this._CreateMonster()
@@ -90,16 +99,39 @@ var GameScenePanel = (function (_super) {
         this.Exit();
     };
     GameScenePanel.prototype.Update = function (timeElapsed) {
-        if (GameManager.Instance.GameState != EGameState.Pause) {
+        if (this.m_slowDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
+            this.m_slowDelay += timeElapsed;
+            if (this.m_slowDelay >= GameConfig.slowDuration) {
+                this.m_slowDelay = -1;
+            }
+        }
+        if (GameManager.Instance.GameState == EGameState.Start) {
             this.m_monsterAddDelay += timeElapsed;
+            this.m_luckyAddDelay += timeElapsed;
         }
         if (GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= GameConfig.monsterAddDelay) {
             this.m_monsterAddDelay = 0;
             this._CreateMonster();
         }
+        if (GameManager.Instance.GameState == EGameState.Start && this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+            this.m_luckyAddDelay = 0;
+            this._CreateLuckyActor();
+        }
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (var i = 0; i < this.m_monsters.length; i++) {
-                this.m_monsters[i].Update(timeElapsed);
+                var actorElapsed = timeElapsed;
+                if (this.m_slowDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
+                    actorElapsed *= 0.2;
+                }
+                this.m_monsters[i].Update(actorElapsed);
+            }
+        }
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            for (var i = 0; i < this.m_bullets.length; i++) {
+                this.m_bullets[i].Update(timeElapsed);
+            }
+            for (var i = 0; i < this.m_luckyActors.length; i++) {
+                this.m_luckyActors[i].Update(timeElapsed);
             }
         }
         if (this.m_cloud1.x >= -this.m_cloud1.width) {
@@ -131,11 +163,39 @@ var GameScenePanel = (function (_super) {
             }
         }
     };
+    GameScenePanel.prototype.RemoveBullet = function (a_bullet) {
+        for (var i = 0; i < this.m_bullets.length; i++) {
+            if (this.m_bullets[i] == a_bullet) {
+                this.m_groupGameEffect.removeChild(this.m_bullets[i]);
+                this.m_bullets.splice(i, 1);
+                break;
+            }
+        }
+    };
+    GameScenePanel.prototype.RemoveLuckyActor = function (a_lucky) {
+        for (var i = 0; i < this.m_luckyActors.length; i++) {
+            if (this.m_luckyActors[i] == a_lucky) {
+                this.m_groupGame.removeChild(this.m_luckyActors[i]);
+                this.m_luckyActors.splice(i, 1);
+                break;
+            }
+        }
+    };
     GameScenePanel.prototype.ClearAllActor = function () {
         while (this.m_monsters.length > 0) {
             var monster = this.m_monsters.pop();
             monster.Destroy();
             this.m_groupGame.removeChild(monster);
+        }
+        while (this.m_bullets.length > 0) {
+            var bullet = this.m_bullets.pop();
+            bullet.Destroy();
+            this.m_groupGameEffect.removeChild(bullet);
+        }
+        while (this.m_luckyActors.length > 0) {
+            var lucky = this.m_luckyActors.pop();
+            lucky.Destroy();
+            this.m_groupGameEffect.removeChild(lucky);
         }
     };
     Object.defineProperty(GameScenePanel.prototype, "Score", {
@@ -145,10 +205,10 @@ var GameScenePanel = (function (_super) {
         set: function (value) {
             this.m_score = value;
             this.m_labScore.text = this.m_score.toString();
-            this.m_labScore.anchorOffsetX = this.m_labScore.width / 2;
-            this.m_labScore.anchorOffsetY = this.m_labScore.height / 2;
-            this.m_labScore.x = 81 + this.m_labScore.anchorOffsetX;
-            this.m_labScore.y = this.m_groupScore.height / 2;
+            // this.m_labScore.anchorOffsetX = this.m_labScore.width / 2
+            // this.m_labScore.anchorOffsetY = this.m_labScore.height / 2
+            // this.m_labScore.x = 81 + this.m_labScore.anchorOffsetX
+            // this.m_labScore.y = this.m_groupScore.height / 2
             egret.Tween.get(this.m_labScore).to({ scaleX: 2.0, scaleY: 2.0 }, 100, egret.Ease.backIn).call(this._OnScoreBigger, this);
         },
         enumerable: true,
@@ -159,14 +219,71 @@ var GameScenePanel = (function (_super) {
             return this.m_power;
         },
         set: function (value) {
+            if (this.m_curItemData == null)
+                return;
             this.m_power = value;
             this.m_angle = 180 + value * 2;
             this.m_angle = Math.min(this.m_angle, 360);
+            if (this.m_angle >= 360) {
+                this.m_imgEffectMask.visible = true;
+                this.effectMask.play(0);
+                this._UpdateItemArmature(true);
+                this.m_angle = 180;
+                this.m_power = 0;
+            }
             this._UpdateProgress(this.m_angle);
         },
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameScenePanel.prototype, "GroundPos", {
+        get: function () {
+            return this.m_imgGroundLine.y;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * 更新道具图标动画
+     *
+     */
+    GameScenePanel.prototype._UpdateItemArmature = function (isRelease) {
+        if (isRelease === void 0) { isRelease = false; }
+        this.m_itemArmatureContainer.clear();
+        var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+        var name = isRelease ? effectData.release : effectData.name;
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name);
+        if (this.m_itemArmature == null) {
+            this.m_itemArmature = new DragonBonesArmature(armatureDisplay);
+        }
+        this.m_itemArmature.ArmatureDisplay = armatureDisplay;
+        this.m_itemArmatureContainer.register(this.m_itemArmature, [name]);
+        if (isRelease) {
+            this.m_itemArmatureContainer.play(name, 1);
+            this.m_itemArmatureContainer.addCompleteCallFunc(this._OnItemArmatureComplete, this);
+        }
+        else {
+            this.m_itemArmatureContainer.play(name, 0);
+        }
+    };
+    /**
+     * 更新全屏特效动画
+     */
+    GameScenePanel.prototype._UpdateFullArmature = function () {
+        this.m_fullArmatureContainer.clear();
+        var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+        var name = effectData.step1;
+        if (effectData.bullet == "" && name != "") {
+            var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name);
+            if (this.m_fullArmature == null) {
+                this.m_fullArmature = new DragonBonesArmature(armatureDisplay);
+            }
+            this.m_fullArmature.ArmatureDisplay = armatureDisplay;
+            this.m_fullArmatureContainer.visible = false;
+            this.m_fullArmatureContainer.register(this.m_fullArmature, [name]);
+            this.m_fullArmatureContainer.scaleX = 1.1;
+        }
+    };
     GameScenePanel.prototype._UpdateProgress = function (angle) {
         var r = this.m_imgPower.height / 2;
         this.m_progress.graphics.clear();
@@ -193,25 +310,89 @@ var GameScenePanel = (function (_super) {
                     }
                 }
             }
+            for (var i = 0; i < this.m_luckyActors.length; i++) {
+                var lucky = this.m_luckyActors[i];
+                if (lucky.ballon.type == GameConfig.gestureType) {
+                    lucky.UpdateGesture();
+                }
+            }
         }
     };
     GameScenePanel.prototype._OnBtnPause = function () {
+        GameManager.Instance.Pause();
     };
     GameScenePanel.prototype._WaterAnimate = function (target) {
         Animations.floatUpDown(target, 2000, 10, 0);
     };
+    GameScenePanel.prototype._OnItemArmatureComplete = function () {
+        if (this.m_curItemData != null) {
+            var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+            var count = Math.min(this.m_monsters.length, effectData.count);
+            if (count > 0) {
+                var bulletCount = 0;
+                for (var index = 0; index < this.m_monsters.length; index++) {
+                    if (this.m_monsters[index].State == EMonsterState.Ready) {
+                        this._CreateBullete(this.m_monsters[index]);
+                        bulletCount++;
+                    }
+                    if (bulletCount >= count)
+                        break;
+                }
+            }
+            else {
+                // 全屏
+                var name_1 = effectData.step1;
+                if (name_1 != "") {
+                    this.m_fullArmatureContainer.visible = true;
+                    this.m_fullArmatureContainer.play(name_1, 1);
+                }
+                switch (effectData.type) {
+                    case EEffectType.Ice:
+                        this.m_slowDelay = 0;
+                        break;
+                    case EEffectType.ChangeGesture:
+                        for (var i = 0; i < this.m_monsters.length; i++) {
+                            this.m_monsters[i].ChangeToEasy();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        this.m_itemArmatureContainer.removeCompleteCallFunc(this._OnItemArmatureComplete, this);
+        this._UpdateItemArmature();
+    };
     GameScenePanel.prototype._OnReadyComplete = function () {
         this.touchChildren = true;
+        this.m_labScore.visible = true;
         GameManager.Instance.Start();
     };
+    GameScenePanel.prototype._OnFullArmatureComplete = function () {
+    };
+    GameScenePanel.prototype._ItemArmatureFadeIn = function () {
+        this._UpdateItemArmature();
+        egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 1 }, 300, egret.Ease.circOut);
+    };
     GameScenePanel.prototype._OnChangeItem = function () {
-        Common.log("切换道具");
-        // for (let i = 0; i < this.m_monsters.length; i++) {
-        //     let monster:Monster = this.m_monsters[i]
-        //     if (monster.State == EMonsterState.Ready && monster.y >= 100) {
-        //         this._CreateBullete(monster)
-        //     }
-        // }
+        // this.m_imgEffectMask.visible = true
+        // this.effectMask.play(0)
+        // this._UpdateItemArmature(true)
+        if (GameConfig.itemUseTable.length > 1) {
+            var index = GameConfig.itemUseTable.indexOf(this.m_currentItemId);
+            if (index >= 0) {
+                if (index < GameConfig.itemUseTable.length - 1) {
+                    index++;
+                }
+                else {
+                    index = 0;
+                }
+                this.m_currentItemId = GameConfig.itemUseTable[index];
+                this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()];
+                egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this);
+                this._UpdateFullArmature();
+            }
+        }
     };
     GameScenePanel.prototype.onComplete = function () {
         this.m_imgWaters.push(this.m_imgWater0);
@@ -229,28 +410,48 @@ var GameScenePanel = (function (_super) {
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2;
         this.m_itemArmatureContainer.y = this.m_groupIcon.height;
         this.m_groupIcon.addChild(this.m_itemArmatureContainer);
+        this.m_fullArmatureContainer = new DragonBonesArmatureContainer();
+        this.m_groupFull.addChild(this.m_fullArmatureContainer);
         this.addChild(this.m_gestureShape);
         this.m_imgPower.mask = this.m_progress;
         this.m_groupPower.addChild(this.m_progress);
-        this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
         this.readyAnimate.addEventListener('complete', this._OnReadyComplete, this);
         this.m_groupIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnChangeItem, this);
+        this.m_fullArmatureContainer.addCompleteCallFunc(this._OnFullArmatureComplete, this);
+        this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
         this._OnResize();
     };
+    /**
+     * 创建子弹
+     */
     GameScenePanel.prototype._CreateBullete = function (target) {
         var bullet = GameObjectPool.getInstance().createObject(Bullet, "Bullet");
         var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
-        if (effectData.bullet.length != "") {
-            bullet.Init(target, effectData.bullet);
+        if (effectData.bullet != "") {
+            bullet.Init(target, effectData.bullet, effectData.type);
+            this.m_bullets.push(bullet);
+            this.m_groupGameEffect.addChild(bullet);
+            bullet.x = this.m_bulletGroup.x + this.m_bulletGroup.width / 2;
+            bullet.y = this.m_bulletGroup.y;
         }
     };
     GameScenePanel.prototype._CreateMonster = function () {
         var monster = GameObjectPool.getInstance().createObject(Monster, "Monster");
         monster.Init();
+        if (this.m_curItemData != null) {
+            var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+            monster.UpdateEffectArmature(effectData);
+        }
         this.m_monsters.push(monster);
         for (var i = this.m_monsters.length - 1; i >= 0; i--) {
             this.m_groupGame.addChild(this.m_monsters[i]);
         }
+    };
+    GameScenePanel.prototype._CreateLuckyActor = function () {
+        var lucky = GameObjectPool.getInstance().createObject(LuckyActor, "LuckyActor");
+        lucky.Init();
+        this.m_luckyActors.push(lucky);
+        this.m_groupGame.addChild(lucky);
     };
     GameScenePanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

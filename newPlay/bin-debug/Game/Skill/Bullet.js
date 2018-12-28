@@ -14,7 +14,7 @@ var Bullet = (function (_super) {
         _this.addChild(_this.m_armatureContainer);
         return _this;
     }
-    Bullet.prototype.Init = function (target, name) {
+    Bullet.prototype.Init = function (target, name, type) {
         this.m_target = target;
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name);
         if (this.m_armature == null) {
@@ -23,10 +23,37 @@ var Bullet = (function (_super) {
         this.m_armature.ArmatureDisplay = armatureDisplay;
         this.m_armatureContainer.register(this.m_armature, [name]);
         this.m_armatureContainer.play(name, 0);
+        this.m_isDead = false;
+        this.m_type = type;
     };
     Bullet.prototype.Destroy = function () {
+        this.m_isDead = true;
+        this.m_armatureContainer.clear();
+        GameObjectPool.getInstance().destroyObject(this);
     };
     Bullet.prototype.Update = function (timeElapsed) {
+        if (this.m_isDead)
+            return;
+        var endY = this.m_target.y - this.m_target.h / 2;
+        this.m_radian = MathUtils.getRadian2(this.x, this.y, this.m_target.x, endY);
+        this.rotation = MathUtils.getAngle(this.m_radian) + 90;
+        var distance = MathUtils.getDistance(this.m_target.x, endY, this.x, this.y);
+        // Common.log(this.m_radian, this.rotation, distance)
+        if (distance <= 140) {
+            this.Destroy();
+            PanelManager.m_gameScenePanel.RemoveBullet(this);
+            if (this.m_type == EEffectType.Fire) {
+                this.m_target.PlayEffect();
+            }
+            return;
+        }
+        var speed = timeElapsed * 2;
+        var tempX = Math.cos(this.m_radian) * speed;
+        var tempY = Math.sin(this.m_radian) * speed;
+        var deltaX = parseFloat(tempX.toFixed(2));
+        var deltaY = parseFloat(tempY.toFixed(2));
+        this.x += deltaX;
+        this.y += deltaY;
     };
     return Bullet;
 }(egret.DisplayObjectContainer));

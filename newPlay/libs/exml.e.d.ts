@@ -66,5 +66,7 @@ declare class gameScenePanel extends eui.Skin{
 }
 declare class gameStart extends eui.Skin{
 }
+declare class quitPanel extends eui.Skin{
+}
 declare class settingPanel extends eui.Skin{
 }

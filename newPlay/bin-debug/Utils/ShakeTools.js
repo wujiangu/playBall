@@ -25,7 +25,8 @@ var ShakeTool = (function () {
      * @param        rate      震动频率(一秒震动多少次)
      * @param        maxDis    震动最大距离
      */
-    ShakeTool.prototype.shakeObj = function (target, time, rate, maxDis) {
+    ShakeTool.prototype.shakeObj = function (target, time, rate, maxDis, func) {
+        if (func === void 0) { func = null; }
         this.target = target;
         // this.initX = target.x;
         // this.initY = target.y;
@@ -38,6 +39,7 @@ var ShakeTool = (function () {
         this.timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.shakeComplete, this);
         this.timer.reset();
         this.timer.start();
+        this.completeFunc = func;
     };
     ShakeTool.prototype.setInitPos = function (x, y) {
         this.initX = x;
@@ -54,6 +56,9 @@ var ShakeTool = (function () {
             egret.Tween.removeTweens(this.target);
             this.target.x = this.initX;
             this.target.y = this.initY;
+        }
+        if (this.completeFunc) {
+            this.completeFunc();
         }
         this.timer.removeEventListener(egret.TimerEvent.TIMER, this.shaking, this);
         this.timer.removeEventListener(egret.TimerEvent.TIMER_COMPLETE, this.shakeComplete, this);

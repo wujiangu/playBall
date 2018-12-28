@@ -9,6 +9,7 @@ namespace PanelManager {
 	export var m_gameScenePanel:GameScenePanel
 	export var m_settingPanel:SettingPanel
 	export var m_gameOverPanel:GameOverPanel
+	export var m_gamePausetPanel:GamePausePanel
 
 	function _OpenBottomBtnPanel() {
 		if (m_bottomBtnPanel == null) {
@@ -88,6 +89,19 @@ namespace PanelManager {
 		}
 	}
 
+	function _OpenGamePausePanel() {
+		if (m_gamePausetPanel == null) {
+			m_gamePausetPanel = new GamePausePanel()
+		}
+		m_gamePausetPanel.onEnter()
+	}
+
+	function _CloseGamePausePanel() {
+		if (m_gamePausetPanel != null){
+			m_gamePausetPanel.onExit()
+		}
+	}
+
 	
 	export function initPanel(){
 		Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager)
@@ -107,5 +121,8 @@ namespace PanelManager {
 
 		Common.addEventListener(MainNotify.openGameOverPanel, _OpenGameOverPanel, PanelManager)
 		Common.addEventListener(MainNotify.closeGameOverPanel, _CloseGameOverPanel, PanelManager)
+
+		Common.addEventListener(MainNotify.openGamePausePanel, _OpenGamePausePanel, PanelManager)
+		Common.addEventListener(MainNotify.closeGamePausePanel, _CloseGamePausePanel, PanelManager)
 	}
 }

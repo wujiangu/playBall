@@ -102,7 +102,7 @@ var Gesture = (function () {
         var len = this._mouseDatas.length;
         _arr.push(this._mouseDatas[currentIndex]);
         for (var i = 0; i < len; i++) {
-            if (egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i]) > 20) {
+            if (egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i]) > 40) {
                 currentIndex = i;
                 _arr.push(this._mouseDatas[currentIndex]);
             }
@@ -178,7 +178,7 @@ var Gesture = (function () {
                 maxType = this._gestureData[i].type;
             }
         }
-        if (max < 0.4) {
+        if (max < 0.5) {
             maxType = -1;
         }
         return maxType;

@@ -7,6 +7,12 @@ var EGameState;
     EGameState[EGameState["Again"] = 3] = "Again";
     EGameState[EGameState["End"] = 4] = "End";
 })(EGameState || (EGameState = {}));
+var EGamePauseState;
+(function (EGamePauseState) {
+    EGamePauseState[EGamePauseState["Continue"] = 1] = "Continue";
+    EGamePauseState[EGamePauseState["Again"] = 2] = "Again";
+    EGamePauseState[EGamePauseState["Return"] = 3] = "Return";
+})(EGamePauseState || (EGamePauseState = {}));
 // 游戏面板动画
 var EPanelAnimation;
 (function (EPanelAnimation) {
@@ -67,4 +73,12 @@ var EMonsterType;
     EMonsterType[EMonsterType["Elite"] = 2] = "Elite";
     EMonsterType[EMonsterType["Boss"] = 3] = "Boss";
 })(EMonsterType || (EMonsterType = {}));
+// 特效的类型
+var EEffectType;
+(function (EEffectType) {
+    EEffectType[EEffectType["Fire"] = 1] = "Fire";
+    EEffectType[EEffectType["Ice"] = 2] = "Ice";
+    EEffectType[EEffectType["Thunder"] = 3] = "Thunder";
+    EEffectType[EEffectType["ChangeGesture"] = 4] = "ChangeGesture";
+})(EEffectType || (EEffectType = {}));
 //# sourceMappingURL=GameEnum.js.map

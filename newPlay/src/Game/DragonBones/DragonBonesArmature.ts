@@ -70,6 +70,18 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
     }
 
     /**
+     * 移除帧事件处理函数
+     */
+    public removeFrameCallFunc(func:Function, target:any) {
+        for (let i = 0; i < this._frameCalls.length; i++) {
+            //判断某一动画是否已经执行过complete方法
+            if ((this._frameCalls[i][0] == func) && (this._frameCalls[i][1] == target)) {
+                this._frameCalls.splice(i, 1)
+            }
+        }
+    }
+
+    /**
      * 获取bone
      */
     public getBone(boneName:string, target:any):dragonBones.Bone {
@@ -161,7 +173,7 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      */
     public stopByFrame(action:string, frame:number):void {
         this.start();
-        this._armatureDisplay.animation.gotoAndStopByFrame(action, frame);
+        this._armature.animation.gotoAndStopByProgress(action, frame);
     }
 
     /**

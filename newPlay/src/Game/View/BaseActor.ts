@@ -50,8 +50,71 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	}
 
+	public GotoSlow() {}
+
+	public get w() {
+		return this.m_width
+	}
+
+	public get h() {
+		return this.m_height
+	}
+
+	public get Balloons() {
+		return this.m_balloons
+	}
+
+	public get GestureData() {
+		return this.m_gestureData
+	}
+
+	public set GestureData(value) {
+		this.m_gestureData = value
+	}
+
+	public set SpeedVertical(value) {
+		this.m_speedY = value
+	}
+	
+	public set SpeedHorizon(value) {
+		this.m_speedX = value
+	}
+
+	public get ActorTableData() {
+		return this.m_data
+	}
+
 	public Update(timeElapsed:number) {
 
+	}
+
+	public BalloonExploreHandle() {}
+
+	public RemoveBalloon(balloon:Balloon) {}
+
+	public PlayEffect() {}
+
+	protected _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {
+		if (count == 1) {
+			balloon.x = 0
+			balloon.y = -this.m_rect.height * 1.1
+			balloon.SetLine()
+		}
+		else if (count == 2) {
+			balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2
+			balloon.y = -this.m_rect.height * 1.1
+			balloon.SetLine(count, value)
+		}
+		else if (count == 3) {
+			if (value == 0) {
+				balloon.x = 0
+				balloon.y = -this.m_rect.height * 1.4
+			}else{
+				balloon.x = (value - 1) * (balloon.width + this.m_rect.width/2) - this.m_rect.width * 0.7
+				balloon.y = -this.m_rect.height
+			}
+			balloon.SetLine(count, value)
+		}
 	}
 
 	protected m_groupBalloon:egret.DisplayObjectContainer
@@ -65,4 +128,16 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	protected m_effectArmatureContainer:DragonBonesArmatureContainer
 	protected m_effectArmature:DragonBonesArmature
+	protected m_effectData:any
+	protected m_width:number
+	protected m_height:number
+
+	protected m_speedY:number
+	protected m_speedX:number
+
+	protected m_balloons:Array<Balloon>
+
+	protected m_data:any
+
+	protected m_slowDelay:number
 }

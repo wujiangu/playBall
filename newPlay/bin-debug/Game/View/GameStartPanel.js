@@ -16,9 +16,9 @@ var GameStartPanel = (function (_super) {
     }
     // 初始化面板
     GameStartPanel.prototype.initPanel = function () {
-        this.m_cloud1Speed = 1;
-        this.m_cloud2Speed = 0.6;
-        this.m_cloud3Speed = 0.3;
+        this.m_cloud1Speed = 0.6;
+        this.m_cloud2Speed = 0.3;
+        this.m_cloud3Speed = 0.1;
         this.m_imgWaters = new Array();
         this.m_isInit = false;
     };
