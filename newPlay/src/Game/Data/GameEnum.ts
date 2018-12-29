@@ -56,9 +56,9 @@ enum EBottleType
 // 手势难度
 enum EGestureDifficult
 {
-    Normal = 1,
-    Hard = 2,
-    Magic = 0,
+    Mix = 0,
+    Normal,
+    Hard,
 }
 
 // 蝙蝠的状态
@@ -88,4 +88,12 @@ enum EEffectType {
     Ice,
     Thunder,
     ChangeGesture,
+}
+
+enum ELevelType
+{
+    Normal = 1,
+    Elite,
+    Boss,
+    End,
 }

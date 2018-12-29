@@ -1,0 +1,11 @@
+[
+    {"difficult":1, "type":1,"path":"gestureSheet_json.gesture001","data":["3", "7"], "count":1, "balloon":"balloonGreen", "color":"0x1c5b52"},
+    {"difficult":1, "type":2,"path":"gestureSheet_json.gesture002","data":["1", "5"], "count":1, "balloon":"balloonPink", "color":"0xcd4a81"},
+    {"difficult":1, "type":3,"path":"gestureSheet_json.gesture003","data":["28", "46"], "count":1, "balloon":"balloonPink", "color":"0xcd4a81"},
+    {"difficult":1, "type":4,"path":"gestureSheet_json.gesture004","data":["543218765"], "count":1, "balloon":"balloonGray", "color":"0x877a5d"},
+    {"difficult":1, "type":5,"path":"gestureSheet_json.gesture005","data":["141", "585"], "count":1, "balloon":"balloonGray", "color":"0x877a5d"},
+    {"difficult":2, "type":101,"path":"gestureSheet_json.gesture101","data":["2345678"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
+    {"difficult":2, "type":102,"path":"gestureSheet_json.gesture102","data":["1875431345681"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
+    {"difficult":2, "type":103,"path":"gestureSheet_json.gesture103","data":["764321876543"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
+    {"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"}
+]

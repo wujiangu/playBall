@@ -215,7 +215,7 @@ class Gesture
             }
         }
 
-        if(max<0.5)
+        if(max<0.4)
         {
             
             maxType = -1;

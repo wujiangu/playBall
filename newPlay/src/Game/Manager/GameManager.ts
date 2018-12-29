@@ -43,10 +43,10 @@ class GameManager extends egret.Sprite{
 		this._lastTime = this._startTime
 	}
 
-	public Pause():void
+	public Pause(isRelease:boolean = false):void
 	{
 		this._gameState = EGameState.Pause
-		Common.dispatchEvent(MainNotify.openGamePausePanel)
+		if (!isRelease) Common.dispatchEvent(MainNotify.openGamePausePanel)
 	}
 
 	public Continue():void

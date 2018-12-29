@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,pingzi_tex_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,pingzi_ske_json,pingzi_tex_json,itemSheet_json,gameUISheet_json,Bg1_jpg,commonPanel_png,procBg1_jpg,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,suijing_ske_json,suijing_tex_json,suijing_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3",
+			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,pingzi_tex_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,pingzi_ske_json,pingzi_tex_json,itemSheet_json,gameUISheet_json,Bg1_jpg,commonPanel_png,procBg1_jpg,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png",
 			"name": "enter"
 		},
 		{
@@ -55,7 +55,7 @@
 			"url": "assets/gesture/gestureSheet.json",
 			"type": "sheet",
 			"name": "gestureSheet_json",
-			"subkeys": "gesture001,gesture002,gesture003,gesture004,gesture005,gesture101,gesture102,gesture103,gesture104"
+			"subkeys": "gesture001,gesture002,gesture003,gesture004,gesture005,gesture006,gesture101,gesture102,gesture103,gesture104,gesture105"
 		},
 		{
 			"url": "assets/ItemRenderer/selected.png",
@@ -515,21 +515,6 @@
 			"name": "mofabang_tex_png"
 		},
 		{
-			"url": "assets/bones/suijing_ske.json",
-			"type": "json",
-			"name": "suijing_ske_json"
-		},
-		{
-			"url": "assets/bones/suijing_tex.json",
-			"type": "json",
-			"name": "suijing_tex_json"
-		},
-		{
-			"url": "assets/bones/suijing_tex.png",
-			"type": "image",
-			"name": "suijing_tex_png"
-		},
-		{
 			"url": "assets/bones/dazhaotexiao_ske.json",
 			"type": "json",
 			"name": "dazhaotexiao_ske_json"
@@ -593,6 +578,56 @@
 			"url": "assets/voice/skillBegin.mp3",
 			"type": "sound",
 			"name": "skillBegin_mp3"
+		},
+		{
+			"url": "config/levelConfig.json",
+			"type": "json",
+			"name": "levelConfig_json"
+		},
+		{
+			"url": "config/summonConfig.json",
+			"type": "json",
+			"name": "summonConfig_json"
+		},
+		{
+			"url": "assets/fnt/scoreFnt.png",
+			"type": "image",
+			"name": "scoreFnt_png"
+		},
+		{
+			"url": "assets/fnt/scoreFnt.fnt",
+			"type": "font",
+			"name": "scoreFnt_fnt"
+		},
+		{
+			"url": "assets/bones/shuijing_tex.png",
+			"type": "image",
+			"name": "shuijing_tex_png"
+		},
+		{
+			"url": "assets/bones/shuijing_ske.json",
+			"type": "json",
+			"name": "shuijing_ske_json"
+		},
+		{
+			"url": "assets/bones/shuijing_tex.json",
+			"type": "json",
+			"name": "shuijing_tex_json"
+		},
+		{
+			"url": "assets/common/shui3.png",
+			"type": "image",
+			"name": "shui3_png"
+		},
+		{
+			"url": "assets/common/shui1.png",
+			"type": "image",
+			"name": "shui1_png"
+		},
+		{
+			"url": "assets/common/shui2.png",
+			"type": "image",
+			"name": "shui2_png"
 		}
 	]
 }

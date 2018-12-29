@@ -140,4 +140,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_data:any
 
 	protected m_slowDelay:number
+
+	protected m_gesturDiff:number
+	protected m_balloonMin:number
+	protected m_balloonMax:number
 }

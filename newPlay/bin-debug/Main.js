@@ -61,6 +61,8 @@ var Main = (function (_super) {
         egret.lifecycle.onResume = function () {
             egret.ticker.resume();
         };
+        this.stage.scaleMode = egret.StageScaleMode.FIXED_WIDTH;
+        this.stage.setContentSize(750, 1336);
         //inject the custom material parser
         //注入自定义的素材解析器
         var assetAdapter = new AssetAdapter();
@@ -166,6 +168,12 @@ var Main = (function (_super) {
      */
     Main.prototype.startCreateScene = function () {
         GameManager.Instance.Init();
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
+    };
+    Main.prototype.onClick = function (evt) {
+        if (evt.currentTarget instanceof eui.Button) {
+            GameVoice.btnSound.play(0, 1);
+        }
     };
     return Main;
 }(eui.UILayer));

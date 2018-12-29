@@ -55,7 +55,8 @@ class Main extends eui.UILayer {
         egret.lifecycle.onResume = () => {
             egret.ticker.resume();
         }
-
+        this.stage.scaleMode = egret.StageScaleMode.FIXED_WIDTH
+        this.stage.setContentSize(750, 1336)
         //inject the custom material parser
         //注入自定义的素材解析器
         let assetAdapter = new AssetAdapter();
@@ -168,5 +169,12 @@ class Main extends eui.UILayer {
      */
     protected startCreateScene(): void {
         GameManager.Instance.Init()
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
+    }
+
+    private onClick(evt:egret.TouchEvent):void{
+        if(evt.currentTarget instanceof eui.Button){
+            GameVoice.btnSound.play(0, 1)
+        }
     }
 }

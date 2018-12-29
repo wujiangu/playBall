@@ -50,9 +50,9 @@ var EBottleType;
 // 手势难度
 var EGestureDifficult;
 (function (EGestureDifficult) {
+    EGestureDifficult[EGestureDifficult["Mix"] = 0] = "Mix";
     EGestureDifficult[EGestureDifficult["Normal"] = 1] = "Normal";
     EGestureDifficult[EGestureDifficult["Hard"] = 2] = "Hard";
-    EGestureDifficult[EGestureDifficult["Magic"] = 0] = "Magic";
 })(EGestureDifficult || (EGestureDifficult = {}));
 // 蝙蝠的状态
 var EBatState;
@@ -81,4 +81,11 @@ var EEffectType;
     EEffectType[EEffectType["Thunder"] = 3] = "Thunder";
     EEffectType[EEffectType["ChangeGesture"] = 4] = "ChangeGesture";
 })(EEffectType || (EEffectType = {}));
+var ELevelType;
+(function (ELevelType) {
+    ELevelType[ELevelType["Normal"] = 1] = "Normal";
+    ELevelType[ELevelType["Elite"] = 2] = "Elite";
+    ELevelType[ELevelType["Boss"] = 3] = "Boss";
+    ELevelType[ELevelType["End"] = 4] = "End";
+})(ELevelType || (ELevelType = {}));
 //# sourceMappingURL=GameEnum.js.map

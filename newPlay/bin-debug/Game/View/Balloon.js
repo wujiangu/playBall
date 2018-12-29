@@ -21,8 +21,8 @@ var Balloon = (function (_super) {
         }
         _this._balloonArmature.ArmatureDisplay = armatureDisplay;
         _this._balloonArmatureContainer.register(_this._balloonArmature, _this._animations);
-        _this._balloonArmatureContainer.scaleX = 0.6;
-        _this._balloonArmatureContainer.scaleY = 0.6;
+        _this._balloonArmatureContainer.scaleX = 0.5;
+        _this._balloonArmatureContainer.scaleY = 0.5;
         _this._balloonArmatureContainer.addCompleteCallFunc(_this._OnBalloonComplete, _this);
         _this._effectArmatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this._effectArmatureContainer);
@@ -39,8 +39,8 @@ var Balloon = (function (_super) {
         _this.addChild(_this._gesture);
         _this._rop = Common.createBitmap("imgRop_png");
         _this.addChild(_this._rop);
-        _this._gesture.scaleX = 0.6;
-        _this._gesture.scaleY = 0.6;
+        _this._gesture.scaleX = 0.5;
+        _this._gesture.scaleY = 0.5;
         return _this;
         // this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
     }
@@ -58,8 +58,8 @@ var Balloon = (function (_super) {
         this._gesture.texture = RES.getRes(data[random].path);
         this._gesture.anchorOffsetX = this._gesture.width / 2;
         this._gesture.anchorOffsetY = this._gesture.height / 2;
-        this._gesture.x = this._balloonArmatureContainer.x;
-        this._gesture.y = this._balloonArmatureContainer.y - 50;
+        this._gesture.x = this._balloonArmatureContainer.x + 2;
+        this._gesture.y = this._balloonArmatureContainer.y - 38;
         this._gesture.visible = true;
         this._type = data[random].type;
         this._score = data[random].count;
@@ -115,6 +115,7 @@ var Balloon = (function (_super) {
         this._gesture.visible = false;
         // this._balloon.play(1)
         this._balloonArmatureContainer.play(this._animationName, 1);
+        GameVoice.ballonBoomSound.play(0, 1);
         if (PanelManager.m_gameScenePanel != null) {
             PanelManager.m_gameScenePanel.Score += this._score;
         }
@@ -176,20 +177,20 @@ var Balloon = (function (_super) {
         this._root.RemoveBalloon(this);
     };
     Balloon.prototype._OnEffectArmatureComplete = function (e) {
-        if (this._isChangeEasy) {
-            this._isChangeEasy = false;
-            this._gestureData.length = 0;
-            for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
-                var data = GameConfig.gestureConfig[i];
-                if (data.difficult == 1) {
-                    this._gestureData.push(data);
-                }
-            }
-            this.UpdateGesture(this._gestureData);
-        }
-        else {
-            this.UpdateGesture(this._root.GestureData);
-        }
+        // if (this._isChangeEasy) {
+        // 	this._isChangeEasy = false
+        // 	this._gestureData.length = 0
+        // 	for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+        // 		let data = GameConfig.gestureConfig[i]
+        // 		if (data.difficult == 1) {
+        // 			this._gestureData.push(data)
+        // 		}
+        // 	}
+        // 	this.UpdateGesture(this._gestureData)
+        // }else{
+        // 	this.UpdateGesture(this._root.GestureData)
+        // }
+        this.UpdateGesture(this._root.GestureData);
     };
     return Balloon;
 }(egret.Sprite));

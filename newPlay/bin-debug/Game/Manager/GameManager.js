@@ -46,9 +46,11 @@ var GameManager = (function (_super) {
         this._startTime = egret.getTimer();
         this._lastTime = this._startTime;
     };
-    GameManager.prototype.Pause = function () {
+    GameManager.prototype.Pause = function (isRelease) {
+        if (isRelease === void 0) { isRelease = false; }
         this._gameState = EGameState.Pause;
-        Common.dispatchEvent(MainNotify.openGamePausePanel);
+        if (!isRelease)
+            Common.dispatchEvent(MainNotify.openGamePausePanel);
     };
     GameManager.prototype.Continue = function () {
         this._gameState = EGameState.Start;

@@ -13,13 +13,33 @@ var Monster = (function (_super) {
         _this.m_balloons = new Array();
         return _this;
     }
-    Monster.prototype.Init = function () {
-        this.m_sumWeight = 0;
-        for (var i = 0; i < GameConfig.monsterConfig.length; i++) {
-            this.m_sumWeight += GameConfig.monsterConfig[i].Prob;
-            GameConfig.monsterConfig[i].weight = this.m_sumWeight;
+    Monster.prototype.Init = function (data, type) {
+        var monsterData = null;
+        switch (type) {
+            case ELevelType.Normal:
+                monsterData = data.normal;
+                break;
+            case ELevelType.Elite:
+                monsterData = data.elite;
+                break;
         }
-        this.m_data = this._RandomMonsterData();
+        this.m_sumWeight = 0;
+        for (var i = 0; i < monsterData.length; i++) {
+            this.m_sumWeight += monsterData[i].prob;
+            monsterData[i].weight = this.m_sumWeight;
+        }
+        var random = MathUtils.getRandom(1, this.m_sumWeight);
+        for (var i = 0; i < monsterData.length; i++) {
+            if (random <= monsterData[i].weight) {
+                this.m_gesturDiff = monsterData[i].diff;
+                this.m_balloonMin = monsterData[i].min;
+                this.m_balloonMax = monsterData[i].max;
+                this.m_summonData = monsterData[i].summon;
+                this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()];
+                break;
+            }
+        }
+        // this.m_data = this._RandomMonsterData()
         if (this.m_data) {
             this.InitData();
             this.InitGraph();
@@ -49,6 +69,7 @@ var Monster = (function (_super) {
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;
+        this.m_armatureContainer.addFrameCallFunc(this._OnArmatureFrame, this);
         this.m_rect.width = this.m_data.Width;
         this.m_rect.height = this.m_data.Height;
         this.m_width = this.m_data.Width;
@@ -56,7 +77,13 @@ var Monster = (function (_super) {
         this.m_slowDelay = -1;
         this.m_gestureData.length = 0;
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
-            this.m_gestureData.push(GameConfig.gestureConfig[i]);
+            if (this.m_gesturDiff == EGestureDifficult.Mix) {
+                this.m_gestureData.push(GameConfig.gestureConfig[i]);
+            }
+            else {
+                if (GameConfig.gestureConfig[i].difficult == this.m_gesturDiff)
+                    this.m_gestureData.push(GameConfig.gestureConfig[i]);
+            }
         }
         this.m_sumBalloon = 0;
     };
@@ -68,14 +95,12 @@ var Monster = (function (_super) {
         this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width);
     };
     Monster.prototype.GotoIdle = function () {
-        this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
-        // this.m_armature.ArmatureDisplay.getBounds(this.m_rect, true)
-        // this.m_armature.ArmatureDisplay.getTransformedBounds(this.m_armatureContainer, this.m_rect)
-        // this.m_rect.width *= this.m_data.Scale
-        // this.m_rect.height *= this.m_data.Scale
-        // this.m_shape.graphics.drawRect(0, 0, this.m_rect.width, this.m_rect.height)
-        // this.m_shape.graphics.endFill()
-        // Common.log("GotoIdle宽度", this.m_data.Name, this.m_rect.width, this.m_rect.height)
+        if (this.m_data.ID == 1002) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.5);
+        }
+        else {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
+        }
     };
     Monster.prototype.GotoHurt = function () {
         if (this.m_type != EMonsterType.Normal) {
@@ -87,6 +112,7 @@ var Monster = (function (_super) {
         this.m_state = EMonsterState.Dead;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
+        PanelManager.m_gameScenePanel.Score += this.m_data.Score;
     };
     Monster.prototype.GotoRun = function () {
         this._DestroyBalloon();
@@ -96,6 +122,13 @@ var Monster = (function (_super) {
     Monster.prototype.GotoSlow = function () {
     };
     Monster.prototype.ChangeToEasy = function () {
+        this.m_gestureData.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            var data = GameConfig.gestureConfig[i];
+            if (data.difficult == 1) {
+                this.m_gestureData.push(data);
+            }
+        }
         for (var i = 0; i < this.m_balloons.length; i++) {
             this.m_balloons[i].ChangeToEasy();
         }
@@ -114,6 +147,8 @@ var Monster = (function (_super) {
             this.m_effectArmature.ArmatureDisplay = armatureDisplay;
             this.m_effectArmatureContainer.register(this.m_effectArmature, [data.step1]);
             this.m_effectArmatureContainer.visible = false;
+            this.m_effectArmatureContainer.scaleX = 0.8;
+            this.m_effectArmatureContainer.scaleY = 0.8;
             this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
             this.m_effectArmatureContainer.addFrameCallFunc(this._OnEffectFrame, this);
         }
@@ -201,7 +236,7 @@ var Monster = (function (_super) {
      */
     Monster.prototype.UpdateSignSlot = function () {
         this._DestroyBalloon();
-        this.m_sumBalloon = MathUtils.getRandom(1, 3);
+        this.m_sumBalloon = MathUtils.getRandom(this.m_balloonMin, this.m_balloonMax);
         for (var i = 0; i < this.m_sumBalloon; i++) {
             var balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon");
             balloon.Init(this.m_gestureData, this);
@@ -249,6 +284,16 @@ var Monster = (function (_super) {
         if (this.m_state == EMonsterState.Stop) {
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveMonster(this);
+        }
+    };
+    Monster.prototype._OnArmatureFrame = function (event) {
+        var evt = event.frameLabel;
+        switch (evt) {
+            case "vomit":
+                if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined) {
+                    PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y);
+                }
+                break;
         }
     };
     Monster.prototype._OnArmatureComplet = function () {

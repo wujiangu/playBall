@@ -38,11 +38,15 @@ var GameStartPanel = (function (_super) {
             this.m_groupStart.alpha = 1;
         }
         // this.m_imgCloth.y = Config.stageHeight - 1375
+        if (GameVoice.beginBGMChannel != null)
+            GameVoice.beginBGMChannel.stop();
+        GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0);
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
     GameStartPanel.prototype.onExit = function () {
         this.touchChildren = false;
+        GameVoice.beginBGMChannel.stop();
         Common.gameScene().uiLayer.removeChild(this);
     };
     GameStartPanel.prototype.Update = function () {

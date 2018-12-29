@@ -15,8 +15,8 @@ class Balloon extends egret.Sprite {
 		this._balloonArmature.ArmatureDisplay = armatureDisplay
 		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
 
-		this._balloonArmatureContainer.scaleX = 0.6
-		this._balloonArmatureContainer.scaleY = 0.6
+		this._balloonArmatureContainer.scaleX = 0.5
+		this._balloonArmatureContainer.scaleY = 0.5
 
 		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
 
@@ -38,8 +38,8 @@ class Balloon extends egret.Sprite {
 		this.addChild(this._gesture)
 		this._rop = Common.createBitmap("imgRop_png")
 		this.addChild(this._rop)
-		this._gesture.scaleX = 0.6
-		this._gesture.scaleY = 0.6
+		this._gesture.scaleX = 0.5
+		this._gesture.scaleY = 0.5
 		// this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
 	}
 
@@ -57,8 +57,8 @@ class Balloon extends egret.Sprite {
 		this._gesture.texture = RES.getRes(data[random].path)
 		this._gesture.anchorOffsetX = this._gesture.width / 2
 		this._gesture.anchorOffsetY = this._gesture.height / 2
-		this._gesture.x = this._balloonArmatureContainer.x
-		this._gesture.y = this._balloonArmatureContainer.y - 50
+		this._gesture.x = this._balloonArmatureContainer.x + 2
+		this._gesture.y = this._balloonArmatureContainer.y - 38
 		this._gesture.visible = true
 		this._type = data[random].type
 		this._score = data[random].count
@@ -115,6 +115,7 @@ class Balloon extends egret.Sprite {
 		this._gesture.visible = false
 		// this._balloon.play(1)
 		this._balloonArmatureContainer.play(this._animationName, 1)
+		GameVoice.ballonBoomSound.play(0, 1)
 
 		if (PanelManager.m_gameScenePanel != null) {
 			PanelManager.m_gameScenePanel.Score += this._score
@@ -172,19 +173,20 @@ class Balloon extends egret.Sprite {
 	}
 
 	private _OnEffectArmatureComplete(e:egret.Event) {
-		if (this._isChangeEasy) {
-			this._isChangeEasy = false
-			this._gestureData.length = 0
-			for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-				let data = GameConfig.gestureConfig[i]
-				if (data.difficult == 1) {
-					this._gestureData.push(data)
-				}
-			}
-			this.UpdateGesture(this._gestureData)
-		}else{
-			this.UpdateGesture(this._root.GestureData)
-		}
+		// if (this._isChangeEasy) {
+		// 	this._isChangeEasy = false
+		// 	this._gestureData.length = 0
+		// 	for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+		// 		let data = GameConfig.gestureConfig[i]
+		// 		if (data.difficult == 1) {
+		// 			this._gestureData.push(data)
+		// 		}
+		// 	}
+		// 	this.UpdateGesture(this._gestureData)
+		// }else{
+		// 	this.UpdateGesture(this._root.GestureData)
+		// }
+		this.UpdateGesture(this._root.GestureData)
 	}
 
 	// private _ChangeBalloonAnimate(name:string) {

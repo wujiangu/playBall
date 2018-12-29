@@ -10,8 +10,6 @@ class GameStartPanel extends BasePanel {
         this.m_cloud1Speed = 0.6
 		this.m_cloud2Speed = 0.3
 		this.m_cloud3Speed = 0.1
-		this.m_imgWaters = new Array()
-
 		this.m_isInit = false
     }
 
@@ -32,6 +30,8 @@ class GameStartPanel extends BasePanel {
 			this.m_groupStart.alpha = 1
 		}
 		// this.m_imgCloth.y = Config.stageHeight - 1375
+		if (GameVoice.beginBGMChannel != null) GameVoice.beginBGMChannel.stop()
+		GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0)
         Common.gameScene().uiLayer.addChild(this)
 
     }
@@ -39,6 +39,7 @@ class GameStartPanel extends BasePanel {
     // 退出面板
     public onExit():void{
 		this.touchChildren = false
+		GameVoice.beginBGMChannel.stop()
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
@@ -60,10 +61,6 @@ class GameStartPanel extends BasePanel {
 		}else{
 			this.m_cloud3.x = -this.m_cloud3.width
 		}
-	}
-
-	private _WaterAnimate(target:eui.Image) {
-		Animations.floatUpDown(target, 2000, 10, 0)
 	}
 
 	private _OnHideCloth() {
@@ -98,30 +95,21 @@ class GameStartPanel extends BasePanel {
 		this._OnHideCloth()
 	}
 
+	private _OnWaterComplete() {
+		this.water.play(0)
+	}
+
 	private onComplete() {
 		// this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
 		this._OnResize()
-
-		this.m_imgWaters.push(this.m_imgWater0)
-		this.m_imgWaters.push(this.m_imgWater1)
-		this.m_imgWaters.push(this.m_imgWater2)
-		this.m_imgWaters.push(this.m_imgWater3)
-		this.m_imgWaters.push(this.m_imgWater4)
-		this.m_imgWaters.push(this.m_imgWater5)
-		this.m_imgWaters.push(this.m_imgWater6)
-
-		for (let i = 0; i < this.m_imgWaters.length; i++) {
-			this.m_imgWaters[i].y = 10
-			egret.setTimeout(this._WaterAnimate, this, i*200, this.m_imgWaters[i])
-		}
-
-
+		this.water.play(0)
 		this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
 		this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this)
 		this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this)
 		this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this)
 		this.InitGroup.addEventListener('complete', this._OnInitComplete, this)
 		this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this)
+		this.water.addEventListener('complete', this._OnWaterComplete, this)
 	}
 
     protected _OnResize(event:egret.Event = null)
@@ -146,14 +134,7 @@ class GameStartPanel extends BasePanel {
 	private m_cloud3Speed:number
 
 	/**水面 */
-	private m_imgWater0:eui.Image
-	private m_imgWater1:eui.Image
-	private m_imgWater2:eui.Image
-	private m_imgWater3:eui.Image
-	private m_imgWater4:eui.Image
-	private m_imgWater5:eui.Image
-	private m_imgWater6:eui.Image
-	private m_imgWaters:Array<eui.Image>
+	private water:egret.tween.TweenGroup
 
 	/**太阳 */
 	private m_imgSun:eui.Image
@@ -162,4 +143,6 @@ class GameStartPanel extends BasePanel {
 	private InitGroup:egret.tween.TweenGroup
 	private CloseGroup:egret.tween.TweenGroup
 	private m_groupStart:eui.Group
+
+	
 }

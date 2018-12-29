@@ -3,22 +3,10 @@ class GameScenePanel extends BasePanel {
 		super()
         this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
         this.skinName = "resource/game_skins/gameScenePanel.exml"
-        GameConfig.monsterConfig = RES.getRes("monsterConfig_json")
-        GameConfig.gestureConfig = RES.getRes("gesture_json")
-        GameConfig.luckyConfig = RES.getRes("luckyConfig_json")
-        for (let i = 0; i < GameConfig.monsterConfig.length; i++) {
-            let data = GameConfig.monsterConfig[i]
-            GameConfig.InitBattleDragonBones(data.Animation)
-        }
-
-        for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
-            let data = GameConfig.luckyConfig[i]
-            GameConfig.InitBattleDragonBones(data.Animation)
-        }
-
         this.m_monsters = new Array()
         this.m_bullets = new Array()
         this.m_luckyActors = new Array()
+        this.m_summonActors = new Array()
 	}
 
 	// 初始化面板
@@ -32,8 +20,6 @@ class GameScenePanel extends BasePanel {
 		this.m_cloud3Speed = 0.1
         this.m_currentItemId = 0
 
-		this.m_imgWaters = new Array()
-
         this.m_progress = new egret.Shape()
     }
 
@@ -43,7 +29,8 @@ class GameScenePanel extends BasePanel {
         this.readyAnimate.play(0)
         this.initData()
         this.m_imgEffectMask.visible = false
-        this.m_labScore.visible = false
+        // this.m_labScore.visible = false
+        this.m_bitLabScore.visible = false
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
     }
@@ -64,9 +51,19 @@ class GameScenePanel extends BasePanel {
         this.Power = 0
         this.m_score = 0
         this.m_slowDelay = -1
-        this.m_labScore.text = this.m_score.toString()
+        // this.m_labScore.text = this.m_score.toString()
+        this.m_bitLabScore.text = this.m_score.toString()
+        this.UpdeLevelData(1001)
 
         ShakeTool.getInstance().setInitPos(this.x, this.y)
+    }
+
+    public UpdeLevelData(a_levelId:number) {
+        this.m_currentLevel = GameConfig.levelConfig[a_levelId.toString()]
+        this.m_passTime = 0
+        this.m_monsterAddDelay = 0
+        this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime
+        this.m_levelState = ELevelType.Normal
     }
 
     // 进入面板
@@ -92,6 +89,8 @@ class GameScenePanel extends BasePanel {
 
         this.Init()
 
+        if (GameVoice.battleBGMChannel != null) GameVoice.battleBGMChannel.stop()
+        GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
         // this._CreateMonster()
     }
 
@@ -101,9 +100,12 @@ class GameScenePanel extends BasePanel {
         this.m_itemArmatureContainer.clear()
 		Common.gameScene().uiLayer.removeChild(this)
         this.Exit()
+
+        GameVoice.battleBGMChannel.stop()
     }
 
     public Update(timeElapsed:number) {
+        let actorElapsed = timeElapsed
         if (this.m_slowDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
             this.m_slowDelay += timeElapsed
             if (this.m_slowDelay >= GameConfig.slowDuration) {
@@ -114,9 +116,21 @@ class GameScenePanel extends BasePanel {
         if (GameManager.Instance.GameState == EGameState.Start) {
             this.m_monsterAddDelay += timeElapsed
             this.m_luckyAddDelay += timeElapsed
+            this.m_passTime += timeElapsed
+            
+            if (this.m_passTime < this.m_currentLevel.normalTime) {
+                this.m_levelState = ELevelType.Normal
+            }
+            else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
+                this.m_levelState = ELevelType.Elite
+            }else{
+                this.m_levelState = ELevelType.End
+            }
+
+            if (this.m_slowDelay >= 0) actorElapsed *= 0.2
         }
 
-        if (GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= GameConfig.monsterAddDelay) {
+        if (this.m_levelState != ELevelType.End && GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
             this.m_monsterAddDelay = 0
             this._CreateMonster()
         }
@@ -128,10 +142,6 @@ class GameScenePanel extends BasePanel {
 
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (let i = 0; i < this.m_monsters.length; i++) {
-                let actorElapsed = timeElapsed
-                if (this.m_slowDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
-                    actorElapsed *= 0.2
-                }
                 this.m_monsters[i].Update(actorElapsed)
             }
         }
@@ -142,7 +152,11 @@ class GameScenePanel extends BasePanel {
             }
 
             for (let i = 0; i < this.m_luckyActors.length; i++) {
-                this.m_luckyActors[i].Update(timeElapsed)
+                this.m_luckyActors[i].Update(actorElapsed)
+            }
+
+            for (let i = 0; i < this.m_summonActors.length; i++) {
+                this.m_summonActors[i].Update(actorElapsed)
             }
         }
 
@@ -175,6 +189,7 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
+        this._ChangeLevel()
     }
 
     public RemoveBullet(a_bullet:Bullet) {
@@ -197,6 +212,17 @@ class GameScenePanel extends BasePanel {
         }
     }
 
+    public RemoveSummonActor(a_summon:SummonActor) {
+        for (let i = 0; i < this.m_summonActors.length; i++) {
+            if (this.m_summonActors[i] == a_summon) {
+                this.m_groupGame.removeChild(this.m_summonActors[i])
+                this.m_summonActors.splice(i, 1)
+                break
+            }
+        }
+        this._ChangeLevel()
+    }
+
     public ClearAllActor() {
         while(this.m_monsters.length > 0) {
 			let monster:Monster = this.m_monsters.pop()
@@ -215,6 +241,12 @@ class GameScenePanel extends BasePanel {
             lucky.Destroy()
             this.m_groupGame.removeChild(lucky)
         }
+
+        while(this.m_summonActors.length > 0) {
+            let summon:SummonActor  = this.m_summonActors.pop()
+            summon.Destroy()
+            this.m_groupGame.removeChild(summon)
+        }
     }
 
     public get Score() {
@@ -223,12 +255,9 @@ class GameScenePanel extends BasePanel {
 
     public set Score(value:number) {
         this.m_score = value
-        this.m_labScore.text = this.m_score.toString()
-        // this.m_labScore.anchorOffsetX = this.m_labScore.width / 2
-        // this.m_labScore.anchorOffsetY = this.m_labScore.height / 2
-        // this.m_labScore.x = 81 + this.m_labScore.anchorOffsetX
-        // this.m_labScore.y = this.m_groupScore.height / 2
-        egret.Tween.get(this.m_labScore).to({scaleX:2.0, scaleY:2.0}, 100, egret.Ease.backIn).call(this._OnScoreBigger, this)
+        // this.m_labScore.text = this.m_score.toString()
+        this.m_bitLabScore.text = this.m_score.toString()
+        // egret.Tween.get(this.m_labScore).to({scaleX:2.0, scaleY:2.0}, 100, egret.Ease.backIn).call(this._OnScoreBigger, this)
     }
 
     public get Power() {
@@ -257,6 +286,15 @@ class GameScenePanel extends BasePanel {
     }
 
     /**
+     * 进入下一关
+     */
+    private _ChangeLevel() {
+        if (this.m_monsters.length <= 0 && this.m_summonActors.length <= 0 && this.m_passTime > this.m_allTime && this.m_levelState == ELevelType.End) {
+            this.UpdeLevelData(this.m_currentLevel.next)
+        }
+    }
+
+    /**
      * 更新道具图标动画
      * 
      */
@@ -271,7 +309,9 @@ class GameScenePanel extends BasePanel {
         this.m_itemArmature.ArmatureDisplay = armatureDisplay
         this.m_itemArmatureContainer.register(this.m_itemArmature,[name])
         if (isRelease) {
+            GameVoice.skillBeginSound.play(0, 1)
             this.m_itemArmatureContainer.play(name, 1)
+            GameManager.Instance.Pause(true)
             this.m_itemArmatureContainer.addCompleteCallFunc(this._OnItemArmatureComplete, this)
         }else{
             this.m_itemArmatureContainer.play(name, 0)
@@ -310,12 +350,12 @@ class GameScenePanel extends BasePanel {
         this.m_progress.y = 20
 	}
 
-    private _OnScoreBigger() {
-        egret.Tween.get(this.m_labScore).to({scaleX:1.0, scaleY:1.0}, 100, egret.Ease.backOut)
-    }
+    // private _OnScoreBigger() {
+    //     egret.Tween.get(this.m_labScore).to({scaleX:1.0, scaleY:1.0}, 100, egret.Ease.backOut)
+    // }
 
     private _OnGesture() {
-        if (GameConfig.gestureType > 0 && (this.m_monsters.length > 0)) {
+        if (GameConfig.gestureType > 0) {
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
                 for (let j = 0; j < monster.Balloons.length; j++) {
@@ -332,6 +372,13 @@ class GameScenePanel extends BasePanel {
                     lucky.UpdateGesture()
                 }
             }
+
+            for (let i = 0; i < this.m_summonActors.length; i++) {
+                let summon:SummonActor = this.m_summonActors[i]
+                if (summon.GestureType == GameConfig.gestureType) {
+                    summon.GotoDead()
+                }
+            }
         }
     }
 
@@ -339,15 +386,12 @@ class GameScenePanel extends BasePanel {
         GameManager.Instance.Pause()
     }
 
-    private _WaterAnimate(target:eui.Image) {
-		Animations.floatUpDown(target, 2000, 10, 0)
-	}
-
     private _OnItemArmatureComplete() {
         if (this.m_curItemData != null) {
             let effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()]
             let count = Math.min(this.m_monsters.length, effectData.count)
             if (count > 0) {
+                GameVoice.fireBallSound.play(0, 1)
                 let bulletCount = 0
                 for (let index = 0; index < this.m_monsters.length; index++) {
                     if (this.m_monsters[index].State == EMonsterState.Ready) {
@@ -366,9 +410,11 @@ class GameScenePanel extends BasePanel {
 
                 switch (effectData.type) {
                     case EEffectType.Ice:
+                        GameVoice.iceEffectSound.play(0, 1)
                         this.m_slowDelay = 0
                     break
                     case EEffectType.ChangeGesture:
+                        GameVoice.staffSound.play(0, 1)
                         for (let i = 0; i < this.m_monsters.length; i++) {
                             this.m_monsters[i].ChangeToEasy()
                         }
@@ -380,13 +426,14 @@ class GameScenePanel extends BasePanel {
             }
         }
         this.m_itemArmatureContainer.removeCompleteCallFunc(this._OnItemArmatureComplete, this)
-
+        GameManager.Instance.Start()
         this._UpdateItemArmature()
     }
 
     private _OnReadyComplete() {
         this.touchChildren = true
-        this.m_labScore.visible = true
+        // this.m_labScore.visible = true
+        this.m_bitLabScore.visible = true
         GameManager.Instance.Start()
     }
 
@@ -420,21 +467,11 @@ class GameScenePanel extends BasePanel {
         }
     }
 
+    private _OnWaterComplete() {
+		this.water.play(0)
+	}
+
 	private onComplete() {
-        this.m_imgWaters.push(this.m_imgWater0)
-		this.m_imgWaters.push(this.m_imgWater1)
-		this.m_imgWaters.push(this.m_imgWater2)
-		this.m_imgWaters.push(this.m_imgWater3)
-		this.m_imgWaters.push(this.m_imgWater4)
-		this.m_imgWaters.push(this.m_imgWater5)
-		this.m_imgWaters.push(this.m_imgWater6)
-
-		for (let i = 0; i < this.m_imgWaters.length; i++) {
-			this.m_imgWaters[i].y = 10
-			egret.setTimeout(this._WaterAnimate, this, i*200, this.m_imgWaters[i])
-		}
-
-
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2
         this.m_itemArmatureContainer.y = this.m_groupIcon.height
@@ -446,11 +483,12 @@ class GameScenePanel extends BasePanel {
         this.addChild( this.m_gestureShape )
         this.m_imgPower.mask = this.m_progress
         this.m_groupPower.addChild(this.m_progress)
-
+        this.water.play(0)
         this.readyAnimate.addEventListener('complete', this._OnReadyComplete, this)
         this.m_groupIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnChangeItem, this)
         this.m_fullArmatureContainer.addCompleteCallFunc(this._OnFullArmatureComplete, this)
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this)
+        this.water.addEventListener('complete', this._OnWaterComplete, this)
 		this._OnResize()
 	}
 
@@ -471,7 +509,7 @@ class GameScenePanel extends BasePanel {
 
     private _CreateMonster() {
         let monster:Monster = GameObjectPool.getInstance().createObject(Monster, "Monster")
-        monster.Init()
+        monster.Init(this.m_currentLevel, this.m_levelState)
         if (this.m_curItemData != null) {
             let effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()]
             monster.UpdateEffectArmature(effectData)
@@ -489,6 +527,23 @@ class GameScenePanel extends BasePanel {
         this.m_groupGame.addChild(lucky)
     }
 
+    public CreateSummonActor(a_data:any, a_x:number, a_y:number) {
+        // if (this.test) return
+        // this.test = true
+        let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
+        let targetX = a_x + MathUtils.getRandom(-150, 150)
+        let targetY = a_y + MathUtils.getRandom(-20, 20)
+        summon.Init(a_data, targetX, targetY)
+        summon.x = a_x
+        summon.y = a_y
+        this.m_summonActors.push(summon)
+        for (let i = this.m_summonActors.length-1; i >= 0; i--) {
+			this.m_groupGame.addChild(this.m_summonActors[i])
+		}
+    }
+
+    private test:boolean = false
+
     protected _OnResize(event:egret.Event = null)
     {
 		
@@ -499,17 +554,29 @@ class GameScenePanel extends BasePanel {
     private m_monsterAddDelay:number
     /**生成幸运角色时间 */
     private m_luckyAddDelay:number
+
     private m_monsters:Array<Monster>
     private m_bullets:Array<Bullet>
     private m_luckyActors:Array<LuckyActor>
+    private m_summonActors:Array<SummonActor>
+
     private m_score:number
     private m_power:number
     private m_slowDelay:number
     private m_currentItemId:number
 
+    /**关卡配置数据 */
+    private m_currentLevel:any
+    /**当前关卡状态 */
+    private m_levelState:ELevelType
+    /**关卡经过的时间 */
+    private m_passTime:number
+    /**关卡总时间 */
+    private m_allTime:number
+
     ///////////////////////////////////////////////////////////////////////////
 	private m_imgScene:eui.Image
-	private m_labScore:eui.Label
+	private m_bitLabScore:eui.BitmapLabel
     private m_imgEffectMask:eui.Image
     private m_imgGroundLine:eui.Image
     private m_btnPause:eui.Button
@@ -532,21 +599,13 @@ class GameScenePanel extends BasePanel {
 	private m_cloud2Speed:number
 	private m_cloud3Speed:number
 
-	/**水面 */
-	private m_imgWater0:eui.Image
-	private m_imgWater1:eui.Image
-	private m_imgWater2:eui.Image
-	private m_imgWater3:eui.Image
-	private m_imgWater4:eui.Image
-	private m_imgWater5:eui.Image
-	private m_imgWater6:eui.Image
-	private m_imgWaters:Array<eui.Image>
-
     /**能量释放组 */
     private m_groupPower:eui.Group
     private m_groupIcon:eui.Group
     private readyAnimate:egret.tween.TweenGroup
     private effectMask:egret.tween.TweenGroup
+    /**水面 */
+	private water:egret.tween.TweenGroup
 
     private m_progress:egret.Shape
 	private m_angle:number

@@ -8,4 +8,18 @@ module GameVoice {
     export var iceEffect_mp3:string = "iceEffect_mp3"              // 冰技能大招
     export var skillBegin_mp3:string = "skillBegin_mp3"              // 大招开始
     export var staff_mp3:string = "staff_mp3"              // 法杖
+
+
+
+    export var beginBGMSound:egret.Sound = null
+    export var beginBGMChannel:egret.SoundChannel = null
+    export var battleBGMSound:egret.Sound = null
+    export var battleBGMChannel:egret.SoundChannel = null
+    export var btnSound:egret.Sound = null
+    export var ballonBoomSound:egret.Sound = null
+    export var burnSound:egret.Sound = null
+    export var fireBallSound:egret.Sound = null
+    export var iceEffectSound:egret.Sound = null
+    export var skillBeginSound:egret.Sound = null
+    export var staffSound:egret.Sound = null
 }

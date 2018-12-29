@@ -1,8 +1,0 @@
-[
-    {"ID":1001, "name":"huoba", "release":"texiao1", "bullet":"huoqiu", "step1":"huoshao", "step2":"", "type":1, "count":3},
-    {"ID":1002, "name":"huoqiu", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1003, "name":"huoshao", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1004, "name":"qiqiu", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1005, "name":"shuihua", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1006, "name":"texiao1", "release":"", "bullet":"", "step1":"", "step2":""}
-]

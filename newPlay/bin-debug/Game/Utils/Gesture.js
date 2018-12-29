@@ -178,7 +178,7 @@ var Gesture = (function () {
                 maxType = this._gestureData[i].type;
             }
         }
-        if (max < 0.5) {
+        if (max < 0.4) {
             maxType = -1;
         }
         return maxType;
