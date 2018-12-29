@@ -83,12 +83,12 @@
 		<tween:TweenGroup id="water">
 			<tween:TweenItem target="{shui3}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{23}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="500">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{23}"/>
 					</tween:props>
@@ -101,12 +101,12 @@
 			</tween:TweenItem>
 			<tween:TweenItem target="{shui2}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{34}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="250">
+				<tween:To duration="500">
 					<tween:props>
 						<e:Object y="{38}"/>
 					</tween:props>
@@ -124,12 +124,12 @@
 			</tween:TweenItem>
 			<tween:TweenItem target="{shui1}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{46}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="250">
+				<tween:To duration="500">
 					<tween:props>
 						<e:Object y="{50}"/>
 					</tween:props>

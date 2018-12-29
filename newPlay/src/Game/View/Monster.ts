@@ -12,6 +12,7 @@ class Monster extends BaseActor {
 			break
 			case ELevelType.Elite:
 				monsterData = data.elite
+				PanelManager.m_gameScenePanel.EliteCount += 1
 			break
 		}
 		this.m_sumWeight = 0

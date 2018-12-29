@@ -28,7 +28,6 @@ var GameScenePanel = (function (_super) {
         this.m_cloud2Speed = 0.3;
         this.m_cloud3Speed = 0.1;
         this.m_currentItemId = 0;
-        this.m_imgWaters = new Array();
         this.m_progress = new egret.Shape();
     };
     GameScenePanel.prototype.Init = function () {
@@ -68,6 +67,7 @@ var GameScenePanel = (function (_super) {
         this.m_monsterAddDelay = 0;
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime;
         this.m_levelState = ELevelType.Normal;
+        this.m_eliteCount = 0;
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -120,6 +120,8 @@ var GameScenePanel = (function (_super) {
             }
             else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
                 this.m_levelState = ELevelType.Elite;
+                if (this.m_eliteCount >= this.m_currentLevel.eliteCount)
+                    this.m_levelState = ELevelType.Normal;
             }
             else {
                 this.m_levelState = ELevelType.End;
@@ -273,6 +275,23 @@ var GameScenePanel = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameScenePanel.prototype, "WaterPos", {
+        get: function () {
+            return this.m_imgGroundWater.y;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameScenePanel.prototype, "EliteCount", {
+        get: function () {
+            return this.m_eliteCount;
+        },
+        set: function (value) {
+            this.m_eliteCount = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * 进入下一关
      */
@@ -336,9 +355,6 @@ var GameScenePanel = (function (_super) {
         this.m_progress.x = 0;
         this.m_progress.y = 20;
     };
-    // private _OnScoreBigger() {
-    //     egret.Tween.get(this.m_labScore).to({scaleX:1.0, scaleY:1.0}, 100, egret.Ease.backOut)
-    // }
     GameScenePanel.prototype._OnGesture = function () {
         if (GameConfig.gestureType > 0) {
             for (var i = 0; i < this.m_monsters.length; i++) {
@@ -366,9 +382,6 @@ var GameScenePanel = (function (_super) {
     };
     GameScenePanel.prototype._OnBtnPause = function () {
         GameManager.Instance.Pause();
-    };
-    GameScenePanel.prototype._WaterAnimate = function (target) {
-        Animations.floatUpDown(target, 2000, 10, 0);
     };
     GameScenePanel.prototype._OnItemArmatureComplete = function () {
         if (this.m_curItemData != null) {
@@ -445,18 +458,10 @@ var GameScenePanel = (function (_super) {
             }
         }
     };
+    GameScenePanel.prototype._OnWaterComplete = function () {
+        this.water.play(0);
+    };
     GameScenePanel.prototype.onComplete = function () {
-        this.m_imgWaters.push(this.m_imgWater0);
-        this.m_imgWaters.push(this.m_imgWater1);
-        this.m_imgWaters.push(this.m_imgWater2);
-        this.m_imgWaters.push(this.m_imgWater3);
-        this.m_imgWaters.push(this.m_imgWater4);
-        this.m_imgWaters.push(this.m_imgWater5);
-        this.m_imgWaters.push(this.m_imgWater6);
-        for (var i = 0; i < this.m_imgWaters.length; i++) {
-            this.m_imgWaters[i].y = 10;
-            egret.setTimeout(this._WaterAnimate, this, i * 200, this.m_imgWaters[i]);
-        }
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer();
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2;
         this.m_itemArmatureContainer.y = this.m_groupIcon.height;
@@ -466,10 +471,12 @@ var GameScenePanel = (function (_super) {
         this.addChild(this.m_gestureShape);
         this.m_imgPower.mask = this.m_progress;
         this.m_groupPower.addChild(this.m_progress);
+        this.water.play(0);
         this.readyAnimate.addEventListener('complete', this._OnReadyComplete, this);
         this.m_groupIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnChangeItem, this);
         this.m_fullArmatureContainer.addCompleteCallFunc(this._OnFullArmatureComplete, this);
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
+        this.water.addEventListener('complete', this._OnWaterComplete, this);
         this._OnResize();
     };
     /**

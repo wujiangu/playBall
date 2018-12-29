@@ -65,12 +65,12 @@
 		<tween:TweenGroup id="water">
 			<tween:TweenItem target="{shui3}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{23}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="500">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{23}"/>
 					</tween:props>
@@ -83,12 +83,12 @@
 			</tween:TweenItem>
 			<tween:TweenItem target="{shui2}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{34}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="250">
+				<tween:To duration="500">
 					<tween:props>
 						<e:Object y="{38}"/>
 					</tween:props>
@@ -106,12 +106,12 @@
 			</tween:TweenItem>
 			<tween:TweenItem target="{shui1}">
 				<tween:Set/>
-				<tween:To duration="250">
+				<tween:To duration="750">
 					<tween:props>
 						<e:Object y="{46}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="250">
+				<tween:To duration="500">
 					<tween:props>
 						<e:Object y="{50}"/>
 					</tween:props>
@@ -140,8 +140,8 @@
 		<e:BitmapLabel id="m_bitLabScore" width="922" height="200" scaleX="0.6" scaleY="0.6" font="scoreFnt_fnt" horizontalCenter="0" verticalCenter="0" text="01235" textAlign="center" anchorOffsetY="0" anchorOffsetX="0"/>
 	</e:Group>
 	<e:Group id="m_groupGame" left="0" right="0" top="0" bottom="0">
-		<e:Image id="m_imgGroundLine" source="imgRop_png" height="2" left="0" right="0" bottom="146"/>
-		<e:Image id="m_imgGroundWater" source="imgRop_png" height="2" left="0" right="0" bottom="19"/>
+		<e:Image id="m_imgGroundLine" source="imgRop_png" height="2" left="0" right="0" bottom="146" visible="false"/>
+		<e:Image id="m_imgGroundWater" source="imgRop_png" height="2" left="0" right="0" bottom="19" visible="false"/>
 	</e:Group>
 	<e:Group id="groupRiver" height="78.67" bottom="0" anchorOffsetY="0" left="0" right="0">
 		<e:Image id="shui3" source="shui3_png" scaleX="1" scaleY="1" horizontalCenter="0" y="18" x="-30"/>

@@ -21,6 +21,7 @@ var Monster = (function (_super) {
                 break;
             case ELevelType.Elite:
                 monsterData = data.elite;
+                PanelManager.m_gameScenePanel.EliteCount += 1;
                 break;
         }
         this.m_sumWeight = 0;

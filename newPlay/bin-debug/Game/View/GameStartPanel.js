@@ -19,7 +19,6 @@ var GameStartPanel = (function (_super) {
         this.m_cloud1Speed = 0.6;
         this.m_cloud2Speed = 0.3;
         this.m_cloud3Speed = 0.1;
-        this.m_imgWaters = new Array();
         this.m_isInit = false;
     };
     // 初始化面板数据
@@ -69,9 +68,6 @@ var GameStartPanel = (function (_super) {
             this.m_cloud3.x = -this.m_cloud3.width;
         }
     };
-    GameStartPanel.prototype._WaterAnimate = function (target) {
-        Animations.floatUpDown(target, 2000, 10, 0);
-    };
     GameStartPanel.prototype._OnHideCloth = function () {
         // GameManager.Instance.Start()
         Common.dispatchEvent(MainNotify.closeGameStartPanel);
@@ -96,26 +92,20 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype._OnCloseComplete = function () {
         this._OnHideCloth();
     };
+    GameStartPanel.prototype._OnWaterComplete = function () {
+        this.water.play(0);
+    };
     GameStartPanel.prototype.onComplete = function () {
         // this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
         this._OnResize();
-        this.m_imgWaters.push(this.m_imgWater0);
-        this.m_imgWaters.push(this.m_imgWater1);
-        this.m_imgWaters.push(this.m_imgWater2);
-        this.m_imgWaters.push(this.m_imgWater3);
-        this.m_imgWaters.push(this.m_imgWater4);
-        this.m_imgWaters.push(this.m_imgWater5);
-        this.m_imgWaters.push(this.m_imgWater6);
-        for (var i = 0; i < this.m_imgWaters.length; i++) {
-            this.m_imgWaters[i].y = 10;
-            egret.setTimeout(this._WaterAnimate, this, i * 200, this.m_imgWaters[i]);
-        }
+        this.water.play(0);
         this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this);
         this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this);
         this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this);
         this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this);
         this.InitGroup.addEventListener('complete', this._OnInitComplete, this);
         this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this);
+        this.water.addEventListener('complete', this._OnWaterComplete, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

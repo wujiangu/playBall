@@ -7,6 +7,7 @@ class Gesture
     private _gestureData:Array<any>
     // private _gestureSound:egret.Sound
     // private _gestureColor:any
+    //{"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
     public Init() 
     {
         // this._gestureColor = {}

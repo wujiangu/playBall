@@ -64,6 +64,7 @@ class GameScenePanel extends BasePanel {
         this.m_monsterAddDelay = 0
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime
         this.m_levelState = ELevelType.Normal
+        this.m_eliteCount = 0
     }
 
     // 进入面板
@@ -123,6 +124,7 @@ class GameScenePanel extends BasePanel {
             }
             else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
                 this.m_levelState = ELevelType.Elite
+                if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.Normal
             }else{
                 this.m_levelState = ELevelType.End
             }
@@ -285,6 +287,18 @@ class GameScenePanel extends BasePanel {
         return this.m_imgGroundLine.y
     }
 
+    public get WaterPos() {
+        return this.m_imgGroundWater.y
+    }
+
+    public get EliteCount() {
+        return this.m_eliteCount
+    }
+
+    public set EliteCount(value:number) {
+        this.m_eliteCount = value
+    }
+
     /**
      * 进入下一关
      */
@@ -349,10 +363,6 @@ class GameScenePanel extends BasePanel {
         this.m_progress.x = 0
         this.m_progress.y = 20
 	}
-
-    // private _OnScoreBigger() {
-    //     egret.Tween.get(this.m_labScore).to({scaleX:1.0, scaleY:1.0}, 100, egret.Ease.backOut)
-    // }
 
     private _OnGesture() {
         if (GameConfig.gestureType > 0) {
@@ -573,12 +583,15 @@ class GameScenePanel extends BasePanel {
     private m_passTime:number
     /**关卡总时间 */
     private m_allTime:number
+    /**精英怪总量 */
+    private m_eliteCount:number
 
     ///////////////////////////////////////////////////////////////////////////
 	private m_imgScene:eui.Image
 	private m_bitLabScore:eui.BitmapLabel
     private m_imgEffectMask:eui.Image
     private m_imgGroundLine:eui.Image
+    private m_imgGroundWater:eui.Image
     private m_btnPause:eui.Button
 
 	private m_groupScore:eui.Group
