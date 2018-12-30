@@ -134,6 +134,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	protected m_speedY:number
 	protected m_speedX:number
+	protected m_spFall:number
 
 	protected m_balloons:Array<Balloon>
 

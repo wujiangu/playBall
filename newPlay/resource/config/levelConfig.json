@@ -3,7 +3,7 @@
         "next":1002,
         "addTime":2000,
         "speed":0,
-        "normalTime":10000,
+        "normalTime":50000,
         "eliteTime":10000,
         "eliteCount":1,
         "normal":[
@@ -56,7 +56,7 @@
         "normal":[
             {"id":1003, "diff":1, "min":2, "max":3, "prob":80},
             {"id":1004, "diff":1, "min":1, "max":3, "prob":15},
-            {"id":1002, "diff":2, "min":1, "max":3, "prob":5}
+            {"id":1002, "diff":2, "min":1, "max":3, "prob":5, "summon":{"id":1001, "diff":1, "ids":[1, 2]}}
         ],
         "elite":[
             {
@@ -81,7 +81,7 @@
             {"id":1001, "diff":0, "min":1, "max":3, "prob":25},
             {"id":1003, "diff":0, "min":1, "max":3, "prob":25},
             {"id":1004, "diff":0, "min":1, "max":3, "prob":25},
-            {"id":1002, "diff":0, "min":1, "max":3, "prob":25}
+            {"id":1002, "diff":0, "min":1, "max":3, "prob":25, "summon":{"id":1001, "diff":0, "ids":[]}}
         ],
         "elite":[
             {

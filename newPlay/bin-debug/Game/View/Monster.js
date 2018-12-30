@@ -67,6 +67,7 @@ var Monster = (function (_super) {
         ]);
         this.m_state = EMonsterState.Ready;
         this.m_speedY = this.m_data.Speed / 100;
+        this.m_spFall = 0.7;
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;
@@ -104,13 +105,13 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.GotoHurt = function () {
-        if (this.m_type != EMonsterType.Normal) {
-            this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 0);
-        }
+        this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 0);
     };
     Monster.prototype.GotoDead = function () {
         this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1);
         this.m_state = EMonsterState.Dead;
+        if (this.m_data.Type == EMonsterType.FallDown)
+            this.m_state = EMonsterState.FallDown;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
         PanelManager.m_gameScenePanel.Score += this.m_data.Score;
@@ -119,6 +120,21 @@ var Monster = (function (_super) {
         this._DestroyBalloon();
         this.m_armatureContainer.play(DragonBonesAnimations.Run, 0);
         GameManager.Instance.Stop();
+    };
+    Monster.prototype.GotoFallWater = function () {
+        this.m_effectArmatureContainer.clear();
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("shuihua", "shuihua");
+        if (this.m_effectArmature == null) {
+            this.m_effectArmature = new DragonBonesArmature(armatureDisplay);
+        }
+        this.m_effectArmature.ArmatureDisplay = armatureDisplay;
+        this.m_effectArmatureContainer.register(this.m_effectArmature, ["shuihua"]);
+        this.m_effectArmatureContainer.scaleX = 0.8;
+        this.m_effectArmatureContainer.scaleY = 0.8;
+        this.m_effectArmatureContainer.visible = true;
+        this.m_effectArmatureContainer.play("shuihua", 1);
+        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10);
+        this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
     };
     Monster.prototype.GotoSlow = function () {
     };
@@ -170,9 +186,9 @@ var Monster = (function (_super) {
                     this.m_balloons.splice(i, 1);
                     balloon.BalloonExplore();
                     this.m_exploreIndex = i;
-                    if (this.m_balloons.length <= 0) {
-                        this.m_state = EMonsterState.Dead;
-                    }
+                    // if (this.m_balloons.length <= 0) {
+                    // 	this.m_state = EMonsterState.Dead
+                    // }
                     break;
                 }
             }
@@ -222,6 +238,15 @@ var Monster = (function (_super) {
                 this.y = PanelManager.m_gameScenePanel.GroundPos;
                 this.m_state = EMonsterState.Run;
                 this.GotoRun();
+            }
+        }
+        else if (this.m_state == EMonsterState.FallDown) {
+            this.y += timeElapsed * this.m_spFall;
+            if (this.y >= PanelManager.m_gameScenePanel.WaterPos) {
+                this.y = PanelManager.m_gameScenePanel.WaterPos;
+                this.m_state = EMonsterState.Drown;
+                this.m_armatureContainer.visible = false;
+                this.GotoFallWater();
             }
         }
     };
@@ -282,7 +307,7 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype._OnEffectArmatureComplete = function () {
-        if (this.m_state == EMonsterState.Stop) {
+        if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveMonster(this);
         }
@@ -301,6 +326,9 @@ var Monster = (function (_super) {
         if (this.m_state == EMonsterState.Dead) {
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveMonster(this);
+        }
+        else if (this.m_state == EMonsterState.FallDown) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0, 2, 6);
         }
     };
     Monster.prototype._RandomMonsterData = function () {

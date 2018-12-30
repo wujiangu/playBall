@@ -36,21 +36,7 @@ enum EMonsterState
     FallDown = 2,
     Dead = 3,
     Stop = 4,
-}
-
-// 狼的类型
-enum EWolfType
-{
-    Gray = 1,
-    White = 2,
-    Red = 3,
-}
-
-// 魔法瓶的类型
-enum EBottleType
-{
-    Ice = 201,
-    Thunder = 202,
+    Drown,
 }
 
 // 手势难度
@@ -61,25 +47,10 @@ enum EGestureDifficult
     Hard,
 }
 
-// 蝙蝠的状态
-enum EBatState
-{
-    Revival = 1,
-    Dead = 2,
-}
-
-// 盗贼的状态
-enum EThiefState
-{
-    Revival = 1,
-    Dead = 2,
-}
-
 // 怪物的类型
 enum EMonsterType {
-    Normal = 1,
-    Elite,
-    Boss,
+    FallDown = 1,   // 下落
+    Float,          // 浮空
 }
 
 // 特效的类型

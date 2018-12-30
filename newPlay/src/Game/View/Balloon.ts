@@ -15,8 +15,8 @@ class Balloon extends egret.Sprite {
 		this._balloonArmature.ArmatureDisplay = armatureDisplay
 		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
 
-		this._balloonArmatureContainer.scaleX = 0.5
-		this._balloonArmatureContainer.scaleY = 0.5
+		this._balloonArmatureContainer.scaleX = 0.45
+		this._balloonArmatureContainer.scaleY = 0.45
 
 		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
 
@@ -57,8 +57,8 @@ class Balloon extends egret.Sprite {
 		this._gesture.texture = RES.getRes(data[random].path)
 		this._gesture.anchorOffsetX = this._gesture.width / 2
 		this._gesture.anchorOffsetY = this._gesture.height / 2
-		this._gesture.x = this._balloonArmatureContainer.x + 2
-		this._gesture.y = this._balloonArmatureContainer.y - 38
+		this._gesture.x = this._balloonArmatureContainer.x - 3
+		this._gesture.y = this._balloonArmatureContainer.y - 36
 		this._gesture.visible = true
 		this._type = data[random].type
 		this._score = data[random].count

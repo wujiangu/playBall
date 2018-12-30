@@ -33,20 +33,8 @@ var EMonsterState;
     EMonsterState[EMonsterState["FallDown"] = 2] = "FallDown";
     EMonsterState[EMonsterState["Dead"] = 3] = "Dead";
     EMonsterState[EMonsterState["Stop"] = 4] = "Stop";
+    EMonsterState[EMonsterState["Drown"] = 5] = "Drown";
 })(EMonsterState || (EMonsterState = {}));
-// 狼的类型
-var EWolfType;
-(function (EWolfType) {
-    EWolfType[EWolfType["Gray"] = 1] = "Gray";
-    EWolfType[EWolfType["White"] = 2] = "White";
-    EWolfType[EWolfType["Red"] = 3] = "Red";
-})(EWolfType || (EWolfType = {}));
-// 魔法瓶的类型
-var EBottleType;
-(function (EBottleType) {
-    EBottleType[EBottleType["Ice"] = 201] = "Ice";
-    EBottleType[EBottleType["Thunder"] = 202] = "Thunder";
-})(EBottleType || (EBottleType = {}));
 // 手势难度
 var EGestureDifficult;
 (function (EGestureDifficult) {
@@ -54,24 +42,11 @@ var EGestureDifficult;
     EGestureDifficult[EGestureDifficult["Normal"] = 1] = "Normal";
     EGestureDifficult[EGestureDifficult["Hard"] = 2] = "Hard";
 })(EGestureDifficult || (EGestureDifficult = {}));
-// 蝙蝠的状态
-var EBatState;
-(function (EBatState) {
-    EBatState[EBatState["Revival"] = 1] = "Revival";
-    EBatState[EBatState["Dead"] = 2] = "Dead";
-})(EBatState || (EBatState = {}));
-// 盗贼的状态
-var EThiefState;
-(function (EThiefState) {
-    EThiefState[EThiefState["Revival"] = 1] = "Revival";
-    EThiefState[EThiefState["Dead"] = 2] = "Dead";
-})(EThiefState || (EThiefState = {}));
 // 怪物的类型
 var EMonsterType;
 (function (EMonsterType) {
-    EMonsterType[EMonsterType["Normal"] = 1] = "Normal";
-    EMonsterType[EMonsterType["Elite"] = 2] = "Elite";
-    EMonsterType[EMonsterType["Boss"] = 3] = "Boss";
+    EMonsterType[EMonsterType["FallDown"] = 1] = "FallDown";
+    EMonsterType[EMonsterType["Float"] = 2] = "Float";
 })(EMonsterType || (EMonsterType = {}));
 // 特效的类型
 var EEffectType;
