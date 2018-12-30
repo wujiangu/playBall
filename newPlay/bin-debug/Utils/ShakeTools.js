@@ -39,7 +39,8 @@ var ShakeTool = (function () {
         this.timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.shakeComplete, this);
         this.timer.reset();
         this.timer.start();
-        this.completeFunc = func;
+        if (func != null)
+            this.completeFunc = func;
     };
     ShakeTool.prototype.setInitPos = function (x, y) {
         this.initX = x;

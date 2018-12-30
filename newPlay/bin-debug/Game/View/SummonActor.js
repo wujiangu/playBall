@@ -10,14 +10,15 @@ var SummonActor = (function (_super) {
     __extends(SummonActor, _super);
     function SummonActor() {
         var _this = _super.call(this) || this;
+        _this.m_balloon = new Balloon();
+        _this.m_groupBalloon.addChild(_this.m_balloon);
         _this.m_gesture = new egret.Bitmap();
         _this.addChild(_this.m_gesture);
         _this.m_gesture.scaleX = 0.5;
         _this.m_gesture.scaleY = 0.5;
-        _this._animations = ["hong", "huang", "lan"];
         return _this;
     }
-    SummonActor.prototype.Init = function (a_data, a_x, a_y) {
+    SummonActor.prototype.Init = function (a_data, a_x, a_y, beginX, beginY) {
         this.m_sumWeight = 0;
         // for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
         // 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
@@ -25,6 +26,7 @@ var SummonActor = (function (_super) {
         // }
         // this.m_data = this._RandomSummonActorData()
         this.m_data = GameConfig.summonConfig[a_data.id.toString()];
+        this._animations = this.m_data.Actions;
         this.m_gesturDiff = a_data.diff;
         this.m_gestureData.length = 0;
         if (a_data.ids.length > 0) {
@@ -48,12 +50,15 @@ var SummonActor = (function (_super) {
                 }
             }
         }
-        this.m_isArrive = false;
         if (this.m_data) {
             this.InitData();
             this.InitGraph();
             this.m_endX = Math.max(a_x, this.w);
             this.m_endY = Math.min(a_y, Config.stageWidth - this.w);
+            if (this.m_data.Type == ESummonType.Balloon) {
+                this.x = beginX;
+                this.y = beginY;
+            }
         }
         else {
             Error("no wolf data");
@@ -84,7 +89,30 @@ var SummonActor = (function (_super) {
     SummonActor.prototype.InitGraph = function () {
         this.x = Config.stageWidth + this.m_width / 2;
         this.y = MathUtils.getRandom(Config.stageHalfHeight - 200, Config.stageHalfHeight + 200);
-        this.UpdateGesture();
+        this.m_gesture.visible = false;
+        this.m_groupBalloon.visible = false;
+        this.m_armatureContainer.visible = true;
+        if (this.m_data.Type == ESummonType.Balloon) {
+            this.m_isArrive = false;
+            this.UpdateGesture();
+            var colorIndex = MathUtils.getRandom(this._animations.length - 1);
+            this._animationName = this._animations[colorIndex];
+            this.m_armatureContainer.play(this._animationName, 1);
+            this.m_armatureContainer.pause(this._animationName);
+        }
+        else if (this.m_data.Type == ESummonType.Monster) {
+            this.m_isArrive = true;
+            this.m_balloon.Init(this.m_gestureData, this);
+            this._SetBallonPosition(this.m_balloon, 1, 0);
+            // this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+            this._animationName = DragonBonesAnimations.Explore;
+            this.m_gestureType = this.m_balloon.type;
+            this.m_state = EMonsterState.Summon;
+            this.m_armatureContainer.play(DragonBonesAnimations.Explore, 1, 1, 0, 3);
+            this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
+            this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width);
+            this.y = MathUtils.getRandom(200, PanelManager.m_gameScenePanel.GroundPos - 200);
+        }
     };
     SummonActor.prototype.UpdateGesture = function () {
         var random = MathUtils.getRandom(this.m_gestureData.length - 1);
@@ -97,10 +125,6 @@ var SummonActor = (function (_super) {
         this.m_gestureType = this.m_gestureData[random].type;
         this.m_score = this.m_gestureData[random].count;
         this.m_gestureData.splice(random, 1);
-        var colorIndex = MathUtils.getRandom(this._animations.length - 1);
-        this._animationName = this._animations[colorIndex];
-        this.m_armatureContainer.play(this._animationName, 1);
-        this.m_armatureContainer.pause(this._animationName);
     };
     SummonActor.prototype.GotoIdle = function () {
         // this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
@@ -109,17 +133,23 @@ var SummonActor = (function (_super) {
         // this.m_armatureContainer.play(DragonBonesAnimations.Run, 0)
         GameManager.Instance.Stop();
     };
-    SummonActor.prototype.GotoDead = function () {
+    SummonActor.prototype.GotoExplore = function () {
         this.m_gesture.visible = false;
         this.m_armatureContainer.play(this._animationName, 1);
         this.m_state = EMonsterState.Dead;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
-        GameVoice.ballonBoomSound.play(0, 1);
+        if (this.m_data.Type == ESummonType.Balloon) {
+            GameVoice.ballonBoomSound.play(0, 1);
+        }
+        else if (this.m_data.Type == ESummonType.Monster) {
+            this.m_balloon.BalloonExplore();
+        }
     };
     SummonActor.prototype.Destroy = function () {
         // this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
         this.m_armatureContainer.clear();
+        this.m_armatureContainer.visible = false;
         GameObjectPool.getInstance().destroyObject(this);
     };
     SummonActor.prototype.Update = function (timeElapsed) {
@@ -139,7 +169,7 @@ var SummonActor = (function (_super) {
                     return;
                 }
                 var radian = MathUtils.getRadian2(this.x, this.y, this.m_endX, this.m_endY);
-                var speed = timeElapsed;
+                var speed = timeElapsed / 2;
                 var tempX = Math.cos(radian) * speed;
                 var tempY = Math.sin(radian) * speed;
                 var deltaX = parseFloat(tempX.toFixed(2));
@@ -167,15 +197,12 @@ var SummonActor = (function (_super) {
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveSummonActor(this);
         }
-    };
-    SummonActor.prototype._RandomSummonActorData = function () {
-        var random = MathUtils.getRandom(1, this.m_sumWeight);
-        for (var i = 0; i < GameConfig.luckyConfig.length; i++) {
-            if (random <= GameConfig.luckyConfig[i].weight) {
-                return GameConfig.luckyConfig[i];
-            }
+        if (this.m_state == EMonsterState.Summon) {
+            this.m_groupBalloon.visible = true;
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
+            this.m_state = EMonsterState.Ready;
+            this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this);
         }
-        return null;
     };
     return SummonActor;
 }(BaseActor));

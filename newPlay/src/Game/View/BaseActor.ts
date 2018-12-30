@@ -46,6 +46,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	}
 
+	public GotoExplore() {}
+
 	public GotoRun() {
 
 	}

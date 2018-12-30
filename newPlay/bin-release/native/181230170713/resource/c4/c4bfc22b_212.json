@@ -1,0 +1,14 @@
+{
+  "1001":{
+    "ID": 1001,
+    "Type": 1,
+    "Name": "气球",
+    "Animation": "qiqiu",
+    "Speed": 10,
+    "Score": 1,
+    "Power": 1,
+    "Scale": 0.45,
+    "Width": 60,
+    "Height": 60
+  }
+}

@@ -32,11 +32,12 @@ enum EPanelAnimation
 enum EMonsterState
 {
     Ready = 0,
-    Run = 1,
-    FallDown = 2,
-    Dead = 3,
-    Stop = 4,
+    Run,
+    FallDown,
+    Dead,
+    Stop,
     Drown,
+    Summon,
 }
 
 // 手势难度
@@ -51,6 +52,13 @@ enum EGestureDifficult
 enum EMonsterType {
     FallDown = 1,   // 下落
     Float,          // 浮空
+}
+
+// 召唤物类型
+enum ESummonType
+{
+    Balloon = 1,
+    Monster
 }
 
 // 特效的类型

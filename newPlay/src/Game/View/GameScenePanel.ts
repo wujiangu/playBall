@@ -386,7 +386,7 @@ class GameScenePanel extends BasePanel {
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
                 if (summon.GestureType == GameConfig.gestureType) {
-                    summon.GotoDead()
+                    summon.GotoExplore()
                 }
             }
         }
@@ -538,14 +538,11 @@ class GameScenePanel extends BasePanel {
     }
 
     public CreateSummonActor(a_data:any, a_x:number, a_y:number) {
-        // if (this.test) return
-        // this.test = true
+        
         let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
         let targetX = a_x + MathUtils.getRandom(-150, 150)
         let targetY = a_y + MathUtils.getRandom(-20, 20)
-        summon.Init(a_data, targetX, targetY)
-        summon.x = a_x
-        summon.y = a_y
+        summon.Init(a_data, targetX, targetY, a_x, a_y)
         this.m_summonActors.push(summon)
         for (let i = this.m_summonActors.length-1; i >= 0; i--) {
 			this.m_groupGame.addChild(this.m_summonActors[i])

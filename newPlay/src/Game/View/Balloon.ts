@@ -121,7 +121,7 @@ class Balloon extends egret.Sprite {
 			PanelManager.m_gameScenePanel.Score += this._score
 		}
 
-		if (this._root.Balloons.length <= 0) {
+		if (this._root.Balloons != null && this._root.Balloons.length <= 0) {
 			this._root.GotoDead()
 		}
 		// if (this._root.State == EMonsterState.Ready) {

@@ -2,15 +2,16 @@ class SummonActor extends BaseActor {
 	public constructor() {
 		super()
 
+		this.m_balloon = new Balloon()
+		this.m_groupBalloon.addChild(this.m_balloon)
+
 		this.m_gesture = new egret.Bitmap()
 		this.addChild(this.m_gesture)
 		this.m_gesture.scaleX = 0.5
 		this.m_gesture.scaleY = 0.5
-
-		this._animations = ["hong", "huang", "lan"]
 	}
 
-	public Init(a_data:any, a_x:number, a_y:number) {
+	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number) {
 		this.m_sumWeight = 0
 		// for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
 		// 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
@@ -20,6 +21,7 @@ class SummonActor extends BaseActor {
 		// this.m_data = this._RandomSummonActorData()
 
 		this.m_data = GameConfig.summonConfig[a_data.id.toString()]
+		this._animations = this.m_data.Actions
 		this.m_gesturDiff = a_data.diff
 		this.m_gestureData.length = 0
 		if (a_data.ids.length > 0) {
@@ -40,13 +42,16 @@ class SummonActor extends BaseActor {
 				}
 			}
 		}
-
-		this.m_isArrive = false
+		
 		if (this.m_data) {
 			this.InitData()
 			this.InitGraph()
 			this.m_endX = Math.max(a_x, this.w)
 			this.m_endY = Math.min(a_y, Config.stageWidth - this.w)
+			if (this.m_data.Type == ESummonType.Balloon) {
+				this.x = beginX
+				this.y = beginY
+			}
         	// Common.log("位置", this.m_endX, this.m_endY)
 		}else{
 			Error("no wolf data")
@@ -83,7 +88,33 @@ class SummonActor extends BaseActor {
 	public InitGraph() {
 		this.x = Config.stageWidth + this.m_width / 2
 		this.y = MathUtils.getRandom(Config.stageHalfHeight - 200, Config.stageHalfHeight + 200)
-		this.UpdateGesture()
+
+		this.m_gesture.visible = false
+		this.m_groupBalloon.visible = false
+		this.m_armatureContainer.visible = true
+		if (this.m_data.Type == ESummonType.Balloon) {
+			this.m_isArrive = false
+			this.UpdateGesture()
+			let colorIndex = MathUtils.getRandom(this._animations.length - 1)
+			this._animationName = this._animations[colorIndex]
+			this.m_armatureContainer.play(this._animationName, 1)
+			this.m_armatureContainer.pause(this._animationName)
+		}
+		else if (this.m_data.Type == ESummonType.Monster) {
+			this.m_isArrive = true
+			this.m_balloon.Init(this.m_gestureData, this)
+			this._SetBallonPosition(this.m_balloon, 1, 0)
+			// this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+			this._animationName = DragonBonesAnimations.Explore
+			this.m_gestureType = this.m_balloon.type
+
+			this.m_state = EMonsterState.Summon
+			this.m_armatureContainer.play(DragonBonesAnimations.Explore, 1, 1, 0, 3)
+
+			this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
+			this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width)
+			this.y = MathUtils.getRandom(200, PanelManager.m_gameScenePanel.GroundPos - 200)
+		}
 	}
 
 	public UpdateGesture() {
@@ -97,11 +128,6 @@ class SummonActor extends BaseActor {
 		this.m_gestureType = this.m_gestureData[random].type
 		this.m_score = this.m_gestureData[random].count
 		this.m_gestureData.splice(random, 1)
-
-		let colorIndex = MathUtils.getRandom(this._animations.length - 1)
-		this._animationName = this._animations[colorIndex]
-		this.m_armatureContainer.play(this._animationName, 1)
-		this.m_armatureContainer.pause(this._animationName)
 	}
 
 	public GotoIdle() {
@@ -113,19 +139,26 @@ class SummonActor extends BaseActor {
 		GameManager.Instance.Stop()
 	}
 
-	public GotoDead() {
+	public GotoExplore() {
 		this.m_gesture.visible = false
 		this.m_armatureContainer.play(this._animationName, 1)
 		this.m_state = EMonsterState.Dead
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
 
-		GameVoice.ballonBoomSound.play(0, 1)
+		if (this.m_data.Type == ESummonType.Balloon) {
+			GameVoice.ballonBoomSound.play(0, 1)
+		}
+		else if (this.m_data.Type == ESummonType.Monster) {
+			this.m_balloon.BalloonExplore()
+		}
+		
 	}
 
 	public Destroy() {
 		// this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
 		this.m_armatureContainer.clear()
+		this.m_armatureContainer.visible = false
 		GameObjectPool.getInstance().destroyObject(this)
 	}
 
@@ -145,7 +178,7 @@ class SummonActor extends BaseActor {
 					return
 				}
 				let radian = MathUtils.getRadian2(this.x, this.y, this.m_endX, this.m_endY)
-				let speed = timeElapsed
+				let speed = timeElapsed / 2
 				let tempX:number = Math.cos(radian) * speed
 				let tempY:number = Math.sin(radian) * speed
 				let deltaX = parseFloat(tempX.toFixed(2))
@@ -172,18 +205,13 @@ class SummonActor extends BaseActor {
 			this.Destroy()
 			PanelManager.m_gameScenePanel.RemoveSummonActor(this)
 		}
-	}
 
-	private _RandomSummonActorData():any {
-		let random = MathUtils.getRandom(1, this.m_sumWeight)
-		for (let i = 0; i < GameConfig.luckyConfig.length; i++)
-		{
-			if (random <= GameConfig.luckyConfig[i].weight)
-			{
-				return GameConfig.luckyConfig[i]
-			}
+		if (this.m_state == EMonsterState.Summon) {
+			this.m_groupBalloon.visible = true
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+			this.m_state = EMonsterState.Ready
+			this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
 		}
-		return null
 	}
 
 	private m_sumWeight:number

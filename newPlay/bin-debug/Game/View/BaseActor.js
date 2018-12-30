@@ -41,6 +41,7 @@ var BaseActor = (function (_super) {
     };
     BaseActor.prototype.GotoDead = function () {
     };
+    BaseActor.prototype.GotoExplore = function () { };
     BaseActor.prototype.GotoRun = function () {
     };
     BaseActor.prototype.GotoSlow = function () { };

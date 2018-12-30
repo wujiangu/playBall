@@ -375,7 +375,7 @@ var GameScenePanel = (function (_super) {
             for (var i = 0; i < this.m_summonActors.length; i++) {
                 var summon = this.m_summonActors[i];
                 if (summon.GestureType == GameConfig.gestureType) {
-                    summon.GotoDead();
+                    summon.GotoExplore();
                 }
             }
         }
@@ -512,14 +512,10 @@ var GameScenePanel = (function (_super) {
         this.m_groupGame.addChild(lucky);
     };
     GameScenePanel.prototype.CreateSummonActor = function (a_data, a_x, a_y) {
-        // if (this.test) return
-        // this.test = true
         var summon = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor");
         var targetX = a_x + MathUtils.getRandom(-150, 150);
         var targetY = a_y + MathUtils.getRandom(-20, 20);
-        summon.Init(a_data, targetX, targetY);
-        summon.x = a_x;
-        summon.y = a_y;
+        summon.Init(a_data, targetX, targetY, a_x, a_y);
         this.m_summonActors.push(summon);
         for (var i = this.m_summonActors.length - 1; i >= 0; i--) {
             this.m_groupGame.addChild(this.m_summonActors[i]);

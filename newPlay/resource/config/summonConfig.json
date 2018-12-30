@@ -4,11 +4,25 @@
     "Type": 1,
     "Name": "气球",
     "Animation": "qiqiu",
+    "Actions":["hong", "huang", "lan"],
     "Speed": 10,
     "Score": 1,
     "Power": 1,
     "Scale": 0.45,
     "Width": 60,
     "Height": 60
+  },
+  "1002":{
+    "ID": 1002,
+    "Type": 2,
+    "Name": "小蜘蛛",
+    "Animation": "zhizhu",
+    "Actions":["idle", "explore"],
+    "Speed": 12,
+    "Score": 2,
+    "Power": 1,
+    "Scale": 0.5,
+    "Width": 60,
+    "Height": 100
   }
 }

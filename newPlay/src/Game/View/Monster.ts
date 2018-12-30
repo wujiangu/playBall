@@ -331,7 +331,8 @@ class Monster extends BaseActor {
 		switch (evt) {
 			case "vomit":
 				if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined) {
-					PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y)
+					let count = MathUtils.getRandom(1, this.m_summonData.count)
+					for (let i = 0; i < count; i++) PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y)
 				}
 			break
 		}

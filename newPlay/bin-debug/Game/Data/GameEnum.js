@@ -34,6 +34,7 @@ var EMonsterState;
     EMonsterState[EMonsterState["Dead"] = 3] = "Dead";
     EMonsterState[EMonsterState["Stop"] = 4] = "Stop";
     EMonsterState[EMonsterState["Drown"] = 5] = "Drown";
+    EMonsterState[EMonsterState["Summon"] = 6] = "Summon";
 })(EMonsterState || (EMonsterState = {}));
 // 手势难度
 var EGestureDifficult;
@@ -48,6 +49,12 @@ var EMonsterType;
     EMonsterType[EMonsterType["FallDown"] = 1] = "FallDown";
     EMonsterType[EMonsterType["Float"] = 2] = "Float";
 })(EMonsterType || (EMonsterType = {}));
+// 召唤物类型
+var ESummonType;
+(function (ESummonType) {
+    ESummonType[ESummonType["Balloon"] = 1] = "Balloon";
+    ESummonType[ESummonType["Monster"] = 2] = "Monster";
+})(ESummonType || (ESummonType = {}));
 // 特效的类型
 var EEffectType;
 (function (EEffectType) {
