@@ -36,7 +36,7 @@ var GameScenePanel = (function (_super) {
         this.readyAnimate.play(0);
         this.initData();
         this.m_imgEffectMask.visible = false;
-        // this.m_labScore.visible = false
+        this.m_rectWarning.visible = false;
         this.m_bitLabScore.visible = false;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
@@ -59,7 +59,7 @@ var GameScenePanel = (function (_super) {
         // this.m_labScore.text = this.m_score.toString()
         this.m_bitLabScore.text = this.m_score.toString();
         this.UpdeLevelData(1001);
-        ShakeTool.getInstance().setInitPos(this.x, this.y);
+        ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y);
     };
     GameScenePanel.prototype.UpdeLevelData = function (a_levelId) {
         this.m_currentLevel = GameConfig.levelConfig[a_levelId.toString()];
@@ -128,6 +128,22 @@ var GameScenePanel = (function (_super) {
             }
             if (this.m_slowDelay >= 0)
                 actorElapsed *= 0.2;
+            for (var i = 0; i < this.m_monsters.length; i++) {
+                var monster = this.m_monsters[i];
+                if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this.m_rectWarning.visible = true;
+                    this.m_isWarning = true;
+                    this.warning.play(0);
+                }
+            }
+            for (var i = 0; i < this.m_summonActors.length; i++) {
+                var summon = this.m_summonActors[i];
+                if (summon.State == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this.m_rectWarning.visible = true;
+                    this.m_isWarning = true;
+                    this.warning.play(0);
+                }
+            }
         }
         if (this.m_levelState != ELevelType.End && GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
             this.m_monsterAddDelay = 0;
@@ -282,12 +298,26 @@ var GameScenePanel = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameScenePanel.prototype, "WarningPos", {
+        get: function () {
+            return this.m_imgGroundWarning.y;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(GameScenePanel.prototype, "EliteCount", {
         get: function () {
             return this.m_eliteCount;
         },
         set: function (value) {
             this.m_eliteCount = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameScenePanel.prototype, "MountBg", {
+        get: function () {
+            return this.m_imgScene;
         },
         enumerable: true,
         configurable: true
@@ -340,7 +370,7 @@ var GameScenePanel = (function (_super) {
             this.m_fullArmature.ArmatureDisplay = armatureDisplay;
             this.m_fullArmatureContainer.visible = false;
             this.m_fullArmatureContainer.register(this.m_fullArmature, [name]);
-            this.m_fullArmatureContainer.scaleX = 1.1;
+            this.m_fullArmatureContainer.scaleX = 1.2;
         }
     };
     GameScenePanel.prototype._UpdateProgress = function (angle) {
@@ -461,6 +491,10 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype._OnWaterComplete = function () {
         this.water.play(0);
     };
+    GameScenePanel.prototype._OnWarningComplete = function () {
+        this.m_isWarning = false;
+        this.m_rectWarning.visible = false;
+    };
     GameScenePanel.prototype.onComplete = function () {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer();
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2;
@@ -477,6 +511,7 @@ var GameScenePanel = (function (_super) {
         this.m_fullArmatureContainer.addCompleteCallFunc(this._OnFullArmatureComplete, this);
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
         this.water.addEventListener('complete', this._OnWaterComplete, this);
+        this.warning.addEventListener('complete', this._OnWarningComplete, this);
         this._OnResize();
     };
     /**
@@ -523,6 +558,8 @@ var GameScenePanel = (function (_super) {
     };
     GameScenePanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }
+        this.m_fullArmatureContainer.width = Config.stageWidth;
+        this.m_fullArmatureContainer.height = Config.stageHeight;
     };
     return GameScenePanel;
 }(BasePanel));

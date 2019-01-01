@@ -64,6 +64,7 @@ class Gesture
     private _currentPoint:egret.Point;
     private mouseDown(evt:egret.TouchEvent)
     {
+        if (this._isDown) return
         this._isDown = true
         this._layer.graphics.clear();
         this._mouseDatas = [];

@@ -186,6 +186,13 @@ var SummonActor = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(SummonActor.prototype, "State", {
+        get: function () {
+            return this.m_state;
+        },
+        enumerable: true,
+        configurable: true
+    });
     // public UpdateGesture() {
     // 	// this.m_balloon.UpdateColorAndGesture()
     // 	// if (PanelManager.m_gameScenePanel != null) {

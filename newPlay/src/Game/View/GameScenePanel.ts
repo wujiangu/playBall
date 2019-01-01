@@ -29,7 +29,7 @@ class GameScenePanel extends BasePanel {
         this.readyAnimate.play(0)
         this.initData()
         this.m_imgEffectMask.visible = false
-        // this.m_labScore.visible = false
+        this.m_rectWarning.visible = false
         this.m_bitLabScore.visible = false
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
@@ -55,7 +55,7 @@ class GameScenePanel extends BasePanel {
         this.m_bitLabScore.text = this.m_score.toString()
         this.UpdeLevelData(1001)
 
-        ShakeTool.getInstance().setInitPos(this.x, this.y)
+        ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y)
     }
 
     public UpdeLevelData(a_levelId:number) {
@@ -130,6 +130,25 @@ class GameScenePanel extends BasePanel {
             }
 
             if (this.m_slowDelay >= 0) actorElapsed *= 0.2
+
+
+            for (let i = 0; i < this.m_monsters.length; i++) {
+                let monster:Monster = this.m_monsters[i]
+                if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this.m_rectWarning.visible = true
+                    this.m_isWarning = true
+                    this.warning.play(0)
+                }
+            }
+
+            for (let i = 0; i < this.m_summonActors.length; i++) {
+                let summon:SummonActor = this.m_summonActors[i]
+                if (summon.State == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this.m_rectWarning.visible = true
+                    this.m_isWarning = true
+                    this.warning.play(0)
+                }
+            }
         }
 
         if (this.m_levelState != ELevelType.End && GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
@@ -291,12 +310,20 @@ class GameScenePanel extends BasePanel {
         return this.m_imgGroundWater.y
     }
 
+    public get WarningPos() {
+        return this.m_imgGroundWarning.y
+    }
+
     public get EliteCount() {
         return this.m_eliteCount
     }
 
     public set EliteCount(value:number) {
         this.m_eliteCount = value
+    }
+
+    public get MountBg() {
+        return this.m_imgScene
     }
 
     /**
@@ -347,7 +374,7 @@ class GameScenePanel extends BasePanel {
             this.m_fullArmature.ArmatureDisplay = armatureDisplay
             this.m_fullArmatureContainer.visible = false
             this.m_fullArmatureContainer.register(this.m_fullArmature, [name])
-            this.m_fullArmatureContainer.scaleX = 1.1
+            this.m_fullArmatureContainer.scaleX = 1.2
         }
     }
 
@@ -481,6 +508,11 @@ class GameScenePanel extends BasePanel {
 		this.water.play(0)
 	}
 
+    private _OnWarningComplete() {
+        this.m_isWarning = false
+        this.m_rectWarning.visible = false
+    }
+
 	private onComplete() {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2
@@ -499,6 +531,7 @@ class GameScenePanel extends BasePanel {
         this.m_fullArmatureContainer.addCompleteCallFunc(this._OnFullArmatureComplete, this)
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this)
         this.water.addEventListener('complete', this._OnWaterComplete, this)
+        this.warning.addEventListener('complete', this._OnWarningComplete, this)
 		this._OnResize()
 	}
 
@@ -553,7 +586,8 @@ class GameScenePanel extends BasePanel {
 
     protected _OnResize(event:egret.Event = null)
     {
-		
+		this.m_fullArmatureContainer.width = Config.stageWidth
+        this.m_fullArmatureContainer.height = Config.stageHeight
     }
 
 
@@ -582,6 +616,7 @@ class GameScenePanel extends BasePanel {
     private m_allTime:number
     /**精英怪总量 */
     private m_eliteCount:number
+    private m_isWarning:boolean
 
     ///////////////////////////////////////////////////////////////////////////
 	private m_imgScene:eui.Image
@@ -589,6 +624,8 @@ class GameScenePanel extends BasePanel {
     private m_imgEffectMask:eui.Image
     private m_imgGroundLine:eui.Image
     private m_imgGroundWater:eui.Image
+    private m_imgGroundWarning:eui.Image
+    private m_rectWarning:eui.Rect
     private m_btnPause:eui.Button
 
 	private m_groupScore:eui.Group
@@ -614,6 +651,7 @@ class GameScenePanel extends BasePanel {
     private m_groupIcon:eui.Group
     private readyAnimate:egret.tween.TweenGroup
     private effectMask:egret.tween.TweenGroup
+    private warning:egret.tween.TweenGroup
     /**水面 */
 	private water:egret.tween.TweenGroup
 

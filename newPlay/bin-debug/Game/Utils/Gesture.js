@@ -56,6 +56,8 @@ var Gesture = (function () {
         this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
     };
     Gesture.prototype.mouseDown = function (evt) {
+        if (this._isDown)
+            return;
         this._isDown = true;
         this._layer.graphics.clear();
         this._mouseDatas = [];

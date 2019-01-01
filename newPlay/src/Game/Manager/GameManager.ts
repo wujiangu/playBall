@@ -30,7 +30,8 @@ class GameManager extends egret.Sprite{
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.End
 			PanelManager.m_gameScenePanel.Exit()
-			ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10, this._Onshake)
+			ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this)
+			Common.log("游戏状态:", this._gameState)
 		}
 		
 	}
@@ -49,6 +50,15 @@ class GameManager extends egret.Sprite{
 		if (!isRelease) Common.dispatchEvent(MainNotify.openGamePausePanel)
 	}
 
+	public StageToBack() {
+		this._lastStage = this._gameState
+		this._gameState = EGameState.StageBack
+	}
+
+	public StageToFront() {
+		this._gameState = this._lastStage
+	}
+
 	public Continue():void
 	{
 		this._gameState = EGameState.Start
@@ -59,6 +69,7 @@ class GameManager extends egret.Sprite{
 
 	public Update():void
 	{
+		if (this._gameState == EGameState.StageBack) return
 		if (this._gameState == EGameState.Ready) {
 			if (PanelManager.m_gameStartPanel != null) {
 				PanelManager.m_gameStartPanel.Update()
@@ -84,13 +95,17 @@ class GameManager extends egret.Sprite{
 	}
 
 	private _Onshake() {
-		Common.dispatchEvent(MainNotify.openGameOverPanel)
+		Common.log("游戏状态:", this._gameState)
+		if (this._gameState == EGameState.End) {
+			Common.dispatchEvent(MainNotify.openGameOverPanel)
+		}
 	}
 
 	private _startTime:number
 	private _lastTime:number
 	private _time:number
 	private _gameState:EGameState
+	private _lastStage:EGameState
 	private _bgMusic:egret.Sound
 	private _bgChannel:egret.SoundChannel
 

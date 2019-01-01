@@ -40,6 +40,7 @@ class Main extends eui.UILayer {
      * loading process interface
      */
     private loadingView: LoadingUI;
+    private isPause:boolean = false
     protected createChildren(): void {
         super.createChildren();
         egret.lifecycle.addLifecycleListener((context) => {
@@ -49,13 +50,15 @@ class Main extends eui.UILayer {
         })
 
         egret.lifecycle.onPause = () => {
+            GameManager.Instance.StageToBack()
             egret.ticker.pause();
         }
 
         egret.lifecycle.onResume = () => {
+            GameManager.Instance.StageToFront()
             egret.ticker.resume();
         }
-        this.stage.scaleMode = egret.StageScaleMode.FIXED_WIDTH
+        this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT
         this.stage.setContentSize(750, 1336)
         //inject the custom material parser
         //注入自定义的素材解析器
@@ -132,6 +135,7 @@ class Main extends eui.UILayer {
 			    GameConfig.isWebView = false
 		    }
             Common.GetMaxScore()
+            Common.GetUseItem()
             this.startCreateScene();
         }
     }

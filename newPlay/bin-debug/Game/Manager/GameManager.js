@@ -37,7 +37,8 @@ var GameManager = (function (_super) {
         if (this._gameState == EGameState.Start) {
             this._gameState = EGameState.End;
             PanelManager.m_gameScenePanel.Exit();
-            ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10, this._Onshake);
+            ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this);
+            Common.log("游戏状态:", this._gameState);
         }
     };
     GameManager.prototype.Start = function () {
@@ -52,12 +53,21 @@ var GameManager = (function (_super) {
         if (!isRelease)
             Common.dispatchEvent(MainNotify.openGamePausePanel);
     };
+    GameManager.prototype.StageToBack = function () {
+        this._lastStage = this._gameState;
+        this._gameState = EGameState.StageBack;
+    };
+    GameManager.prototype.StageToFront = function () {
+        this._gameState = this._lastStage;
+    };
     GameManager.prototype.Continue = function () {
         this._gameState = EGameState.Start;
         this._startTime = egret.getTimer();
         this._lastTime = this._startTime;
     };
     GameManager.prototype.Update = function () {
+        if (this._gameState == EGameState.StageBack)
+            return;
         if (this._gameState == EGameState.Ready) {
             if (PanelManager.m_gameStartPanel != null) {
                 PanelManager.m_gameStartPanel.Update();
@@ -84,7 +94,10 @@ var GameManager = (function (_super) {
         configurable: true
     });
     GameManager.prototype._Onshake = function () {
-        Common.dispatchEvent(MainNotify.openGameOverPanel);
+        Common.log("游戏状态:", this._gameState);
+        if (this._gameState == EGameState.End) {
+            Common.dispatchEvent(MainNotify.openGameOverPanel);
+        }
     };
     return GameManager;
 }(egret.Sprite));

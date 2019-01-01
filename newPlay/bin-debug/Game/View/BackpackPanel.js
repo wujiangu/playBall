@@ -10,10 +10,10 @@ var BackpackPanel = (function (_super) {
     __extends(BackpackPanel, _super);
     function BackpackPanel() {
         var _this = _super.call(this) || this;
-        _this.addEventListener(eui.UIEvent.COMPLETE, _this.onComplete, _this);
-        _this.skinName = "resource/game_skins/backpackPanel.exml";
         _this.m_itemIDs = new Array();
         _this.m_btnItems = new Array();
+        _this.addEventListener(eui.UIEvent.COMPLETE, _this.onComplete, _this);
+        _this.skinName = "resource/game_skins/backpackPanel.exml";
         return _this;
     }
     // 初始化面板
@@ -38,40 +38,42 @@ var BackpackPanel = (function (_super) {
         this.touchChildren = false;
         Common.gameScene().uiLayer.removeChild(this);
     };
-    BackpackPanel.prototype._UpdateBtnItem = function (a_id, a_isRemove, a_target) {
-        if (a_isRemove === void 0) { a_isRemove = false; }
-        if (a_target === void 0) { a_target = null; }
-        if (a_id != null) {
-            if (!a_isRemove) {
-                if (this.m_btnItem1.name.length <= 0)
-                    this.m_btnItem1.name = a_id;
-                else if (this.m_btnItem2.name.length <= 0)
-                    this.m_btnItem2.name = a_id;
-                else { }
-            }
-            else {
-                a_target.name = "";
-                GameConfig.itemTable[a_id].IsUse = 0;
-                var id = parseInt(a_id);
-                var index = GameConfig.itemUseTable.indexOf(id);
-                GameConfig.itemUseTable.splice(index);
-            }
+    BackpackPanel.prototype._UpdateBtnItem = function () {
+        // if (a_id != null) {
+        // 	if (!a_isRemove) {
+        // 		if (this.m_btnItem1.name.length <= 0) this.m_btnItem1.name = a_id
+        // 		else if (this.m_btnItem2.name.length <= 0) this.m_btnItem2.name = a_id
+        // 		else{}
+        // 	}else{
+        // 		a_target.name = ""
+        // 		GameConfig.itemTable[a_id].IsUse = 0
+        // 		let id = parseInt(a_id)
+        // 		let index = GameConfig.itemUseTable.indexOf(id)
+        // 		GameConfig.itemUseTable.splice(index)
+        // 	}
+        // }
+        // if (this.m_btnItem1.name.length > 0) {
+        // 	this.m_btnItem1.visible = true
+        // 	let image:eui.Image = <eui.Image>this.m_btnItem1.getChildAt(0)
+        // 	image.source = GameConfig.itemTable[this.m_btnItem1.name].Icon
+        // }else{
+        // 	this.m_btnItem1.visible = false
+        // }
+        // if (this.m_btnItem2.name.length > 0) {
+        // 	this.m_btnItem2.visible = true
+        // 	let image:eui.Image = <eui.Image>this.m_btnItem2.getChildAt(0)
+        // 	image.source = GameConfig.itemTable[this.m_btnItem2.name].Icon
+        // }else{
+        // 	this.m_btnItem2.visible = false
+        // }
+        for (var i = 0; i < this.m_btnItems.length; i++) {
+            this.m_btnItems[i].visible = false;
         }
-        if (this.m_btnItem1.name.length > 0) {
-            this.m_btnItem1.visible = true;
-            var image = this.m_btnItem1.getChildAt(0);
-            image.source = GameConfig.itemTable[this.m_btnItem1.name].Icon;
-        }
-        else {
-            this.m_btnItem1.visible = false;
-        }
-        if (this.m_btnItem2.name.length > 0) {
-            this.m_btnItem2.visible = true;
-            var image = this.m_btnItem2.getChildAt(0);
-            image.source = GameConfig.itemTable[this.m_btnItem2.name].Icon;
-        }
-        else {
-            this.m_btnItem2.visible = false;
+        for (var i = 0; i < GameConfig.itemUseTable.length; i++) {
+            var id = GameConfig.itemUseTable[i];
+            this.m_btnItems[i].visible = true;
+            var image = this.m_btnItems[i].getChildAt(0);
+            image.source = GameConfig.itemTable[id.toString()].Icon;
         }
         this._UpdateAllItemList();
     };
@@ -80,12 +82,11 @@ var BackpackPanel = (function (_super) {
         this.m_itemCenter.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[1]].Icon);
         this.m_itemRight.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[2]].GrayIcon);
         var currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID.toString();
-        if (GameConfig.itemTable[currentId].IsUse == 1) {
-            this.m_labUse.visible = true;
-        }
-        else {
-            this.m_labUse.visible = false;
-        }
+        // if (GameConfig.itemTable[currentId].IsUse == 1) {
+        // 	this.m_labUse.visible = true
+        // }else{
+        // 	this.m_labUse.visible = false
+        // }
         this._UpdateItemInfo();
     };
     BackpackPanel.prototype._UpdateItemInfo = function () {
@@ -98,26 +99,43 @@ var BackpackPanel = (function (_super) {
         Common.dispatchEvent(MainNotify.openGameStartPanel);
     };
     BackpackPanel.prototype._OnBtnUse = function () {
-        if (GameConfig.itemUseTable.length < 2) {
-            var currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID;
-            var strId = currentId.toString();
-            if (GameConfig.itemTable[strId].Open) {
-                if (GameConfig.itemTable[strId].IsUse == 1) {
-                    TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！");
-                }
-                else {
-                    GameConfig.itemTable[strId].IsUse = 1;
-                    GameConfig.itemUseTable.push(currentId);
-                    this.m_labUse.visible = true;
-                    this._UpdateBtnItem(strId);
-                }
+        // if (GameConfig.itemUseTable.length < 2) {
+        // 	let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID
+        // 	let strId = currentId.toString()
+        // 	if (GameConfig.itemTable[strId].Open) {
+        // 		if (GameConfig.itemTable[strId].IsUse == 1) {
+        // 			TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
+        // 		}else{
+        // 			GameConfig.itemTable[strId].IsUse = 1
+        // 			GameConfig.itemUseTable.push(currentId)
+        // 			this._UpdateBtnItem(strId)
+        // 		}
+        // 	}else{
+        // 		TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
+        // 	}
+        // }else{
+        // 	TipsManager.Show("装备数量已达到上限！")
+        // }
+        var currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID;
+        var strId = currentId.toString();
+        if (GameConfig.itemTable[strId].Open) {
+            if (GameConfig.itemTable[strId].IsUse == 1) {
+                TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！");
             }
             else {
-                TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！");
+                GameConfig.itemTable[strId].IsUse = 1;
+                if (GameConfig.itemUseTable.length >= 2) {
+                    var id = GameConfig.itemUseTable[0];
+                    GameConfig.itemTable[id.toString()].IsUse = 0;
+                    GameConfig.itemUseTable.splice(0, 1);
+                }
+                GameConfig.itemUseTable.push(currentId);
+                Common.UpdateUseItem();
+                this._UpdateBtnItem();
             }
         }
         else {
-            TipsManager.Show("装备数量已达到上限！");
+            TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！");
         }
     };
     BackpackPanel.prototype._OnBtnLeft = function () {
@@ -142,21 +160,23 @@ var BackpackPanel = (function (_super) {
         this.itemGroup.play(0);
     };
     BackpackPanel.prototype._OnBtnItem1 = function () {
-        this._UpdateBtnItem(this.m_btnItem1.name, true, this.m_btnItem1);
+        // this._UpdateBtnItem(this.m_btnItem1.name, true, this.m_btnItem1)
     };
     BackpackPanel.prototype._OnBtnItem2 = function () {
-        this._UpdateBtnItem(this.m_btnItem2.name, true, this.m_btnItem2);
+        // this._UpdateBtnItem(this.m_btnItem2.name, true, this.m_btnItem2)
     };
     BackpackPanel.prototype.onComplete = function () {
         this.m_btnItem1.name = "";
         this.m_btnItem2.name = "";
+        this.m_btnItems.push(this.m_btnItem1);
+        this.m_btnItems.push(this.m_btnItem2);
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this);
         this.m_btnUse.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnUse, this);
         this.m_btnLeft.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLeft, this);
         this.m_btnRight.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRight, this);
         this.itemGroup.addEventListener('complete', this._OnTweenGroupComplete, this);
-        this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this);
-        this.m_btnItem2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem2, this);
+        // this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this)
+        // this.m_btnItem2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem2, this)
         this._OnResize();
     };
     BackpackPanel.prototype._OnResize = function (event) {

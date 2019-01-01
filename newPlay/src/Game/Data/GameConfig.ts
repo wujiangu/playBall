@@ -54,8 +54,11 @@ class GameConfig {
 		this.levelConfig = RES.getRes("levelConfig_json")
 		this.itemConfig = RES.getRes("itemConfig_json")
 		this.itemTable = {}
-		this.itemUseTable = new Array()
-
+		// this.itemUseTable = new Array()
+		let itemList = {}
+		for (let i = 0; i < this.itemUseTable.length; i++) {
+			itemList[this.itemUseTable[i].toString()] = 1
+		}
 		for (let i = 0; i < this.itemConfig.length; i++) {
 			let config = this.itemConfig[i]
 			let data = {}
@@ -67,6 +70,7 @@ class GameConfig {
 			data["Open"] = config.Open
 			data["Effect"] = config.Effect
 			data["IsUse"] = 0
+			if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0) data["IsUse"] = 1
 			this.itemTable[config.ID.toString()] = data
 		}
 

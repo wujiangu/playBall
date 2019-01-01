@@ -6,6 +6,8 @@ enum EGameState
     Pause,
     Again,
     End,
+    StageBack,
+    StageFront,
 }
 
 enum EGamePauseState

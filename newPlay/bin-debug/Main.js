@@ -38,6 +38,7 @@ var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isPause = false;
         _this.isThemeLoadEnd = false;
         _this.isResourceLoadEnd = false;
         return _this;
@@ -56,12 +57,14 @@ var Main = (function (_super) {
             };
         });
         egret.lifecycle.onPause = function () {
+            GameManager.Instance.StageToBack();
             egret.ticker.pause();
         };
         egret.lifecycle.onResume = function () {
+            GameManager.Instance.StageToFront();
             egret.ticker.resume();
         };
-        this.stage.scaleMode = egret.StageScaleMode.FIXED_WIDTH;
+        this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT;
         this.stage.setContentSize(750, 1336);
         //inject the custom material parser
         //注入自定义的素材解析器
@@ -132,6 +135,7 @@ var Main = (function (_super) {
                 GameConfig.isWebView = false;
             }
             Common.GetMaxScore();
+            Common.GetUseItem();
             this.startCreateScene();
         }
     };

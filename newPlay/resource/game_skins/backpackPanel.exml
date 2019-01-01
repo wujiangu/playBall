@@ -74,7 +74,6 @@
 	<e:Image id="m_itemRight" width="120" height="120" horizontalCenter="168" verticalCenter="-41"/>
 	<e:Image source="itemSheet_json.itemBg1" horizontalCenter="0" verticalCenter="-437"/>
 	<e:Image id="m_imgBox" source="itemSheet_json.itemBox" anchorOffsetY="0" height="150" anchorOffsetX="0" width="150" scale9Grid="33,33,129,128" horizontalCenter="0" verticalCenter="-116"/>
-	<e:Label id="m_labUse" text="使用中" x="275" y="481" fontFamily="Microsoft YaHei" textColor="0xf41111"/>
 	<e:Group width="361" height="100" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" verticalCenter="-336.5" touchThrough="false" touchEnabled="false" touchChildren="true">
 		<e:Button id="m_btnItem1" label="" x="38" y="0" height="100" width="100">
 			<e:skinName>

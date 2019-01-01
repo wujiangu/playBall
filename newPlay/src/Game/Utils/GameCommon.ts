@@ -59,4 +59,43 @@ namespace Common{
 			}
 		}
 	}
+
+	/**
+	 * 获取使用道具表
+	 */
+	export function GetUseItem() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.itemUseTable = JSON.parse(message)
+					// GameConfig.maxScore = parseInt(message)
+				}else{
+					GameConfig.itemUseTable = new Array()
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"itemUseTable")
+		}
+		else {
+			let itemUseTable = NativeApi.getLocalData(GameConfig.game+"itemUseTable")
+			if (itemUseTable == null) {
+				GameConfig.itemUseTable = new Array()
+			}else{
+				// GameConfig.maxScore = parseInt(score)
+				GameConfig.itemUseTable = JSON.parse(itemUseTable)
+			}
+		}
+	}
+
+	/**更新道具列表 */
+	export function UpdateUseItem() {
+		if (GameConfig.itemUseTable.length > 0) {
+			let str = JSON.stringify(GameConfig.itemUseTable)
+			
+			if (!GameConfig.isWebView) {
+				egret.ExternalInterface.call("write", GameConfig.game+"itemUseTable:" + str)
+			}else{
+				NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
+			}
+		}
+	}
 }

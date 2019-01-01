@@ -147,7 +147,7 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Image id="m_imgBg" left="0" right="0" bottom="0" source="Bg1_jpg" height="1392"/>
+	<e:Image id="m_imgBg" left="-25" right="-25" bottom="0" source="Bg1_jpg" height="1392"/>
 	<e:Image id="m_cloud1" x="447" source="gameUISheet_json.game104" y="599"/>
 	<e:Image id="m_cloud2" x="75.66" source="gameUISheet_json.game103" y="339"/>
 	<e:Image id="m_cloud3" x="565" scaleX="-1" bottom="1158" source="gameUISheet_json.game104"/>
@@ -179,7 +179,7 @@
 			</e:skinName>
 		</e:Button>
 	</e:Group>
-	<e:Button id="m_btnSetting" label="" width="72" height="72" right="13" top="12">
+	<e:Button id="m_btnSetting" label="" width="72" height="72" top="12" horizontalCenter="326">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnSetting" source.down="btnSheet_json.btnSetting"/>

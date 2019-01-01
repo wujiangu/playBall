@@ -193,6 +193,10 @@ class SummonActor extends BaseActor {
 		return this.m_gestureType
 	}
 
+	public get State() {
+		return this.m_state
+	}
+
 	// public UpdateGesture() {
 	// 	// this.m_balloon.UpdateColorAndGesture()
 	// 	// if (PanelManager.m_gameScenePanel != null) {

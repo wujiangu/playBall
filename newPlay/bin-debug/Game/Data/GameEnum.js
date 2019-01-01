@@ -6,6 +6,8 @@ var EGameState;
     EGameState[EGameState["Pause"] = 2] = "Pause";
     EGameState[EGameState["Again"] = 3] = "Again";
     EGameState[EGameState["End"] = 4] = "End";
+    EGameState[EGameState["StageBack"] = 5] = "StageBack";
+    EGameState[EGameState["StageFront"] = 6] = "StageFront";
 })(EGameState || (EGameState = {}));
 var EGamePauseState;
 (function (EGamePauseState) {

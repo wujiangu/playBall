@@ -1,11 +1,11 @@
 class BackpackPanel extends BasePanel {
 	public constructor() {
 		super()
-		this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
-        this.skinName = "resource/game_skins/backpackPanel.exml"
 
 		this.m_itemIDs = new Array()
 		this.m_btnItems = new Array()
+		this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
+        this.skinName = "resource/game_skins/backpackPanel.exml"
 	}
 
 	// 初始化面板
@@ -38,35 +38,45 @@ class BackpackPanel extends BasePanel {
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
-	private _UpdateBtnItem(a_id?:string, a_isRemove:boolean = false, a_target:eui.Button = null) {
-		if (a_id != null) {
-			if (!a_isRemove) {
-				if (this.m_btnItem1.name.length <= 0) this.m_btnItem1.name = a_id
-				else if (this.m_btnItem2.name.length <= 0) this.m_btnItem2.name = a_id
-				else{}
-			}else{
-				a_target.name = ""
-				GameConfig.itemTable[a_id].IsUse = 0
-				let id = parseInt(a_id)
-				let index = GameConfig.itemUseTable.indexOf(id)
-				GameConfig.itemUseTable.splice(index)
-			}
-		}
+	private _UpdateBtnItem() {
+		// if (a_id != null) {
+		// 	if (!a_isRemove) {
+		// 		if (this.m_btnItem1.name.length <= 0) this.m_btnItem1.name = a_id
+		// 		else if (this.m_btnItem2.name.length <= 0) this.m_btnItem2.name = a_id
+		// 		else{}
+		// 	}else{
+		// 		a_target.name = ""
+		// 		GameConfig.itemTable[a_id].IsUse = 0
+		// 		let id = parseInt(a_id)
+		// 		let index = GameConfig.itemUseTable.indexOf(id)
+		// 		GameConfig.itemUseTable.splice(index)
+		// 	}
+		// }
 
-		if (this.m_btnItem1.name.length > 0) {
-			this.m_btnItem1.visible = true
-			let image:eui.Image = <eui.Image>this.m_btnItem1.getChildAt(0)
-			image.source = GameConfig.itemTable[this.m_btnItem1.name].Icon
-		}else{
-			this.m_btnItem1.visible = false
-		}
+		// if (this.m_btnItem1.name.length > 0) {
+		// 	this.m_btnItem1.visible = true
+		// 	let image:eui.Image = <eui.Image>this.m_btnItem1.getChildAt(0)
+		// 	image.source = GameConfig.itemTable[this.m_btnItem1.name].Icon
+		// }else{
+		// 	this.m_btnItem1.visible = false
+		// }
 		
-		if (this.m_btnItem2.name.length > 0) {
-			this.m_btnItem2.visible = true
-			let image:eui.Image = <eui.Image>this.m_btnItem2.getChildAt(0)
-			image.source = GameConfig.itemTable[this.m_btnItem2.name].Icon
-		}else{
-			this.m_btnItem2.visible = false
+		// if (this.m_btnItem2.name.length > 0) {
+		// 	this.m_btnItem2.visible = true
+		// 	let image:eui.Image = <eui.Image>this.m_btnItem2.getChildAt(0)
+		// 	image.source = GameConfig.itemTable[this.m_btnItem2.name].Icon
+		// }else{
+		// 	this.m_btnItem2.visible = false
+		// }
+
+		for (let i = 0; i < this.m_btnItems.length; i++) {
+			this.m_btnItems[i].visible = false
+		}
+		for (let i = 0; i < GameConfig.itemUseTable.length; i++) {
+			let id = GameConfig.itemUseTable[i]
+			this.m_btnItems[i].visible = true
+			let image:eui.Image = <eui.Image>this.m_btnItems[i].getChildAt(0)
+			image.source = GameConfig.itemTable[id.toString()].Icon
 		}
 
 		this._UpdateAllItemList()
@@ -78,11 +88,11 @@ class BackpackPanel extends BasePanel {
 		this.m_itemRight.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[2]].GrayIcon)
 
 		let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID.toString()
-		if (GameConfig.itemTable[currentId].IsUse == 1) {
-			this.m_labUse.visible = true
-		}else{
-			this.m_labUse.visible = false
-		}
+		// if (GameConfig.itemTable[currentId].IsUse == 1) {
+		// 	this.m_labUse.visible = true
+		// }else{
+		// 	this.m_labUse.visible = false
+		// }
 		this._UpdateItemInfo()
 	}
 
@@ -98,24 +108,43 @@ class BackpackPanel extends BasePanel {
 	}
 
 	private _OnBtnUse() {
-		if (GameConfig.itemUseTable.length < 2) {
-			let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID
-			let strId = currentId.toString()
-			if (GameConfig.itemTable[strId].Open) {
-				if (GameConfig.itemTable[strId].IsUse == 1) {
-					TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
-				}else{
-					GameConfig.itemTable[strId].IsUse = 1
-					GameConfig.itemUseTable.push(currentId)
-					this.m_labUse.visible = true
-					this._UpdateBtnItem(strId)
-				}
-			}else{
-				TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
-			}
+		// if (GameConfig.itemUseTable.length < 2) {
+		// 	let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID
+		// 	let strId = currentId.toString()
+		// 	if (GameConfig.itemTable[strId].Open) {
+		// 		if (GameConfig.itemTable[strId].IsUse == 1) {
+		// 			TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
+		// 		}else{
+		// 			GameConfig.itemTable[strId].IsUse = 1
+		// 			GameConfig.itemUseTable.push(currentId)
+		// 			this._UpdateBtnItem(strId)
+		// 		}
+		// 	}else{
+		// 		TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
+		// 	}
 			
+		// }else{
+		// 	TipsManager.Show("装备数量已达到上限！")
+		// }
+
+		let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID
+		let strId = currentId.toString()
+		if (GameConfig.itemTable[strId].Open) {
+			if (GameConfig.itemTable[strId].IsUse == 1) {
+				TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
+			}else{
+				GameConfig.itemTable[strId].IsUse = 1
+				if (GameConfig.itemUseTable.length >= 2) {
+					let id = GameConfig.itemUseTable[0]
+					GameConfig.itemTable[id.toString()].IsUse = 0
+					GameConfig.itemUseTable.splice(0, 1)
+				}
+				GameConfig.itemUseTable.push(currentId)
+				Common.UpdateUseItem()
+				this._UpdateBtnItem()
+			}
 		}else{
-			TipsManager.Show("装备数量已达到上限！")
+			TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
 		}
 	}
 
@@ -144,11 +173,11 @@ class BackpackPanel extends BasePanel {
 	}
 
 	private _OnBtnItem1() {
-		this._UpdateBtnItem(this.m_btnItem1.name, true, this.m_btnItem1)
+		// this._UpdateBtnItem(this.m_btnItem1.name, true, this.m_btnItem1)
 	}
 
 	private _OnBtnItem2() {
-		this._UpdateBtnItem(this.m_btnItem2.name, true, this.m_btnItem2)
+		// this._UpdateBtnItem(this.m_btnItem2.name, true, this.m_btnItem2)
 	}
 
 	private onComplete() {
@@ -156,14 +185,17 @@ class BackpackPanel extends BasePanel {
 		this.m_btnItem1.name = ""
 		this.m_btnItem2.name = ""
 
+		this.m_btnItems.push(this.m_btnItem1)
+		this.m_btnItems.push(this.m_btnItem2)
+
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
 		this.m_btnUse.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnUse, this)
 		this.m_btnLeft.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLeft, this)
 		this.m_btnRight.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRight, this)
 		this.itemGroup.addEventListener('complete', this._OnTweenGroupComplete, this);
 
-		this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this)
-		this.m_btnItem2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem2, this)
+		// this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this)
+		// this.m_btnItem2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem2, this)
 
 		this._OnResize()
 	}
@@ -191,9 +223,7 @@ class BackpackPanel extends BasePanel {
 
 	private itemGroup:egret.tween.TweenGroup
 
-	private m_labUse:eui.Label
-
 	private m_btnItem1:eui.Button
 	private m_btnItem2:eui.Button
-	private m_btnItems:Array<any>
+	private m_btnItems:Array<eui.Button>
 }

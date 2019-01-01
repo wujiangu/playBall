@@ -15,6 +15,7 @@ class ShakeTool {
     private rate: number;                //一秒震动次数
     private timer:egret.Timer = new egret.Timer(100);
     private completeFunc:Function
+    private thisobj:any
     
     public static getInstance():ShakeTool{
     	if(this.instance == null){
@@ -30,7 +31,7 @@ class ShakeTool {
      * @param        rate      震动频率(一秒震动多少次)
      * @param        maxDis    震动最大距离
      */
-    public shakeObj(target: egret.DisplayObject,time: number,rate: number,maxDis: number, func:Function = null): void {
+    public shakeObj(target: egret.DisplayObject,time: number,rate: number,maxDis: number, func:Function = null, thisobj:any = null): void {
         this.target = target;
         // this.initX = target.x;
         // this.initY = target.y;
@@ -44,7 +45,10 @@ class ShakeTool {
         this.timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.shakeComplete, this);
         this.timer.reset();
         this.timer.start();
-        this.completeFunc = func
+        if (func != null && thisobj != null) {
+            this.completeFunc = func
+            this.thisobj = thisobj
+        }
     }
 
     public setInitPos(x:number, y:number) {
@@ -65,8 +69,8 @@ class ShakeTool {
             this.target.x = this.initX;
             this.target.y = this.initY;
         }
-        if (this.completeFunc) {
-            this.completeFunc()
+        if (this.completeFunc && this.thisobj) {
+            this.completeFunc.call(this.thisobj)
         }
         this.timer.removeEventListener(egret.TimerEvent.TIMER,this.shaking,this);
         this.timer.removeEventListener(egret.TimerEvent.TIMER_COMPLETE,this.shakeComplete,this);

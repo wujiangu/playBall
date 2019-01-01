@@ -29,7 +29,11 @@ var GameConfig = (function () {
         this.levelConfig = RES.getRes("levelConfig_json");
         this.itemConfig = RES.getRes("itemConfig_json");
         this.itemTable = {};
-        this.itemUseTable = new Array();
+        // this.itemUseTable = new Array()
+        var itemList = {};
+        for (var i = 0; i < this.itemUseTable.length; i++) {
+            itemList[this.itemUseTable[i].toString()] = 1;
+        }
         for (var i = 0; i < this.itemConfig.length; i++) {
             var config = this.itemConfig[i];
             var data = {};
@@ -41,6 +45,8 @@ var GameConfig = (function () {
             data["Open"] = config.Open;
             data["Effect"] = config.Effect;
             data["IsUse"] = 0;
+            if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0)
+                data["IsUse"] = 1;
             this.itemTable[config.ID.toString()] = data;
         }
         var effectConfig = RES.getRes("effectConfig_json");

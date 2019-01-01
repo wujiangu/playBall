@@ -133,7 +133,7 @@ var Monster = (function (_super) {
         this.m_effectArmatureContainer.scaleY = 0.8;
         this.m_effectArmatureContainer.visible = true;
         this.m_effectArmatureContainer.play("shuihua", 1);
-        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel, 5, 4, 10);
+        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.5, 4, 5);
         this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
     };
     Monster.prototype.GotoSlow = function () {
