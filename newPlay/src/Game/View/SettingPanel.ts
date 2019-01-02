@@ -20,11 +20,10 @@ class SettingPanel extends BasePanel {
 		// Common.curPanel = PanelManager.m_backpackPanel
 		
         Common.gameScene().uiLayer.addChild(this)
-
 		this.m_sliderSound.maximum = 100
 		this.m_sliderBGM.maximum = 100
-		this.m_sliderSound.value = 50
-		this.m_sliderBGM.value = 30
+		this.m_sliderSound.value = GameConfig.bgmValue
+		this.m_sliderBGM.value = GameConfig.soundValue
 		this.m_btnReturn.enabled = false
 		Animations.popupOut(this.m_groupSetting, 300, function(){
 			this.m_btnReturn.enabled = true
@@ -38,12 +37,15 @@ class SettingPanel extends BasePanel {
 		}.bind(this))
     }
 
-	private _OnSoundSlider() {
-		
+	private _OnSoundSlider(e:egret.Event) {
+		let slider = <eui.HSlider>e.target
+		GameConfig.soundValue = slider.pendingValue
 	}
 
-	private _OnBGMSlider() {
-
+	private _OnBGMSlider(e:egret.Event) {
+		let slider = <eui.HSlider>e.target
+		GameConfig.bgmValue = slider.pendingValue
+		if (GameVoice.beginBGMChannel != null) GameVoice.beginBGMChannel.volume = GameConfig.bgmValue / 100
 	}
 
 	private _OnClose() {
@@ -55,6 +57,8 @@ class SettingPanel extends BasePanel {
 		this._OnResize()
 
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnClose, this)
+
+		Common.addTouchBegin(this.m_btnReturn)
 		this.m_sliderSound.addEventListener(egret.Event.CHANGE, this._OnSoundSlider, this)
 		this.m_sliderBGM.addEventListener(egret.Event.CHANGE, this._OnBGMSlider, this)
 	}

@@ -192,6 +192,13 @@ class BackpackPanel extends BasePanel {
 		this.m_btnUse.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnUse, this)
 		this.m_btnLeft.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLeft, this)
 		this.m_btnRight.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRight, this)
+
+
+		Common.addTouchBegin(this.m_btnReturn)
+		Common.addTouchBegin(this.m_btnUse)
+		Common.addTouchBegin(this.m_btnLeft)
+		Common.addTouchBegin(this.m_btnRight)
+
 		this.itemGroup.addEventListener('complete', this._OnTweenGroupComplete, this);
 
 		// this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this)

@@ -103,12 +103,17 @@ var GameStartPanel = (function (_super) {
         this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this);
         this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this);
         this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this);
+        Common.addTouchBegin(this.m_btnGameStart);
+        Common.addTouchBegin(this.m_btnSetting);
+        Common.addTouchBegin(this.m_btnRank);
+        Common.addTouchBegin(this.m_btnProc);
         this.InitGroup.addEventListener('complete', this._OnInitComplete, this);
         this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this);
         this.water.addEventListener('complete', this._OnWaterComplete, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }
+        _super.prototype._OnResize.call(this, event);
     };
     return GameStartPanel;
 }(BasePanel));

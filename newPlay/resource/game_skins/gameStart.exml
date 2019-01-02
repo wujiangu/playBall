@@ -147,7 +147,7 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Image id="m_imgBg" left="-25" right="-25" bottom="0" source="Bg1_jpg" height="1392"/>
+	<e:Image id="m_imgBg" height="1492" source="Bg1_png" width="760" bottom="0" horizontalCenter="0"/>
 	<e:Image id="m_cloud1" x="447" source="gameUISheet_json.game104" y="599"/>
 	<e:Image id="m_cloud2" x="75.66" source="gameUISheet_json.game103" y="339"/>
 	<e:Image id="m_cloud3" x="565" scaleX="-1" bottom="1158" source="gameUISheet_json.game104"/>

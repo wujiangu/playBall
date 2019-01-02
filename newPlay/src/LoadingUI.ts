@@ -37,7 +37,7 @@ class LoadingUI extends egret.Sprite {
 
     private CreatLoadingUI():void {
         // this.createBgGradientFill()
-        let bg = Common.createBitmap("loading_01_png")
+        let bg = Common.createBitmap("loadBg_jpg")
         bg.width = Config.stageWidth
         bg.height = Config.stageHeight
         this.addChild(bg)
@@ -98,12 +98,12 @@ class LoadingUI extends egret.Sprite {
 
         // this.createLogo();
 
-        let logo = Common.createBitmap("loading_03_png")
-        logo.anchorOffsetX = logo.width>>1
-        logo.anchorOffsetY = logo.height>>1
-        logo.x = Config.stageHalfWidth
-        logo.y = Config.stageHalfHeight - logo.height
-        this.addChild(logo)
+        // let logo = Common.createBitmap("loading_03_png")
+        // logo.anchorOffsetX = logo.width>>1
+        // logo.anchorOffsetY = logo.height>>1
+        // logo.x = Config.stageHalfWidth
+        // logo.y = Config.stageHalfHeight - logo.height
+        // this.addChild(logo)
 
         this.update(0);
         this.play()

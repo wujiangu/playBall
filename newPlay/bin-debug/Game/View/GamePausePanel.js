@@ -69,6 +69,9 @@ var GamePausePanel = (function (_super) {
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this);
         this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this);
         this.m_btnContinue.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnContinue, this);
+        Common.addTouchBegin(this.m_btnReturn);
+        Common.addTouchBegin(this.m_btnAgain);
+        Common.addTouchBegin(this.m_btnContinue);
         this.show.addEventListener('complete', this._OnShow, this);
         this.hide.addEventListener('complete', this._OnHide, this);
     };

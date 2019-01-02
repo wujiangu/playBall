@@ -63,6 +63,11 @@ class GameOverPanel extends BasePanel {
 
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
 		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this)
+
+
+		Common.addTouchBegin(this.m_btnReturn)
+		Common.addTouchBegin(this.m_btnAgain)
+		
 		this.Show.addEventListener('complete', this._OnShow, this)
 		this.Hide.addEventListener('complete', this._OnHide, this)
 	}

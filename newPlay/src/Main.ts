@@ -34,6 +34,11 @@ class Main extends eui.UILayer {
         Config.stageHeight = this.stage.stageHeight;
         Config.stageHalfWidth = this.stage.stageWidth / 2;
         Config.stageHalfHeight = this.stage.stageHeight / 2;
+        // this.stage.x = this.stage.stageWidth / 2
+        // this.left = 0
+        // this.top = 0
+        // this.right = 0
+        // this.bottom = 0
     }
     /**
      * 加载进度界面
@@ -60,6 +65,8 @@ class Main extends eui.UILayer {
         }
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT
         this.stage.setContentSize(750, 1336)
+        this.stage.maxTouches = 1
+        
         //inject the custom material parser
         //注入自定义的素材解析器
         let assetAdapter = new AssetAdapter();
@@ -173,12 +180,12 @@ class Main extends eui.UILayer {
      */
     protected startCreateScene(): void {
         GameManager.Instance.Init()
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
+        // this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
     }
 
-    private onClick(evt:egret.TouchEvent):void{
-        if(evt.currentTarget instanceof eui.Button){
-            GameVoice.btnSound.play(0, 1)
-        }
-    }
+    // private onClick(evt:egret.TouchEvent):void{
+    //     if(evt.currentTarget instanceof eui.Button){
+    //         GameVoice.btnSound.play(0, 1)
+    //     }
+    // }
 }

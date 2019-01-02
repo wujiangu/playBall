@@ -10,6 +10,15 @@ namespace Common{
     //当前面板
 	export var curPanel:BasePanel
 
+	function onTouchBegin() {
+		GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100
+	}
+
+	export function addTouchBegin(target:eui.Button) {
+		target.addEventListener(egret.TouchEvent.TOUCH_BEGIN, onTouchBegin, Common)
+	}
+
+
 	/**获取账号 */
 	export function GetAccount() {
 		egret.ExternalInterface.addCallback("sendToEgret", function (message) {

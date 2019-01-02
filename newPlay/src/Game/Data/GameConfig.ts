@@ -25,7 +25,8 @@ class GameConfig {
 	public static account:string
 	public static curScore:number
 	public static maxScore:number
-
+	public static bgmValue:number = 100
+	public static soundValue:number = 100
 	/**
      * 初始化骨骼的动画数据
      */

@@ -17,7 +17,7 @@
     "Type": 2,
     "Name": "小蜘蛛",
     "Animation": "zhizhu",
-    "Actions":["idle", "explore"],
+    "Actions":["idle", "dead"],
     "Speed": 12,
     "Score": 2,
     "Power": 1,

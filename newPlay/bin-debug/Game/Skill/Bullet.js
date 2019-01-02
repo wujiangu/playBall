@@ -44,7 +44,8 @@ var Bullet = (function (_super) {
             PanelManager.m_gameScenePanel.RemoveBullet(this);
             if (this.m_type == EEffectType.Fire) {
                 this.m_target.PlayEffect();
-                GameVoice.burnSound.play(0, 1);
+                var channel = GameVoice.burnSound.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
             }
             return;
         }

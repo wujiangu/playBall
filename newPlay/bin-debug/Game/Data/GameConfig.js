@@ -100,5 +100,7 @@ GameConfig.baseFallSpeed = 0.1;
 GameConfig.monsterAddDelay = 2000;
 GameConfig.luckyActorAddDelay = 20000;
 GameConfig.slowDuration = 3000;
+GameConfig.bgmValue = 100;
+GameConfig.soundValue = 100;
 __reflect(GameConfig.prototype, "GameConfig");
 //# sourceMappingURL=GameConfig.js.map

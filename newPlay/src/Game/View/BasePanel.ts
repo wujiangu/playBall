@@ -40,7 +40,9 @@ class BasePanel extends eui.Component{
 
     protected _OnResize(event:egret.Event = null)
     {
-
+        if (Config.stageHeight / Config.stageWidth < 1366 / 750) {
+            Common.log("比率小")
+        }
     }
 
 }

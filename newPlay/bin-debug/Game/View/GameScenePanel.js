@@ -93,6 +93,7 @@ var GameScenePanel = (function (_super) {
         if (GameVoice.battleBGMChannel != null)
             GameVoice.battleBGMChannel.stop();
         GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0);
+        GameVoice.battleBGMChannel.volume = GameConfig.bgmValue / 100;
         // this._CreateMonster()
     };
     // 退出面板
@@ -346,7 +347,8 @@ var GameScenePanel = (function (_super) {
         this.m_itemArmature.ArmatureDisplay = armatureDisplay;
         this.m_itemArmatureContainer.register(this.m_itemArmature, [name]);
         if (isRelease) {
-            GameVoice.skillBeginSound.play(0, 1);
+            var channel = GameVoice.skillBeginSound.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
             this.m_itemArmatureContainer.play(name, 1);
             GameManager.Instance.Pause(true);
             this.m_itemArmatureContainer.addCompleteCallFunc(this._OnItemArmatureComplete, this);
@@ -418,7 +420,8 @@ var GameScenePanel = (function (_super) {
             var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
             var count = Math.min(this.m_monsters.length, effectData.count);
             if (count > 0) {
-                GameVoice.fireBallSound.play(0, 1);
+                var channel = GameVoice.fireBallSound.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
                 var bulletCount = 0;
                 for (var index = 0; index < this.m_monsters.length; index++) {
                     if (this.m_monsters[index].State == EMonsterState.Ready) {
@@ -438,11 +441,11 @@ var GameScenePanel = (function (_super) {
                 }
                 switch (effectData.type) {
                     case EEffectType.Ice:
-                        GameVoice.iceEffectSound.play(0, 1);
+                        GameVoice.iceEffectSound.play(0, 1).volume = GameConfig.soundValue / 100;
                         this.m_slowDelay = 0;
                         break;
                     case EEffectType.ChangeGesture:
-                        GameVoice.staffSound.play(0, 1);
+                        GameVoice.staffSound.play(0, 1).volume = GameConfig.soundValue / 100;
                         for (var i = 0; i < this.m_monsters.length; i++) {
                             this.m_monsters[i].ChangeToEasy();
                         }
@@ -512,6 +515,7 @@ var GameScenePanel = (function (_super) {
         this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this);
         this.water.addEventListener('complete', this._OnWaterComplete, this);
         this.warning.addEventListener('complete', this._OnWarningComplete, this);
+        Common.addTouchBegin(this.m_btnPause);
         this._OnResize();
     };
     /**
@@ -546,11 +550,13 @@ var GameScenePanel = (function (_super) {
         this.m_luckyActors.push(lucky);
         this.m_groupGame.addChild(lucky);
     };
-    GameScenePanel.prototype.CreateSummonActor = function (a_data, a_x, a_y) {
+    GameScenePanel.prototype.CreateSummonActor = function (a_data, a_x, a_y, a_count, a_num) {
+        if (a_count === void 0) { a_count = 0; }
+        if (a_num === void 0) { a_num = 0; }
         var summon = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor");
         var targetX = a_x + MathUtils.getRandom(-150, 150);
         var targetY = a_y + MathUtils.getRandom(-20, 20);
-        summon.Init(a_data, targetX, targetY, a_x, a_y);
+        summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num);
         this.m_summonActors.push(summon);
         for (var i = this.m_summonActors.length - 1; i >= 0; i--) {
             this.m_groupGame.addChild(this.m_summonActors[i]);

@@ -42,12 +42,22 @@ var Main = (function (_super) {
         _this.isThemeLoadEnd = false;
         _this.isResourceLoadEnd = false;
         return _this;
+        // private onClick(evt:egret.TouchEvent):void{
+        //     if(evt.currentTarget instanceof eui.Button){
+        //         GameVoice.btnSound.play(0, 1)
+        //     }
+        // }
     }
     Main.prototype._OnResize = function (event) {
         Config.stageWidth = this.stage.stageWidth;
         Config.stageHeight = this.stage.stageHeight;
         Config.stageHalfWidth = this.stage.stageWidth / 2;
         Config.stageHalfHeight = this.stage.stageHeight / 2;
+        // this.stage.x = this.stage.stageWidth / 2
+        // this.left = 0
+        // this.top = 0
+        // this.right = 0
+        // this.bottom = 0
     };
     Main.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);
@@ -66,6 +76,7 @@ var Main = (function (_super) {
         };
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT;
         this.stage.setContentSize(750, 1336);
+        this.stage.maxTouches = 1;
         //inject the custom material parser
         //注入自定义的素材解析器
         var assetAdapter = new AssetAdapter();
@@ -172,12 +183,7 @@ var Main = (function (_super) {
      */
     Main.prototype.startCreateScene = function () {
         GameManager.Instance.Init();
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
-    };
-    Main.prototype.onClick = function (evt) {
-        if (evt.currentTarget instanceof eui.Button) {
-            GameVoice.btnSound.play(0, 1);
-        }
+        // this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
     };
     return Main;
 }(eui.UILayer));

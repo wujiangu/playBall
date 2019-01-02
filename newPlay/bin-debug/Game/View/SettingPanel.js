@@ -26,8 +26,8 @@ var SettingPanel = (function (_super) {
         Common.gameScene().uiLayer.addChild(this);
         this.m_sliderSound.maximum = 100;
         this.m_sliderBGM.maximum = 100;
-        this.m_sliderSound.value = 50;
-        this.m_sliderBGM.value = 30;
+        this.m_sliderSound.value = GameConfig.bgmValue;
+        this.m_sliderBGM.value = GameConfig.soundValue;
         this.m_btnReturn.enabled = false;
         Animations.popupOut(this.m_groupSetting, 300, function () {
             this.m_btnReturn.enabled = true;
@@ -39,9 +39,15 @@ var SettingPanel = (function (_super) {
             Common.gameScene().uiLayer.removeChild(this);
         }.bind(this));
     };
-    SettingPanel.prototype._OnSoundSlider = function () {
+    SettingPanel.prototype._OnSoundSlider = function (e) {
+        var slider = e.target;
+        GameConfig.soundValue = slider.pendingValue;
     };
-    SettingPanel.prototype._OnBGMSlider = function () {
+    SettingPanel.prototype._OnBGMSlider = function (e) {
+        var slider = e.target;
+        GameConfig.bgmValue = slider.pendingValue;
+        if (GameVoice.beginBGMChannel != null)
+            GameVoice.beginBGMChannel.volume = GameConfig.bgmValue / 100;
     };
     SettingPanel.prototype._OnClose = function () {
         Common.dispatchEvent(MainNotify.closeSettingPanel);
@@ -49,6 +55,7 @@ var SettingPanel = (function (_super) {
     SettingPanel.prototype.onComplete = function () {
         this._OnResize();
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnClose, this);
+        Common.addTouchBegin(this.m_btnReturn);
         this.m_sliderSound.addEventListener(egret.Event.CHANGE, this._OnSoundSlider, this);
         this.m_sliderBGM.addEventListener(egret.Event.CHANGE, this._OnBGMSlider, this);
     };

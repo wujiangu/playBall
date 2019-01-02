@@ -158,7 +158,7 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Image id="m_imgScene" left="-25" right="-25" source="Bg1_jpg" height="1392" y="-56"/>
+	<e:Image id="m_imgScene" left="-5" right="-5" height="1492" source="Bg1_png" y="-156"/>
 	<e:Rect id="m_rectWarning" left="0" right="0" top="0" bottom="0" fillColor="0xff0000" fillAlpha="0.5" touchEnabled="false"/>
 	<e:Image id="m_imgSun" width="123" height="123" source="gameUISheet_json.game105" horizontalCenter="-200.5" top="129"/>
 	<e:Image id="m_cloud1" x="447" source="gameUISheet_json.game104" y="521"/>

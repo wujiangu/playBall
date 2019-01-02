@@ -45,7 +45,7 @@ var LoadingUI = (function (_super) {
     }
     LoadingUI.prototype.CreatLoadingUI = function () {
         // this.createBgGradientFill()
-        var bg = Common.createBitmap("loading_01_png");
+        var bg = Common.createBitmap("loadBg_jpg");
         bg.width = Config.stageWidth;
         bg.height = Config.stageHeight;
         this.addChild(bg);
@@ -98,12 +98,12 @@ var LoadingUI = (function (_super) {
         this.airFan.x = this.txtLoadPos.x;
         this.airFan.y = this.txtLoadPos.y;
         // this.createLogo();
-        var logo = Common.createBitmap("loading_03_png");
-        logo.anchorOffsetX = logo.width >> 1;
-        logo.anchorOffsetY = logo.height >> 1;
-        logo.x = Config.stageHalfWidth;
-        logo.y = Config.stageHalfHeight - logo.height;
-        this.addChild(logo);
+        // let logo = Common.createBitmap("loading_03_png")
+        // logo.anchorOffsetX = logo.width>>1
+        // logo.anchorOffsetY = logo.height>>1
+        // logo.x = Config.stageHalfWidth
+        // logo.y = Config.stageHalfHeight - logo.height
+        // this.addChild(logo)
         this.update(0);
         this.play();
     };

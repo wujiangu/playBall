@@ -326,6 +326,11 @@ var Monster = (function (_super) {
     };
     Monster.prototype._OnArmatureComplet = function () {
         if (this.m_state == EMonsterState.Dead) {
+            if (this.m_summonData != null) {
+                var count = MathUtils.getRandom(1, this.m_summonData.count);
+                for (var i = 0; i < count; i++)
+                    PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i);
+            }
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveMonster(this);
         }

@@ -11,7 +11,7 @@ class SummonActor extends BaseActor {
 		this.m_gesture.scaleY = 0.5
 	}
 
-	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number) {
+	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number, a_count:number = 0, a_num:number = 0) {
 		this.m_sumWeight = 0
 		// for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
 		// 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
@@ -50,6 +50,18 @@ class SummonActor extends BaseActor {
 			this.m_endY = Math.min(a_y, Config.stageWidth - this.w)
 			if (this.m_data.Type == ESummonType.Balloon) {
 				this.x = beginX
+				this.y = beginY
+			}
+			else if (this.m_data.Type == ESummonType.Monster) {
+
+				if (a_count == 1) this.x = beginX
+				else if (a_count == 2) {
+					this.x = beginX - (-2 * a_num + 1) * 60
+				}
+				else if (a_count == 3) {
+					this.x = beginX - (-a_num + 1) * 60
+				}
+				
 				this.y = beginY
 			}
         	// Common.log("位置", this.m_endX, this.m_endY)
@@ -105,15 +117,15 @@ class SummonActor extends BaseActor {
 			this.m_balloon.Init(this.m_gestureData, this)
 			this._SetBallonPosition(this.m_balloon, 1, 0)
 			// this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
-			this._animationName = DragonBonesAnimations.Explore
+			this._animationName = DragonBonesAnimations.Dead
 			this.m_gestureType = this.m_balloon.type
 
 			this.m_state = EMonsterState.Summon
-			this.m_armatureContainer.play(DragonBonesAnimations.Explore, 1, 1, 0, 3)
+			this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1, 1, 0, 3)
 
 			this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
-			this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width)
-			this.y = MathUtils.getRandom(200, PanelManager.m_gameScenePanel.GroundPos - 200)
+			// this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width)
+			// this.y = MathUtils.getRandom(200, PanelManager.m_gameScenePanel.GroundPos - 200)
 		}
 	}
 
@@ -147,7 +159,8 @@ class SummonActor extends BaseActor {
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
 
 		if (this.m_data.Type == ESummonType.Balloon) {
-			GameVoice.ballonBoomSound.play(0, 1)
+			let channel = GameVoice.ballonBoomSound.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
 		}
 		else if (this.m_data.Type == ESummonType.Monster) {
 			this.m_balloon.BalloonExplore()

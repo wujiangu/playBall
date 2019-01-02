@@ -33,14 +33,14 @@ egret_native.egretStart = function () {
 		entryClassName: "Main",
 		frameRate: 30,
 		scaleMode: "fixedWidth",
-		contentWidth: 640,
-		contentHeight: 1136,
+		contentWidth: 750,
+		contentHeight: 1366,
 		showPaintRect: false,
 		showFPS: false,
 		fpsStyles: "x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9",
 		showLog: false,
 		logFilter: "",
-		maxTouches: 2,
+		maxTouches: 1,
 		textureScaleFactor: 1
 		//----auto option end----
     };

@@ -9,6 +9,13 @@ var Common;
         return this.curScene;
     }
     Common.gameScene = gameScene;
+    function onTouchBegin() {
+        GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100;
+    }
+    function addTouchBegin(target) {
+        target.addEventListener(egret.TouchEvent.TOUCH_BEGIN, onTouchBegin, Common);
+    }
+    Common.addTouchBegin = addTouchBegin;
     /**获取账号 */
     function GetAccount() {
         egret.ExternalInterface.addCallback("sendToEgret", function (message) {

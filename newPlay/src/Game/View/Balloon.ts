@@ -115,7 +115,8 @@ class Balloon extends egret.Sprite {
 		this._gesture.visible = false
 		// this._balloon.play(1)
 		this._balloonArmatureContainer.play(this._animationName, 1)
-		GameVoice.ballonBoomSound.play(0, 1)
+		let channel = GameVoice.ballonBoomSound.play(0, 1)
+		channel.volume = GameConfig.soundValue / 100
 
 		if (PanelManager.m_gameScenePanel != null) {
 			PanelManager.m_gameScenePanel.Score += this._score

@@ -3,7 +3,7 @@
         "next":1002,
         "addTime":1800,
         "speed":0,
-        "normalTime":50000,
+        "normalTime":10000,
         "eliteTime":10000,
         "eliteCount":1,
         "normal":[
@@ -12,12 +12,12 @@
         ],
         "elite":[
             {
-                "id":1002, 
+                "id":1005, 
                 "diff":2,
                 "min":2,
                 "max":2,
                 "prob":100,
-                "summon":{"id":1001, "diff":1, "ids":[1, 2], "count":1}
+                "summon":{"id":1002, "diff":1, "ids":[1, 2], "count":2}
             }
         ],
         "boss":[]

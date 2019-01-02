@@ -38,6 +38,9 @@ var BasePanel = (function (_super) {
     };
     BasePanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }
+        if (Config.stageHeight / Config.stageWidth < 1366 / 750) {
+            Common.log("比率小");
+        }
     };
     return BasePanel;
 }(eui.Component));
