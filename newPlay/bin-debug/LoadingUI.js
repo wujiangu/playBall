@@ -45,10 +45,20 @@ var LoadingUI = (function (_super) {
     }
     LoadingUI.prototype.CreatLoadingUI = function () {
         // this.createBgGradientFill()
-        var bg = Common.createBitmap("loadBg_jpg");
+        var bg = Common.createBitmap("loadBg_png");
         bg.width = Config.stageWidth;
         bg.height = Config.stageHeight;
         this.addChild(bg);
+        GameConfig.InitBattleDragonBones("huoyedoudong");
+        this.armatureContainer = new DragonBonesArmatureContainer();
+        this.addChild(this.armatureContainer);
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("huoyedoudong", "huoyedoudong");
+        var armature = new DragonBonesArmature(armatureDisplay);
+        armature.ArmatureDisplay = armatureDisplay;
+        this.armatureContainer.register(armature, ["huoyedoudong"]);
+        this.armatureContainer.x = bg.width / 2 - 15;
+        this.armatureContainer.y = Config.stageHalfHeight * 0.65;
+        this.armatureContainer.play("huoyedoudong", 0);
         var container = new egret.Sprite();
         this.addChild(container);
         var sw = Config.stageWidth;

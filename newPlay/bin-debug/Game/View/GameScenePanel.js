@@ -38,6 +38,7 @@ var GameScenePanel = (function (_super) {
         this.m_imgEffectMask.visible = false;
         this.m_rectWarning.visible = false;
         this.m_bitLabScore.visible = false;
+        this.m_combo.visible = false;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
     };
@@ -56,6 +57,9 @@ var GameScenePanel = (function (_super) {
         this.Power = 0;
         this.m_score = 0;
         this.m_slowDelay = -1;
+        this.m_comboDelay = -1;
+        this.m_comboCount = 0;
+        this.m_isBoom = false;
         // this.m_labScore.text = this.m_score.toString()
         this.m_bitLabScore.text = this.m_score.toString();
         this.UpdeLevelData(1001);
@@ -129,6 +133,16 @@ var GameScenePanel = (function (_super) {
             }
             if (this.m_slowDelay >= 0)
                 actorElapsed *= 0.2;
+            // 连击
+            if (this.m_comboDelay >= 0) {
+                this.m_comboDelay += actorElapsed;
+                if (this.m_comboDelay >= GameConfig.comboDelay) {
+                    this.m_comboDelay = -1;
+                    this.m_comboCount = 0;
+                    this.m_isBoom = false;
+                    this.m_combo.visible = false;
+                }
+            }
             for (var i = 0; i < this.m_monsters.length; i++) {
                 var monster = this.m_monsters[i];
                 if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
@@ -323,6 +337,16 @@ var GameScenePanel = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameScenePanel.prototype, "Boom", {
+        get: function () {
+            return this.m_isBoom;
+        },
+        set: function (value) {
+            this.m_isBoom = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * 进入下一关
      */
@@ -389,6 +413,7 @@ var GameScenePanel = (function (_super) {
     };
     GameScenePanel.prototype._OnGesture = function () {
         if (GameConfig.gestureType > 0) {
+            GameConfig.balloonScore = 0;
             for (var i = 0; i < this.m_monsters.length; i++) {
                 var monster = this.m_monsters[i];
                 for (var j = 0; j < monster.Balloons.length; j++) {
@@ -410,6 +435,18 @@ var GameScenePanel = (function (_super) {
                     summon.GotoExplore();
                 }
             }
+            if (this.m_isBoom) {
+                this.m_comboDelay = 0;
+                this.m_comboCount += 1;
+                this.m_isBoom = false;
+                if (this.m_comboCount >= 2) {
+                    this.m_combo.visible = true;
+                    this.m_combo.text = "Combo X " + this.m_comboCount;
+                    this.combo.play(0);
+                    GameConfig.balloonScore *= this.m_comboCount;
+                }
+            }
+            this.Score += GameConfig.balloonScore;
         }
     };
     GameScenePanel.prototype._OnBtnPause = function () {

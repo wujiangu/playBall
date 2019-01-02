@@ -37,10 +37,23 @@ class LoadingUI extends egret.Sprite {
 
     private CreatLoadingUI():void {
         // this.createBgGradientFill()
-        let bg = Common.createBitmap("loadBg_jpg")
+        let bg = Common.createBitmap("loadBg_png")
         bg.width = Config.stageWidth
         bg.height = Config.stageHeight
         this.addChild(bg)
+
+        GameConfig.InitBattleDragonBones("huoyedoudong")
+        this.armatureContainer = new DragonBonesArmatureContainer()
+        this.addChild(this.armatureContainer)
+        let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("huoyedoudong", "huoyedoudong")
+        let armature = new DragonBonesArmature(armatureDisplay)
+		armature.ArmatureDisplay = armatureDisplay
+		this.armatureContainer.register(armature, ["huoyedoudong"])
+        this.armatureContainer.x = bg.width / 2 - 15
+        this.armatureContainer.y = Config.stageHalfHeight * 0.65
+        this.armatureContainer.play("huoyedoudong", 0)
+
+
 
         var container:egret.Sprite=new egret.Sprite()
         this.addChild(container);
@@ -223,6 +236,7 @@ class LoadingUI extends egret.Sprite {
         return sprite;
     }
 
+    private armatureContainer:DragonBonesArmatureContainer
     private txtLoad:egret.TextField;
     // private txtName:egret.TextField;
     // private progress:egret.Sprite;

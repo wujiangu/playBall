@@ -12,6 +12,7 @@ class GameConfig {
 
 	public static itemTable:any
 	public static itemUseTable:Array<number>
+	public static itemUse:number
 	public static effectTable:any
 	public static monsterTable:any
 
@@ -21,12 +22,14 @@ class GameConfig {
 	public static monsterAddDelay:number = 2000
 	public static luckyActorAddDelay:number = 20000
 	public static slowDuration:number = 3000
+	public static comboDelay:number = 1000
 
 	public static account:string
 	public static curScore:number
 	public static maxScore:number
 	public static bgmValue:number = 100
 	public static soundValue:number = 100
+	public static balloonScore:number
 	/**
      * 初始化骨骼的动画数据
      */

@@ -69,6 +69,41 @@ var Common;
         }
     }
     Common.UpdateMaxScore = UpdateMaxScore;
+    /**获取当前使用道具 */
+    function GetItem() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.itemUse = parseInt(message);
+                }
+                else {
+                    GameConfig.itemUse = -1;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "itemUse");
+        }
+        else {
+            var itemUse = NativeApi.getLocalData(GameConfig.game + "itemUse");
+            if (itemUse == null) {
+                GameConfig.itemUse = -1;
+            }
+            else {
+                // GameConfig.maxScore = parseInt(score)
+                GameConfig.itemUse = parseInt(itemUse);
+            }
+        }
+    }
+    Common.GetItem = GetItem;
+    /**更新当前使用道具 */
+    function UpdateItem(value) {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "itemUse:" + value);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "itemUse", value.toString());
+        }
+    }
+    Common.UpdateItem = UpdateItem;
     /**
      * 获取使用道具表
      */

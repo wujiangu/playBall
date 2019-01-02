@@ -4,10 +4,13 @@ class Balloon extends egret.Sprite {
 		super()
 		this._gestureData = new Array()
 
+		this._rop = Common.createBitmap("imgRop_png")
+		this.addChild(this._rop)
+
 		this._balloonArmatureContainer = new DragonBonesArmatureContainer()
 		this.addChild(this._balloonArmatureContainer)
 
-		this._animations = ["hong", "huang", "lan"]
+		this._animations = ["hong", "huang", "lan", "explore"]
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("qiqiu", "qiqiu")
 		if (this._balloonArmature == null) {
 			this._balloonArmature = new DragonBonesArmature(armatureDisplay)
@@ -36,8 +39,6 @@ class Balloon extends egret.Sprite {
 
 		this._gesture = new egret.Bitmap()
 		this.addChild(this._gesture)
-		this._rop = Common.createBitmap("imgRop_png")
-		this.addChild(this._rop)
 		this._gesture.scaleX = 0.5
 		this._gesture.scaleY = 0.5
 		// this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
@@ -72,17 +73,21 @@ class Balloon extends egret.Sprite {
 
 	public ChangeToEasy() {
 		this._isChangeEasy = true
-		this.UpdateColorAndGesture()		
+		this._type = 0
+		this._effectArmatureContainer.play("bianhua", 1)
+		// this.UpdateColorAndGesture()		
 	}
 
 	public UpdateColorAndGesture() {
 		this._type = 0
-		this._effectArmatureContainer.play("bianhua", 1)
+		this._gesture.visible = false
+		this._balloonArmatureContainer.play("explore", 1)
+		// this._effectArmatureContainer.play("bianhua", 1)
 	}
 
 	public SetLine(count:number = 1, value:number = 0) {
 		this._rop.x = this._balloonArmatureContainer.x
-		this._rop.y = this._balloonArmatureContainer.y
+		this._rop.y = this._balloonArmatureContainer.y - 10
 		this._rop.scaleX = 0.5
 		if (count == 1) {
 			this._rop.rotation = 0
@@ -109,7 +114,7 @@ class Balloon extends egret.Sprite {
 		}
 	}
 
-	public BalloonExplore() {
+	public BalloonExplore(isGestureExplore:boolean = true) {
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0
 		this._gesture.visible = false
@@ -118,9 +123,12 @@ class Balloon extends egret.Sprite {
 		let channel = GameVoice.ballonBoomSound.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
 
-		if (PanelManager.m_gameScenePanel != null) {
-			PanelManager.m_gameScenePanel.Score += this._score
-		}
+		GameConfig.balloonScore += this._score
+		// if (PanelManager.m_gameScenePanel != null) {
+		// 	PanelManager.m_gameScenePanel.Score += this._score
+		// }
+
+		if (isGestureExplore) PanelManager.m_gameScenePanel.Boom = true
 
 		if (this._root.Balloons != null && this._root.Balloons.length <= 0) {
 			this._root.GotoDead()
@@ -168,37 +176,21 @@ class Balloon extends egret.Sprite {
 	}
 
 	private _OnBalloonComplete(e:egret.Event) {
-		this._root.BalloonExploreHandle()
-		GameObjectPool.getInstance().destroyObject(this)
-		this._root.RemoveBalloon(this)
+		if (this._type == 0) {
+			this.UpdateGesture(this._root.GestureData)
+		}else{
+			this._root.BalloonExploreHandle()
+			GameObjectPool.getInstance().destroyObject(this)
+			this._root.RemoveBalloon(this)
+		}
+		
 	}
 
 	private _OnEffectArmatureComplete(e:egret.Event) {
-		// if (this._isChangeEasy) {
-		// 	this._isChangeEasy = false
-		// 	this._gestureData.length = 0
-		// 	for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-		// 		let data = GameConfig.gestureConfig[i]
-		// 		if (data.difficult == 1) {
-		// 			this._gestureData.push(data)
-		// 		}
-		// 	}
-		// 	this.UpdateGesture(this._gestureData)
-		// }else{
-		// 	this.UpdateGesture(this._root.GestureData)
-		// }
 		this.UpdateGesture(this._root.GestureData)
 	}
 
-	// private _ChangeBalloonAnimate(name:string) {
-	// 	this._balloonData.mcDataSet = RES.getRes(name + "_json")
-	// 	this._balloonData.texture = RES.getRes(name + "_png")
-	// 	this._balloon.movieClipData = this._balloonData.generateMovieClipData(name)
-	// }
-
 	private _gesture:egret.Bitmap
-	// private _balloonData:egret.MovieClipDataFactory
-	// private _balloon:egret.MovieClip
 	private _type:number
 	private _score:number
 	private _rop:egret.Bitmap

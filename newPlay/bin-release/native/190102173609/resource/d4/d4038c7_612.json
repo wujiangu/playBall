@@ -1,0 +1,29 @@
+[
+  {
+    "ID": 1001,
+    "Name": "冰锥",
+    "Desc": "减缓敌人速度",
+    "GrayIcon": "itemSheet_json.item01",
+    "Icon": "itemSheet_json.item02",
+    "Effect": 1008,
+    "Open": true
+  },
+  {
+    "ID": 1002,
+    "Name": "法杖",
+    "Desc": "符号变成简单",
+    "GrayIcon": "itemSheet_json.item03",
+    "Icon": "itemSheet_json.item04",
+    "Effect": 1009,
+    "Open": true
+  },
+  {
+    "ID": 1003,
+    "Name": "火把",
+    "Desc": "火攻敌人",
+    "GrayIcon": "itemSheet_json.item05",
+    "Icon": "itemSheet_json.item06",
+    "Effect": 1001,
+    "Open": true
+  }
+]

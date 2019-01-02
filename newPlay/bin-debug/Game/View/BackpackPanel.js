@@ -99,23 +99,6 @@ var BackpackPanel = (function (_super) {
         Common.dispatchEvent(MainNotify.openGameStartPanel);
     };
     BackpackPanel.prototype._OnBtnUse = function () {
-        // if (GameConfig.itemUseTable.length < 2) {
-        // 	let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID
-        // 	let strId = currentId.toString()
-        // 	if (GameConfig.itemTable[strId].Open) {
-        // 		if (GameConfig.itemTable[strId].IsUse == 1) {
-        // 			TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
-        // 		}else{
-        // 			GameConfig.itemTable[strId].IsUse = 1
-        // 			GameConfig.itemUseTable.push(currentId)
-        // 			this._UpdateBtnItem(strId)
-        // 		}
-        // 	}else{
-        // 		TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
-        // 	}
-        // }else{
-        // 	TipsManager.Show("装备数量已达到上限！")
-        // }
         var currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID;
         var strId = currentId.toString();
         if (GameConfig.itemTable[strId].Open) {

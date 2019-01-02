@@ -31,6 +31,7 @@ class GameScenePanel extends BasePanel {
         this.m_imgEffectMask.visible = false
         this.m_rectWarning.visible = false
         this.m_bitLabScore.visible = false
+        this.m_combo.visible = false
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
     }
@@ -51,6 +52,9 @@ class GameScenePanel extends BasePanel {
         this.Power = 0
         this.m_score = 0
         this.m_slowDelay = -1
+        this.m_comboDelay = -1
+        this.m_comboCount = 0
+        this.m_isBoom = false
         // this.m_labScore.text = this.m_score.toString()
         this.m_bitLabScore.text = this.m_score.toString()
         this.UpdeLevelData(1001)
@@ -131,6 +135,17 @@ class GameScenePanel extends BasePanel {
             }
 
             if (this.m_slowDelay >= 0) actorElapsed *= 0.2
+
+            // 连击
+            if (this.m_comboDelay >= 0) {
+                this.m_comboDelay += actorElapsed
+                if (this.m_comboDelay >= GameConfig.comboDelay) {
+                    this.m_comboDelay = -1
+                    this.m_comboCount = 0
+                    this.m_isBoom = false
+                    this.m_combo.visible = false
+                }
+            }
 
 
             for (let i = 0; i < this.m_monsters.length; i++) {
@@ -327,6 +342,14 @@ class GameScenePanel extends BasePanel {
         return this.m_imgScene
     }
 
+    public get Boom() {
+        return this.m_isBoom
+    }
+
+    public set Boom(value:boolean) {
+        this.m_isBoom = value
+    }
+
     /**
      * 进入下一关
      */
@@ -395,6 +418,7 @@ class GameScenePanel extends BasePanel {
 
     private _OnGesture() {
         if (GameConfig.gestureType > 0) {
+            GameConfig.balloonScore = 0
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
                 for (let j = 0; j < monster.Balloons.length; j++) {
@@ -418,6 +442,20 @@ class GameScenePanel extends BasePanel {
                     summon.GotoExplore()
                 }
             }
+
+            if (this.m_isBoom) {
+                this.m_comboDelay = 0
+                this.m_comboCount += 1
+                this.m_isBoom = false
+
+                if (this.m_comboCount >= 2) {
+                    this.m_combo.visible = true
+                    this.m_combo.text = "Combo X " + this.m_comboCount
+                    this.combo.play(0)
+                    GameConfig.balloonScore *= this.m_comboCount
+                }
+            }
+            this.Score += GameConfig.balloonScore
         }
     }
 
@@ -451,7 +489,6 @@ class GameScenePanel extends BasePanel {
                 switch (effectData.type) {
                     case EEffectType.Ice:
                         GameVoice.iceEffectSound.play(0, 1).volume = GameConfig.soundValue / 100
-                        
                         this.m_slowDelay = 0
                     break
                     case EEffectType.ChangeGesture:
@@ -603,6 +640,9 @@ class GameScenePanel extends BasePanel {
     private m_monsterAddDelay:number
     /**生成幸运角色时间 */
     private m_luckyAddDelay:number
+    private m_comboDelay:number
+    private m_comboCount:number
+    private m_isBoom:boolean
 
     private m_monsters:Array<Monster>
     private m_bullets:Array<Bullet>
@@ -635,6 +675,9 @@ class GameScenePanel extends BasePanel {
     private m_imgGroundWarning:eui.Image
     private m_rectWarning:eui.Rect
     private m_btnPause:eui.Button
+
+    private m_combo:eui.Label
+    private combo:egret.tween.TweenGroup
 
 	private m_groupScore:eui.Group
 	private m_groupBottom:eui.Group

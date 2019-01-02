@@ -66,9 +66,13 @@ var SummonActor = (function (_super) {
                     this.x = beginX;
                 else if (a_count == 2) {
                     this.x = beginX - (-2 * a_num + 1) * 60;
+                    this.x = Math.max(this.x, this.m_rect.width);
+                    this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width);
                 }
                 else if (a_count == 3) {
-                    this.x = beginX - (-a_num + 1) * 60;
+                    this.x = beginX - (-a_num + 1) * 120;
+                    this.x = Math.max(this.x, this.m_rect.width);
+                    this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width);
                 }
                 this.y = beginY;
             }
