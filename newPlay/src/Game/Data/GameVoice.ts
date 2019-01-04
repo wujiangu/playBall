@@ -8,6 +8,10 @@ module GameVoice {
     export var iceEffect_mp3:string = "iceEffect_mp3"              // 冰技能大招
     export var skillBegin_mp3:string = "skillBegin_mp3"              // 大招开始
     export var staff_mp3:string = "staff_mp3"              // 法杖
+    export var combo1_mp3:string = "combo1_mp3"              // 一连
+    export var combo2_mp3:string = "combo2_mp3"              // 二连
+    export var combo3_mp3:string = "combo3_mp3"              // 三连
+    export var spiderKingArrive_mp3:string = "spiderKingArrive_mp3"              // 蜘蛛王出场
 
 
 
@@ -22,4 +26,8 @@ module GameVoice {
     export var iceEffectSound:egret.Sound = null
     export var skillBeginSound:egret.Sound = null
     export var staffSound:egret.Sound = null
+    export var combo1Sound:egret.Sound = null
+    export var combo2Sound:egret.Sound = null
+    export var combo3Sound:egret.Sound = null
+    export var spiderKingArrive:egret.Sound = null
 }

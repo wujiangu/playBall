@@ -3,7 +3,7 @@ class BackpackPanel extends BasePanel {
 		super()
 
 		this.m_itemIDs = new Array()
-		this.m_btnItems = new Array()
+		this.m_itemIRs = new Array()
 		this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
         this.skinName = "resource/game_skins/backpackPanel.exml"
 	}
@@ -16,15 +16,12 @@ class BackpackPanel extends BasePanel {
     // 初始化面板数据
     public initData():void{
 		this.m_itemIDs = [0, 1, 2]
-		// this._UpdateAllItemList()
     }
 
     // 进入面板
     public onEnter():void{
 		Common.curPanel = PanelManager.m_backpackPanel
 		this.touchChildren = true
-		this.itemGroup.play(0)
-
 		this.initData()
 
 		this._UpdateBtnItem()
@@ -39,67 +36,34 @@ class BackpackPanel extends BasePanel {
     }
 
 	private _UpdateBtnItem() {
-		// if (a_id != null) {
-		// 	if (!a_isRemove) {
-		// 		if (this.m_btnItem1.name.length <= 0) this.m_btnItem1.name = a_id
-		// 		else if (this.m_btnItem2.name.length <= 0) this.m_btnItem2.name = a_id
-		// 		else{}
-		// 	}else{
-		// 		a_target.name = ""
-		// 		GameConfig.itemTable[a_id].IsUse = 0
-		// 		let id = parseInt(a_id)
-		// 		let index = GameConfig.itemUseTable.indexOf(id)
-		// 		GameConfig.itemUseTable.splice(index)
-		// 	}
-		// }
-
-		// if (this.m_btnItem1.name.length > 0) {
-		// 	this.m_btnItem1.visible = true
-		// 	let image:eui.Image = <eui.Image>this.m_btnItem1.getChildAt(0)
-		// 	image.source = GameConfig.itemTable[this.m_btnItem1.name].Icon
-		// }else{
-		// 	this.m_btnItem1.visible = false
-		// }
-		
-		// if (this.m_btnItem2.name.length > 0) {
-		// 	this.m_btnItem2.visible = true
-		// 	let image:eui.Image = <eui.Image>this.m_btnItem2.getChildAt(0)
-		// 	image.source = GameConfig.itemTable[this.m_btnItem2.name].Icon
-		// }else{
-		// 	this.m_btnItem2.visible = false
-		// }
-
-		for (let i = 0; i < this.m_btnItems.length; i++) {
-			this.m_btnItems[i].visible = false
-		}
+		this.m_curItem.visible = false
+		this.m_itemTypeBg.visible = false
 		for (let i = 0; i < GameConfig.itemUseTable.length; i++) {
 			let id = GameConfig.itemUseTable[i]
-			this.m_btnItems[i].visible = true
-			let image:eui.Image = <eui.Image>this.m_btnItems[i].getChildAt(0)
-			image.source = GameConfig.itemTable[id.toString()].Icon
+			this.m_curItem.visible = true
+			this.m_itemTypeBg.visible = true
+			this.m_curItem.texture = RES.getRes(GameConfig.itemTable[id.toString()].Icon)
+			this.m_itemTypeBg.texture = RES.getRes(GameConfig.itemTable[id.toString()].ItemBg)
 		}
 
 		this._UpdateAllItemList()
 	}
 
 	private _UpdateAllItemList() {
-		this.m_itemLeft.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[0]].GrayIcon)
-		this.m_itemCenter.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[1]].Icon)
-		this.m_itemRight.texture = RES.getRes(GameConfig.itemConfig[this.m_itemIDs[2]].GrayIcon)
-
+		for (let i = 0; i < this.m_itemIRs.length; i++) {
+			let itemId = GameConfig.itemConfig[this.m_itemIDs[i]].ID
+			this.m_itemIRs[i].UpdateItem(itemId.toString(), i)
+		}
 		let currentId = GameConfig.itemConfig[this.m_itemIDs[1]].ID.toString()
-		// if (GameConfig.itemTable[currentId].IsUse == 1) {
-		// 	this.m_labUse.visible = true
-		// }else{
-		// 	this.m_labUse.visible = false
-		// }
+		let itemData = GameConfig.itemTable[currentId]
+		let image:eui.Image = <eui.Image>this.m_btnUse.getChildAt(0)
+		image.source = "btnUse_png"
+		if (!itemData.Open) image.source = "btnLock_png"
 		this._UpdateItemInfo()
 	}
 
 	private _UpdateItemInfo() {
 		let itemTableData = GameConfig.itemConfig[this.m_itemIDs[1]]
-		this.m_labItemName.text = itemTableData.Name
-		this.m_labItemDesc.text = itemTableData.Desc
 	}
 
 	private _OnBtnReturn() {
@@ -112,10 +76,10 @@ class BackpackPanel extends BasePanel {
 		let strId = currentId.toString()
 		if (GameConfig.itemTable[strId].Open) {
 			if (GameConfig.itemTable[strId].IsUse == 1) {
-				TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！")
+				TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
 			}else{
 				GameConfig.itemTable[strId].IsUse = 1
-				if (GameConfig.itemUseTable.length >= 2) {
+				if (GameConfig.itemUseTable.length >= 1) {
 					let id = GameConfig.itemUseTable[0]
 					GameConfig.itemTable[id.toString()].IsUse = 0
 					GameConfig.itemUseTable.splice(0, 1)
@@ -125,11 +89,40 @@ class BackpackPanel extends BasePanel {
 				this._UpdateBtnItem()
 			}
 		}else{
-			TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！")
+			TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
 		}
 	}
 
 	private _OnBtnLeft() {
+		if (this.swapIndex == 0) {
+			this.m_groupItemIR.swapChildren(this.m_itemIRLeft1, this.m_itemIRRight1)
+			this.swapIndex = 1
+		}
+		this.leftAnimation.play(0)
+		
+	}
+
+	private _OnBtnRight() {
+		if (this.swapIndex == 1) {
+			this.m_groupItemIR.swapChildren(this.m_itemIRLeft1, this.m_itemIRRight1)
+			this.swapIndex = 0
+		}
+		this.rightAnimation.play(0)
+		
+	}
+
+	private _OnLeftComplete() {
+		for (let i = 0; i < this.m_itemIDs.length; i++) {
+			this.m_itemIDs[i] += 1
+			if (this.m_itemIDs[i] >= GameConfig.itemConfig.length) {
+				this.m_itemIDs[i] = 0
+			}
+		}
+		this._UpdateAllItemList()
+		
+	}
+
+	private _OnRightComplete() {
 		for (let i = 0; i < this.m_itemIDs.length; i++) {
 			this.m_itemIDs[i] -= 1
 			if (this.m_itemIDs[i] < 0) {
@@ -139,51 +132,23 @@ class BackpackPanel extends BasePanel {
 		this._UpdateAllItemList()
 	}
 
-	private _OnBtnRight() {
-		for (let i = 0; i < this.m_itemIDs.length; i++) {
-			this.m_itemIDs[i] += 1
-			if (this.m_itemIDs[i] >= GameConfig.itemConfig.length) {
-				this.m_itemIDs[i] = 0
-			}
-		}
-		this._UpdateAllItemList()
-	}
-
-	private _OnTweenGroupComplete() {
-		this.itemGroup.play(0)
-	}
-
-	private _OnBtnItem1() {
-		// this._UpdateBtnItem(this.m_btnItem1.name, true, this.m_btnItem1)
-	}
-
-	private _OnBtnItem2() {
-		// this._UpdateBtnItem(this.m_btnItem2.name, true, this.m_btnItem2)
-	}
-
 	private onComplete() {
-		
-		this.m_btnItem1.name = ""
-		this.m_btnItem2.name = ""
 
-		this.m_btnItems.push(this.m_btnItem1)
-		this.m_btnItems.push(this.m_btnItem2)
-
+		this.m_itemIRs.push(this.m_itemIRLeft1)
+		// this.m_itemIRs.push(this.m_itemIRLeft2)
+		this.m_itemIRs.push(this.m_itemIRCenter)
+		this.m_itemIRs.push(this.m_itemIRRight1)
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
 		this.m_btnUse.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnUse, this)
 		this.m_btnLeft.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLeft, this)
 		this.m_btnRight.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRight, this)
-
+		this.leftAnimation.addEventListener("complete", this._OnLeftComplete, this)
+		this.rightAnimation.addEventListener("complete", this._OnRightComplete, this)
 
 		Common.addTouchBegin(this.m_btnReturn)
 		Common.addTouchBegin(this.m_btnUse)
 		Common.addTouchBegin(this.m_btnLeft)
 		Common.addTouchBegin(this.m_btnRight)
-
-		this.itemGroup.addEventListener('complete', this._OnTweenGroupComplete, this);
-
-		// this.m_btnItem1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem1, this)
-		// this.m_btnItem2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnItem2, this)
 
 		this._OnResize()
 	}
@@ -196,22 +161,64 @@ class BackpackPanel extends BasePanel {
 	private m_itemIDs:Array<number>
 	private m_curItemId:number
 
+	private m_itemTypeBg:eui.Image
+	private m_curItem:eui.Image
+
 
 	private m_btnReturn:eui.Button
 	private m_btnRight:eui.Button
 	private m_btnLeft:eui.Button
 	private m_btnUse:eui.Button
 
-	private m_labItemName:eui.Label
-	private m_labItemDesc:eui.Label
+	private m_itemIRCenter:ItemIR
+	private m_itemIRLeft1:ItemIR
+	private m_itemIRLeft2:ItemIR
+	private m_itemIRRight1:ItemIR
+	private m_itemIRRight2:ItemIR
 
-	private m_itemCenter:eui.Image
-	private m_itemLeft:eui.Image
-	private m_itemRight:eui.Image
+	private m_itemIRs:Array<ItemIR>
 
-	private itemGroup:egret.tween.TweenGroup
+	private leftAnimation:egret.tween.TweenGroup
+	private rightAnimation:egret.tween.TweenGroup
+	private m_groupItemIR:eui.Group
 
-	private m_btnItem1:eui.Button
-	private m_btnItem2:eui.Button
-	private m_btnItems:Array<eui.Button>
+	private swapIndex:number = 0
+}
+
+class ItemIR extends eui.Component {
+	public constructor() {
+		super()
+		this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
+        this.skinName = "resource/game_skins/itemIR.exml"
+	}
+
+
+	public UpdateItem(strId:string, index:number) {
+		let itemData = GameConfig.itemTable[strId]
+
+		if (GameConfig.itemTable[strId].IsUse == 0) this.m_labstatus.text = "Idle"
+		else this.m_labstatus.text = "Equipped"
+
+		if (!itemData.Open) this.m_labstatus.text = "Unlock"
+
+		if (index == 1) this.m_groupMask.visible = false
+		else this.m_groupMask.visible = true
+
+		this.m_labName.text = itemData.Name
+		this.m_labDesc.text = itemData.Desc
+		this.m_imgItem.texture = RES.getRes(itemData.Icon)
+		this.m_itemBg.texture = RES.getRes(itemData.Bg)
+	}
+
+	private onComplete() {
+		let mask = Common.createBitmap("")
+	}
+
+	private m_itemBg:eui.Image
+	private m_labstatus:eui.Label
+	private m_labgrade:eui.Label
+	private m_labName:eui.Label
+	private m_labDesc:eui.Label
+	private m_imgItem:eui.Image
+	private m_groupMask:eui.Group
 }

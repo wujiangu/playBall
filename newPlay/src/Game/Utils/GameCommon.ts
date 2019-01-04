@@ -1,11 +1,11 @@
 namespace Common{
-    var curScene:GameScene;
+    export var curScene:GameScene;
 	//当前游戏场景类
 	export function gameScene():GameScene{ 
-		if(this.curScene == null){
-			this.curScene = new GameScene();
+		if(curScene == null){
+			curScene = new GameScene();
 		}
-		return this.curScene;
+		return curScene
 	}
     //当前面板
 	export var curPanel:BasePanel
@@ -131,7 +131,6 @@ namespace Common{
 	export function UpdateUseItem() {
 		if (GameConfig.itemUseTable.length > 0) {
 			let str = JSON.stringify(GameConfig.itemUseTable)
-			
 			if (!GameConfig.isWebView) {
 				egret.ExternalInterface.call("write", GameConfig.game+"itemUseTable:" + str)
 			}else{

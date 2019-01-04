@@ -36,6 +36,7 @@
     "resource/game_skins/gameOverPanel.exml",
     "resource/game_skins/gameScenePanel.exml",
     "resource/game_skins/gameStart.exml",
+    "resource/game_skins/itemIR.exml",
     "resource/game_skins/quitPanel.exml",
     "resource/game_skins/settingPanel.exml"
   ],

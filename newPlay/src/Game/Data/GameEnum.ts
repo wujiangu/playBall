@@ -8,6 +8,7 @@ enum EGameState
     End,
     StageBack,
     StageFront,
+    Warning,
 }
 
 enum EGamePauseState
@@ -40,6 +41,10 @@ enum EMonsterState
     Stop,
     Drown,
     Summon,
+    SummonFinish,
+    Attack,
+    Arrive,
+    Move,
 }
 
 // 手势难度
@@ -54,6 +59,12 @@ enum EGestureDifficult
 enum EMonsterType {
     FallDown = 1,   // 下落
     Float,          // 浮空
+}
+
+enum EMonsterDifficult
+{
+    Normal = 1,
+    Elite,
 }
 
 // 召唤物类型

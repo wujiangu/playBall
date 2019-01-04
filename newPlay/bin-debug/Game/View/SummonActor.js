@@ -18,9 +18,10 @@ var SummonActor = (function (_super) {
         _this.m_gesture.scaleY = 0.5;
         return _this;
     }
-    SummonActor.prototype.Init = function (a_data, a_x, a_y, beginX, beginY, a_count, a_num) {
+    SummonActor.prototype.Init = function (a_data, a_x, a_y, beginX, beginY, a_count, a_num, a_isBoss) {
         if (a_count === void 0) { a_count = 0; }
         if (a_num === void 0) { a_num = 0; }
+        if (a_isBoss === void 0) { a_isBoss = false; }
         this.m_sumWeight = 0;
         // for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
         // 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
@@ -55,8 +56,9 @@ var SummonActor = (function (_super) {
         if (this.m_data) {
             this.InitData();
             this.InitGraph();
-            this.m_endX = Math.max(a_x, this.w);
-            this.m_endY = Math.min(a_y, Config.stageWidth - this.w);
+            this.m_endX = Math.max(a_x, this.m_rect.width);
+            this.m_endX = Math.min(a_x, Config.stageWidth - this.m_rect.width);
+            this.m_endY = beginY;
             if (this.m_data.Type == ESummonType.Balloon) {
                 this.x = beginX;
                 this.y = beginY;
@@ -66,11 +68,15 @@ var SummonActor = (function (_super) {
                     this.x = beginX;
                 else if (a_count == 2) {
                     this.x = beginX - (-2 * a_num + 1) * 60;
+                    if (a_isBoss)
+                        this.x = beginX - (-2 * a_num + 1) * 400;
                     this.x = Math.max(this.x, this.m_rect.width);
                     this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width);
                 }
                 else if (a_count == 3) {
                     this.x = beginX - (-a_num + 1) * 120;
+                    if (a_isBoss)
+                        this.x = Config.stageHalfWidth - (-a_num + 1) * 500;
                     this.x = Math.max(this.x, this.m_rect.width);
                     this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width);
                 }
@@ -125,7 +131,7 @@ var SummonActor = (function (_super) {
             this._animationName = DragonBonesAnimations.Dead;
             this.m_gestureType = this.m_balloon.type;
             this.m_state = EMonsterState.Summon;
-            this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1, 1, 0, 3);
+            this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1, 1, 0, 3);
             this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         }
     };
@@ -155,6 +161,8 @@ var SummonActor = (function (_super) {
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
         if (this.m_data.Type == ESummonType.Balloon) {
+            GameConfig.balloonScore += this.m_score;
+            PanelManager.m_gameScenePanel.Boom = true;
             var channel = GameVoice.ballonBoomSound.play(0, 1);
             channel.volume = GameConfig.soundValue / 100;
         }

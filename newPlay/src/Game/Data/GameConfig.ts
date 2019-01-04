@@ -23,6 +23,7 @@ class GameConfig {
 	public static luckyActorAddDelay:number = 20000
 	public static slowDuration:number = 3000
 	public static comboDelay:number = 1000
+	public static spiderDelay:number = 4000
 
 	public static account:string
 	public static curScore:number
@@ -30,6 +31,8 @@ class GameConfig {
 	public static bgmValue:number = 100
 	public static soundValue:number = 100
 	public static balloonScore:number
+	public static monsterPos:number = 1
+	public static testSelectLevel:number = 1001
 	/**
      * 初始化骨骼的动画数据
      */
@@ -51,6 +54,10 @@ class GameConfig {
 		GameVoice.iceEffectSound = RES.getRes(GameVoice.iceEffect_mp3)
 		GameVoice.skillBeginSound = RES.getRes(GameVoice.skillBegin_mp3)
 		GameVoice.staffSound = RES.getRes(GameVoice.staff_mp3)
+		GameVoice.combo1Sound = RES.getRes(GameVoice.combo1_mp3)
+		GameVoice.combo2Sound = RES.getRes(GameVoice.combo2_mp3)
+		GameVoice.combo3Sound = RES.getRes(GameVoice.combo3_mp3)
+		GameVoice.spiderKingArrive = RES.getRes(GameVoice.spiderKingArrive_mp3)
 	}
 
 	public static Init() {
@@ -69,8 +76,9 @@ class GameConfig {
 			data["ID"] = config.ID
 			data["Name"] = config.Name
 			data["Desc"] = config.Desc
-			data["GrayIcon"] = config.GrayIcon
+			data["Bg"] = config.Bg
 			data["Icon"] = config.Icon
+			data["ItemBg"] = config.ItemBg
 			data["Open"] = config.Open
 			data["Effect"] = config.Effect
 			data["IsUse"] = 0
@@ -105,6 +113,7 @@ class GameConfig {
 			let data = {}
 			data["ID"] = config.ID
 			data["Type"] = config.Type
+			data["Difficult"] = config.Difficult
 			data["Animation"] = config.Animation
 			data["Speed"] = config.Speed
 			data["Score"] = config.Score

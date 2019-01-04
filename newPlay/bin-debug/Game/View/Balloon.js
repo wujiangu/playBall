@@ -113,6 +113,38 @@ var Balloon = (function (_super) {
             }
         }
     };
+    Balloon.prototype.BossSetLine = function (count, value) {
+        if (count === void 0) { count = 1; }
+        if (value === void 0) { value = 0; }
+        this._rop.x = this._balloonArmatureContainer.x;
+        this._rop.y = this._balloonArmatureContainer.y - 10;
+        this._rop.scaleX = 0.5;
+        if (count == 1) {
+            this._rop.rotation = 0;
+            this._rop.scaleY = 40;
+        }
+        else if (count == 2) {
+            this._rop.scaleY = 60;
+            if (value == 0) {
+                this._rop.rotation = -15;
+            }
+            else {
+                this._rop.rotation = 15;
+            }
+        }
+        else if (count == 3) {
+            this._rop.scaleY = 40;
+            if (value == 0) {
+                this._rop.rotation = 0;
+            }
+            else if (value == 1) {
+                this._rop.rotation = -30;
+            }
+            else {
+                this._rop.rotation = 30;
+            }
+        }
+    };
     Balloon.prototype.BalloonExplore = function (isGestureExplore) {
         if (isGestureExplore === void 0) { isGestureExplore = true; }
         this._rop.scaleX = 0;

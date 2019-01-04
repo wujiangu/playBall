@@ -20,4 +20,8 @@ class Config {
 	public static stageHeight:number = 0
 	public static stageHalfWidth:number = 0
 	public static stageHalfHeight:number = 0
+
+	public static stageLeft:number = 0
+	public static stageCenter:number = 0
+	public static stageRight:number = 0
 }

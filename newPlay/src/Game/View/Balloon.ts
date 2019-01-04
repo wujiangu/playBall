@@ -114,6 +114,35 @@ class Balloon extends egret.Sprite {
 		}
 	}
 
+	public BossSetLine(count:number = 1, value:number = 0) {
+		this._rop.x = this._balloonArmatureContainer.x
+		this._rop.y = this._balloonArmatureContainer.y - 10
+		this._rop.scaleX = 0.5
+		if (count == 1) {
+			this._rop.rotation = 0
+			this._rop.scaleY = 40
+		}
+		else if (count == 2) {
+			this._rop.scaleY = 60
+			if (value == 0) {
+				this._rop.rotation = -15
+			}else{
+				this._rop.rotation = 15
+			}
+		}
+		else if (count == 3) {
+			this._rop.scaleY = 40
+			if (value == 0) {
+				this._rop.rotation = 0
+			}
+			else if (value == 1) {
+				this._rop.rotation = -30
+			}else{
+				this._rop.rotation = 30
+			}
+		}
+	}
+
 	public BalloonExplore(isGestureExplore:boolean = true) {
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0

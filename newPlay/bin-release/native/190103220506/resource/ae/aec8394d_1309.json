@@ -1,0 +1,52 @@
+[
+  {
+    "ID": 1001,
+    "Name": "Crystal",
+    "Desc": "Reduce the rate of decline",
+    "Bg": "Bg1003_png",
+    "Icon": "Icon1003_png",
+    "ItemBg": "ItemBg1003_png",
+    "Effect": 1008,
+    "Open": true
+  },
+  {
+    "ID": 1002,
+    "Name": "Star Staff",
+    "Desc": "When the energy is full, the symbols of all symbols are changed into simple classes.",
+    "Bg": "Bg1002_png",
+    "Icon": "Icon1002_png",
+    "ItemBg": "ItemBg1002_png",
+    "Effect": 1009,
+    "Open": true
+  },
+  {
+    "ID": 1003,
+    "Name": "Torch",
+    "Desc": "When the energy is full, it will release a flame to burn and destroy the front target, no more than 3 targets.",
+    "Bg": "Bg1003_png",
+    "Icon": "Icon1003_png",
+    "ItemBg": "ItemBg1003_png",
+    "Effect": 1001,
+    "Open": true
+  },
+  {
+    "ID": 1004,
+    "Name": "xxxxx",
+    "Desc": "1111111111111111111111111111111111111111111111111111",
+    "Bg": "Bg1002_png",
+    "Icon": "Icon1002_png",
+    "ItemBg": "ItemBg1002_png",
+    "Effect": 1001,
+    "Open": false
+  },
+  {
+    "ID": 1005,
+    "Name": "yyyy",
+    "Desc": "2222222222222222222222222222222222222222222222222222222222222",
+    "Bg": "Bg1003_png",
+    "Icon": "Icon1003_png",
+    "ItemBg": "ItemBg1003_png",
+    "Effect": 1001,
+    "Open": false
+  }
+]

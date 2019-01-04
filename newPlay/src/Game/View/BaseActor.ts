@@ -121,7 +121,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	protected m_groupBalloon:egret.DisplayObjectContainer
 	protected m_armatureContainer:DragonBonesArmatureContainer
-	protected m_type:EMonsterType
+	protected m_type:EMonsterDifficult
 	// protected m_dropShadowFilter:egret.DropShadowFilter
 	protected m_armature:DragonBonesArmature
 	protected m_gestureData:Array<any>

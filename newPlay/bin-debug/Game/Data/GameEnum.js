@@ -8,6 +8,7 @@ var EGameState;
     EGameState[EGameState["End"] = 4] = "End";
     EGameState[EGameState["StageBack"] = 5] = "StageBack";
     EGameState[EGameState["StageFront"] = 6] = "StageFront";
+    EGameState[EGameState["Warning"] = 7] = "Warning";
 })(EGameState || (EGameState = {}));
 var EGamePauseState;
 (function (EGamePauseState) {
@@ -37,6 +38,10 @@ var EMonsterState;
     EMonsterState[EMonsterState["Stop"] = 4] = "Stop";
     EMonsterState[EMonsterState["Drown"] = 5] = "Drown";
     EMonsterState[EMonsterState["Summon"] = 6] = "Summon";
+    EMonsterState[EMonsterState["SummonFinish"] = 7] = "SummonFinish";
+    EMonsterState[EMonsterState["Attack"] = 8] = "Attack";
+    EMonsterState[EMonsterState["Arrive"] = 9] = "Arrive";
+    EMonsterState[EMonsterState["Move"] = 10] = "Move";
 })(EMonsterState || (EMonsterState = {}));
 // 手势难度
 var EGestureDifficult;
@@ -51,6 +56,11 @@ var EMonsterType;
     EMonsterType[EMonsterType["FallDown"] = 1] = "FallDown";
     EMonsterType[EMonsterType["Float"] = 2] = "Float";
 })(EMonsterType || (EMonsterType = {}));
+var EMonsterDifficult;
+(function (EMonsterDifficult) {
+    EMonsterDifficult[EMonsterDifficult["Normal"] = 1] = "Normal";
+    EMonsterDifficult[EMonsterDifficult["Elite"] = 2] = "Elite";
+})(EMonsterDifficult || (EMonsterDifficult = {}));
 // 召唤物类型
 var ESummonType;
 (function (ESummonType) {

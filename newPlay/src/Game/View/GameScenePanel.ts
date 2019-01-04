@@ -7,6 +7,7 @@ class GameScenePanel extends BasePanel {
         this.m_bullets = new Array()
         this.m_luckyActors = new Array()
         this.m_summonActors = new Array()
+        this.m_spiderActors = new Array()
 	}
 
 	// 初始化面板
@@ -18,6 +19,7 @@ class GameScenePanel extends BasePanel {
         this.m_cloud1Speed = 0.6
 		this.m_cloud2Speed = 0.3
 		this.m_cloud3Speed = 0.1
+        this.m_sunSpeed = 0.05
         this.m_currentItemId = 0
 
         this.m_progress = new egret.Shape()
@@ -31,7 +33,10 @@ class GameScenePanel extends BasePanel {
         this.m_imgEffectMask.visible = false
         this.m_rectWarning.visible = false
         this.m_bitLabScore.visible = false
-        this.m_combo.visible = false
+        // this.m_combo.visible = false
+        this.m_fntCombo.visible = false
+        this.m_fntComboCount.visible = false
+        this.m_imgPower.alpha = 1
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
     }
@@ -55,9 +60,8 @@ class GameScenePanel extends BasePanel {
         this.m_comboDelay = -1
         this.m_comboCount = 0
         this.m_isBoom = false
-        // this.m_labScore.text = this.m_score.toString()
         this.m_bitLabScore.text = this.m_score.toString()
-        this.UpdeLevelData(1001)
+        this.UpdeLevelData(GameConfig.testSelectLevel)
 
         ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y)
     }
@@ -129,7 +133,7 @@ class GameScenePanel extends BasePanel {
             }
             else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
                 this.m_levelState = ELevelType.Elite
-                if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.Normal
+                if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.End
             }else{
                 this.m_levelState = ELevelType.End
             }
@@ -143,7 +147,11 @@ class GameScenePanel extends BasePanel {
                     this.m_comboDelay = -1
                     this.m_comboCount = 0
                     this.m_isBoom = false
-                    this.m_combo.visible = false
+                    this.comboMove.stop()
+                    this.comboEnd.play(0)
+                    // this.m_fntCombo.visible = false
+                    // this.m_fntComboCount.visible = false
+                    // this.m_combo.visible = false
                 }
             }
 
@@ -169,7 +177,11 @@ class GameScenePanel extends BasePanel {
 
         if (this.m_levelState != ELevelType.End && GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
             this.m_monsterAddDelay = 0
-            this._CreateMonster()
+            if (this.m_levelState == ELevelType.Elite && this.m_currentLevel.elite[0].id == 1006) {
+                this._CreateSpiderActor()
+            }else{
+                this._CreateMonster()
+            }
         }
 
         if (GameManager.Instance.GameState == EGameState.Start && this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
@@ -180,6 +192,10 @@ class GameScenePanel extends BasePanel {
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (let i = 0; i < this.m_monsters.length; i++) {
                 this.m_monsters[i].Update(actorElapsed)
+            }
+
+            for (let i = 0; i < this.m_spiderActors.length; i++) {
+                this.m_spiderActors[i].Update(actorElapsed)
             }
         }
 
@@ -214,6 +230,12 @@ class GameScenePanel extends BasePanel {
 			this.m_cloud3.x += this.m_cloud1Speed
 		}else{
 			this.m_cloud3.x = -this.m_cloud3.width
+		}
+
+        if (this.m_imgSun.x <= Config.stageWidth + this.m_imgSun.width) {
+            this.m_imgSun.x += this.m_sunSpeed
+        }else{
+			this.m_imgSun.x = -this.m_imgSun.width
 		}
     }
 
@@ -260,6 +282,16 @@ class GameScenePanel extends BasePanel {
         this._ChangeLevel()
     }
 
+    public RemoveSpiderActor(a_spider:SpiderActor) {
+        for (let i = 0; i < this.m_spiderActors.length; i++) {
+            if (this.m_spiderActors[i] == a_spider) {
+                this.m_groupGame.removeChild(this.m_spiderActors[i])
+                this.m_spiderActors.splice(i, 1)
+                break
+            }
+        }
+    }
+
     public ClearAllActor() {
         while(this.m_monsters.length > 0) {
 			let monster:Monster = this.m_monsters.pop()
@@ -283,6 +315,12 @@ class GameScenePanel extends BasePanel {
             let summon:SummonActor  = this.m_summonActors.pop()
             summon.Destroy()
             this.m_groupGame.removeChild(summon)
+        }
+
+        while(this.m_spiderActors.length > 0) {
+            let spider:SpiderActor = this.m_spiderActors.pop()
+            spider.Destroy()
+            this.m_groupGame.removeChild(spider)
         }
     }
 
@@ -308,11 +346,12 @@ class GameScenePanel extends BasePanel {
         this.m_angle = Math.min(this.m_angle, 360)
 
         if (this.m_angle >= 360) {
-            this.m_imgEffectMask.visible = true
-            this.effectMask.play(0)
-            this._UpdateItemArmature(true)
-            this.m_angle = 180
-            this.m_power = 0
+            this.powerfull.play(0)
+            // this.m_imgEffectMask.visible = true
+            // this.effectMask.play(0)
+            // this._UpdateItemArmature(true)
+            // this.m_angle = 180
+            // this.m_power = 0
         }
 
         this._UpdateProgress(this.m_angle)
@@ -350,11 +389,55 @@ class GameScenePanel extends BasePanel {
         this.m_isBoom = value
     }
 
+    /**更新连击 */
+    public UpdateBatter() {
+        if (this.m_isBoom) {
+            this.m_comboDelay = 0
+            this.m_comboCount += 1
+            this.m_isBoom = false
+
+            if (this.m_comboCount >= 2) {
+                // this.m_combo.visible = true
+                this.m_fntCombo.visible = true
+                this.m_fntComboCount.visible = true
+                this.m_fntComboCount.text = "X" + this.m_comboCount
+                this.m_comboArmatureContainer.y = 80
+                if (this.m_comboCount < 6) {
+                    this.m_fntCombo.font = RES.getRes("comboBlueFnt_fnt")
+                    this.m_fntComboCount.font = RES.getRes("comboBlueFnt_fnt")
+                    this.m_comboArmatureContainer.play("lan", 1)
+                    GameVoice.combo1Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }
+                else if (this.m_comboCount >= 6 && this.m_comboCount < 11) {
+                    this.m_fntCombo.font = RES.getRes("comboYellowFnt_fnt")
+                    this.m_fntComboCount.font = RES.getRes("comboYellowFnt_fnt")
+                    this.m_comboArmatureContainer.play("huang", 1)
+                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }else{
+                    this.m_fntCombo.font = RES.getRes("comboRedFnt_fnt")
+                    this.m_fntComboCount.font = RES.getRes("comboRedFnt_fnt")
+                    this.m_comboArmatureContainer.play("hong", 1)
+                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }
+                this.comboBegin.play(0)
+                // this.combo.play(0)
+                GameConfig.balloonScore *= this.m_comboCount
+            }
+        }
+        this.Score += GameConfig.balloonScore
+    }
+
     /**
      * 进入下一关
      */
     private _ChangeLevel() {
-        if (this.m_monsters.length <= 0 && this.m_summonActors.length <= 0 && this.m_passTime > this.m_allTime && this.m_levelState == ELevelType.End) {
+        // Common.log(this.m_monsters.length, this.m_summonActors.length, this.m_passTime, this.m_allTime, this.m_levelState)
+        if (this.m_monsters.length <= 0 
+            && this.m_summonActors.length <= 0 
+            && this.m_spiderActors.length <= 0
+            && this.m_passTime > this.m_allTime 
+            && this.m_levelState == ELevelType.End) 
+        {
             this.UpdeLevelData(this.m_currentLevel.next)
         }
     }
@@ -443,19 +526,17 @@ class GameScenePanel extends BasePanel {
                 }
             }
 
-            if (this.m_isBoom) {
-                this.m_comboDelay = 0
-                this.m_comboCount += 1
-                this.m_isBoom = false
-
-                if (this.m_comboCount >= 2) {
-                    this.m_combo.visible = true
-                    this.m_combo.text = "Combo X " + this.m_comboCount
-                    this.combo.play(0)
-                    GameConfig.balloonScore *= this.m_comboCount
-                }
+            for (let i = 0 ; i < this.m_spiderActors.length; i++) {
+                let spider:SpiderActor = this.m_spiderActors[i]
+                for (let j = 0; j < spider.Balloons.length; j++) {
+                    let balloon:Balloon = spider.Balloons[j]
+                    if (balloon.type == GameConfig.gestureType) {
+                        spider.BallExplosion(balloon)
+                    }
+				}
             }
-            this.Score += GameConfig.balloonScore
+
+            this.UpdateBatter()
         }
     }
 
@@ -472,7 +553,7 @@ class GameScenePanel extends BasePanel {
                 channel.volume = GameConfig.soundValue / 100
                 let bulletCount = 0
                 for (let index = 0; index < this.m_monsters.length; index++) {
-                    if (this.m_monsters[index].State == EMonsterState.Ready) {
+                    if (this.m_monsters[index].State == EMonsterState.Ready && this.m_monsters[index].Type == EMonsterDifficult.Normal) {
                         this._CreateBullete(this.m_monsters[index])
                         bulletCount++
                     }
@@ -510,7 +591,6 @@ class GameScenePanel extends BasePanel {
 
     private _OnReadyComplete() {
         this.touchChildren = true
-        // this.m_labScore.visible = true
         this.m_bitLabScore.visible = true
         GameManager.Instance.Start()
     }
@@ -525,24 +605,28 @@ class GameScenePanel extends BasePanel {
     }
 
     private _OnChangeItem() {
-        // this.m_imgEffectMask.visible = true
-        // this.effectMask.play(0)
-        // this._UpdateItemArmature(true)
+        this.m_imgEffectMask.visible = true
+        this.effectMask.play(0)
+        this._UpdateItemArmature(true)
+        this.m_angle = 180
+        this.m_power = 0
+        this.powerfull.stop()
+        this.m_imgPower.alpha = 1
 
-        if (GameConfig.itemUseTable.length > 1) {
-            let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
-            if (index >= 0) {
-                if (index < GameConfig.itemUseTable.length - 1) {
-                    index++
-                }else{
-                    index = 0
-                }
-                this.m_currentItemId = GameConfig.itemUseTable[index]
-                this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()]
-                egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this)
-                this._UpdateFullArmature()
-            }
-        }
+        // if (GameConfig.itemUseTable.length > 1) {
+        //     let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
+        //     if (index >= 0) {
+        //         if (index < GameConfig.itemUseTable.length - 1) {
+        //             index++
+        //         }else{
+        //             index = 0
+        //         }
+        //         this.m_currentItemId = GameConfig.itemUseTable[index]
+        //         this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()]
+        //         egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this)
+        //         this._UpdateFullArmature()
+        //     }
+        // }
     }
 
     private _OnWaterComplete() {
@@ -554,6 +638,23 @@ class GameScenePanel extends BasePanel {
         this.m_rectWarning.visible = false
     }
 
+    private _OnComboBeginComplete() {
+        this.comboMove.play(0)
+    }
+
+    private _OnComboEndComplete() {
+        this.m_fntCombo.visible = false
+        this.m_fntComboCount.visible = false
+    }
+
+    private _OnComboMoveComplete() {
+        this.comboMove.play(0)
+    }
+
+    private _OnPowerfullComplete() {
+        this.powerfull.play(0)
+    }
+
 	private onComplete() {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2
@@ -562,6 +663,16 @@ class GameScenePanel extends BasePanel {
 
         this.m_fullArmatureContainer = new DragonBonesArmatureContainer()
         this.m_groupFull.addChild(this.m_fullArmatureContainer)
+
+        this.m_comboArmatureContainer = new DragonBonesArmatureContainer()
+        this.m_groupScore.addChild(this.m_comboArmatureContainer)
+        let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("Detonationexplosion", "Detonationexplosion")
+        let comboArmature = new DragonBonesArmature(armatureDisplay)
+        comboArmature.ArmatureDisplay = armatureDisplay
+        this.m_comboArmatureContainer.register(comboArmature, ["hong", "huang", "lan"])
+        this.m_comboArmatureContainer.x = this.m_groupScore.width / 2
+        
+
 
         this.addChild( this.m_gestureShape )
         this.m_imgPower.mask = this.m_progress
@@ -574,6 +685,12 @@ class GameScenePanel extends BasePanel {
         this.water.addEventListener('complete', this._OnWaterComplete, this)
         this.warning.addEventListener('complete', this._OnWarningComplete, this)
 
+
+        this.comboBegin.addEventListener('complete', this._OnComboBeginComplete, this)
+        this.comboEnd.addEventListener('complete', this._OnComboEndComplete, this)
+        this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this)
+        this.powerfull.addEventListener('complete', this._OnPowerfullComplete, this)
+        
 
         Common.addTouchBegin(this.m_btnPause)
         
@@ -615,12 +732,18 @@ class GameScenePanel extends BasePanel {
         this.m_groupGame.addChild(lucky)
     }
 
-    public CreateSummonActor(a_data:any, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0) {
-        
+    private _CreateSpiderActor() {
+        let spider:SpiderActor = GameObjectPool.getInstance().createObject(SpiderActor, "SpiderActor")
+        spider.Init(this.m_currentLevel)
+        this.m_spiderActors.push(spider)
+        this.m_groupGame.addChild(spider)
+    }
+
+    public CreateSummonActor(a_data:any, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
         let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
-        let targetX = a_x + MathUtils.getRandom(-150, 150)
+        let targetX = a_x + MathUtils.getRandom(-250, 250)
         let targetY = a_y + MathUtils.getRandom(-20, 20)
-        summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num)
+        summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num, isBoss)
         this.m_summonActors.push(summon)
         for (let i = this.m_summonActors.length-1; i >= 0; i--) {
 			this.m_groupGame.addChild(this.m_summonActors[i])
@@ -648,6 +771,7 @@ class GameScenePanel extends BasePanel {
     private m_bullets:Array<Bullet>
     private m_luckyActors:Array<LuckyActor>
     private m_summonActors:Array<SummonActor>
+    private m_spiderActors:Array<SpiderActor>
 
     private m_score:number
     private m_power:number
@@ -676,8 +800,15 @@ class GameScenePanel extends BasePanel {
     private m_rectWarning:eui.Rect
     private m_btnPause:eui.Button
 
-    private m_combo:eui.Label
+    private m_fntCombo:eui.BitmapLabel
+    private m_fntComboCount:eui.BitmapLabel
+    // private m_combo:eui.Label
     private combo:egret.tween.TweenGroup
+    private comboBegin:egret.tween.TweenGroup
+    private comboEnd:egret.tween.TweenGroup
+    private comboMove:egret.tween.TweenGroup
+    private powerfull:egret.tween.TweenGroup
+    
 
 	private m_groupScore:eui.Group
 	private m_groupBottom:eui.Group
@@ -696,6 +827,9 @@ class GameScenePanel extends BasePanel {
 	private m_cloud1Speed:number
 	private m_cloud2Speed:number
 	private m_cloud3Speed:number
+
+    private m_imgSun:eui.Image
+    private m_sunSpeed:number
 
     /**能量释放组 */
     private m_groupPower:eui.Group
@@ -717,4 +851,7 @@ class GameScenePanel extends BasePanel {
 
     private m_fullArmatureContainer:DragonBonesArmatureContainer
     private m_fullArmature:DragonBonesArmature
+
+    private m_comboArmatureContainer:DragonBonesArmatureContainer
+    private m_comboArmature:DragonBonesArmature
 }

@@ -1,0 +1,754 @@
+{
+	"groups": [
+		{
+			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,itemSheet_json,gameUISheet_json,commonPanel_png,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,btnLock_png,btnProcReturn_png,btnSwap_png,btnUse_png,procBg1_png,procBg2_png,procBg4_png,procBg5_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Icon1003_png,ItemBg1002_png,ItemBg1003_png,Bg1002_png,Bg1003_png,Icon1002_png",
+			"name": "enter"
+		},
+		{
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/Button/btnSheet.json",
+			"type": "sheet",
+			"name": "btnSheet_json",
+			"subkeys": "btnAgain,btnBGM,btnContinue,btnItemSwap,btnPauseReturn,btnProp,btnRank,btnReturn,btnSetting,btnSound,btnStart,btnUse"
+		},
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_disabled.png",
+			"type": "image",
+			"name": "checkbox_select_disabled_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_down.png",
+			"type": "image",
+			"name": "checkbox_select_down_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_up.png",
+			"type": "image",
+			"name": "checkbox_select_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_unselect.png",
+			"type": "image",
+			"name": "checkbox_unselect_png"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"url": "assets/gesture/gestureSheet.json",
+			"type": "sheet",
+			"name": "gestureSheet_json",
+			"subkeys": "gesture001,gesture002,gesture003,gesture004,gesture005,gesture006,gesture101,gesture102,gesture103,gesture104,gesture105"
+		},
+		{
+			"url": "assets/ItemRenderer/selected.png",
+			"type": "image",
+			"name": "selected_png"
+		},
+		{
+			"url": "assets/Panel/border.png",
+			"type": "image",
+			"name": "border_png"
+		},
+		{
+			"url": "assets/Panel/header.png",
+			"type": "image",
+			"name": "header_png"
+		},
+		{
+			"url": "assets/preload/loading_02.png",
+			"type": "image",
+			"name": "loading_02_png",
+			"scale9grid": "19,19,462,5"
+		},
+		{
+			"url": "assets/preload/loading_04.png",
+			"type": "image",
+			"name": "loading_04_png"
+		},
+		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_disabled.png",
+			"type": "image",
+			"name": "radiobutton_select_disabled_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_down.png",
+			"type": "image",
+			"name": "radiobutton_select_down_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_up.png",
+			"type": "image",
+			"name": "radiobutton_select_up_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_unselect.png",
+			"type": "image",
+			"name": "radiobutton_unselect_png"
+		},
+		{
+			"url": "assets/ScrollBar/roundthumb.png",
+			"type": "image",
+			"name": "roundthumb_png"
+		},
+		{
+			"url": "assets/ScrollBar/track_sb.png",
+			"type": "image",
+			"name": "track_sb_png"
+		},
+		{
+			"url": "assets/Slider/thumb.png",
+			"type": "image",
+			"name": "thumb_png"
+		},
+		{
+			"url": "assets/Slider/track.png",
+			"type": "image",
+			"name": "track_png"
+		},
+		{
+			"url": "assets/Slider/tracklight.png",
+			"type": "image",
+			"name": "tracklight_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/handle.png",
+			"type": "image",
+			"name": "handle_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/off.png",
+			"type": "image",
+			"name": "off_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/on.png",
+			"type": "image",
+			"name": "on_png"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "config/gesture.json",
+			"type": "json",
+			"name": "gesture_json"
+		},
+		{
+			"url": "config/itemConfig.json",
+			"type": "json",
+			"name": "itemConfig_json"
+		},
+		{
+			"url": "config/monsterConfig.json",
+			"type": "json",
+			"name": "monsterConfig_json"
+		},
+		{
+			"url": "assets/movieClip/balloonYellow.png",
+			"type": "image",
+			"name": "balloonYellow_png"
+		},
+		{
+			"url": "assets/movieClip/balloonBlue.json",
+			"type": "json",
+			"name": "balloonBlue_json"
+		},
+		{
+			"url": "assets/movieClip/balloonBlue.png",
+			"type": "image",
+			"name": "balloonBlue_png"
+		},
+		{
+			"url": "assets/movieClip/balloonGray.json",
+			"type": "json",
+			"name": "balloonGray_json"
+		},
+		{
+			"url": "assets/movieClip/balloonGray.png",
+			"type": "image",
+			"name": "balloonGray_png"
+		},
+		{
+			"url": "assets/movieClip/balloonGreen.json",
+			"type": "json",
+			"name": "balloonGreen_json"
+		},
+		{
+			"url": "assets/movieClip/balloonGreen.png",
+			"type": "image",
+			"name": "balloonGreen_png"
+		},
+		{
+			"url": "assets/movieClip/balloonOrange.json",
+			"type": "json",
+			"name": "balloonOrange_json"
+		},
+		{
+			"url": "assets/movieClip/balloonOrange.png",
+			"type": "image",
+			"name": "balloonOrange_png"
+		},
+		{
+			"url": "assets/movieClip/balloonPink.json",
+			"type": "json",
+			"name": "balloonPink_json"
+		},
+		{
+			"url": "assets/movieClip/balloonPink.png",
+			"type": "image",
+			"name": "balloonPink_png"
+		},
+		{
+			"url": "assets/movieClip/balloonPurple.json",
+			"type": "json",
+			"name": "balloonPurple_json"
+		},
+		{
+			"url": "assets/movieClip/balloonPurple.png",
+			"type": "image",
+			"name": "balloonPurple_png"
+		},
+		{
+			"url": "assets/movieClip/balloonRed.json",
+			"type": "json",
+			"name": "balloonRed_json"
+		},
+		{
+			"url": "assets/movieClip/balloonRed.png",
+			"type": "image",
+			"name": "balloonRed_png"
+		},
+		{
+			"url": "assets/movieClip/balloonYellow.json",
+			"type": "json",
+			"name": "balloonYellow_json"
+		},
+		{
+			"url": "assets/game/imgRop.png",
+			"type": "image",
+			"name": "imgRop_png"
+		},
+		{
+			"url": "assets/game/mask.png",
+			"type": "image",
+			"name": "mask_png"
+		},
+		{
+			"url": "assets/game/gameUISheet.json",
+			"type": "sheet",
+			"name": "gameUISheet_json",
+			"subkeys": "game1,game101,game102,game103,game104,game105,game2,game3,game4,game5,gameJiangbei,gameProgressBg"
+		},
+		{
+			"url": "assets/Icon/itemSheet.json",
+			"type": "sheet",
+			"name": "itemSheet_json",
+			"subkeys": "item01,item02,item03,item04,item05,item06,itemBg1,itemBox"
+		},
+		{
+			"url": "assets/bones/lajitong_ske.json",
+			"type": "json",
+			"name": "lajitong_ske_json"
+		},
+		{
+			"url": "assets/bones/lajitong_tex.json",
+			"type": "json",
+			"name": "lajitong_tex_json"
+		},
+		{
+			"url": "assets/bones/lajitong_tex.png",
+			"type": "image",
+			"name": "lajitong_tex_png"
+		},
+		{
+			"url": "assets/common/commonPanel.png",
+			"type": "image",
+			"name": "commonPanel_png"
+		},
+		{
+			"url": "assets/game/power_Pro.png",
+			"type": "image",
+			"name": "power_Pro_png"
+		},
+		{
+			"url": "assets/game/READY.png",
+			"type": "image",
+			"name": "READY_png"
+		},
+		{
+			"url": "assets/game/GO.png",
+			"type": "image",
+			"name": "GO_png"
+		},
+		{
+			"url": "config/effectConfig.json",
+			"type": "json",
+			"name": "effectConfig_json"
+		},
+		{
+			"url": "assets/bones/huoba_ske.json",
+			"type": "json",
+			"name": "huoba_ske_json"
+		},
+		{
+			"url": "assets/bones/huoba_tex.json",
+			"type": "json",
+			"name": "huoba_tex_json"
+		},
+		{
+			"url": "assets/bones/huoba_tex.png",
+			"type": "image",
+			"name": "huoba_tex_png"
+		},
+		{
+			"url": "assets/bones/huoqiu_ske.json",
+			"type": "json",
+			"name": "huoqiu_ske_json"
+		},
+		{
+			"url": "assets/bones/huoqiu_tex.json",
+			"type": "json",
+			"name": "huoqiu_tex_json"
+		},
+		{
+			"url": "assets/bones/huoqiu_tex.png",
+			"type": "image",
+			"name": "huoqiu_tex_png"
+		},
+		{
+			"url": "assets/bones/huoshao_ske.json",
+			"type": "json",
+			"name": "huoshao_ske_json"
+		},
+		{
+			"url": "assets/bones/huoshao_tex.json",
+			"type": "json",
+			"name": "huoshao_tex_json"
+		},
+		{
+			"url": "assets/bones/huoshao_tex.png",
+			"type": "image",
+			"name": "huoshao_tex_png"
+		},
+		{
+			"url": "assets/bones/qiqiu_ske.json",
+			"type": "json",
+			"name": "qiqiu_ske_json"
+		},
+		{
+			"url": "assets/bones/qiqiu_tex.json",
+			"type": "json",
+			"name": "qiqiu_tex_json"
+		},
+		{
+			"url": "assets/bones/qiqiu_tex.png",
+			"type": "image",
+			"name": "qiqiu_tex_png"
+		},
+		{
+			"url": "assets/bones/shuihua_ske.json",
+			"type": "json",
+			"name": "shuihua_ske_json"
+		},
+		{
+			"url": "assets/bones/shuihua_tex.json",
+			"type": "json",
+			"name": "shuihua_tex_json"
+		},
+		{
+			"url": "assets/bones/shuihua_tex.png",
+			"type": "image",
+			"name": "shuihua_tex_png"
+		},
+		{
+			"url": "assets/bones/xuegao_tex.png",
+			"type": "image",
+			"name": "xuegao_tex_png"
+		},
+		{
+			"url": "assets/bones/huoxinren_ske.json",
+			"type": "json",
+			"name": "huoxinren_ske_json"
+		},
+		{
+			"url": "assets/bones/huoxinren_tex.json",
+			"type": "json",
+			"name": "huoxinren_tex_json"
+		},
+		{
+			"url": "assets/bones/huoxinren_tex.png",
+			"type": "image",
+			"name": "huoxinren_tex_png"
+		},
+		{
+			"url": "assets/bones/xinyunguai_ske.json",
+			"type": "json",
+			"name": "xinyunguai_ske_json"
+		},
+		{
+			"url": "assets/bones/xinyunguai_tex.json",
+			"type": "json",
+			"name": "xinyunguai_tex_json"
+		},
+		{
+			"url": "assets/bones/xinyunguai_tex.png",
+			"type": "image",
+			"name": "xinyunguai_tex_png"
+		},
+		{
+			"url": "assets/bones/xuegao_ske.json",
+			"type": "json",
+			"name": "xuegao_ske_json"
+		},
+		{
+			"url": "assets/bones/xuegao_tex.json",
+			"type": "json",
+			"name": "xuegao_tex_json"
+		},
+		{
+			"url": "config/luckyConfig.json",
+			"type": "json",
+			"name": "luckyConfig_json"
+		},
+		{
+			"url": "assets/bones/bianhua_tex.png",
+			"type": "image",
+			"name": "bianhua_tex_png"
+		},
+		{
+			"url": "assets/bones/bianhua_ske.json",
+			"type": "json",
+			"name": "bianhua_ske_json"
+		},
+		{
+			"url": "assets/bones/bianhua_tex.json",
+			"type": "json",
+			"name": "bianhua_tex_json"
+		},
+		{
+			"url": "assets/bones/dazhaotexiao_tex.json",
+			"type": "json",
+			"name": "dazhaotexiao_tex_json"
+		},
+		{
+			"url": "assets/bones/dazhaotexiao_tex.png",
+			"type": "image",
+			"name": "dazhaotexiao_tex_png"
+		},
+		{
+			"url": "assets/bones/mofabang_ske.json",
+			"type": "json",
+			"name": "mofabang_ske_json"
+		},
+		{
+			"url": "assets/bones/mofabang_tex.json",
+			"type": "json",
+			"name": "mofabang_tex_json"
+		},
+		{
+			"url": "assets/bones/mofabang_tex.png",
+			"type": "image",
+			"name": "mofabang_tex_png"
+		},
+		{
+			"url": "assets/bones/dazhaotexiao_ske.json",
+			"type": "json",
+			"name": "dazhaotexiao_ske_json"
+		},
+		{
+			"url": "assets/bones/jiansu_tex.png",
+			"type": "image",
+			"name": "jiansu_tex_png"
+		},
+		{
+			"url": "assets/bones/jiansu_ske.json",
+			"type": "json",
+			"name": "jiansu_ske_json"
+		},
+		{
+			"url": "assets/bones/jiansu_tex.json",
+			"type": "json",
+			"name": "jiansu_tex_json"
+		},
+		{
+			"url": "assets/voice/staff.mp3",
+			"type": "sound",
+			"name": "staff_mp3"
+		},
+		{
+			"url": "assets/voice/ballonBoom.mp3",
+			"type": "sound",
+			"name": "ballonBoom_mp3"
+		},
+		{
+			"url": "assets/voice/battleBGM.mp3",
+			"type": "sound",
+			"name": "battleBGM_mp3"
+		},
+		{
+			"url": "assets/voice/beginBGM.mp3",
+			"type": "sound",
+			"name": "beginBGM_mp3"
+		},
+		{
+			"url": "assets/voice/btn.mp3",
+			"type": "sound",
+			"name": "btn_mp3"
+		},
+		{
+			"url": "assets/voice/burn.mp3",
+			"type": "sound",
+			"name": "burn_mp3"
+		},
+		{
+			"url": "assets/voice/fireBall.mp3",
+			"type": "sound",
+			"name": "fireBall_mp3"
+		},
+		{
+			"url": "assets/voice/iceEffect.mp3",
+			"type": "sound",
+			"name": "iceEffect_mp3"
+		},
+		{
+			"url": "assets/voice/skillBegin.mp3",
+			"type": "sound",
+			"name": "skillBegin_mp3"
+		},
+		{
+			"url": "config/levelConfig.json",
+			"type": "json",
+			"name": "levelConfig_json"
+		},
+		{
+			"url": "config/summonConfig.json",
+			"type": "json",
+			"name": "summonConfig_json"
+		},
+		{
+			"url": "assets/fnt/scoreFnt.png",
+			"type": "image",
+			"name": "scoreFnt_png"
+		},
+		{
+			"url": "assets/fnt/scoreFnt.fnt",
+			"type": "font",
+			"name": "scoreFnt_fnt"
+		},
+		{
+			"url": "assets/bones/shuijing_tex.png",
+			"type": "image",
+			"name": "shuijing_tex_png"
+		},
+		{
+			"url": "assets/bones/shuijing_ske.json",
+			"type": "json",
+			"name": "shuijing_ske_json"
+		},
+		{
+			"url": "assets/bones/shuijing_tex.json",
+			"type": "json",
+			"name": "shuijing_tex_json"
+		},
+		{
+			"url": "assets/common/shui3.png",
+			"type": "image",
+			"name": "shui3_png"
+		},
+		{
+			"url": "assets/common/shui1.png",
+			"type": "image",
+			"name": "shui1_png"
+		},
+		{
+			"url": "assets/common/shui2.png",
+			"type": "image",
+			"name": "shui2_png"
+		},
+		{
+			"url": "assets/bones/jiupingguai_tex.png",
+			"type": "image",
+			"name": "jiupingguai_tex_png"
+		},
+		{
+			"url": "assets/bones/jiupingguai_ske.json",
+			"type": "json",
+			"name": "jiupingguai_ske_json"
+		},
+		{
+			"url": "assets/bones/jiupingguai_tex.json",
+			"type": "json",
+			"name": "jiupingguai_tex_json"
+		},
+		{
+			"url": "assets/bones/zhizhu_ske.json",
+			"type": "json",
+			"name": "zhizhu_ske_json"
+		},
+		{
+			"url": "assets/bones/zhizhu_tex.json",
+			"type": "json",
+			"name": "zhizhu_tex_json"
+		},
+		{
+			"url": "assets/bones/zhizhu_tex.png",
+			"type": "image",
+			"name": "zhizhu_tex_png"
+		},
+		{
+			"url": "assets/game/Bg1.png",
+			"type": "image",
+			"name": "Bg1_png"
+		},
+		{
+			"url": "assets/preload/loadBg.png",
+			"type": "image",
+			"name": "loadBg_png"
+		},
+		{
+			"url": "assets/preload/huoyedoudong_tex.png",
+			"type": "image",
+			"name": "huoyedoudong_tex_png"
+		},
+		{
+			"url": "assets/preload/huoyedoudong_ske.json",
+			"type": "json",
+			"name": "huoyedoudong_ske_json"
+		},
+		{
+			"url": "assets/preload/huoyedoudong_tex.json",
+			"type": "json",
+			"name": "huoyedoudong_tex_json"
+		},
+		{
+			"url": "assets/backpack/btnLock.png",
+			"type": "image",
+			"name": "btnLock_png"
+		},
+		{
+			"url": "assets/backpack/btnProcReturn.png",
+			"type": "image",
+			"name": "btnProcReturn_png"
+		},
+		{
+			"url": "assets/backpack/btnSwap.png",
+			"type": "image",
+			"name": "btnSwap_png"
+		},
+		{
+			"url": "assets/backpack/btnUse.png",
+			"type": "image",
+			"name": "btnUse_png"
+		},
+		{
+			"url": "assets/backpack/procBg1.png",
+			"type": "image",
+			"name": "procBg1_png"
+		},
+		{
+			"url": "assets/backpack/procBg2.png",
+			"type": "image",
+			"name": "procBg2_png"
+		},
+		{
+			"url": "assets/backpack/procBg4.png",
+			"type": "image",
+			"name": "procBg4_png"
+		},
+		{
+			"url": "assets/backpack/procBg5.png",
+			"type": "image",
+			"name": "procBg5_png"
+		},
+		{
+			"url": "assets/fnt/comboBlueFnt.fnt",
+			"type": "font",
+			"name": "comboBlueFnt_fnt"
+		},
+		{
+			"url": "assets/fnt/comboBlueFnt.png",
+			"type": "image",
+			"name": "comboBlueFnt_png"
+		},
+		{
+			"url": "assets/fnt/comboRedFnt.fnt",
+			"type": "font",
+			"name": "comboRedFnt_fnt"
+		},
+		{
+			"url": "assets/fnt/comboRedFnt.png",
+			"type": "image",
+			"name": "comboRedFnt_png"
+		},
+		{
+			"url": "assets/fnt/comboYellowFnt.fnt",
+			"type": "font",
+			"name": "comboYellowFnt_fnt"
+		},
+		{
+			"url": "assets/fnt/comboYellowFnt.png",
+			"type": "image",
+			"name": "comboYellowFnt_png"
+		},
+		{
+			"url": "assets/backpack/Icon1003.png",
+			"type": "image",
+			"name": "Icon1003_png"
+		},
+		{
+			"url": "assets/backpack/ItemBg1002.png",
+			"type": "image",
+			"name": "ItemBg1002_png"
+		},
+		{
+			"url": "assets/backpack/ItemBg1003.png",
+			"type": "image",
+			"name": "ItemBg1003_png"
+		},
+		{
+			"url": "assets/backpack/Bg1002.png",
+			"type": "image",
+			"name": "Bg1002_png"
+		},
+		{
+			"url": "assets/backpack/Bg1003.png",
+			"type": "image",
+			"name": "Bg1003_png"
+		},
+		{
+			"url": "assets/backpack/Icon1002.png",
+			"type": "image",
+			"name": "Icon1002_png"
+		}
+	]
+}

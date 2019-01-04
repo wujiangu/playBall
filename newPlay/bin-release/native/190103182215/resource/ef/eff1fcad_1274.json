@@ -1,0 +1,47 @@
+[
+  {
+    "ID": 1001,
+    "Name": "Crystal",
+    "Desc": "Reduce the rate of decline",
+    "GrayIcon": "itemSheet_json.item01",
+    "Icon": "itemSheet_json.item02",
+    "Effect": 1008,
+    "Open": true
+  },
+  {
+    "ID": 1002,
+    "Name": "Star Staff",
+    "Desc": "When the energy is full, the symbols of all symbols are changed into simple classes.",
+    "GrayIcon": "itemSheet_json.item03",
+    "Icon": "itemSheet_json.item04",
+    "Effect": 1009,
+    "Open": true
+  },
+  {
+    "ID": 1003,
+    "Name": "Torch",
+    "Desc": "When the energy is full, it will release a flame to burn and destroy the front target, no more than 3 targets.",
+    "GrayIcon": "itemSheet_json.item05",
+    "Icon": "itemSheet_json.item06",
+    "Effect": 1001,
+    "Open": true
+  },
+  {
+    "ID": 1004,
+    "Name": "xxxxx",
+    "Desc": "1111111111111111111111111111111111111111111111111111",
+    "GrayIcon": "itemSheet_json.item05",
+    "Icon": "itemSheet_json.item06",
+    "Effect": 1001,
+    "Open": false
+  },
+  {
+    "ID": 1005,
+    "Name": "yyyy",
+    "Desc": "2222222222222222222222222222222222222222222222222222222222222",
+    "GrayIcon": "itemSheet_json.item05",
+    "Icon": "itemSheet_json.item06",
+    "Effect": 1001,
+    "Open": false
+  }
+]

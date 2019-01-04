@@ -22,6 +22,7 @@ var Monster = (function (_super) {
             case ELevelType.Elite:
                 monsterData = data.elite;
                 PanelManager.m_gameScenePanel.EliteCount += 1;
+                GameConfig.monsterPos = 3;
                 break;
         }
         this.m_sumWeight = 0;
@@ -37,6 +38,7 @@ var Monster = (function (_super) {
                 this.m_balloonMax = monsterData[i].max;
                 this.m_summonData = monsterData[i].summon;
                 this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()];
+                this.m_type = this.m_data.Difficult;
                 break;
             }
         }
@@ -94,7 +96,20 @@ var Monster = (function (_super) {
         // this.filters = [this.m_dropShadowFilter]
         this.GotoIdle();
         this.UpdateSignSlot();
-        this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width);
+        switch (GameConfig.monsterPos) {
+            case 1:
+                this.x = MathUtils.getRandom(this.m_rect.width, Config.stageLeft - this.m_rect.width);
+                GameConfig.monsterPos = 2;
+                break;
+            case 2:
+                this.x = MathUtils.getRandom(Config.stageCenter + this.m_rect.width, Config.stageWidth - this.m_rect.width);
+                GameConfig.monsterPos = 3;
+                break;
+            case 3:
+                this.x = MathUtils.getRandom(Config.stageLeft + this.m_rect.width, Config.stageCenter - this.m_rect.width);
+                GameConfig.monsterPos = 1;
+                break;
+        }
     };
     Monster.prototype.GotoIdle = function () {
         if (this.m_data.ID == 1002) {
@@ -133,7 +148,7 @@ var Monster = (function (_super) {
         this.m_effectArmatureContainer.scaleY = 0.8;
         this.m_effectArmatureContainer.visible = true;
         this.m_effectArmatureContainer.play("shuihua", 1);
-        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.5, 4, 5);
+        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 6);
         this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
     };
     Monster.prototype.GotoSlow = function () {
@@ -175,6 +190,9 @@ var Monster = (function (_super) {
         this.m_effectArmatureContainer.play(this.m_effectData.step1, 1);
         if (this.m_effectData.type == EEffectType.Fire) {
             this.m_state = EMonsterState.Stop;
+            GameConfig.balloonScore = 0;
+            PanelManager.m_gameScenePanel.Boom = true;
+            PanelManager.m_gameScenePanel.UpdateBatter();
         }
     };
     Monster.prototype.BallExplosion = function (a_ball) {
@@ -186,9 +204,6 @@ var Monster = (function (_super) {
                     this.m_balloons.splice(i, 1);
                     balloon.BalloonExplore();
                     this.m_exploreIndex = i;
-                    // if (this.m_balloons.length <= 0) {
-                    // 	this.m_state = EMonsterState.Dead
-                    // }
                     break;
                 }
             }
@@ -292,6 +307,13 @@ var Monster = (function (_super) {
     Object.defineProperty(Monster.prototype, "Balloons", {
         get: function () {
             return this.m_balloons;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Monster.prototype, "Type", {
+        get: function () {
+            return this.m_type;
         },
         enumerable: true,
         configurable: true

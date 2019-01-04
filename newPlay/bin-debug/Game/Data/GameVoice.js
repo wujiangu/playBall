@@ -9,6 +9,10 @@ var GameVoice;
     GameVoice.iceEffect_mp3 = "iceEffect_mp3"; // 冰技能大招
     GameVoice.skillBegin_mp3 = "skillBegin_mp3"; // 大招开始
     GameVoice.staff_mp3 = "staff_mp3"; // 法杖
+    GameVoice.combo1_mp3 = "combo1_mp3"; // 一连
+    GameVoice.combo2_mp3 = "combo2_mp3"; // 二连
+    GameVoice.combo3_mp3 = "combo3_mp3"; // 三连
+    GameVoice.spiderKingArrive_mp3 = "spiderKingArrive_mp3"; // 蜘蛛王出场
     GameVoice.beginBGMSound = null;
     GameVoice.beginBGMChannel = null;
     GameVoice.battleBGMSound = null;
@@ -20,5 +24,9 @@ var GameVoice;
     GameVoice.iceEffectSound = null;
     GameVoice.skillBeginSound = null;
     GameVoice.staffSound = null;
+    GameVoice.combo1Sound = null;
+    GameVoice.combo2Sound = null;
+    GameVoice.combo3Sound = null;
+    GameVoice.spiderKingArrive = null;
 })(GameVoice || (GameVoice = {}));
 //# sourceMappingURL=GameVoice.js.map

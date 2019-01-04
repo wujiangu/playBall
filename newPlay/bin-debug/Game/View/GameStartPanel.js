@@ -28,6 +28,7 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameStartPanel;
         this.touchChildren = true;
+        this.m_maskRect.visible = false;
         if (!this.m_isInit) {
             this.touchChildren = false;
             this.InitGroup.play(0);
@@ -35,6 +36,8 @@ var GameStartPanel = (function (_super) {
         }
         else {
             this.m_groupStart.alpha = 1;
+            this.m_maskRect.visible = true;
+            this.initGame.play(0);
         }
         // this.m_imgCloth.y = Config.stageHeight - 1375
         if (GameVoice.beginBGMChannel != null)
@@ -75,7 +78,10 @@ var GameStartPanel = (function (_super) {
     };
     GameStartPanel.prototype._OnStartGame = function () {
         this.touchChildren = false;
-        this.CloseGroup.play(0);
+        this.m_sceneType = 1;
+        this.m_maskRect.visible = true;
+        this.startGame.play(0);
+        // this.CloseGroup.play(0)
     };
     GameStartPanel.prototype._OnBtnSetting = function () {
         Common.dispatchEvent(MainNotify.openSettingPanel);
@@ -83,8 +89,9 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype._OnBtnRank = function () {
     };
     GameStartPanel.prototype._OnBtnProc = function () {
-        Common.dispatchEvent(MainNotify.closeGameStartPanel);
-        Common.dispatchEvent(MainNotify.openBackpackPanel);
+        this.m_sceneType = 2;
+        this.m_maskRect.visible = true;
+        this.startGame.play(0);
     };
     GameStartPanel.prototype._OnInitComplete = function () {
         this.touchChildren = true;
@@ -94,6 +101,31 @@ var GameStartPanel = (function (_super) {
     };
     GameStartPanel.prototype._OnWaterComplete = function () {
         this.water.play(0);
+    };
+    GameStartPanel.prototype._OnBtn1 = function () {
+        GameConfig.testSelectLevel = 1001;
+    };
+    GameStartPanel.prototype._OnBtn2 = function () {
+        GameConfig.testSelectLevel = 1002;
+    };
+    GameStartPanel.prototype._OnBtn3 = function () {
+        GameConfig.testSelectLevel = 1003;
+    };
+    GameStartPanel.prototype._OnBtnLoop = function () {
+        GameConfig.testSelectLevel = 1004;
+    };
+    GameStartPanel.prototype._OnGameStartComplete = function () {
+        if (this.m_sceneType == 1) {
+            this._OnHideCloth();
+        }
+        else if (this.m_sceneType == 2) {
+            Common.dispatchEvent(MainNotify.closeGameStartPanel);
+            Common.dispatchEvent(MainNotify.openBackpackPanel);
+        }
+    };
+    GameStartPanel.prototype._OnInitGameComplete = function () {
+        Common.log("进来动画完成");
+        this.touchChildren = true;
     };
     GameStartPanel.prototype.onComplete = function () {
         // this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
@@ -110,6 +142,13 @@ var GameStartPanel = (function (_super) {
         this.InitGroup.addEventListener('complete', this._OnInitComplete, this);
         this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this);
         this.water.addEventListener('complete', this._OnWaterComplete, this);
+        this.startGame.addEventListener('complete', this._OnGameStartComplete, this);
+        this.initGame.addEventListener('complete', this._OnInitGameComplete, this);
+        this.m_groupLevel.visible = true;
+        this.m_btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn1, this);
+        this.m_btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn2, this);
+        this.m_btn3.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn3, this);
+        this.m_btnLoop.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLoop, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

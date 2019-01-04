@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="backpackPanel" width="750" height="1336" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" xmlns:ns1="*">
+	<w:Declarations>
+	</w:Declarations>
+	<e:Image id="m_imgBg" height="1394" bottom="0" left="0" right="0" source="procBg1_png"/>
+	<e:Button id="m_btnReturn" label="" top="14" left="20">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnProcReturn_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="m_btnRight" label="" right="-7" verticalCenter="-41">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="m_btnLeft" label="" verticalCenter="-41" left="-6" scaleX="-1">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image source="procBg5_png" scaleX="0.8" scaleY="0.8" horizontalCenter="0" verticalCenter="-466.5"/>
+	<e:Image source="itemSheet_json.itemBg1" horizontalCenter="0" verticalCenter="-478"/>
+	<e:Group id="m_groupItemIR" width="582.6" height="584" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-88">
+		<ns1:ItemIR id="m_itemIRRight2" width="341.6" height="584" horizontalCenter="156" verticalCenter="0" scaleX="0.8" scaleY="0.8" x="233" y="39"/>
+		<ns1:ItemIR id="m_itemIRLeft2" width="341.6" height="584" horizontalCenter="-156" verticalCenter="0" scaleX="0.8" scaleY="0.8" x="243" y="49"/>
+		<ns1:ItemIR id="m_itemIRRight1" width="341.6" height="584" horizontalCenter="78" verticalCenter="0" scaleX="0.9" scaleY="0.9" x="223" y="29"/>
+		<ns1:ItemIR id="m_itemIRLeft1" width="341.6" height="584" horizontalCenter="-78" verticalCenter="0" scaleX="0.9" scaleY="0.9" x="233" y="39"/>
+		<ns1:ItemIR id="m_itemIRCenter" width="341.6" height="584" horizontalCenter="0" verticalCenter="0" x="118" y="0" scaleX="1" scaleY="1"/>
+	</e:Group>
+	<e:Button id="m_btnUse" label="" horizontalCenter="0" verticalCenter="203.5">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnUse_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Image id="m_itemTypeBg" source="procBg6_png" horizontalCenter="0" bottom="129"/>
+	<e:Image id="m_curItem" source="huoba_png" scaleX="0.5" scaleY="0.5" horizontalCenter="0" bottom="150"/>
+</e:Skin>

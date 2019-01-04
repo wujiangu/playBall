@@ -22,12 +22,15 @@ class GameStartPanel extends BasePanel {
     public onEnter():void{
 		Common.curPanel = PanelManager.m_gameStartPanel
 		this.touchChildren = true
+		this.m_maskRect.visible = false
 		if (!this.m_isInit) {
 			this.touchChildren = false
 			this.InitGroup.play(0)
 			this.m_isInit = true
 		}else{
 			this.m_groupStart.alpha = 1
+			this.m_maskRect.visible = true
+			this.initGame.play(0)
 		}
 		// this.m_imgCloth.y = Config.stageHeight - 1375
 		if (GameVoice.beginBGMChannel != null) GameVoice.beginBGMChannel.stop()
@@ -39,7 +42,7 @@ class GameStartPanel extends BasePanel {
     // 退出面板
     public onExit():void{
 		this.touchChildren = false
-		GameVoice.beginBGMChannel.stop()
+		if (this.m_sceneType == 1) GameVoice.beginBGMChannel.stop()
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
@@ -71,7 +74,10 @@ class GameStartPanel extends BasePanel {
 
 	private _OnStartGame() {
 		this.touchChildren = false
-		this.CloseGroup.play(0)
+		this.m_sceneType = 1
+		this.m_maskRect.visible = true
+		this.startGame.play(0)
+		// this.CloseGroup.play(0)
 	}
 
 	private _OnBtnSetting() {
@@ -83,8 +89,9 @@ class GameStartPanel extends BasePanel {
 	}
 
 	private _OnBtnProc() {
-		Common.dispatchEvent(MainNotify.closeGameStartPanel)
-		Common.dispatchEvent(MainNotify.openBackpackPanel)
+		this.m_sceneType = 2
+		this.m_maskRect.visible = true
+		this.startGame.play(0)
 	}
 
 	private _OnInitComplete() {
@@ -97,6 +104,37 @@ class GameStartPanel extends BasePanel {
 
 	private _OnWaterComplete() {
 		this.water.play(0)
+	}
+
+	private _OnBtn1() {
+		GameConfig.testSelectLevel = 1001
+	}
+
+	private _OnBtn2() {
+		GameConfig.testSelectLevel = 1002
+	}
+
+	private _OnBtn3() {
+		GameConfig.testSelectLevel = 1003
+	}
+
+	private _OnBtnLoop() {
+		GameConfig.testSelectLevel = 1004
+	}
+
+	private _OnGameStartComplete() {
+		if (this.m_sceneType == 1) {
+			this._OnHideCloth()
+		}
+		else if (this.m_sceneType == 2) {
+			Common.dispatchEvent(MainNotify.closeGameStartPanel)
+			Common.dispatchEvent(MainNotify.openBackpackPanel)
+		}
+    }
+
+	private _OnInitGameComplete() {
+		Common.log("进来动画完成")
+		this.touchChildren = true
 	}
 
 	private onComplete() {
@@ -116,6 +154,15 @@ class GameStartPanel extends BasePanel {
 		this.InitGroup.addEventListener('complete', this._OnInitComplete, this)
 		this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this)
 		this.water.addEventListener('complete', this._OnWaterComplete, this)
+		this.startGame.addEventListener('complete', this._OnGameStartComplete, this)
+		this.initGame.addEventListener('complete', this._OnInitGameComplete, this)
+
+
+		this.m_groupLevel.visible = true
+		this.m_btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn1, this)
+		this.m_btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn2, this)
+		this.m_btn3.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn3, this)
+		this.m_btnLoop.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLoop, this)
 	}
 
     protected _OnResize(event:egret.Event = null)
@@ -123,6 +170,8 @@ class GameStartPanel extends BasePanel {
 		super._OnResize(event)
     }
 
+
+	private m_sceneType:number
 
 	private m_imgBg:eui.Image
 	// private m_imgCloth:eui.Image
@@ -139,6 +188,9 @@ class GameStartPanel extends BasePanel {
 	private m_cloud2Speed:number
 	private m_cloud3Speed:number
 
+	private startGame:egret.tween.TweenGroup
+	private initGame:egret.tween.TweenGroup
+
 	/**水面 */
 	private water:egret.tween.TweenGroup
 
@@ -150,5 +202,12 @@ class GameStartPanel extends BasePanel {
 	private CloseGroup:egret.tween.TweenGroup
 	private m_groupStart:eui.Group
 
+	private m_maskRect:eui.Rect
+
 	
+	private m_groupLevel:eui.Group
+	private m_btn1:eui.Button
+	private m_btn2:eui.Button
+	private m_btn3:eui.Button
+	private m_btnLoop:eui.Button
 }

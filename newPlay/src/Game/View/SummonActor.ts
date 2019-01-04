@@ -11,7 +11,7 @@ class SummonActor extends BaseActor {
 		this.m_gesture.scaleY = 0.5
 	}
 
-	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number, a_count:number = 0, a_num:number = 0) {
+	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number, a_count:number = 0, a_num:number = 0, a_isBoss:boolean = false) {
 		this.m_sumWeight = 0
 		// for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
 		// 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
@@ -46,8 +46,9 @@ class SummonActor extends BaseActor {
 		if (this.m_data) {
 			this.InitData()
 			this.InitGraph()
-			this.m_endX = Math.max(a_x, this.w)
-			this.m_endY = Math.min(a_y, Config.stageWidth - this.w)
+			this.m_endX = Math.max(a_x, this.m_rect.width)
+			this.m_endX = Math.min(a_x, Config.stageWidth - this.m_rect.width)
+			this.m_endY = beginY
 			if (this.m_data.Type == ESummonType.Balloon) {
 				this.x = beginX
 				this.y = beginY
@@ -57,11 +58,13 @@ class SummonActor extends BaseActor {
 				if (a_count == 1) this.x = beginX
 				else if (a_count == 2) {
 					this.x = beginX - (-2 * a_num + 1) * 60
+					if (a_isBoss) this.x = beginX - (-2 * a_num + 1) * 400
 					this.x = Math.max(this.x, this.m_rect.width)
 					this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width)
 				}
 				else if (a_count == 3) {
 					this.x = beginX - (-a_num + 1) * 120
+					if (a_isBoss) this.x = Config.stageHalfWidth - (-a_num + 1) * 500
 					this.x = Math.max(this.x, this.m_rect.width)
 					this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width)
 				}
@@ -125,7 +128,7 @@ class SummonActor extends BaseActor {
 			this.m_gestureType = this.m_balloon.type
 
 			this.m_state = EMonsterState.Summon
-			this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1, 1, 0, 3)
+			this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1, 1, 0, 3)
 
 			this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
 			// this.x = MathUtils.getRandom(this.m_rect.width, Config.stageWidth - this.m_rect.width)
@@ -163,6 +166,8 @@ class SummonActor extends BaseActor {
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
 
 		if (this.m_data.Type == ESummonType.Balloon) {
+			GameConfig.balloonScore += this.m_score
+			PanelManager.m_gameScenePanel.Boom = true
 			let channel = GameVoice.ballonBoomSound.play(0, 1)
 			channel.volume = GameConfig.soundValue / 100
 		}

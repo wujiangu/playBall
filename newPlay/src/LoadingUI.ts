@@ -94,10 +94,10 @@ class LoadingUI extends egret.Sprite {
         this.txtLoad=txtExp;
         this.addChild(txtExp)
         //--------
-        var txtTip:egret.TextField=Common.createText("游戏加载", 0, 0, 40, 0xa56016);
-        txtTip.x=(sw-txtTip.width)>>1;
-        txtTip.y=txtbg.y + txtTip.height
-        this.addChild(txtTip)
+        // var txtTip:egret.TextField=Common.createText("游戏加载", 0, 0, 40, 0xa56016);
+        // txtTip.x=(sw-txtTip.width)>>1;
+        // txtTip.y=txtbg.y + txtTip.height
+        // this.addChild(txtTip)
         
         // var txtName:egret.TextField=Common.createText("", 0, 0);
         // txtName.size=40;

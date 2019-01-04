@@ -1,12 +1,11 @@
 var Common;
 (function (Common) {
-    var curScene;
     //当前游戏场景类
     function gameScene() {
-        if (this.curScene == null) {
-            this.curScene = new GameScene();
+        if (Common.curScene == null) {
+            Common.curScene = new GameScene();
         }
-        return this.curScene;
+        return Common.curScene;
     }
     Common.gameScene = gameScene;
     function onTouchBegin() {

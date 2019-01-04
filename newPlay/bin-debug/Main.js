@@ -53,11 +53,11 @@ var Main = (function (_super) {
         Config.stageHeight = this.stage.stageHeight;
         Config.stageHalfWidth = this.stage.stageWidth / 2;
         Config.stageHalfHeight = this.stage.stageHeight / 2;
-        // this.stage.x = this.stage.stageWidth / 2
-        // this.left = 0
-        // this.top = 0
-        // this.right = 0
-        // this.bottom = 0
+        Config.stageLeft = Config.stageWidth / 3;
+        Config.stageCenter = 2 * Config.stageWidth / 3;
+        // Common.log("高度", Config.stageHeight)
+        // Common.curScene.y = Config.stageHeight - 1392
+        // if (Config.stageHeight < 1392) this.stage.scaleMode = egret.StageScaleMode.FIXED_HEIGHT
     };
     Main.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);
@@ -75,7 +75,7 @@ var Main = (function (_super) {
             egret.ticker.resume();
         };
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT;
-        this.stage.setContentSize(750, 1336);
+        this.stage.setContentSize(730, 1392);
         this.stage.maxTouches = 1;
         //inject the custom material parser
         //注入自定义的素材解析器

@@ -11,5 +11,9 @@ DragonBonesAnimations.Dead = "dead";
 DragonBonesAnimations.Run = "run";
 DragonBonesAnimations.Hurt = "hurt";
 DragonBonesAnimations.Explore = "explore";
+DragonBonesAnimations.Arrive = "arrive";
+DragonBonesAnimations.Attack = "attack";
+DragonBonesAnimations.ReadyFall = "readyFall";
+DragonBonesAnimations.Move = "move";
 __reflect(DragonBonesAnimations.prototype, "DragonBonesAnimations");
 //# sourceMappingURL=DragonBonesAnimations.js.map
