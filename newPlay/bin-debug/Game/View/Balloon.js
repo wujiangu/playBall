@@ -85,8 +85,7 @@ var Balloon = (function (_super) {
     Balloon.prototype.UpdateColorAndGesture = function () {
         this._type = 0;
         this._gesture.visible = false;
-        this._balloonArmatureContainer.play("explore", 1);
-        // this._effectArmatureContainer.play("bianhua", 1)
+        this._balloonArmatureContainer.play("explore", 1, 1, 0, 3);
     };
     Balloon.prototype.SetLine = function (count, value) {
         if (count === void 0) { count = 1; }
@@ -235,3 +234,4 @@ var Balloon = (function (_super) {
     return Balloon;
 }(egret.Sprite));
 __reflect(Balloon.prototype, "Balloon");
+//# sourceMappingURL=Balloon.js.map

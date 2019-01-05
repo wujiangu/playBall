@@ -174,6 +174,8 @@ class SummonActor extends BaseActor {
 		else if (this.m_data.Type == ESummonType.Monster) {
 			this.m_balloon.BalloonExplore()
 		}
+
+		PanelManager.m_gameScenePanel.ActorDeadHandle()
 		
 	}
 

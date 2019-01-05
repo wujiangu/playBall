@@ -51,6 +51,7 @@ var GameManager = (function (_super) {
         this._gameState = EGameState.Start;
         this._startTime = egret.getTimer();
         this._lastTime = this._startTime;
+        this._gameSlowDelay = -1;
     };
     GameManager.prototype.Pause = function (isRelease) {
         if (isRelease === void 0) { isRelease = false; }
@@ -70,6 +71,10 @@ var GameManager = (function (_super) {
         this._startTime = egret.getTimer();
         this._lastTime = this._startTime;
     };
+    GameManager.prototype.GameSlow = function () {
+        Common.log("慢放");
+        this._gameSlowDelay = 0;
+    };
     GameManager.prototype.Update = function () {
         if (this._gameState == EGameState.StageBack)
             return;
@@ -81,11 +86,17 @@ var GameManager = (function (_super) {
         }
         this._startTime = egret.getTimer();
         var timeElapsed = this._startTime - this._lastTime;
+        if (this._gameSlowDelay >= 0) {
+            this._gameSlowDelay += timeElapsed;
+            timeElapsed *= 0.4;
+            if (this._gameSlowDelay >= 2000) {
+                this._gameSlowDelay = -1;
+            }
+        }
         if (PanelManager.m_gameScenePanel != null) {
             PanelManager.m_gameScenePanel.Update(timeElapsed);
         }
         DragonBonesFactory.getInstance().Update(timeElapsed);
-        // this._map.Update(this._startTime - this._lastTime)
         this._lastTime = this._startTime;
     };
     Object.defineProperty(GameManager.prototype, "GameState", {
@@ -99,7 +110,6 @@ var GameManager = (function (_super) {
         configurable: true
     });
     GameManager.prototype._Onshake = function () {
-        Common.log("游戏状态:", this._gameState);
         if (this._gameState == EGameState.End) {
             Common.dispatchEvent(MainNotify.openGameOverPanel);
         }
@@ -107,3 +117,4 @@ var GameManager = (function (_super) {
     return GameManager;
 }(egret.Sprite));
 __reflect(GameManager.prototype, "GameManager");
+//# sourceMappingURL=GameManager.js.map

@@ -36,3 +36,4 @@ var MainNotify;
     MainNotify.openGamePausePanel = "openGamePausePanel";
     MainNotify.closeGamePausePanel = "closeGamePausePanel";
 })(MainNotify || (MainNotify = {}));
+//# sourceMappingURL=MainNotify.js.map

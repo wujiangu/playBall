@@ -132,6 +132,10 @@ class Monster extends BaseActor {
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
 		PanelManager.m_gameScenePanel.Score += this.m_data.Score
+		PanelManager.m_gameScenePanel.ActorDeadHandle()
+		if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
+			GameManager.Instance.GameSlow()
+		}
 	}
 
 	public GotoRun() {

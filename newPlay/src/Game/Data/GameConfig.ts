@@ -28,6 +28,8 @@ class GameConfig {
 	public static account:string
 	public static curScore:number
 	public static maxScore:number
+	public static curCombo:number
+	public static maxCombo:number
 	public static bgmValue:number = 100
 	public static soundValue:number = 100
 	public static balloonScore:number

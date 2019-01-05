@@ -183,3 +183,4 @@ var ItemIR = (function (_super) {
     return ItemIR;
 }(eui.Component));
 __reflect(ItemIR.prototype, "ItemIR");
+//# sourceMappingURL=BackpackPanel.js.map

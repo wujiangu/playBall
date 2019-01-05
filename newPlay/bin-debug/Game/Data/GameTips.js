@@ -8,3 +8,4 @@ var GameTips = (function () {
     return GameTips;
 }());
 __reflect(GameTips.prototype, "GameTips");
+//# sourceMappingURL=GameTips.js.map

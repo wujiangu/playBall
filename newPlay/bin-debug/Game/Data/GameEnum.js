@@ -78,7 +78,9 @@ var EEffectType;
 var ELevelType;
 (function (ELevelType) {
     ELevelType[ELevelType["Normal"] = 1] = "Normal";
-    ELevelType[ELevelType["Elite"] = 2] = "Elite";
-    ELevelType[ELevelType["Boss"] = 3] = "Boss";
-    ELevelType[ELevelType["End"] = 4] = "End";
+    ELevelType[ELevelType["EliteWarning"] = 2] = "EliteWarning";
+    ELevelType[ELevelType["Elite"] = 3] = "Elite";
+    ELevelType[ELevelType["Boss"] = 4] = "Boss";
+    ELevelType[ELevelType["End"] = 5] = "End";
 })(ELevelType || (ELevelType = {}));
+//# sourceMappingURL=GameEnum.js.map

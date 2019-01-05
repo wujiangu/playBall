@@ -77,3 +77,4 @@ var GameOverPanel = (function (_super) {
     return GameOverPanel;
 }(BasePanel));
 __reflect(GameOverPanel.prototype, "GameOverPanel");
+//# sourceMappingURL=GameOverPanel.js.map

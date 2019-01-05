@@ -134,3 +134,4 @@ var BaseActor = (function (_super) {
     return BaseActor;
 }(egret.DisplayObjectContainer));
 __reflect(BaseActor.prototype, "BaseActor");
+//# sourceMappingURL=BaseActor.js.map

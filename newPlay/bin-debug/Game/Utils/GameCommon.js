@@ -54,7 +54,7 @@ var Common;
     }
     Common.GetMaxScore = GetMaxScore;
     /**更新历史最高分
-     * @param {value} 当前分数
+     * @param value 当前分数
      */
     function UpdateMaxScore(value) {
         if (value > GameConfig.maxScore) {
@@ -68,6 +68,45 @@ var Common;
         }
     }
     Common.UpdateMaxScore = UpdateMaxScore;
+    /**获取历史最高分数 */
+    function GetMaxCombo() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.maxCombo = parseInt(message);
+                }
+                else {
+                    GameConfig.maxCombo = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "maxCombo");
+        }
+        else {
+            var score = NativeApi.getLocalData(GameConfig.game + "maxCombo");
+            if (score == null) {
+                GameConfig.maxCombo = 0;
+            }
+            else {
+                GameConfig.maxCombo = parseInt(score);
+            }
+        }
+    }
+    Common.GetMaxCombo = GetMaxCombo;
+    /**更新历史最高分
+     * @param value 当前分数
+     */
+    function UpdateMaxCombo(value) {
+        if (value > GameConfig.maxCombo) {
+            GameConfig.maxCombo = value;
+            if (!GameConfig.isWebView) {
+                egret.ExternalInterface.call("write", GameConfig.game + "maxCombo:" + value);
+            }
+            else {
+                NativeApi.setLocalData(GameConfig.game + "maxCombo", value.toString());
+            }
+        }
+    }
+    Common.UpdateMaxCombo = UpdateMaxCombo;
     /**获取当前使用道具 */
     function GetItem() {
         if (!GameConfig.isWebView) {
@@ -145,3 +184,4 @@ var Common;
     }
     Common.UpdateUseItem = UpdateUseItem;
 })(Common || (Common = {}));
+//# sourceMappingURL=GameCommon.js.map

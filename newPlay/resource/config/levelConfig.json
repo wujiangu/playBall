@@ -5,6 +5,7 @@
         "speed":0,
         "normalTime":2000,
         "eliteTime":2000,
+        "normalCount":1,
         "eliteCount":1,
         "normal":[
             {"id":1001, "diff":1, "min":1, "max":2, "prob":80},
@@ -28,6 +29,7 @@
         "speed":0,
         "normalTime":30000,
         "eliteTime":2000,
+        "normalCount":1,
         "eliteCount":1,
         "normal":[
             {"id":1001, "diff":0, "min":2, "max":3, "prob":10},
@@ -52,6 +54,7 @@
         "speed":0,
         "normalTime":30000,
         "eliteTime":2000,
+        "normalCount":1,
         "eliteCount":1,
         "normal":[
             {"id":1003, "diff":2, "min":2, "max":3, "prob":70},
@@ -76,6 +79,7 @@
         "speed":0,
         "normalTime":30000,
         "eliteTime":2000,
+        "normalCount":1,
         "eliteCount":1,
         "normal":[
             {"id":1001, "diff":0, "min":3, "max":3, "prob":15},

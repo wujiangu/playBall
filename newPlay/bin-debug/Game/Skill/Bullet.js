@@ -65,3 +65,4 @@ var Bullet = (function (_super) {
     return Bullet;
 }(egret.DisplayObjectContainer));
 __reflect(Bullet.prototype, "Bullet");
+//# sourceMappingURL=Bullet.js.map

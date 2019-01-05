@@ -56,7 +56,7 @@ namespace Common{
 	}
 
 	/**更新历史最高分
-	 * @param {value} 当前分数
+	 * @param value 当前分数
 	 */
 	export function UpdateMaxScore(value:number) {
 		if (value > GameConfig.maxScore) {
@@ -65,6 +65,42 @@ namespace Common{
 				egret.ExternalInterface.call("write", GameConfig.game+"maxScore:" + value)
 			}else{
 				NativeApi.setLocalData(GameConfig.game+"maxScore", value.toString())
+			}
+		}
+	}
+
+	/**获取历史最高分数 */
+	export function GetMaxCombo() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.maxCombo = parseInt(message)
+				}else{
+					GameConfig.maxCombo = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"maxCombo")
+		}
+		else {
+			let score = NativeApi.getLocalData(GameConfig.game+"maxCombo")
+			if (score == null) {
+				GameConfig.maxCombo = 0
+			}else{
+				GameConfig.maxCombo = parseInt(score)
+			}
+		}
+	}
+
+	/**更新历史最高分
+	 * @param value 当前分数
+	 */
+	export function UpdateMaxCombo(value:number) {
+		if (value > GameConfig.maxCombo) {
+			GameConfig.maxCombo = value
+			if (!GameConfig.isWebView) {
+				egret.ExternalInterface.call("write", GameConfig.game+"maxCombo:" + value)
+			}else{
+				NativeApi.setLocalData(GameConfig.game+"maxCombo", value.toString())
 			}
 		}
 	}

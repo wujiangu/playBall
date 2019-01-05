@@ -16,3 +16,4 @@ var DragonBonesAnimations = (function () {
     return DragonBonesAnimations;
 }());
 __reflect(DragonBonesAnimations.prototype, "DragonBonesAnimations");
+//# sourceMappingURL=DragonBonesAnimations.js.map

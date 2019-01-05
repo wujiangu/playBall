@@ -145,6 +145,7 @@ var SpiderActor = (function (_super) {
             this.m_state = EMonsterState.FallDown;
             PanelManager.m_gameScenePanel.Power += this.m_data.Power;
             PanelManager.m_gameScenePanel.Score += this.m_data.Score;
+            GameManager.Instance.GameSlow();
         }
     };
     SpiderActor.prototype.GotoExplore = function () { };
@@ -268,7 +269,7 @@ var SpiderActor = (function (_super) {
                 this.m_state = EMonsterState.Run;
                 this.GotoRun();
             }
-            if (this.m_sumonDelay >= 0) {
+            if (this.m_sumonDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
                 this.m_sumonDelay += timeElapsed;
                 if (this.m_sumonDelay >= GameConfig.spiderDelay) {
                     this.m_sumonDelay = 0;
@@ -377,3 +378,4 @@ var SpiderActor = (function (_super) {
     return SpiderActor;
 }(BaseActor));
 __reflect(SpiderActor.prototype, "SpiderActor");
+//# sourceMappingURL=SpiderActor.js.map

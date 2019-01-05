@@ -7,3 +7,4 @@ var SkillBase = (function () {
     return SkillBase;
 }());
 __reflect(SkillBase.prototype, "SkillBase");
+//# sourceMappingURL=SkillBase.js.map

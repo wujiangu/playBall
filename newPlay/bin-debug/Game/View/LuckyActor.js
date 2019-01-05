@@ -92,11 +92,7 @@ var LuckyActor = (function (_super) {
         }
     };
     LuckyActor.prototype.UpdateGesture = function () {
-        // this.m_balloon.UpdateGesture(this.m_gestureData)
         this.m_balloon.UpdateColorAndGesture();
-        // if (PanelManager.m_gameScenePanel != null) {
-        // 	PanelManager.m_gameScenePanel.Score += this.m_balloon.Score
-        // }
         var channel = GameVoice.ballonBoomSound.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
         GameConfig.balloonScore += this.m_balloon.Score;
@@ -121,3 +117,4 @@ var LuckyActor = (function (_super) {
     return LuckyActor;
 }(BaseActor));
 __reflect(LuckyActor.prototype, "LuckyActor");
+//# sourceMappingURL=LuckyActor.js.map

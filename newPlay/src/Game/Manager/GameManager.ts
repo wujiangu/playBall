@@ -31,7 +31,6 @@ class GameManager extends egret.Sprite{
 			this._gameState = EGameState.End
 			PanelManager.m_gameScenePanel.Exit()
 			ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this)
-			Common.log("游戏状态:", this._gameState)
 		}
 		
 	}
@@ -42,6 +41,7 @@ class GameManager extends egret.Sprite{
 		this._gameState = EGameState.Start
 		this._startTime = egret.getTimer()
 		this._lastTime = this._startTime
+		this._gameSlowDelay = -1
 	}
 
 	public Pause(isRelease:boolean = false):void
@@ -66,6 +66,9 @@ class GameManager extends egret.Sprite{
 		this._lastTime = this._startTime
 	}
 
+	public GameSlow() {
+		this._gameSlowDelay = 0
+	}
 
 	public Update():void
 	{
@@ -76,13 +79,20 @@ class GameManager extends egret.Sprite{
 			}
 			return
 		}
+		
 		this._startTime = egret.getTimer()
 		let timeElapsed = this._startTime - this._lastTime
+		if (this._gameSlowDelay >= 0) {
+			this._gameSlowDelay += timeElapsed
+			timeElapsed *= 0.4
+			if (this._gameSlowDelay >= 2000) {
+				this._gameSlowDelay = -1
+			}
+		}
 		if (PanelManager.m_gameScenePanel != null) {
 			PanelManager.m_gameScenePanel.Update(timeElapsed)
 		}
 		DragonBonesFactory.getInstance().Update(timeElapsed)
-		// this._map.Update(this._startTime - this._lastTime)
 		this._lastTime = this._startTime
 	}
 
@@ -95,7 +105,6 @@ class GameManager extends egret.Sprite{
 	}
 
 	private _Onshake() {
-		Common.log("游戏状态:", this._gameState)
 		if (this._gameState == EGameState.End) {
 			Common.dispatchEvent(MainNotify.openGameOverPanel)
 		}
@@ -106,8 +115,8 @@ class GameManager extends egret.Sprite{
 	private _time:number
 	private _gameState:EGameState
 	private _lastStage:EGameState
-	private _bgMusic:egret.Sound
-	private _bgChannel:egret.SoundChannel
+	private _gameSpeed:number
+	private _gameSlowDelay:number
 
 	private static _Instance:GameManager
 }

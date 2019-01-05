@@ -91,11 +91,7 @@ class LuckyActor extends BaseActor{
 	}
 
 	public UpdateGesture() {
-		// this.m_balloon.UpdateGesture(this.m_gestureData)
 		this.m_balloon.UpdateColorAndGesture()
-		// if (PanelManager.m_gameScenePanel != null) {
-		// 	PanelManager.m_gameScenePanel.Score += this.m_balloon.Score
-		// }
 		let channel = GameVoice.ballonBoomSound.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
 		GameConfig.balloonScore += this.m_balloon.Score

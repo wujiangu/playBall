@@ -70,3 +70,4 @@ var SettingPanel = (function (_super) {
     return SettingPanel;
 }(BasePanel));
 __reflect(SettingPanel.prototype, "SettingPanel");
+//# sourceMappingURL=SettingPanel.js.map

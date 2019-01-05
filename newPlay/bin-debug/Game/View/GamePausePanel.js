@@ -86,3 +86,4 @@ var GamePausePanel = (function (_super) {
     return GamePausePanel;
 }(BasePanel));
 __reflect(GamePausePanel.prototype, "GamePausePanel");
+//# sourceMappingURL=GamePausePanel.js.map

@@ -177,6 +177,7 @@ var SummonActor = (function (_super) {
         else if (this.m_data.Type == ESummonType.Monster) {
             this.m_balloon.BalloonExplore();
         }
+        PanelManager.m_gameScenePanel.ActorDeadHandle();
     };
     SummonActor.prototype.Destroy = function () {
         // this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
@@ -246,3 +247,4 @@ var SummonActor = (function (_super) {
     return SummonActor;
 }(BaseActor));
 __reflect(SummonActor.prototype, "SummonActor");
+//# sourceMappingURL=SummonActor.js.map

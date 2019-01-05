@@ -135,6 +135,10 @@ var Monster = (function (_super) {
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
         PanelManager.m_gameScenePanel.Score += this.m_data.Score;
+        PanelManager.m_gameScenePanel.ActorDeadHandle();
+        if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
+            GameManager.Instance.GameSlow();
+        }
     };
     Monster.prototype.GotoRun = function () {
         this._DestroyBalloon();
@@ -386,3 +390,4 @@ var Monster = (function (_super) {
     return Monster;
 }(BaseActor));
 __reflect(Monster.prototype, "Monster");
+//# sourceMappingURL=Monster.js.map

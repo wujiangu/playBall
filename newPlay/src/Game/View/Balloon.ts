@@ -84,8 +84,7 @@ class Balloon extends egret.Sprite {
 	public UpdateColorAndGesture() {
 		this._type = 0
 		this._gesture.visible = false
-		this._balloonArmatureContainer.play("explore", 1)
-		// this._effectArmatureContainer.play("bianhua", 1)
+		this._balloonArmatureContainer.play("explore", 1, 1, 0, 3)
 	}
 
 	public SetLine(count:number = 1, value:number = 0) {

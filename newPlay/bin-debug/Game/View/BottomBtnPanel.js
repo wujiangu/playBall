@@ -71,3 +71,4 @@ var BottomBtnPanel = (function (_super) {
     return BottomBtnPanel;
 }(BasePanel));
 __reflect(BottomBtnPanel.prototype, "BottomBtnPanel");
+//# sourceMappingURL=BottomBtnPanel.js.map

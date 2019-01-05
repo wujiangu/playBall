@@ -5,12 +5,12 @@
 			<tween:TweenItem target="{m_imgTitle}">
 				<tween:Set>
 					<tween:props>
-						<e:Object alpha="{0}" y="{-134.36}"/>
+						<e:Object alpha="{0}" y="{-190}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{1}" y="{-124.46}"/>
+						<e:Object alpha="{1}" y="{-180}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -222,7 +222,7 @@
 				</tween:To>
 				<tween:To duration="350">
 					<tween:props>
-						<e:Object y="{-124.46}"/>
+						<e:Object y="{-180}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -344,7 +344,7 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Image id="m_imgTitle" y="-134.36" x="117" scaleX="1" scaleY="1" source="imgTitle_png"/>
+		<e:Image id="m_imgTitle" y="-180" x="117" scaleX="1" scaleY="1" source="imgTitle_png"/>
 		<e:Button id="m_btnGameStart" label="" y="168.64000000000001" scaleX="1" x="227" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -373,5 +373,5 @@
 		<e:Button id="m_btn3" label="第三关" x="331" y="9"/>
 		<e:Button id="m_btnLoop" label="循环关" x="475" y="9"/>
 	</e:Group>
-	<e:Rect id="m_maskRect" left="0" right="0" top="0" bottom="0" touchEnabled="false"/>
+	<e:Rect id="m_maskRect" left="0" right="0" top="0" bottom="0" touchEnabled="false" visible="false"/>
 </e:Skin>

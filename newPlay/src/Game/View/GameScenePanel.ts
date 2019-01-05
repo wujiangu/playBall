@@ -59,6 +59,7 @@ class GameScenePanel extends BasePanel {
         this.m_slowDelay = -1
         this.m_comboDelay = -1
         this.m_comboCount = 0
+        GameConfig.curCombo = 0
         this.m_isBoom = false
         this.m_bitLabScore.text = this.m_score.toString()
         this.UpdeLevelData(GameConfig.testSelectLevel)
@@ -73,6 +74,7 @@ class GameScenePanel extends BasePanel {
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime
         this.m_levelState = ELevelType.Normal
         this.m_eliteCount = 0
+        this.m_normalCount = 0
     }
 
     // 进入面板
@@ -124,27 +126,41 @@ class GameScenePanel extends BasePanel {
         }
 
         if (GameManager.Instance.GameState == EGameState.Start) {
-            
-            if (this.m_passTime < this.m_currentLevel.normalTime) {
-                this.m_levelState = ELevelType.Normal
-            }
-            else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
-                this.m_levelState = ELevelType.Elite
-                if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.End
+            if (this.m_slowDelay >= 0) actorElapsed *= 0.2
+
+            if (this.m_levelState == ELevelType.Normal) {
+                this.m_monsterAddDelay += timeElapsed
             }else{
-                this.m_levelState = ELevelType.End
+                this.m_monsterAddDelay = 0
             }
 
-            if (this.m_slowDelay >= 0) actorElapsed *= 0.2
+            // if (this.m_passTime < this.m_currentLevel.normalTime) {
+            //     this.m_levelState = ELevelType.Normal
+            //     this.m_monsterAddDelay += timeElapsed
+            //     this.m_passTime += timeElapsed
+            // }else{
+            //     this.m_levelState = ELevelType.EliteWarning
+            //     this.m_monsterAddDelay = 0
+            // }
+            // else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
+            //     this.m_levelState = ELevelType.Elite
+            //     if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.End
+            // }else{
+            //     this.m_levelState = ELevelType.End
+            // }
+
             
-            this.m_monsterAddDelay += timeElapsed
+            
+            
             this.m_luckyAddDelay += timeElapsed
-            this.m_passTime += timeElapsed
+            
+
             // 连击
             if (this.m_comboDelay >= 0) {
                 this.m_comboDelay += actorElapsed
                 if (this.m_comboDelay >= GameConfig.comboDelay) {
                     this.m_comboDelay = -1
+                    GameConfig.curCombo = Math.max(this.m_comboCount, GameConfig.curCombo)
                     this.m_comboCount = 0
                     this.m_isBoom = false
                     this.comboMove.stop()
@@ -173,21 +189,26 @@ class GameScenePanel extends BasePanel {
                     this.warning.play(0)
                 }
             }
-        }
 
-        if (this.m_levelState != ELevelType.End && GameManager.Instance.GameState == EGameState.Start && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
-            this.m_monsterAddDelay = 0
-            if (this.m_levelState == ELevelType.Elite && this.m_currentLevel.elite[0].id == 1006) {
-                this._CreateSpiderActor()
-            }else{
+            if (this.m_normalCount < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
+                this.m_monsterAddDelay = 0
                 this._CreateMonster()
+                // if (this.m_levelState == ELevelType.Elite && this.m_currentLevel.elite[0].id == 1006) {
+                //     this._CreateSpiderActor()
+                // }else{
+                //     this._CreateMonster()
+                // }
+            }
+
+            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+                this.m_luckyAddDelay = 0
+                this._CreateLuckyActor()
             }
         }
 
-        if (GameManager.Instance.GameState == EGameState.Start && this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
-            this.m_luckyAddDelay = 0
-            this._CreateLuckyActor()
-        }
+        
+
+        
 
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (let i = 0; i < this.m_monsters.length; i++) {
@@ -248,6 +269,7 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
+        // this._EnterWarning()
         this._ChangeLevel()
     }
 
@@ -279,6 +301,7 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
+        // this._EnterWarning()
         this._ChangeLevel()
     }
 
@@ -323,6 +346,21 @@ class GameScenePanel extends BasePanel {
             spider.Destroy()
             this.m_groupGame.removeChild(spider)
         }
+    }
+
+    /**是否没有生还的怪物或者召唤物 */
+    public IsNoneAlive() {
+        for (let i = 0; i < this.m_monsters.length; i++) {
+            if (this.m_monsters[i].State == EMonsterState.Ready) {
+                return false
+            }
+        }
+        for (let i = 0; i < this.m_summonActors.length; i++) {
+            if (this.m_summonActors[i].State == EMonsterState.Ready) {
+                return false
+            }
+        }
+        return true
     }
 
     public get Score() {
@@ -378,6 +416,34 @@ class GameScenePanel extends BasePanel {
         this.m_eliteCount = value
     }
 
+    public get NormalCount() {
+        return this.m_normalCount
+    }
+
+    public set NormalCount(value:number) {
+        this.m_normalCount = value
+        
+    }
+
+    public get LevelStage() {
+        return this.m_levelState
+    }
+
+    public ActorDeadHandle() {
+
+        if (this.m_levelState == ELevelType.Normal && this.m_normalCount >= this.m_currentLevel.normalCount && this.IsNoneAlive()) {
+            this.m_levelState = ELevelType.EliteWarning
+        }
+
+        if (this.m_levelState == ELevelType.EliteWarning) {
+            this._EnterWarning()
+        }
+
+        // if (this.m_levelState == ELevelType.Elite) {
+        //     GameManager.Instance.GameSlow()
+        // }
+    }
+
     public get MountBg() {
         return this.m_imgScene
     }
@@ -398,7 +464,6 @@ class GameScenePanel extends BasePanel {
             this.m_isBoom = false
 
             if (this.m_comboCount >= 2) {
-                // this.m_combo.visible = true
                 this.m_fntCombo.visible = true
                 this.m_fntComboCount.visible = true
                 this.m_fntComboCount.text = "X" + this.m_comboCount
@@ -421,9 +486,12 @@ class GameScenePanel extends BasePanel {
                     GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 this.comboBegin.play(0)
-                // this.combo.play(0)
                 GameConfig.balloonScore *= this.m_comboCount
             }
+
+            if (this.m_comboCount <= 2) GameConfig.comboDelay = 1500
+            else if (this.m_comboCount > 2 && this.m_comboCount <= 3) GameConfig.comboDelay = 1200
+            else GameConfig.comboDelay = 1000
         }
         this.Score += GameConfig.balloonScore
     }
@@ -436,9 +504,9 @@ class GameScenePanel extends BasePanel {
         if (this.m_monsters.length <= 0 
             && this.m_summonActors.length <= 0 
             && this.m_spiderActors.length <= 0
-            && this.m_passTime > this.m_allTime 
-            && this.m_levelState == ELevelType.End) 
+            && this.m_levelState == ELevelType.Elite) 
         {
+            Common.log("进入下一关")
             this.UpdeLevelData(this.m_currentLevel.next)
         }
     }
@@ -446,8 +514,16 @@ class GameScenePanel extends BasePanel {
     /**
      * 进入boss
      */
+    private _EnterWarning() {
+        Common.log("进入警告")
+        egret.setTimeout(this._EnterBoss, this, 2000)
+    }
+
     private _EnterBoss() {
-        
+        Common.log("进入BOSS")
+        this.m_levelState = ELevelType.Elite
+        if (this.m_currentLevel.elite[0].id == 1006) this._CreateSpiderActor()
+        else this._CreateMonster()
     }
 
     /**
@@ -725,6 +801,7 @@ class GameScenePanel extends BasePanel {
     private _CreateMonster() {
         let monster:Monster = GameObjectPool.getInstance().createObject(Monster, "Monster")
         monster.Init(this.m_currentLevel, this.m_levelState)
+        this.m_normalCount++
         if (this.m_curItemData != null) {
             let effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()]
             monster.UpdateEffectArmature(effectData)
@@ -798,6 +875,7 @@ class GameScenePanel extends BasePanel {
     private m_allTime:number
     /**精英怪总量 */
     private m_eliteCount:number
+    private m_normalCount:number
     private m_isWarning:boolean
 
     ///////////////////////////////////////////////////////////////////////////

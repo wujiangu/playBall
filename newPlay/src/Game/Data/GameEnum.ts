@@ -85,6 +85,7 @@ enum EEffectType {
 enum ELevelType
 {
     Normal = 1,
+    EliteWarning,
     Elite,
     Boss,
     End,
