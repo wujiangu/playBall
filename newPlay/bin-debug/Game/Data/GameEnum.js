@@ -82,4 +82,3 @@ var ELevelType;
     ELevelType[ELevelType["Boss"] = 3] = "Boss";
     ELevelType[ELevelType["End"] = 4] = "End";
 })(ELevelType || (ELevelType = {}));
-//# sourceMappingURL=GameEnum.js.map

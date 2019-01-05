@@ -4,8 +4,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var GameTips = (function () {
     function GameTips() {
     }
+    GameTips.test = "测试提示";
     return GameTips;
 }());
-GameTips.test = "测试提示";
 __reflect(GameTips.prototype, "GameTips");
-//# sourceMappingURL=GameTips.js.map

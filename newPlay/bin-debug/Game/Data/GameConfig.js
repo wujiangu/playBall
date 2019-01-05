@@ -98,19 +98,18 @@ var GameConfig = (function () {
         // this.itemUseTable.push(1002)
         // this.itemUseTable.push(1003)
     };
+    GameConfig.game = "HT";
+    GameConfig.isWebView = true;
+    GameConfig.baseFallSpeed = 0.1;
+    GameConfig.monsterAddDelay = 2000;
+    GameConfig.luckyActorAddDelay = 20000;
+    GameConfig.slowDuration = 3000;
+    GameConfig.comboDelay = 1000;
+    GameConfig.spiderDelay = 4000;
+    GameConfig.bgmValue = 100;
+    GameConfig.soundValue = 100;
+    GameConfig.monsterPos = 1;
+    GameConfig.testSelectLevel = 1001;
     return GameConfig;
 }());
-GameConfig.game = "HT";
-GameConfig.isWebView = true;
-GameConfig.baseFallSpeed = 0.1;
-GameConfig.monsterAddDelay = 2000;
-GameConfig.luckyActorAddDelay = 20000;
-GameConfig.slowDuration = 3000;
-GameConfig.comboDelay = 1000;
-GameConfig.spiderDelay = 4000;
-GameConfig.bgmValue = 100;
-GameConfig.soundValue = 100;
-GameConfig.monsterPos = 1;
-GameConfig.testSelectLevel = 1001;
 __reflect(GameConfig.prototype, "GameConfig");
-//# sourceMappingURL=GameConfig.js.map

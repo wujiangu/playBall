@@ -29,4 +29,3 @@ var GameVoice;
     GameVoice.combo3Sound = null;
     GameVoice.spiderKingArrive = null;
 })(GameVoice || (GameVoice = {}));
-//# sourceMappingURL=GameVoice.js.map

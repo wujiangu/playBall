@@ -18,8 +18,8 @@ class Balloon extends egret.Sprite {
 		this._balloonArmature.ArmatureDisplay = armatureDisplay
 		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
 
-		this._balloonArmatureContainer.scaleX = 0.45
-		this._balloonArmatureContainer.scaleY = 0.45
+		this._balloonArmatureContainer.scaleX = 0.48
+		this._balloonArmatureContainer.scaleY = 0.48
 
 		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
 
@@ -39,8 +39,8 @@ class Balloon extends egret.Sprite {
 
 		this._gesture = new egret.Bitmap()
 		this.addChild(this._gesture)
-		this._gesture.scaleX = 0.5
-		this._gesture.scaleY = 0.5
+		this._gesture.scaleX = 0.55
+		this._gesture.scaleY = 0.55
 		// this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
 	}
 
@@ -69,6 +69,9 @@ class Balloon extends egret.Sprite {
 		this._animationName = this._animations[colorIndex]
 		this._balloonArmatureContainer.play(this._animationName, 1)
 		this._balloonArmatureContainer.pause(this._animationName)
+
+		this.scaleX = 1
+		this.scaleY = 1
 	}
 
 	public ChangeToEasy() {

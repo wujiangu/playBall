@@ -45,4 +45,3 @@ var NativeApi;
     }
     NativeApi.getCurUrl = getCurUrl;
 })(NativeApi || (NativeApi = {}));
-//# sourceMappingURL=NativeApi.js.map

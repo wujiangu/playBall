@@ -133,7 +133,6 @@ class GameStartPanel extends BasePanel {
     }
 
 	private _OnInitGameComplete() {
-		Common.log("进来动画完成")
 		this.touchChildren = true
 	}
 
@@ -158,7 +157,7 @@ class GameStartPanel extends BasePanel {
 		this.initGame.addEventListener('complete', this._OnInitGameComplete, this)
 
 
-		this.m_groupLevel.visible = true
+		this.m_groupLevel.visible = false
 		this.m_btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn1, this)
 		this.m_btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn2, this)
 		this.m_btn3.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn3, this)

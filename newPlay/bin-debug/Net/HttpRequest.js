@@ -47,6 +47,8 @@ var HttpRequest = (function () {
         // Config.sdwIp = ""
         if (!isJSON) {
             sendData = Common.getUrlParams(params);
+            // sendData = Config.openIp + "?" + sendData
+            // Config.sdwIp = sendData
         }
         http.send(sendData);
     };
@@ -210,4 +212,3 @@ var Http = (function () {
     return Http;
 }());
 __reflect(Http.prototype, "Http");
-//# sourceMappingURL=HttpRequest.js.map

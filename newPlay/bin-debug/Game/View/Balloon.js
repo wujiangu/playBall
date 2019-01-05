@@ -1,11 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Balloon = (function (_super) {
     __extends(Balloon, _super);
     function Balloon() {
@@ -23,8 +28,8 @@ var Balloon = (function (_super) {
         }
         _this._balloonArmature.ArmatureDisplay = armatureDisplay;
         _this._balloonArmatureContainer.register(_this._balloonArmature, _this._animations);
-        _this._balloonArmatureContainer.scaleX = 0.45;
-        _this._balloonArmatureContainer.scaleY = 0.45;
+        _this._balloonArmatureContainer.scaleX = 0.48;
+        _this._balloonArmatureContainer.scaleY = 0.48;
         _this._balloonArmatureContainer.addCompleteCallFunc(_this._OnBalloonComplete, _this);
         _this._effectArmatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this._effectArmatureContainer);
@@ -39,8 +44,8 @@ var Balloon = (function (_super) {
         _this._effectArmatureContainer.addCompleteCallFunc(_this._OnEffectArmatureComplete, _this);
         _this._gesture = new egret.Bitmap();
         _this.addChild(_this._gesture);
-        _this._gesture.scaleX = 0.5;
-        _this._gesture.scaleY = 0.5;
+        _this._gesture.scaleX = 0.55;
+        _this._gesture.scaleY = 0.55;
         return _this;
         // this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
     }
@@ -68,6 +73,8 @@ var Balloon = (function (_super) {
         this._animationName = this._animations[colorIndex];
         this._balloonArmatureContainer.play(this._animationName, 1);
         this._balloonArmatureContainer.pause(this._animationName);
+        this.scaleX = 1;
+        this.scaleY = 1;
     };
     Balloon.prototype.ChangeToEasy = function () {
         this._isChangeEasy = true;
@@ -228,4 +235,3 @@ var Balloon = (function (_super) {
     return Balloon;
 }(egret.Sprite));
 __reflect(Balloon.prototype, "Balloon");
-//# sourceMappingURL=Balloon.js.map

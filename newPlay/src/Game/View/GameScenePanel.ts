@@ -124,9 +124,6 @@ class GameScenePanel extends BasePanel {
         }
 
         if (GameManager.Instance.GameState == EGameState.Start) {
-            this.m_monsterAddDelay += timeElapsed
-            this.m_luckyAddDelay += timeElapsed
-            this.m_passTime += timeElapsed
             
             if (this.m_passTime < this.m_currentLevel.normalTime) {
                 this.m_levelState = ELevelType.Normal
@@ -139,7 +136,10 @@ class GameScenePanel extends BasePanel {
             }
 
             if (this.m_slowDelay >= 0) actorElapsed *= 0.2
-
+            
+            this.m_monsterAddDelay += timeElapsed
+            this.m_luckyAddDelay += timeElapsed
+            this.m_passTime += timeElapsed
             // 连击
             if (this.m_comboDelay >= 0) {
                 this.m_comboDelay += actorElapsed
@@ -290,6 +290,7 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
+        this._ChangeLevel()
     }
 
     public ClearAllActor() {
@@ -440,6 +441,13 @@ class GameScenePanel extends BasePanel {
         {
             this.UpdeLevelData(this.m_currentLevel.next)
         }
+    }
+
+    /**
+     * 进入boss
+     */
+    private _EnterBoss() {
+        
     }
 
     /**
@@ -605,14 +613,16 @@ class GameScenePanel extends BasePanel {
     }
 
     private _OnChangeItem() {
-        this.m_imgEffectMask.visible = true
-        this.effectMask.play(0)
-        this._UpdateItemArmature(true)
-        this.m_angle = 180
-        this.m_power = 0
-        this.powerfull.stop()
-        this.m_imgPower.alpha = 1
-
+        if (this.m_angle >= 360) {
+            this.m_imgEffectMask.visible = true
+            this.effectMask.play(0)
+            this._UpdateItemArmature(true)
+            this.m_angle = 180
+            this.m_power = 0
+            this.powerfull.stop()
+            this.m_imgPower.alpha = 1
+            this._UpdateProgress(this.m_angle)
+        }
         // if (GameConfig.itemUseTable.length > 1) {
         //     let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
         //     if (index >= 0) {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="itemIR" width="341.6" height="584" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="procBg2_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="m_itemBg" x="10.14" y="94.67" anchorOffsetX="0" width="321.6" anchorOffsetY="0" height="234.4" source="Bg1002_png"/>
+	<e:Label id="m_labstatus" text="Equipped" y="42" horizontalCenter="0" fontFamily="Microsoft YaHei" textAlign="center" verticalAlign="middle" bold="true" size="40"/>
+	<e:Label id="m_labgrade" text="Rare" y="334.07" horizontalCenter="0" fontFamily="Microsoft YaHei" textAlign="center" verticalAlign="middle" bold="true" size="30" textColor="0xc526f2"/>
+	<e:Label id="m_labName" text="Torch" y="383.07" horizontalCenter="0" fontFamily="Microsoft YaHei" textAlign="center" verticalAlign="middle" bold="true" size="30" textColor="0xffffff"/>
+	<e:Label id="m_labDesc" text="When d destroy the front target, no more than 3 targets." y="431" horizontalCenter="-0.30000000000001137" fontFamily="Microsoft YaHei" textAlign="left" verticalAlign="top" size="25" textColor="0xFFFFFF" anchorOffsetY="0" height="102" anchorOffsetX="0" width="307" bold="true"/>
+	<e:Image id="m_imgItem" source="huoba_png" horizontalCenter="0" verticalCenter="-80" scaleX="0.8" scaleY="0.8"/>
+	<e:Group id="m_groupMask" left="0" right="0" top="0" bottom="0">
+		<e:Rect ellipseWidth="60" ellipseHeight="60" width="323.6" height="550" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0.19999999999998863" verticalCenter="-17" fillAlpha="0.55" x="9" y="0" scaleX="1" scaleY="1"/>
+		<e:Rect ellipseWidth="0" ellipseHeight="0" width="10.6" height="58" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="-165.3" verticalCenter="-224" fillAlpha="0.55" x="0" y="39" scaleX="1" scaleY="1"/>
+		<e:Rect ellipseWidth="0" ellipseHeight="0" width="8" height="58" anchorOffsetX="0" anchorOffsetY="0" verticalCenter="-224" fillAlpha="0.55" x="332" y="39" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>

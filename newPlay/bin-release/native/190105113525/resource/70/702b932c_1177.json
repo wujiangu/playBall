@@ -1,0 +1,14 @@
+[
+    {"ID":1001, "name":"huoba", "release":"dazhaotexiao", "bullet":"huoqiu", "step1":"huoshao", "step2":"", "type":1, "count":3},
+    {"ID":1002, "name":"huoqiu", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1003, "name":"huoshao", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1004, "name":"qiqiu", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1005, "name":"shuihua", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1006, "name":"dazhaotexiao", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1007, "name":"bianhua", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1008, "name":"shuijing", "release":"dazhaotexiao", "bullet":"", "step1":"jiansu", "step2":"", "type":2, "count":-1},
+    {"ID":1009, "name":"mofabang", "release":"dazhaotexiao", "bullet":"", "step1":"", "step2":"", "type":4, "count":-1},
+    {"ID":1010, "name":"jiansu", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1011, "name":"Detonationexplosion", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1012, "name":"duye", "release":"", "bullet":"", "step1":"", "step2":""}
+]

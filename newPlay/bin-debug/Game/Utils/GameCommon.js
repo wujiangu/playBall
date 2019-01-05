@@ -111,6 +111,7 @@ var Common;
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
                     GameConfig.itemUseTable = JSON.parse(message);
+                    // GameConfig.maxScore = parseInt(message)
                 }
                 else {
                     GameConfig.itemUseTable = new Array();
@@ -144,4 +145,3 @@ var Common;
     }
     Common.UpdateUseItem = UpdateUseItem;
 })(Common || (Common = {}));
-//# sourceMappingURL=GameCommon.js.map

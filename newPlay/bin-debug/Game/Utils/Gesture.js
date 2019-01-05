@@ -129,6 +129,7 @@ var Gesture = (function () {
                 var quad = this.quadrant(p1, p2);
                 var dir = this.getDirByAngQuad(ang, quad);
                 this._dirsArr.push(dir);
+                // console.log("quad: ",quad, "ang: ", ang);
             }
         }
         //console.log(this._dirsArr);
@@ -324,4 +325,3 @@ var Gesture = (function () {
     return Gesture;
 }());
 __reflect(Gesture.prototype, "Gesture");
-//# sourceMappingURL=Gesture.js.map

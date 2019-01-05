@@ -1,11 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Monster = (function (_super) {
     __extends(Monster, _super);
     function Monster() {
@@ -221,6 +226,7 @@ var Monster = (function (_super) {
     Monster.prototype.BalloonExploreHandle = function () {
         if (this.m_balloons.length <= 0) {
             this.m_sumBalloon = 0;
+            // this.GotoDead()
         }
         else {
             if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
@@ -380,4 +386,3 @@ var Monster = (function (_super) {
     return Monster;
 }(BaseActor));
 __reflect(Monster.prototype, "Monster");
-//# sourceMappingURL=Monster.js.map

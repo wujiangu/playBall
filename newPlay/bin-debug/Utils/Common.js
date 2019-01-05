@@ -4,11 +4,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Common;
 (function (Common) {
     /**全局字体颜色 */
@@ -384,22 +389,22 @@ var Common;
     var Const = (function () {
         function Const() {
         }
+        /**布局 横版*/
+        Const.HORIZONTAL = "horizontal";
+        /**布局 竖版*/
+        Const.VERTICAL = "vertical";
+        /**形状 方块*/
+        Const.SHAPE_RECT = "shape rect";
+        /**形状 圆角方块*/
+        Const.SHAPE_RECT_ROUND = "shape rect round";
+        /**形状 圆块*/
+        Const.SHAPE_CIRCLE = "shape circle";
+        /**版本 调试*/
+        Const.VER_DEBUG = "debug";
+        /**版本 发布*/
+        Const.VER_RELEASE = "release";
         return Const;
     }());
-    /**布局 横版*/
-    Const.HORIZONTAL = "horizontal";
-    /**布局 竖版*/
-    Const.VERTICAL = "vertical";
-    /**形状 方块*/
-    Const.SHAPE_RECT = "shape rect";
-    /**形状 圆角方块*/
-    Const.SHAPE_RECT_ROUND = "shape rect round";
-    /**形状 圆块*/
-    Const.SHAPE_CIRCLE = "shape circle";
-    /**版本 调试*/
-    Const.VER_DEBUG = "debug";
-    /**版本 发布*/
-    Const.VER_RELEASE = "release";
     Common.Const = Const;
     __reflect(Const.prototype, "Common.Const");
     var MoonDisplayObject = (function (_super) {
@@ -478,4 +483,3 @@ var Common;
     Common.MoonDisplayObject = MoonDisplayObject;
     __reflect(MoonDisplayObject.prototype, "Common.MoonDisplayObject");
 })(Common || (Common = {}));
-//# sourceMappingURL=Common.js.map

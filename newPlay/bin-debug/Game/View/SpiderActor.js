@@ -1,11 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var SpiderActor = (function (_super) {
     __extends(SpiderActor, _super);
     function SpiderActor() {
@@ -96,6 +101,7 @@ var SpiderActor = (function (_super) {
     };
     SpiderActor.prototype.GotoArrival = function () {
         this.m_state = EMonsterState.Arrive;
+        GameVoice.spiderKingArrive.play(0, 1).volume = GameConfig.soundValue / 100;
         this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1);
     };
     SpiderActor.prototype.Summon = function (a_count) {
@@ -105,31 +111,41 @@ var SpiderActor = (function (_super) {
         }
     };
     SpiderActor.prototype.GotoIdle = function () {
-        this.m_state = EMonsterState.Ready;
-        this.Summon();
-        this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1);
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            this.m_state = EMonsterState.Ready;
+            this.Summon();
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1);
+        }
     };
     SpiderActor.prototype.GotoAttack = function () {
-        this.m_state = EMonsterState.Attack;
-        this.m_isSpit = false;
-        this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1);
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            this.m_state = EMonsterState.Attack;
+            this.m_isSpit = false;
+            this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1);
+        }
     };
     SpiderActor.prototype.GotoSummonFinish = function () {
-        this.m_state = EMonsterState.SummonFinish;
-        this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1);
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            this.m_state = EMonsterState.SummonFinish;
+            this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1);
+        }
     };
     SpiderActor.prototype.GotoMove = function () {
-        this.m_state = EMonsterState.Move;
-        this.m_sumonDelay = 0;
-        this.UpdateSignSlot();
-        this.Summon(3);
-        this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35);
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            this.m_state = EMonsterState.Move;
+            this.m_sumonDelay = 0;
+            this.UpdateSignSlot();
+            this.Summon(3);
+            this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35);
+        }
     };
     SpiderActor.prototype.GotoDead = function () {
-        this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1);
-        this.m_state = EMonsterState.FallDown;
-        PanelManager.m_gameScenePanel.Power += this.m_data.Power;
-        PanelManager.m_gameScenePanel.Score += this.m_data.Score;
+        if (GameManager.Instance.GameState == EGameState.Start) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1);
+            this.m_state = EMonsterState.FallDown;
+            PanelManager.m_gameScenePanel.Power += this.m_data.Power;
+            PanelManager.m_gameScenePanel.Score += this.m_data.Score;
+        }
     };
     SpiderActor.prototype.GotoExplore = function () { };
     SpiderActor.prototype.GotoRun = function () {
@@ -341,7 +357,7 @@ var SpiderActor = (function (_super) {
             this.m_isSpit = false;
             this.m_summonWave++;
             var count = MathUtils.getRandom(1, 2);
-            var data = { "id": 1003, "diff": 1, "ids": [1, 2], "count": 2 };
+            var data = { "id": 1003, "diff": 1, "ids": [], "count": 2 };
             for (var i = 0; i < count; i++) {
                 egret.setTimeout(this._Spide, this, i * 400, data, posX, posY, count, i);
             }
@@ -361,4 +377,3 @@ var SpiderActor = (function (_super) {
     return SpiderActor;
 }(BaseActor));
 __reflect(SpiderActor.prototype, "SpiderActor");
-//# sourceMappingURL=SpiderActor.js.map

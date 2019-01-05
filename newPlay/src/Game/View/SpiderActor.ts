@@ -95,6 +95,7 @@ class SpiderActor extends BaseActor {
 
 	public GotoArrival() {
 		this.m_state = EMonsterState.Arrive
+		GameVoice.spiderKingArrive.play(0, 1).volume = GameConfig.soundValue / 100
 		this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1)
 	}
 
@@ -105,35 +106,47 @@ class SpiderActor extends BaseActor {
 	}
 
 	public GotoIdle() {
-		this.m_state = EMonsterState.Ready
-		this.Summon()
-		this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1)
+		if (GameManager.Instance.GameState == EGameState.Start) {
+			this.m_state = EMonsterState.Ready
+			this.Summon()
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1)
+		}
 	}
 
 	public GotoAttack() {
-		this.m_state = EMonsterState.Attack
-		this.m_isSpit = false
-		this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1)
+		if (GameManager.Instance.GameState == EGameState.Start) {
+			this.m_state = EMonsterState.Attack
+			this.m_isSpit = false
+			this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1)
+		}
+		
 	}
 
 	public GotoSummonFinish() {
-		this.m_state = EMonsterState.SummonFinish
-		this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
+		if (GameManager.Instance.GameState == EGameState.Start) {
+			this.m_state = EMonsterState.SummonFinish
+			this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
+		}
+		
 	}
 
 	public GotoMove() {
-		this.m_state = EMonsterState.Move
-		this.m_sumonDelay = 0
-		this.UpdateSignSlot()
-		this.Summon(3)
-		this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
+		if (GameManager.Instance.GameState == EGameState.Start) {
+			this.m_state = EMonsterState.Move
+			this.m_sumonDelay = 0
+			this.UpdateSignSlot()
+			this.Summon(3)
+			this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
+		}
 	}
 
 	public GotoDead() {
-		this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1)
-		this.m_state = EMonsterState.FallDown
-		PanelManager.m_gameScenePanel.Power += this.m_data.Power
-		PanelManager.m_gameScenePanel.Score += this.m_data.Score
+		if (GameManager.Instance.GameState == EGameState.Start) {
+			this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1)
+			this.m_state = EMonsterState.FallDown
+			PanelManager.m_gameScenePanel.Power += this.m_data.Power
+			PanelManager.m_gameScenePanel.Score += this.m_data.Score
+		}
 	}
 
 	public GotoExplore() {}
@@ -351,7 +364,7 @@ class SpiderActor extends BaseActor {
 			this.m_isSpit = false
 			this.m_summonWave++
 			let count = MathUtils.getRandom(1, 2)
-			let data = {"id":1003, "diff":1, "ids":[1,2], "count":2}
+			let data = {"id":1003, "diff":1, "ids":[], "count":2}
 			for (let i = 0; i < count; i++) {
 				egret.setTimeout(this._Spide, this, i*400, data, posX, posY, count, i)
 			} 

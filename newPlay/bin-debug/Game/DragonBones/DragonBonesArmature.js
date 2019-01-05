@@ -1,11 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /**
  * Armature封装类
  */
@@ -181,6 +186,7 @@ var DragonBonesArmature = (function (_super) {
         if (playTimes === void 0) { playTimes = null; }
         this.start();
         for (var i = 0; i < actions.length; i++) {
+            // this._armature.animation.fadeIn(actions[i], 0, 0, 0, `Group${id[i]}`, dragonBones.AnimationFadeOutMode.SameLayerAndGroup);
         }
     };
     /**
@@ -244,4 +250,3 @@ var DragonBonesArmature = (function (_super) {
     return DragonBonesArmature;
 }(egret.DisplayObjectContainer));
 __reflect(DragonBonesArmature.prototype, "DragonBonesArmature");
-//# sourceMappingURL=DragonBonesArmature.js.map

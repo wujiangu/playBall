@@ -1,11 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var GameStartPanel = (function (_super) {
     __extends(GameStartPanel, _super);
     function GameStartPanel() {
@@ -48,7 +53,8 @@ var GameStartPanel = (function (_super) {
     // 退出面板
     GameStartPanel.prototype.onExit = function () {
         this.touchChildren = false;
-        GameVoice.beginBGMChannel.stop();
+        if (this.m_sceneType == 1)
+            GameVoice.beginBGMChannel.stop();
         Common.gameScene().uiLayer.removeChild(this);
     };
     GameStartPanel.prototype.Update = function () {
@@ -124,7 +130,6 @@ var GameStartPanel = (function (_super) {
         }
     };
     GameStartPanel.prototype._OnInitGameComplete = function () {
-        Common.log("进来动画完成");
         this.touchChildren = true;
     };
     GameStartPanel.prototype.onComplete = function () {
@@ -144,7 +149,7 @@ var GameStartPanel = (function (_super) {
         this.water.addEventListener('complete', this._OnWaterComplete, this);
         this.startGame.addEventListener('complete', this._OnGameStartComplete, this);
         this.initGame.addEventListener('complete', this._OnInitGameComplete, this);
-        this.m_groupLevel.visible = true;
+        this.m_groupLevel.visible = false;
         this.m_btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn1, this);
         this.m_btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn2, this);
         this.m_btn3.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn3, this);
@@ -157,4 +162,3 @@ var GameStartPanel = (function (_super) {
     return GameStartPanel;
 }(BasePanel));
 __reflect(GameStartPanel.prototype, "GameStartPanel");
-//# sourceMappingURL=GameStartPanel.js.map
