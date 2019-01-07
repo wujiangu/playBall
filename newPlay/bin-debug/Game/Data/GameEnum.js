@@ -42,6 +42,7 @@ var EMonsterState;
     EMonsterState[EMonsterState["Attack"] = 8] = "Attack";
     EMonsterState[EMonsterState["Arrive"] = 9] = "Arrive";
     EMonsterState[EMonsterState["Move"] = 10] = "Move";
+    EMonsterState[EMonsterState["Hurt"] = 11] = "Hurt";
 })(EMonsterState || (EMonsterState = {}));
 // 手势难度
 var EGestureDifficult;

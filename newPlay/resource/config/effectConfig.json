@@ -10,5 +10,6 @@
     {"ID":1009, "name":"mofabang", "release":"dazhaotexiao", "bullet":"", "step1":"", "step2":"", "type":4, "count":-1},
     {"ID":1010, "name":"jiansu", "release":"", "bullet":"", "step1":"", "step2":""},
     {"ID":1011, "name":"Detonationexplosion", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1012, "name":"duye", "release":"", "bullet":"", "step1":"", "step2":""}
+    {"ID":1012, "name":"duye", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1013, "name":"wang", "release":"", "bullet":"", "step1":"", "step2":""}
 ]

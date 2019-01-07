@@ -94,7 +94,7 @@ var SpiderActor = (function (_super) {
         this.m_sumonDelay = -1;
     };
     SpiderActor.prototype.InitGraph = function () {
-        this.y = Config.stageHalfHeight - 100;
+        this.y = Config.stageHalfHeight - 350;
         // this.filters = [this.m_dropShadowFilter]
         this.GotoArrival();
         this.x = Config.stageHalfWidth;
@@ -115,6 +115,7 @@ var SpiderActor = (function (_super) {
             this.m_state = EMonsterState.Ready;
             this.Summon();
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1);
+            PanelManager.m_gameScenePanel.PlaySpiderWebArmature("idle", 4);
         }
     };
     SpiderActor.prototype.GotoAttack = function () {
@@ -122,12 +123,14 @@ var SpiderActor = (function (_super) {
             this.m_state = EMonsterState.Attack;
             this.m_isSpit = false;
             this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1);
+            PanelManager.m_gameScenePanel.PlaySpiderWebArmature("attack", 3);
         }
     };
     SpiderActor.prototype.GotoSummonFinish = function () {
         if (GameManager.Instance.GameState == EGameState.Start) {
             this.m_state = EMonsterState.SummonFinish;
-            this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1);
+            PanelManager.m_gameScenePanel.PlaySpiderWebArmature("dead", 5);
+            // this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
         }
     };
     SpiderActor.prototype.GotoMove = function () {
@@ -136,7 +139,7 @@ var SpiderActor = (function (_super) {
             this.m_sumonDelay = 0;
             this.UpdateSignSlot();
             this.Summon(3);
-            this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35);
+            this.m_armatureContainer.play(DragonBonesAnimations.Move, 0);
         }
     };
     SpiderActor.prototype.GotoDead = function () {
@@ -308,6 +311,7 @@ var SpiderActor = (function (_super) {
         switch (this.m_state) {
             case EMonsterState.Arrive:
                 this.GotoAttack();
+                // PanelManager.m_gameScenePanel.PlaySpiderWebArmature("arrive2", 2)
                 break;
             case EMonsterState.Ready:
                 this.GotoAttack();
@@ -324,7 +328,7 @@ var SpiderActor = (function (_super) {
                 }
                 break;
             case EMonsterState.Move:
-                this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35);
+                // this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
                 break;
             case EMonsterState.FallDown:
                 break;
@@ -338,20 +342,20 @@ var SpiderActor = (function (_super) {
             case "summon1":
                 this.m_isSpit = true;
                 posX = this.x;
-                posY = this.y - 50;
+                posY = this.y + 200;
                 break;
             case "summon2":
                 this.m_isSpit = true;
                 posX = this.x - 100;
-                posY = this.y - 50;
+                posY = this.y + 200;
                 break;
             case "summon3":
                 this.m_isSpit = true;
                 posX = this.x + 100;
-                posY = this.y - 50;
+                posY = this.y + 200;
                 break;
             case "readyFall":
-                this.GotoMove();
+                // this.GotoMove()
                 break;
         }
         if (this.m_isSpit) {

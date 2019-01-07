@@ -85,7 +85,7 @@ class SpiderActor extends BaseActor {
 	}
 
 	public InitGraph() {
-		this.y = Config.stageHalfHeight - 100
+		this.y = Config.stageHalfHeight - 350
 
 		// this.filters = [this.m_dropShadowFilter]
 
@@ -110,6 +110,7 @@ class SpiderActor extends BaseActor {
 			this.m_state = EMonsterState.Ready
 			this.Summon()
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1)
+			PanelManager.m_gameScenePanel.PlaySpiderWebArmature("idle", 4)
 		}
 	}
 
@@ -118,6 +119,7 @@ class SpiderActor extends BaseActor {
 			this.m_state = EMonsterState.Attack
 			this.m_isSpit = false
 			this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1)
+			PanelManager.m_gameScenePanel.PlaySpiderWebArmature("attack", 3)
 		}
 		
 	}
@@ -125,7 +127,8 @@ class SpiderActor extends BaseActor {
 	public GotoSummonFinish() {
 		if (GameManager.Instance.GameState == EGameState.Start) {
 			this.m_state = EMonsterState.SummonFinish
-			this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
+			PanelManager.m_gameScenePanel.PlaySpiderWebArmature("dead", 5)
+			// this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
 		}
 		
 	}
@@ -136,7 +139,7 @@ class SpiderActor extends BaseActor {
 			this.m_sumonDelay = 0
 			this.UpdateSignSlot()
 			this.Summon(3)
-			this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
+			this.m_armatureContainer.play(DragonBonesAnimations.Move, 0)
 		}
 	}
 
@@ -313,6 +316,7 @@ class SpiderActor extends BaseActor {
 		switch (this.m_state) {
 			case EMonsterState.Arrive:
 				this.GotoAttack()
+				// PanelManager.m_gameScenePanel.PlaySpiderWebArmature("arrive2", 2)
 			break
 			case EMonsterState.Ready:
 				this.GotoAttack()
@@ -327,7 +331,7 @@ class SpiderActor extends BaseActor {
 				}
 			break
 			case EMonsterState.Move:
-				this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
+				// this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1, 2, 35)
 			break
 			case EMonsterState.FallDown:
 				
@@ -344,20 +348,20 @@ class SpiderActor extends BaseActor {
 			case "summon1":
 				this.m_isSpit = true
 				posX = this.x
-				posY = this.y - 50
+				posY = this.y + 200
 			break
 			case "summon2":
 				this.m_isSpit = true
 				posX = this.x - 100
-				posY = this.y - 50
+				posY = this.y + 200
 			break
 			case "summon3":
 				this.m_isSpit = true
 				posX = this.x + 100
-				posY = this.y - 50
+				posY = this.y + 200
 			break
 			case "readyFall":
-				this.GotoMove()
+				// this.GotoMove()
 			break
 		}
 

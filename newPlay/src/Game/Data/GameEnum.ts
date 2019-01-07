@@ -45,6 +45,7 @@ enum EMonsterState
     Attack,
     Arrive,
     Move,
+    Hurt,
 }
 
 // 手势难度

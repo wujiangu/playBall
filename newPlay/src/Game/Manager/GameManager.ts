@@ -85,7 +85,7 @@ class GameManager extends egret.Sprite{
 		if (this._gameSlowDelay >= 0) {
 			this._gameSlowDelay += timeElapsed
 			timeElapsed *= 0.4
-			if (this._gameSlowDelay >= 2000) {
+			if (this._gameSlowDelay >= 1000) {
 				this._gameSlowDelay = -1
 			}
 		}

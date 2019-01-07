@@ -44,6 +44,7 @@ class LuckyActor extends BaseActor{
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
 		this.m_armatureContainer.scaleY = this.m_data.Scale
+		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this)
 
 		this.m_rect.width = this.m_data.Width
 		this.m_rect.height = this.m_data.Height
@@ -67,7 +68,13 @@ class LuckyActor extends BaseActor{
 	}
 
 	public GotoIdle() {
+		this.m_state = EMonsterState.Ready
 		this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+	}
+
+	public GotoHurt() {
+		this.m_state = EMonsterState.Hurt
+		this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 1)
 	}
 
 	public Destroy() {
@@ -96,10 +103,17 @@ class LuckyActor extends BaseActor{
 		channel.volume = GameConfig.soundValue / 100
 		GameConfig.balloonScore += this.m_balloon.Score
 		PanelManager.m_gameScenePanel.Boom = true
+		this.GotoHurt()
 	}
 
 	public get ballon() {
 		return this.m_balloon
+	}
+
+	private _OnArmatureComplete() {
+		if (this.m_state == EMonsterState.Hurt) {
+			this.GotoIdle()
+		}
 	}
 
 	private _RandomLuckyActorData():any {

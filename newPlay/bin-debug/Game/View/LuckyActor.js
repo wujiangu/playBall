@@ -54,6 +54,7 @@ var LuckyActor = (function (_super) {
         this.m_speedX = 0.1;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;
+        this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this);
         this.m_rect.width = this.m_data.Width;
         this.m_rect.height = this.m_data.Height;
         this.m_width = this.m_data.Width;
@@ -71,7 +72,12 @@ var LuckyActor = (function (_super) {
         this._SetBallonPosition(this.m_balloon, 1, 0);
     };
     LuckyActor.prototype.GotoIdle = function () {
+        this.m_state = EMonsterState.Ready;
         this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
+    };
+    LuckyActor.prototype.GotoHurt = function () {
+        this.m_state = EMonsterState.Hurt;
+        this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 1);
     };
     LuckyActor.prototype.Destroy = function () {
         // this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
@@ -97,6 +103,7 @@ var LuckyActor = (function (_super) {
         channel.volume = GameConfig.soundValue / 100;
         GameConfig.balloonScore += this.m_balloon.Score;
         PanelManager.m_gameScenePanel.Boom = true;
+        this.GotoHurt();
     };
     Object.defineProperty(LuckyActor.prototype, "ballon", {
         get: function () {
@@ -105,6 +112,11 @@ var LuckyActor = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    LuckyActor.prototype._OnArmatureComplete = function () {
+        if (this.m_state == EMonsterState.Hurt) {
+            this.GotoIdle();
+        }
+    };
     LuckyActor.prototype._RandomLuckyActorData = function () {
         var random = MathUtils.getRandom(1, this.m_sumWeight);
         for (var i = 0; i < GameConfig.luckyConfig.length; i++) {

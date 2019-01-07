@@ -36,6 +36,7 @@ class GameScenePanel extends BasePanel {
         // this.m_combo.visible = false
         this.m_fntCombo.visible = false
         this.m_fntComboCount.visible = false
+        this.m_spiderWebArmatureContainer.visible = false
         this.m_imgPower.alpha = 1
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
@@ -193,11 +194,6 @@ class GameScenePanel extends BasePanel {
             if (this.m_normalCount < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
                 this.m_monsterAddDelay = 0
                 this._CreateMonster()
-                // if (this.m_levelState == ELevelType.Elite && this.m_currentLevel.elite[0].id == 1006) {
-                //     this._CreateSpiderActor()
-                // }else{
-                //     this._CreateMonster()
-                // }
             }
 
             if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
@@ -369,9 +365,7 @@ class GameScenePanel extends BasePanel {
 
     public set Score(value:number) {
         this.m_score = value
-        // this.m_labScore.text = this.m_score.toString()
         this.m_bitLabScore.text = this.m_score.toString()
-        // egret.Tween.get(this.m_labScore).to({scaleX:2.0, scaleY:2.0}, 100, egret.Ease.backIn).call(this._OnScoreBigger, this)
     }
 
     public get Power() {
@@ -522,7 +516,10 @@ class GameScenePanel extends BasePanel {
     private _EnterBoss() {
         Common.log("进入BOSS")
         this.m_levelState = ELevelType.Elite
-        if (this.m_currentLevel.elite[0].id == 1006) this._CreateSpiderActor()
+        if (this.m_currentLevel.elite[0].id == 1006) {
+            this.PlaySpiderWebArmature("arrive1", 1)
+            // this._CreateSpiderActor()
+        }
         else this._CreateMonster()
     }
 
@@ -741,6 +738,35 @@ class GameScenePanel extends BasePanel {
         this.powerfull.play(0)
     }
 
+
+    public PlaySpiderWebArmature(action:string, a_stage:number) {
+        this.m_spiderWebArmatureContainer.visible = true
+        this.m_spiderWebArmatureContainer.play(action, 1)
+        this.m_spiderStage = a_stage
+    }
+
+    private _OnSpiderWebArmatureComplete() {
+        switch (this.m_spiderStage) {
+            case 1:
+                this._CreateSpiderActor()
+                this.PlaySpiderWebArmature("arrive2", 2)
+            break
+            case 2:
+                
+            break
+            case 5:
+                for (let i = 0; i < this.m_spiderActors.length; i++) this.m_spiderActors[i].GotoMove()
+            break
+        }
+        
+    }
+
+    private _OnSpiderWebArmatureFrame() {
+
+    }
+
+
+
 	private onComplete() {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2
@@ -758,6 +784,19 @@ class GameScenePanel extends BasePanel {
         this.m_comboArmatureContainer.register(comboArmature, ["hong", "huang", "lan"])
         this.m_comboArmatureContainer.x = this.m_groupScore.width / 2
         
+
+        this.m_spiderWebArmatureContainer = new DragonBonesArmatureContainer()
+        this.m_groupGame.addChild(this.m_spiderWebArmatureContainer)
+        let spiderWebDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("wang", "wang")
+        let spiderArmature = new DragonBonesArmature(spiderWebDisplay)
+        spiderArmature.ArmatureDisplay = spiderWebDisplay
+        this.m_spiderWebArmatureContainer.register(spiderArmature, ["arrive1","arrive2","attack","dead","idle"])
+        this.m_spiderWebArmatureContainer.x = Config.stageHalfWidth
+        this.m_spiderWebArmatureContainer.y = 400
+        this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._OnSpiderWebArmatureComplete, this)
+        this.m_spiderWebArmatureContainer.addFrameCallFunc(this._OnSpiderWebArmatureFrame, this)
+        this.m_spiderWebArmatureContainer.scaleX = 2
+        this.m_spiderWebArmatureContainer.scaleY = 2
 
 
         this.addChild( this.m_gestureShape )
@@ -942,4 +981,7 @@ class GameScenePanel extends BasePanel {
 
     private m_comboArmatureContainer:DragonBonesArmatureContainer
     private m_comboArmature:DragonBonesArmature
+
+    private m_spiderWebArmatureContainer:DragonBonesArmatureContainer
+    private m_spiderStage:number
 }

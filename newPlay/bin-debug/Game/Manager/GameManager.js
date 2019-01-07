@@ -43,7 +43,6 @@ var GameManager = (function (_super) {
             this._gameState = EGameState.End;
             PanelManager.m_gameScenePanel.Exit();
             ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this);
-            Common.log("游戏状态:", this._gameState);
         }
     };
     GameManager.prototype.Start = function () {
@@ -72,7 +71,6 @@ var GameManager = (function (_super) {
         this._lastTime = this._startTime;
     };
     GameManager.prototype.GameSlow = function () {
-        Common.log("慢放");
         this._gameSlowDelay = 0;
     };
     GameManager.prototype.Update = function () {
@@ -89,7 +87,7 @@ var GameManager = (function (_super) {
         if (this._gameSlowDelay >= 0) {
             this._gameSlowDelay += timeElapsed;
             timeElapsed *= 0.4;
-            if (this._gameSlowDelay >= 2000) {
+            if (this._gameSlowDelay >= 1000) {
                 this._gameSlowDelay = -1;
             }
         }
