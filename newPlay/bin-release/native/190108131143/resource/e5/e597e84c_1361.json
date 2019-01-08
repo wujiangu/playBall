@@ -1,0 +1,80 @@
+[
+  {
+    "ID": 1001,
+    "Type": 1,
+    "Difficult":1,
+    "Name": "瓶子怪",
+    "Animation": "jiupingguai",
+    "Speed": 17,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 0.9,
+    "Width": 90,
+    "Height": 120
+  },
+  {
+    "ID": 1002,
+    "Type": 1,
+    "Difficult":2,
+    "Name": "龙猫",
+    "Animation": "longmao",
+    "Speed": 12,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 1.5,
+    "Width": 95,
+    "Height": 150
+  },
+  {
+    "ID": 1003,
+    "Type": 2,
+    "Difficult":1,
+    "Name": "火星人",
+    "Animation": "huoxinren",
+    "Speed": 17,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 0.8,
+    "Width": 85,
+    "Height": 140
+  },
+  {
+    "ID": 1004,
+    "Type": 1,
+    "Difficult":1,
+    "Name": "雪糕",
+    "Animation": "xuegao",
+    "Speed": 17,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 0.8,
+    "Width": 90,
+    "Height": 130
+  },
+  {
+    "ID": 1005,
+    "Type": 2,
+    "Difficult":2,
+    "Name": "蜘蛛",
+    "Animation": "zhizhu",
+    "Speed": 12,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 0.8,
+    "Width": 90,
+    "Height": 150
+  },
+  {
+    "ID": 1006,
+    "Type": 2,
+    "Difficult":2,
+    "Name": "蜘蛛王",
+    "Animation": "zhizhuwang",
+    "Speed": 8,
+    "Score": 0,
+    "Power": 5,
+    "Scale": 1,
+    "Width": 300,
+    "Height": 300
+  }
+]

@@ -53,7 +53,6 @@ var SpiderActor = (function (_super) {
             this.m_armature = new DragonBonesArmature(armatureDisplay);
         }
         this.m_armature.ArmatureDisplay = armatureDisplay;
-        this.m_armatureContainer.visible = true;
         this.m_effectArmatureContainer.visible = false;
         this.m_armatureContainer.register(this.m_armature, [
             DragonBonesAnimations.Idle,
@@ -74,6 +73,7 @@ var SpiderActor = (function (_super) {
         this.m_armatureContainer.scaleY = this.m_data.Scale;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this);
         this.m_armatureContainer.addFrameCallFunc(this._OnArmatureFrame, this);
+        this.m_armatureContainer.visible = false;
         this.m_rect.width = this.m_data.Width;
         this.m_rect.height = this.m_data.Height;
         this.m_width = this.m_data.Width;
@@ -95,9 +95,10 @@ var SpiderActor = (function (_super) {
     };
     SpiderActor.prototype.InitGraph = function () {
         this.y = Config.stageHalfHeight - 350;
-        // this.filters = [this.m_dropShadowFilter]
-        this.GotoArrival();
         this.x = Config.stageHalfWidth;
+        // this.filters = [this.m_dropShadowFilter]
+        this.m_armatureContainer.visible = true;
+        this.GotoArrival();
     };
     SpiderActor.prototype.GotoArrival = function () {
         this.m_state = EMonsterState.Arrive;

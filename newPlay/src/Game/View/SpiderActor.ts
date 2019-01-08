@@ -39,7 +39,6 @@ class SpiderActor extends BaseActor {
 			this.m_armature = new DragonBonesArmature(armatureDisplay)
 		}
 		this.m_armature.ArmatureDisplay = armatureDisplay
-		this.m_armatureContainer.visible = true
 		this.m_effectArmatureContainer.visible = false
 		this.m_armatureContainer.register(this.m_armature,[
 			DragonBonesAnimations.Idle,
@@ -63,7 +62,7 @@ class SpiderActor extends BaseActor {
 
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this)
 		this.m_armatureContainer.addFrameCallFunc(this._OnArmatureFrame, this)
-
+		this.m_armatureContainer.visible = false
 		this.m_rect.width = this.m_data.Width
 		this.m_rect.height = this.m_data.Height
 		this.m_width = this.m_data.Width
@@ -86,11 +85,11 @@ class SpiderActor extends BaseActor {
 
 	public InitGraph() {
 		this.y = Config.stageHalfHeight - 350
-
-		// this.filters = [this.m_dropShadowFilter]
-
-		this.GotoArrival()
 		this.x = Config.stageHalfWidth
+		// this.filters = [this.m_dropShadowFilter]
+		this.m_armatureContainer.visible = true
+		this.GotoArrival()
+		
 	}
 
 	public GotoArrival() {
