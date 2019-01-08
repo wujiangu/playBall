@@ -64,6 +64,8 @@ class BackpackPanel extends BasePanel {
 
 	private _UpdateItemInfo() {
 		let itemTableData = GameConfig.itemConfig[this.m_itemIDs[1]]
+		this.m_curItemName.text = itemTableData.Name
+		this.m_curItemDesc.text = itemTableData.Desc
 	}
 
 	private _OnBtnReturn() {
@@ -135,7 +137,6 @@ class BackpackPanel extends BasePanel {
 	private onComplete() {
 
 		this.m_itemIRs.push(this.m_itemIRLeft1)
-		// this.m_itemIRs.push(this.m_itemIRLeft2)
 		this.m_itemIRs.push(this.m_itemIRCenter)
 		this.m_itemIRs.push(this.m_itemIRRight1)
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
@@ -170,19 +171,54 @@ class BackpackPanel extends BasePanel {
 	private m_btnLeft:eui.Button
 	private m_btnUse:eui.Button
 
-	private m_itemIRCenter:ItemIR
-	private m_itemIRLeft1:ItemIR
-	private m_itemIRLeft2:ItemIR
-	private m_itemIRRight1:ItemIR
-	private m_itemIRRight2:ItemIR
+	private m_itemIRCenter:NewItemIR
+	private m_itemIRLeft1:NewItemIR
+	private m_itemIRRight1:NewItemIR
 
-	private m_itemIRs:Array<ItemIR>
+	private m_itemIRs:Array<NewItemIR>
 
 	private leftAnimation:egret.tween.TweenGroup
 	private rightAnimation:egret.tween.TweenGroup
 	private m_groupItemIR:eui.Group
 
 	private swapIndex:number = 0
+
+	private m_curItemName:eui.Label
+	private m_curItemDesc:eui.Label
+}
+
+class NewItemIR extends eui.Component {
+	public constructor() {
+		super()
+		this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
+        this.skinName = "resource/game_skins/newItemIR.exml"
+	}
+
+
+	public UpdateItem(strId:string, index:number) {
+		let itemData = GameConfig.itemTable[strId]
+
+		// if (GameConfig.itemTable[strId].IsUse == 0) this.m_labstatus.text = "Idle"
+		// else this.m_labstatus.text = "Equipped"
+
+		// if (!itemData.Open) this.m_labstatus.text = "Unlock"
+
+		if (index == 1) this.m_imgMask.visible = false
+		else this.m_imgMask.visible = true
+
+		// this.m_labName.text = itemData.Name
+		// this.m_labDesc.text = itemData.Desc
+		this.m_imgItem.texture = RES.getRes(itemData.Icon)
+		this.m_itemBg.texture = RES.getRes(itemData.Bg)
+	}
+
+	private onComplete() {
+		
+	}
+
+	private m_itemBg:eui.Image
+	private m_imgItem:eui.Image
+	private m_imgMask:eui.Rect
 }
 
 class ItemIR extends eui.Component {

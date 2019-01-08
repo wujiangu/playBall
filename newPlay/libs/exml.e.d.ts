@@ -68,6 +68,8 @@ declare class gameStart extends eui.Skin{
 }
 declare class itemIR extends eui.Skin{
 }
+declare class newItemIR extends eui.Skin{
+}
 declare class quitPanel extends eui.Skin{
 }
 declare class settingPanel extends eui.Skin{

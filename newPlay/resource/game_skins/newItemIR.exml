@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="newItemIR" width="315" height="308" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="m_itemBg" source="Bg1001_png" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="m_imgItem" source="Icon1003_png" horizontalCenter="0" verticalCenter="0"/>
+	<e:Rect id="m_imgMask" width="296" height="290" anchorOffsetX="0" anchorOffsetY="0" ellipseHeight="125" ellipseWidth="126" horizontalCenter="-0.5" verticalCenter="-10" strokeAlpha="1" fillAlpha="0.85"/>
+</e:Skin>

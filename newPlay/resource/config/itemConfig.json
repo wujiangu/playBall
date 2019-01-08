@@ -5,7 +5,7 @@
     "Desc": "Freeze the target and slow it down",
     "Bg": "Bg1001_png",
     "Icon": "Icon1001_png",
-    "ItemBg": "ItemBg1001_png",
+    "ItemBg": "procBg7_png",
     "Effect": 1008,
     "Open": true
   },
@@ -15,7 +15,7 @@
     "Desc": "Changing all symbolic spheres",
     "Bg": "Bg1002_png",
     "Icon": "Icon1002_png",
-    "ItemBg": "ItemBg1002_png",
+    "ItemBg": "procBg7_png",
     "Effect": 1009,
     "Open": true
   },
@@ -25,7 +25,7 @@
     "Desc": "Three objectives of combustion front row",
     "Bg": "Bg1003_png",
     "Icon": "Icon1003_png",
-    "ItemBg": "ItemBg1003_png",
+    "ItemBg": "procBg7_png",
     "Effect": 1001,
     "Open": true
   }

@@ -77,27 +77,34 @@
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image left="0" right="0" top="-15" bottom="-25" source="mask_png" anchorOffsetY="0"/>
-	<e:Button id="m_btnReturn" label="" left="20" top="21">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnReturn"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:Button>
-	<e:Button id="m_btnAgain" label="" horizontalCenter="0" verticalCenter="125">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnAgain"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:Button>
-	<e:Group id="m_groupGameOver" width="445" height="306" horizontalCenter="0" verticalCenter="-120" anchorOffsetX="0" anchorOffsetY="0">
-		<e:Image height="307" anchorOffsetY="0" left="0" right="0" top="0" source="commonPanel_png" scale9Grid="180,90,484,64"/>
-		<e:Label id="m_labTitle" text="本次得分" x="142" y="11.5" fontFamily="Microsoft YaHei" size="40"/>
-		<e:Label id="m_labScore" text="56" y="106" fontFamily="Microsoft YaHei" size="120" textColor="0xfba706" horizontalCenter="0"/>
-		<e:Label id="m_labHistory" text="历史最高分：" x="78.5" y="261.5" fontFamily="Microsoft YaHei" textColor="0x868491"/>
-		<e:Label id="m_labHistoryScore" text="1000" x="269" y="261.5" fontFamily="Microsoft YaHei" textAlign="left" textColor="0x868491"/>
+
+
+	<e:Group id="m_groupGameOver" width="596" height="830" horizontalCenter="0" verticalCenter="-29" anchorOffsetX="0" anchorOffsetY="0">
+		<e:Image anchorOffsetY="0" scale9Grid="180,90,484,64" source="gamBg4_png" x="0" y="0"/>
+		<e:Image source="gamBg5_png" y="-60.5" scaleX="1" scaleY="1" horizontalCenter="0"/>
+
+		<e:Label id="m_labScore" text="1000" fontFamily="Microsoft YaHei" size="160" horizontalCenter="0" verticalCenter="-209" textColor="0x6e6f67"/>
+		<e:Label id="m_labTitle" text="CAROM:" x="114" y="449" fontFamily="Microsoft YaHei" size="55" textColor="0x6d3f28"/>
+		<e:Label id="m_labTitle0" text="SCORE:" x="145" y="389" fontFamily="Microsoft YaHei" size="55" textColor="0x6D3F28"/>
+		<e:Label id="m_labPingfen" text="SSS" x="347.5" y="383.5" fontFamily="Microsoft YaHei" size="66" textColor="0xfaee22"/>
+		<e:Label id="m_labLianji" text="X145" x="347.5" y="443.5" fontFamily="Microsoft YaHei" size="66" textColor="0xFAEE22"/>
+		<e:Label id="m_labHistory" text="Highest record：" x="110" y="520" fontFamily="Microsoft YaHei" size="35" textColor="0xfdffea"/>
+		<e:Label id="m_labHistoryScore" text="1000" x="379.5" y="520" fontFamily="Microsoft YaHei" textAlign="left" textColor="0xfdffea" size="35"/>
+		<e:Button id="m_btnReturn" label="Button" x="1" y="667">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnSheet1_json.16" source.down="btnSheet1_json.17"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="m_btnAgain" label="Button" x="341" y="667">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnSheet1_json.18" source.down="btnSheet1_json.19"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
 	</e:Group>
 </e:Skin>

@@ -17,51 +17,51 @@
 			<tween:TweenItem target="{m_btnGameStart}">
 				<tween:Set>
 					<tween:props>
-						<e:Object y="{158.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{200}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:To duration="350">
 					<tween:props>
-						<e:Object y="{158.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{200}"/>
 					</tween:props>
 				</tween:To>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{168.64}" alpha="{1}"/>
+						<e:Object alpha="{1}" y="{210}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_btnProc}">
 				<tween:Set>
 					<tween:props>
-						<e:Object y="{318.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{413}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:To duration="700">
 					<tween:props>
-						<e:Object y="{318.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{413}"/>
 					</tween:props>
 				</tween:To>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{328.64}" alpha="{1}"/>
+						<e:Object alpha="{1}" y="{423}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_btnRank}">
 				<tween:Set>
 					<tween:props>
-						<e:Object y="{476.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{625}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:To duration="1050">
 					<tween:props>
-						<e:Object y="{476.64}" alpha="{0}"/>
+						<e:Object alpha="{0}" y="{625}"/>
 					</tween:props>
 				</tween:To>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{486.64}" alpha="{1}"/>
+						<e:Object alpha="{1}" y="{635}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -229,7 +229,7 @@
 			<tween:TweenItem target="{m_btnGameStart}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{-300}" y="{168.64}"/>
+						<e:Object x="{-300}" y="{200}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:Wait duration="650"/>
@@ -247,7 +247,7 @@
 			<tween:TweenItem target="{m_btnProc}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{-300}" y="{328.64}"/>
+						<e:Object x="{-300}" y="{413}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:Wait duration="750"/>
@@ -265,7 +265,7 @@
 			<tween:TweenItem target="{m_btnRank}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{-300}" y="{476.64}"/>
+						<e:Object x="{-300}" y="{625}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:Wait duration="850"/>
@@ -328,30 +328,33 @@
 	<e:Image id="m_cloud3" x="565" scaleX="-1" bottom="1158" source="gameUISheet_json.game104"/>
 	<e:Image id="m_imgSun" width="123" height="123" source="gameUISheet_json.game105" x="113" scaleX="1" scaleY="1" y="129"/>
 	<e:Group id="m_groupStart" height="566.67" anchorOffsetX="0" touchEnabled="false" anchorOffsetY="0" left="0" right="0" top="310">
-		<e:Button id="m_btnProc" label="" y="328.64" x="227" scaleX="1" scaleY="1">
+		<e:Button id="m_btnProc" label="" y="413" x="227" scaleX="1" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnProp" source.down="btnSheet_json.btnPropDown"/>
+				<e:Image width="100%" height="100%" source="btnSheet1_json.5" source.down="btnSheet1_json.6"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
-		<e:Button id="m_btnRank" label="" y="476.64" x="227" scaleX="1" scaleY="1">
+		<e:Button id="m_btnRank" label="" y="625" x="227" scaleX="1" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0"  source="btnSheet_json.btnRank" source.down="btnSheet_json.btnRankDown"/>
+				<e:Image width="100%" height="100%" source="btnSheet1_json.7" source.down="btnSheet1_json.8"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
 		<e:Image id="m_imgTitle" y="-180" x="117" scaleX="1" scaleY="1" source="imgTitle_png"/>
-		<e:Button id="m_btnGameStart" label="" y="168.64000000000001" scaleX="1" x="227" scaleY="1">
+		<e:Button id="m_btnGameStart" label="" y="200" scaleX="1" x="227" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnStart" source.down="btnSheet_json.btnStartDown"/>
+				<e:Image width="100%" height="100%" source="btnSheet1_json.3" source.down="btnSheet1_json.4"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
 	</e:Group>
 	<e:Button id="m_btnSetting" label="" width="72" height="72" x="651" y="12">

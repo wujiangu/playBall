@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,itemSheet_json,gameUISheet_json,commonPanel_png,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,btnLock_png,btnProcReturn_png,btnSwap_png,btnUse_png,procBg1_png,procBg2_png,procBg5_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Bg1001_png,ItemBg1001_png,Icon1001_png,Bg1002_png,Icon1002_png,ItemBg1002_png,procBg4_png,Bg1003_png,Icon1003_png,ItemBg1003_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json",
+			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,itemSheet_json,gameUISheet_json,commonPanel_png,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,btnLock_png,btnProcReturn_png,btnSwap_png,btnUse_png,procBg1_png,procBg2_png,procBg5_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Bg1001_png,ItemBg1001_png,Icon1001_png,Bg1002_png,Icon1002_png,ItemBg1002_png,procBg4_png,Bg1003_png,Icon1003_png,ItemBg1003_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json,procBg6_png,procBg7_png,btnSheet1_json,gamBg5_png,gamBg1_png,gamBg2_png,gamBg3_png,gamBg4_png",
 			"name": "enter"
 		},
 		{
@@ -864,6 +864,47 @@
 			"url": "assets/bones/longmao_tex.json",
 			"type": "json",
 			"name": "longmao_tex_json"
+		},
+		{
+			"url": "assets/backpack/procBg6.png",
+			"type": "image",
+			"name": "procBg6_png"
+		},
+		{
+			"url": "assets/backpack/procBg7.png",
+			"type": "image",
+			"name": "procBg7_png"
+		},
+		{
+			"url": "assets/Button/btnSheet1.json",
+			"type": "sheet",
+			"name": "btnSheet1_json",
+			"subkeys": "1,16,17,18,19,3,4,5,6,7,8"
+		},
+		{
+			"url": "assets/game/gamBg5.png",
+			"type": "image",
+			"name": "gamBg5_png"
+		},
+		{
+			"url": "assets/game/gamBg1.png",
+			"type": "image",
+			"name": "gamBg1_png"
+		},
+		{
+			"url": "assets/game/gamBg2.png",
+			"type": "image",
+			"name": "gamBg2_png"
+		},
+		{
+			"url": "assets/game/gamBg3.png",
+			"type": "image",
+			"name": "gamBg3_png"
+		},
+		{
+			"url": "assets/game/gamBg4.png",
+			"type": "image",
+			"name": "gamBg4_png"
 		}
 	]
 }

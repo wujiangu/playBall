@@ -69,6 +69,8 @@ var BackpackPanel = (function (_super) {
     };
     BackpackPanel.prototype._UpdateItemInfo = function () {
         var itemTableData = GameConfig.itemConfig[this.m_itemIDs[1]];
+        this.m_curItemName.text = itemTableData.Name;
+        this.m_curItemDesc.text = itemTableData.Desc;
     };
     BackpackPanel.prototype._OnBtnReturn = function () {
         Common.dispatchEvent(MainNotify.closeBackpackPanel);
@@ -131,7 +133,6 @@ var BackpackPanel = (function (_super) {
     };
     BackpackPanel.prototype.onComplete = function () {
         this.m_itemIRs.push(this.m_itemIRLeft1);
-        // this.m_itemIRs.push(this.m_itemIRLeft2)
         this.m_itemIRs.push(this.m_itemIRCenter);
         this.m_itemIRs.push(this.m_itemIRRight1);
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this);
@@ -152,6 +153,33 @@ var BackpackPanel = (function (_super) {
     return BackpackPanel;
 }(BasePanel));
 __reflect(BackpackPanel.prototype, "BackpackPanel");
+var NewItemIR = (function (_super) {
+    __extends(NewItemIR, _super);
+    function NewItemIR() {
+        var _this = _super.call(this) || this;
+        _this.addEventListener(eui.UIEvent.COMPLETE, _this.onComplete, _this);
+        _this.skinName = "resource/game_skins/newItemIR.exml";
+        return _this;
+    }
+    NewItemIR.prototype.UpdateItem = function (strId, index) {
+        var itemData = GameConfig.itemTable[strId];
+        // if (GameConfig.itemTable[strId].IsUse == 0) this.m_labstatus.text = "Idle"
+        // else this.m_labstatus.text = "Equipped"
+        // if (!itemData.Open) this.m_labstatus.text = "Unlock"
+        if (index == 1)
+            this.m_imgMask.visible = false;
+        else
+            this.m_imgMask.visible = true;
+        // this.m_labName.text = itemData.Name
+        // this.m_labDesc.text = itemData.Desc
+        this.m_imgItem.texture = RES.getRes(itemData.Icon);
+        this.m_itemBg.texture = RES.getRes(itemData.Bg);
+    };
+    NewItemIR.prototype.onComplete = function () {
+    };
+    return NewItemIR;
+}(eui.Component));
+__reflect(NewItemIR.prototype, "NewItemIR");
 var ItemIR = (function (_super) {
     __extends(ItemIR, _super);
     function ItemIR() {

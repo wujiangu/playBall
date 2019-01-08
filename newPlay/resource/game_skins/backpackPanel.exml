@@ -99,7 +99,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="m_btnRight" label="" right="-7" verticalCenter="-41">
+	<e:Button id="m_btnRight" label="" right="-7" verticalCenter="-185">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
@@ -107,7 +107,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="m_btnLeft" label="" verticalCenter="-41" left="-6" scaleX="-1">
+	<e:Button id="m_btnLeft" label="" verticalCenter="-185" left="-6" scaleX="-1">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
@@ -116,14 +116,12 @@
 		</e:skinName>
 	</e:Button>
 	<e:Image source="procBg5_png" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="-466.5"/>
-	<e:Group id="m_groupItemIR" width="582.6" height="584" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-33">
-		<ns1:ItemIR id="m_itemIRRight2" width="341.6" height="584" horizontalCenter="156" verticalCenter="0" scaleX="0.8" scaleY="0.8" x="233" y="39" visible="false"/>
-		<ns1:ItemIR id="m_itemIRLeft2" width="341.6" height="584" horizontalCenter="-156" verticalCenter="0" scaleX="0.8" scaleY="0.8" x="243" y="49" visible="false"/>
-		<ns1:ItemIR id="m_itemIRRight1" width="341.6" height="584" scaleX="0.9" scaleY="0.9" x="275" y="29"/>
-		<ns1:ItemIR id="m_itemIRLeft1" width="341.6" height="584" scaleX="0.9" scaleY="0.9" x="-1" y="29"/>
-		<ns1:ItemIR id="m_itemIRCenter" width="341.6" height="584" x="121" y="0" scaleX="1" scaleY="1"/>
+	<e:Group id="m_groupItemIR" width="582.6" height="308" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-219">
+		<ns1:NewItemIR id="m_itemIRRight1" width="315" height="308" scaleX="0.9" scaleY="0.9" x="275" y="29"/>
+		<ns1:NewItemIR id="m_itemIRLeft1" width="315" height="308" scaleX="0.9" scaleY="0.9" x="-1" y="29"/>
+		<ns1:NewItemIR id="m_itemIRCenter" width="315" height="308" x="121" y="0" scaleX="1" scaleY="1"/>
 	</e:Group>
-	<e:Button id="m_btnUse" label="" horizontalCenter="0" verticalCenter="231.5">
+	<e:Button id="m_btnUse" label="" horizontalCenter="0" verticalCenter="269.5">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnUse_png"/>
@@ -131,6 +129,13 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Image id="m_itemTypeBg" horizontalCenter="0" bottom="129" source="ItemBg1003_png"/>
-	<e:Image id="m_curItem" scaleX="0.5" scaleY="0.5" horizontalCenter="0" bottom="150" source="Icon1003_png"/>
+	<e:Image id="m_itemTypeBg" horizontalCenter="0" bottom="76" source="procBg7_png" scaleX="0.9" scaleY="0.9"/>
+	<e:Image id="m_curItem" scaleX="0.5" scaleY="0.5" horizontalCenter="0" bottom="114" source="Icon1003_png"/>
+	<e:Image source="procBg6_png" horizontalCenter="0" verticalCenter="-79"/>
+	<e:Group width="500" height="177" verticalCenter="75.5" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0">
+		<e:Image source="gameUISheet_json.game5" y="0" anchorOffsetY="0" height="53" left="0" right="0"/>
+		<e:Image source="gameUISheet_json.game4" y="54" anchorOffsetY="0" left="0" right="0" height="124"/>
+		<e:Label id="m_curItemName" text="Torch" y="2" fontFamily="Microsoft YaHei" size="49" horizontalCenter="0" bold="true" textAlign="center" textColor="0x26cfda"/>
+		<e:Label id="m_curItemDesc" text="Torch" y="64.5" fontFamily="Microsoft YaHei" size="27" bold="true" textAlign="left" anchorOffsetX="0" width="438" anchorOffsetY="0" height="102" x="33" textColor="0x424e5e"/>
+	</e:Group>
 </e:Skin>

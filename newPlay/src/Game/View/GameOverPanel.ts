@@ -21,6 +21,18 @@ class GameOverPanel extends BasePanel {
 		this.m_isAgain = false
 		this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString()
 		this.m_labHistoryScore.text = GameConfig.maxScore.toString()
+		this.m_labLianji.text = GameConfig.curCombo.toString()
+
+		let comboScore:string = "D"
+
+		if (GameConfig.curCombo <= 3) comboScore = "D"
+		else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6) comboScore = "C"
+		else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10) comboScore = "B"
+		else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15) comboScore = "A"
+		else if (GameConfig.curCombo > 15 && GameConfig.curCombo <= 25) comboScore = "S"
+		else if (GameConfig.curCombo > 25 && GameConfig.curCombo <= 40) comboScore = "SS"
+		else comboScore = "SSS"
+		this.m_labPingfen.text = comboScore
 		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
 		this.Show.play(0)
         Common.gameScene().uiLayer.addChild(this)
@@ -86,6 +98,9 @@ class GameOverPanel extends BasePanel {
 	private m_labScore:eui.Label
 	/**历史最高分 */
 	private m_labHistoryScore:eui.Label
+
+	private m_labPingfen:eui.Label
+	private m_labLianji:eui.Label
 
 	private Show:egret.tween.TweenGroup
 	private Hide:egret.tween.TweenGroup
