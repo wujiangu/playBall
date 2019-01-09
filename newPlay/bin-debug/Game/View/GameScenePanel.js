@@ -84,6 +84,10 @@ var GameScenePanel = (function (_super) {
         this.m_levelState = ELevelType.Normal;
         this.m_eliteCount = 0;
         this.m_normalCount = 0;
+        if (a_levelId == this.m_currentLevel.next) {
+            this.m_currentLevel.normalCount += this.m_normalCount * 150;
+            this.m_normalCount++;
+        }
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -183,7 +187,7 @@ var GameScenePanel = (function (_super) {
                     this.warning.play(0);
                 }
             }
-            if (this.m_normalCount < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
+            if (this.m_score < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
                 this.m_monsterAddDelay = 0;
                 this._CreateMonster();
             }
@@ -411,7 +415,7 @@ var GameScenePanel = (function (_super) {
         configurable: true
     });
     GameScenePanel.prototype.ActorDeadHandle = function () {
-        if (this.m_levelState == ELevelType.Normal && this.m_normalCount >= this.m_currentLevel.normalCount && this.IsNoneAlive()) {
+        if (this.m_levelState == ELevelType.Normal && this.m_score >= this.m_currentLevel.normalCount && this.IsNoneAlive()) {
             this.m_levelState = ELevelType.EliteWarning;
         }
         if (this.m_levelState == ELevelType.EliteWarning) {
@@ -477,7 +481,8 @@ var GameScenePanel = (function (_super) {
             else
                 GameConfig.comboDelay = 1000;
         }
-        this.Score += GameConfig.balloonScore;
+        if (this.m_levelState == ELevelType.Normal)
+            this.Score += GameConfig.balloonScore;
     };
     /**
      * 进入下一关
@@ -786,7 +791,7 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype._CreateMonster = function () {
         var monster = GameObjectPool.getInstance().createObject(Monster, "Monster");
         monster.Init(this.m_currentLevel, this.m_levelState);
-        this.m_normalCount++;
+        // this.m_normalCount++
         if (this.m_curItemData != null) {
             var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
             monster.UpdateEffectArmature(effectData);

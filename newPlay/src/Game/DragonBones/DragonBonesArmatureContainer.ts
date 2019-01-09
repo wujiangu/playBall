@@ -95,6 +95,10 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
         return this.bones[name];
     }
 
+    public getSlots() {
+        this.armatures[0].getSlots()
+    }
+
     public getState(action:string):dragonBones.AnimationState {
        if (this.actions[action] == null) {
             Common.log("不存在动作---->"+action+typeof(action));

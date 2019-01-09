@@ -19,8 +19,8 @@ var SummonActor = (function (_super) {
         _this.m_groupBalloon.addChild(_this.m_balloon);
         _this.m_gesture = new egret.Bitmap();
         _this.addChild(_this.m_gesture);
-        _this.m_gesture.scaleX = 0.5;
-        _this.m_gesture.scaleY = 0.5;
+        _this.m_gesture.scaleX = 0.55;
+        _this.m_gesture.scaleY = 0.55;
         return _this;
     }
     SummonActor.prototype.Init = function (a_data, a_x, a_y, beginX, beginY, a_count, a_num, a_isBoss) {
@@ -124,8 +124,8 @@ var SummonActor = (function (_super) {
         if (this.m_data.Type == ESummonType.Balloon) {
             this.m_isArrive = false;
             this.UpdateGesture();
-            var colorIndex = MathUtils.getRandom(this._animations.length - 1);
-            this._animationName = this._animations[colorIndex];
+            // let colorIndex = MathUtils.getRandom(this._animations.length - 1)
+            // this._animationName = this._animations[colorIndex]
             this.m_armatureContainer.play(this._animationName, 1);
             this.m_armatureContainer.pause(this._animationName);
         }
@@ -148,11 +148,12 @@ var SummonActor = (function (_super) {
         this.m_gesture.texture = RES.getRes(this.m_gestureData[random].path);
         this.m_gesture.anchorOffsetX = this.m_gesture.width / 2;
         this.m_gesture.anchorOffsetY = this.m_gesture.height / 2;
-        this.m_gesture.x = this.m_armatureContainer.x - 3;
-        this.m_gesture.y = this.m_armatureContainer.y - 36;
+        this.m_gesture.x = this.m_armatureContainer.x + 1;
+        this.m_gesture.y = this.m_armatureContainer.y - 38;
         this.m_gesture.visible = true;
         this.m_gestureType = this.m_gestureData[random].type;
         this.m_score = this.m_gestureData[random].count;
+        this._animationName = this.m_gestureData[random].balloon;
         this.m_gestureData.splice(random, 1);
     };
     SummonActor.prototype.GotoIdle = function () {
@@ -168,6 +169,9 @@ var SummonActor = (function (_super) {
         this.m_state = EMonsterState.Dead;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
         PanelManager.m_gameScenePanel.Power += this.m_data.Power;
+        // if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
+        // 	PanelManager.m_gameScenePanel.Score += this.m_score
+        // }
         if (this.m_data.Type == ESummonType.Balloon) {
             GameConfig.balloonScore += this.m_score;
             PanelManager.m_gameScenePanel.Boom = true;

@@ -131,7 +131,9 @@ class Monster extends BaseActor {
 		if (this.m_data.Type == EMonsterType.FallDown) this.m_state = EMonsterState.FallDown
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
-		PanelManager.m_gameScenePanel.Score += this.m_data.Score
+		// if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
+		// 	PanelManager.m_gameScenePanel.Score += this.m_data.Score
+		// }
 		PanelManager.m_gameScenePanel.ActorDeadHandle()
 		if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
 			GameManager.Instance.GameSlow()

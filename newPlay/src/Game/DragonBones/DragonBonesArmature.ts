@@ -116,6 +116,14 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
         }
     }
 
+    public getSlots() {
+        return this._armature.getSlots()
+    }
+
+    public getSlot(name:string) {
+        return this._armature.getSlot(name)
+    }
+
     /**
      * 播放动画
      */

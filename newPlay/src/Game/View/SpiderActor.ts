@@ -59,7 +59,7 @@ class SpiderActor extends BaseActor {
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
 		this.m_armatureContainer.scaleY = this.m_data.Scale
-
+	
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this)
 		this.m_armatureContainer.addFrameCallFunc(this._OnArmatureFrame, this)
 		this.m_armatureContainer.visible = false
@@ -147,7 +147,7 @@ class SpiderActor extends BaseActor {
 			this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1)
 			this.m_state = EMonsterState.FallDown
 			PanelManager.m_gameScenePanel.Power += this.m_data.Power
-			PanelManager.m_gameScenePanel.Score += this.m_data.Score
+			// PanelManager.m_gameScenePanel.Score += this.m_data.Score
 			GameManager.Instance.GameSlow()
 		}
 	}

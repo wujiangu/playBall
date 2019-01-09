@@ -78,7 +78,7 @@ class BackpackPanel extends BasePanel {
 		let strId = currentId.toString()
 		if (GameConfig.itemTable[strId].Open) {
 			if (GameConfig.itemTable[strId].IsUse == 1) {
-				TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
+				TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
 			}else{
 				GameConfig.itemTable[strId].IsUse = 1
 				if (GameConfig.itemUseTable.length >= 1) {
@@ -89,6 +89,7 @@ class BackpackPanel extends BasePanel {
 				GameConfig.itemUseTable.push(currentId)
 				Common.UpdateUseItem()
 				this._UpdateBtnItem()
+				this.selectItem.play(0)
 			}
 		}else{
 			TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
@@ -185,6 +186,7 @@ class BackpackPanel extends BasePanel {
 
 	private m_curItemName:eui.Label
 	private m_curItemDesc:eui.Label
+	private selectItem:egret.tween.TweenGroup
 }
 
 class NewItemIR extends eui.Component {
@@ -218,7 +220,7 @@ class NewItemIR extends eui.Component {
 
 	private m_itemBg:eui.Image
 	private m_imgItem:eui.Image
-	private m_imgMask:eui.Rect
+	private m_imgMask:eui.Image
 }
 
 class ItemIR extends eui.Component {

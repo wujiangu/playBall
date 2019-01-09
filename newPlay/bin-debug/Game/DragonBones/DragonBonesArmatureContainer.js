@@ -101,6 +101,9 @@ var DragonBonesArmatureContainer = (function (_super) {
         }
         return this.bones[name];
     };
+    DragonBonesArmatureContainer.prototype.getSlots = function () {
+        this.armatures[0].getSlots();
+    };
     DragonBonesArmatureContainer.prototype.getState = function (action) {
         if (this.actions[action] == null) {
             Common.log("不存在动作---->" + action + typeof (action));

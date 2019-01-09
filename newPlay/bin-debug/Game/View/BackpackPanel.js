@@ -81,7 +81,7 @@ var BackpackPanel = (function (_super) {
         var strId = currentId.toString();
         if (GameConfig.itemTable[strId].Open) {
             if (GameConfig.itemTable[strId].IsUse == 1) {
-                TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175);
+                TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190);
             }
             else {
                 GameConfig.itemTable[strId].IsUse = 1;
@@ -93,6 +93,7 @@ var BackpackPanel = (function (_super) {
                 GameConfig.itemUseTable.push(currentId);
                 Common.UpdateUseItem();
                 this._UpdateBtnItem();
+                this.selectItem.play(0);
             }
         }
         else {

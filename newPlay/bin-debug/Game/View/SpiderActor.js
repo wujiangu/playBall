@@ -148,7 +148,7 @@ var SpiderActor = (function (_super) {
             this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1);
             this.m_state = EMonsterState.FallDown;
             PanelManager.m_gameScenePanel.Power += this.m_data.Power;
-            PanelManager.m_gameScenePanel.Score += this.m_data.Score;
+            // PanelManager.m_gameScenePanel.Score += this.m_data.Score
             GameManager.Instance.GameSlow();
         }
     };

@@ -121,6 +121,12 @@ var DragonBonesArmature = (function (_super) {
             arr[0].call(arr[1], event);
         }
     };
+    DragonBonesArmature.prototype.getSlots = function () {
+        return this._armature.getSlots();
+    };
+    DragonBonesArmature.prototype.getSlot = function (name) {
+        return this._armature.getSlot(name);
+    };
     /**
      * 播放动画
      */
