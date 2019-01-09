@@ -50,6 +50,7 @@ var GameScenePanel = (function (_super) {
         this.m_fntComboCount.visible = false;
         this.m_spiderWebArmatureContainer.visible = false;
         this.m_imgPower.alpha = 1;
+        this.m_normalCount = 0;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
     };
@@ -73,6 +74,7 @@ var GameScenePanel = (function (_super) {
         GameConfig.curCombo = 0;
         this.m_isBoom = false;
         this.m_bitLabScore.text = this.m_score.toString();
+        this.powerfull.stop();
         this.UpdeLevelData(GameConfig.testSelectLevel);
         ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y);
     };
@@ -83,11 +85,12 @@ var GameScenePanel = (function (_super) {
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime;
         this.m_levelState = ELevelType.Normal;
         this.m_eliteCount = 0;
-        this.m_normalCount = 0;
+        // this.m_normalCount = 0
         if (a_levelId == this.m_currentLevel.next) {
             this.m_currentLevel.normalCount += this.m_normalCount * 150;
             this.m_normalCount++;
         }
+        GameConfig.gameSpeedPercent = this.m_currentLevel.speed;
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -141,20 +144,6 @@ var GameScenePanel = (function (_super) {
             else {
                 this.m_monsterAddDelay = 0;
             }
-            // if (this.m_passTime < this.m_currentLevel.normalTime) {
-            //     this.m_levelState = ELevelType.Normal
-            //     this.m_monsterAddDelay += timeElapsed
-            //     this.m_passTime += timeElapsed
-            // }else{
-            //     this.m_levelState = ELevelType.EliteWarning
-            //     this.m_monsterAddDelay = 0
-            // }
-            // else if (this.m_passTime >= this.m_currentLevel.normalTime && this.m_passTime < this.m_allTime) {
-            //     this.m_levelState = ELevelType.Elite
-            //     if (this.m_eliteCount >= this.m_currentLevel.eliteCount) this.m_levelState = ELevelType.End
-            // }else{
-            //     this.m_levelState = ELevelType.End
-            // }
             this.m_luckyAddDelay += timeElapsed;
             // 连击
             if (this.m_comboDelay >= 0) {
@@ -418,12 +407,11 @@ var GameScenePanel = (function (_super) {
         if (this.m_levelState == ELevelType.Normal && this.m_score >= this.m_currentLevel.normalCount && this.IsNoneAlive()) {
             this.m_levelState = ELevelType.EliteWarning;
         }
+        Common.log(this.m_levelState, this.m_score, this.m_currentLevel.normalCount, this.IsNoneAlive());
         if (this.m_levelState == ELevelType.EliteWarning) {
+            this.m_levelState = ELevelType.End;
             this._EnterWarning();
         }
-        // if (this.m_levelState == ELevelType.Elite) {
-        //     GameManager.Instance.GameSlow()
-        // }
     };
     Object.defineProperty(GameScenePanel.prototype, "MountBg", {
         get: function () {
@@ -483,6 +471,7 @@ var GameScenePanel = (function (_super) {
         }
         if (this.m_levelState == ELevelType.Normal)
             this.Score += GameConfig.balloonScore;
+        this.ActorDeadHandle();
     };
     /**
      * 进入下一关

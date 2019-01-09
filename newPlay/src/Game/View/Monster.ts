@@ -60,7 +60,7 @@ class Monster extends BaseActor {
 		])
 		
 		this.m_state = EMonsterState.Ready
-		this.m_speedY = this.m_data.Speed / 100
+		this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent
 		this.m_spFall = 0.7
 		this.m_speedX = 0.2
 
@@ -115,7 +115,7 @@ class Monster extends BaseActor {
 
 	public GotoIdle() {
 		if (this.m_data.ID == 1002) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.5)
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.8)
 		}else{
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
 		}
@@ -134,7 +134,7 @@ class Monster extends BaseActor {
 		// if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
 		// 	PanelManager.m_gameScenePanel.Score += this.m_data.Score
 		// }
-		PanelManager.m_gameScenePanel.ActorDeadHandle()
+		// PanelManager.m_gameScenePanel.ActorDeadHandle()
 		if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
 			GameManager.Instance.GameSlow()
 		}

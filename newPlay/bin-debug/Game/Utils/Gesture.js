@@ -134,9 +134,9 @@ var Gesture = (function () {
         }
         //console.log(this._dirsArr);
         var dirstr = this.repDiff(this._dirsArr);
-        console.log(dirstr);
+        // console.log( dirstr );
         var rel = this.sweep(dirstr);
-        console.log("type------------->: ", rel);
+        // console.log("type------------->: ",rel);
         this.disEvent(rel);
     };
     Gesture.prototype.disEvent = function (type) {

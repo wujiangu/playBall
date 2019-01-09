@@ -66,7 +66,7 @@ var SpiderActor = (function (_super) {
             DragonBonesAnimations.Move,
         ]);
         this.m_state = EMonsterState.Arrive;
-        this.m_speedY = this.m_data.Speed / 100;
+        this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent;
         this.m_spFall = 0.7;
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;

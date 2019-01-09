@@ -87,7 +87,7 @@ class SummonActor extends BaseActor {
 		this.m_armatureContainer.register(this.m_armature, this._animations)
 		
 		this.m_state = EMonsterState.Ready
-		this.m_speedY = this.m_data.Speed / 100
+		this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent
 		this.m_speedX = 0.1
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
@@ -180,7 +180,7 @@ class SummonActor extends BaseActor {
 			this.m_balloon.BalloonExplore()
 		}
 
-		PanelManager.m_gameScenePanel.ActorDeadHandle()
+		// PanelManager.m_gameScenePanel.ActorDeadHandle()
 		
 	}
 

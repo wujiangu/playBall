@@ -73,7 +73,7 @@ var Monster = (function (_super) {
             DragonBonesAnimations.Explore,
         ]);
         this.m_state = EMonsterState.Ready;
-        this.m_speedY = this.m_data.Speed / 100;
+        this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent;
         this.m_spFall = 0.7;
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
@@ -137,7 +137,7 @@ var Monster = (function (_super) {
         // if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
         // 	PanelManager.m_gameScenePanel.Score += this.m_data.Score
         // }
-        PanelManager.m_gameScenePanel.ActorDeadHandle();
+        // PanelManager.m_gameScenePanel.ActorDeadHandle()
         if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
             GameManager.Instance.GameSlow();
         }

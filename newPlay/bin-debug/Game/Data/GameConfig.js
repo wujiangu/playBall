@@ -110,6 +110,7 @@ var GameConfig = (function () {
     GameConfig.soundValue = 100;
     GameConfig.monsterPos = 1;
     GameConfig.testSelectLevel = 1001;
+    GameConfig.gameSpeedPercent = 0;
     return GameConfig;
 }());
 __reflect(GameConfig.prototype, "GameConfig");

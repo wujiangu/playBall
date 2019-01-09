@@ -156,9 +156,9 @@ class Gesture
         }
         //console.log(this._dirsArr);
         var dirstr:string = this.repDiff( this._dirsArr );
-        console.log( dirstr );
+        // console.log( dirstr );
         var rel:number = this.sweep( dirstr );
-        console.log("type------------->: ",rel);
+        // console.log("type------------->: ",rel);
         this.disEvent(rel);
     }
 

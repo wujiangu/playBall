@@ -35,6 +35,7 @@ class GameConfig {
 	public static balloonScore:number
 	public static monsterPos:number = 1
 	public static testSelectLevel:number = 1001
+	public static gameSpeedPercent:number = 0
 	/**
      * 初始化骨骼的动画数据
      */
