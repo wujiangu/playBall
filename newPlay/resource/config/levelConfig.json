@@ -2,21 +2,22 @@
     "1001":{
         "next":1002,
         "addTime":1800,
-        "speed":0.7,
+        "speed":0.8,
         "normalTime":2000,
         "eliteTime":2000,
         "normalCount":100,
         "eliteCount":1,
         "normal":[
             {"id":1001, "diff":1, "min":1, "max":1, "prob":60},
-            {"id":1004, "diff":1, "min":1, "max":1, "prob":40}
+            {"id":1004, "diff":1, "min":1, "max":1, "prob":30},
+            {"id":1004, "diff":1, "min":2, "max":2, "prob":10}
         ],
         "elite":[
             {
                 "id":1001, 
                 "diff":1,
-                "min":2,
-                "max":2,
+                "min":3,
+                "max":3,
                 "prob":100
             }
         ],
@@ -25,22 +26,22 @@
     "1002":{
         "next":1003,
         "addTime":1800,
-        "speed":0.8,
+        "speed":0.85,
         "normalTime":30000,
         "eliteTime":2000,
         "normalCount":200,
         "eliteCount":1,
         "normal":[
-            {"id":1001, "diff":1, "min":2, "max":2, "prob":20},
-            {"id":1001, "diff":1, "min":1, "max":1, "prob":30},
-            {"id":1004, "diff":1, "min":1, "max":1, "prob":50}
+            {"id":1001, "diff":0, "min":1, "max":1, "prob":20},
+            {"id":1003, "diff":1, "min":2, "max":2, "prob":30},
+            {"id":1004, "diff":1, "min":1, "max":2, "prob":50}
         ],
         "elite":[
             {
                 "id":1004, 
-                "diff":2,
-                "min":1,
-                "max":1,
+                "diff":1,
+                "min":3,
+                "max":3,
                 "prob":100
             }
         ],
@@ -49,20 +50,20 @@
     "1003":{
         "next":1004,
         "addTime":1800,
-        "speed":0.9,
+        "speed":0.95,
         "normalTime":30000,
         "eliteTime":2000,
         "normalCount":300,
         "eliteCount":1,
         "normal":[
-            {"id":1003, "diff":1, "min":1, "max":2, "prob":20},
-            {"id":1004, "diff":1, "min":1, "max":1, "prob":60},
-            {"id":1004, "diff":2, "min":1, "max":1, "prob":20}
+            {"id":1001, "diff":1, "min":2, "max":2, "prob":20},
+            {"id":1003, "diff":1, "min":2, "max":2, "prob":30},
+            {"id":1004, "diff":0, "min":1, "max":1, "prob":50}
         ],
         "elite":[
             {
                 "id":1003, 
-                "diff":1,
+                "diff":0,
                 "min":3,
                 "max":3,
                 "prob":100
@@ -79,10 +80,9 @@
         "normalCount":400,
         "eliteCount":1,
         "normal":[
-            {"id":1004, "diff":1, "min":1, "max":2, "prob":10},
-            {"id":1003, "diff":2, "min":1, "max":1, "prob":30},
-            {"id":1003, "diff":1, "min":2, "max":3, "prob":20},
-            {"id":1004, "diff":1, "min":1, "max":1, "prob":40}
+            {"id":1004, "diff":2, "min":1, "max":1, "prob":10},
+            {"id":1003, "diff":1, "min":2, "max":3, "prob":50},
+            {"id":1004, "diff":0, "min":1, "max":2, "prob":40}
         ],
         "elite":[
             {
@@ -105,17 +105,16 @@
         "normalCount":500,
         "eliteCount":1,
         "normal":[
-            {"id":1003, "diff":2, "min":1, "max":2, "prob":30},
-            {"id":1003, "diff":1, "min":1, "max":1, "prob":30},
+            {"id":1003, "diff":1, "min":3, "max":3, "prob":60},
             {"id":1005, "diff":1, "min":2, "max":3, "prob":20, "summon":{"id":1002, "diff":1, "ids":[], "count":1}},
-            {"id":1004, "diff":0, "min":1, "max":1, "prob":20}
+            {"id":1004, "diff":0, "min":2, "max":2, "prob":20}
         ],
         "elite":[
             {
                 "id":1002, 
                 "diff":2,
-                "min":2,
-                "max":2,
+                "min":3,
+                "max":3,
                 "prob":100,
                 "summon":{"id":1001, "diff":1, "ids":[], "count":2}
             }
@@ -123,7 +122,7 @@
         "boss":[]
     },
     "1006":{
-        "next":1006,
+        "next":1007,
         "addTime":1800,
         "speed":1.05,
         "normalTime":30000,
@@ -131,8 +130,7 @@
         "normalCount":600,
         "eliteCount":1,
         "normal":[
-            {"id":1003, "diff":0, "min":2, "max":3, "prob":20},
-            {"id":1004, "diff":1, "min":1, "max":2, "prob":40},
+            {"id":1003, "diff":0, "min":2, "max":3, "prob":60},
             {"id":1005, "diff":1, "min":2, "max":3, "prob":20, "summon":{"id":1002, "diff":1, "ids":[], "count":2}},
             {"id":1002, "diff":0, "min":2, "max":2, "prob":20, "summon":{"id":1001, "diff":1, "ids":[], "count":2}}
         ],
@@ -143,7 +141,41 @@
                 "min":3,
                 "max":3,
                 "prob":100,
-                "summon":{"id":1002, "diff":2, "ids":[], "count":3}
+                "summon":{"id":1002, "diff":0, "ids":[], "count":3}
+            }
+        ],
+        "boss":[]
+    },
+    "1007":{
+        "next":1007,
+        "addTime":1800,
+        "speed":1.05,
+        "normalTime":30000,
+        "eliteTime":2000,
+        "normalCount":600,
+        "eliteCount":1,
+        "normal":[
+            {"id":1003, "diff":0, "min":3, "max":3, "prob":25},
+            {"id":1004, "diff":0, "min":2, "max":2, "prob":25},
+            {"id":1005, "diff":1, "min":3, "max":3, "prob":25, "summon":{"id":1002, "diff":1, "ids":[], "count":2}},
+            {"id":1001, "diff":1, "min":3, "max":3, "prob":25}
+        ],
+        "elite":[
+            {
+                "id":1006, 
+                "diff":2,
+                "min":3,
+                "max":3,
+                "prob":50,
+                "summon":{"id":1002, "diff":1, "ids":[], "count":3}
+            },
+            {
+                "id":1002, 
+                "diff":2,
+                "min":3,
+                "max":3,
+                "prob":50,
+                "summon":{"id":1001, "diff":2, "ids":[], "count":3}
             }
         ],
         "boss":[]
