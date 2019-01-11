@@ -98,7 +98,7 @@ var BackpackPanel = (function (_super) {
             }
         }
         else {
-            TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175);
+            // TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
         }
     };
     BackpackPanel.prototype._OnBtnLeft = function () {

@@ -63,11 +63,11 @@
         "elite":[
             {
                 "id":1009, 
-                "diff":0,
+                "diff":1,
                 "min":3,
                 "max":3,
                 "prob":100,
-                "summon":{"id":1001, "diff":1, "ids":[], "count":3}
+                "summon":{"id":1001, "diff":1, "ids":[], "count":2}
             }
         ],
         "boss":[]
@@ -88,7 +88,7 @@
         "elite":[
             {
                 "id":1010, 
-                "diff":1,
+                "diff":0,
                 "min":3,
                 "max":3,
                 "prob":100,

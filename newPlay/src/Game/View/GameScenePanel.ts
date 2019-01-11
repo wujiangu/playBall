@@ -496,12 +496,12 @@ class GameScenePanel extends BasePanel {
 
                 for (let i = 0; i < this.m_monsters.length; i++) {
                     let monster:Monster = this.m_monsters[i]
-                    monster.SetVertical(this.m_comboCount * 0.05)
+                    monster.SetVertical(this.m_comboCount * 0.08)
                 }
 
                 for (let i = 0; i < this.m_summonActors.length; i++) {
                     let summon:SummonActor = this.m_summonActors[i]
-                    summon.SetVertical(this.m_comboCount * 0.05)
+                    summon.SetVertical(this.m_comboCount * 0.08)
                 }
             }
 

@@ -491,11 +491,11 @@ var GameScenePanel = (function (_super) {
                 GameConfig.balloonScore *= this.m_comboCount;
                 for (var i = 0; i < this.m_monsters.length; i++) {
                     var monster = this.m_monsters[i];
-                    monster.SetVertical(this.m_comboCount * 0.05);
+                    monster.SetVertical(this.m_comboCount * 0.08);
                 }
                 for (var i = 0; i < this.m_summonActors.length; i++) {
                     var summon = this.m_summonActors[i];
-                    summon.SetVertical(this.m_comboCount * 0.05);
+                    summon.SetVertical(this.m_comboCount * 0.08);
                 }
             }
             if (this.m_comboCount <= 2)
