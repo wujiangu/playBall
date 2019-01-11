@@ -76,14 +76,17 @@ var GameManager = (function (_super) {
     GameManager.prototype.Update = function () {
         if (this._gameState == EGameState.StageBack)
             return;
+        this._startTime = egret.getTimer();
+        var timeElapsed = this._startTime - this._lastTime;
         if (this._gameState == EGameState.Ready) {
             if (PanelManager.m_gameStartPanel != null) {
                 PanelManager.m_gameStartPanel.Update();
             }
+            if (PanelManager.m_gameScenePanel != null) {
+                PanelManager.m_gameScenePanel.Update(timeElapsed);
+            }
             return;
         }
-        this._startTime = egret.getTimer();
-        var timeElapsed = this._startTime - this._lastTime;
         if (this._gameSlowDelay >= 0) {
             this._gameSlowDelay += timeElapsed;
             timeElapsed *= 0.4;

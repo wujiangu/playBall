@@ -74,6 +74,8 @@ class Balloon extends egret.Sprite {
 
 		this.scaleX = 1
 		this.scaleY = 1
+
+		if (data.length <= 0) this._root.ResetGestureData()
 	}
 
 	public ChangeToEasy() {
@@ -95,10 +97,10 @@ class Balloon extends egret.Sprite {
 		this._rop.scaleX = 0.5
 		if (count == 1) {
 			this._rop.rotation = 0
-			this._rop.scaleY = 10
+			this._rop.scaleY = 15
 		}
 		else if (count == 2) {
-			this._rop.scaleY = 14
+			this._rop.scaleY = 16
 			if (value == 0) {
 				this._rop.rotation = -45
 			}else{
@@ -106,7 +108,7 @@ class Balloon extends egret.Sprite {
 			}
 		}
 		else if (count == 3) {
-			this._rop.scaleY = 20
+			this._rop.scaleY = 25
 			if (value == 0) {
 				this._rop.rotation = 0
 			}

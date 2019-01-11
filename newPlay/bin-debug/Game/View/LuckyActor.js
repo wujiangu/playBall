@@ -59,9 +59,13 @@ var LuckyActor = (function (_super) {
         this.m_rect.height = this.m_data.Height;
         this.m_width = this.m_data.Width;
         this.m_height = this.m_data.Height;
+        this.ResetGestureData();
+    };
+    LuckyActor.prototype.ResetGestureData = function () {
         this.m_gestureData.length = 0;
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
-            this.m_gestureData.push(GameConfig.gestureConfig[i]);
+            if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal)
+                this.m_gestureData.push(GameConfig.gestureConfig[i]);
         }
     };
     LuckyActor.prototype.InitGraph = function () {

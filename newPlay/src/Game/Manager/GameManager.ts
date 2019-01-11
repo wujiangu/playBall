@@ -73,15 +73,20 @@ class GameManager extends egret.Sprite{
 	public Update():void
 	{
 		if (this._gameState == EGameState.StageBack) return
+		this._startTime = egret.getTimer()
+		let timeElapsed = this._startTime - this._lastTime
 		if (this._gameState == EGameState.Ready) {
 			if (PanelManager.m_gameStartPanel != null) {
 				PanelManager.m_gameStartPanel.Update()
 			}
+
+			if (PanelManager.m_gameScenePanel != null) {
+				PanelManager.m_gameScenePanel.Update(timeElapsed)
+			}
 			return
 		}
 		
-		this._startTime = egret.getTimer()
-		let timeElapsed = this._startTime - this._lastTime
+		
 		if (this._gameSlowDelay >= 0) {
 			this._gameSlowDelay += timeElapsed
 			timeElapsed *= 0.4

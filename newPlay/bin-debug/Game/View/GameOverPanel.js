@@ -31,7 +31,7 @@ var GameOverPanel = (function (_super) {
         this.m_isAgain = false;
         this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString();
         this.m_labHistoryScore.text = GameConfig.maxScore.toString();
-        this.m_labLianji.text = GameConfig.curCombo.toString();
+        this.m_labLianji.text = "X" + GameConfig.curCombo.toString();
         var comboScore = "D";
         if (GameConfig.curCombo <= 3)
             comboScore = "D";
@@ -50,12 +50,14 @@ var GameOverPanel = (function (_super) {
         this.m_labPingfen.text = comboScore;
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
+        GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
     GameOverPanel.prototype.onExit = function () {
         this.touchChildren = false;
         this.Hide.play(0);
+        this.channel.stop();
     };
     GameOverPanel.prototype._OnBtnReturn = function () {
         Common.dispatchEvent(MainNotify.closeGameOverPanel);

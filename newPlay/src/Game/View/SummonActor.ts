@@ -48,6 +48,8 @@ class SummonActor extends BaseActor {
 			this.InitGraph()
 			this.m_endX = Math.max(a_x, this.m_rect.width)
 			this.m_endX = Math.min(a_x, Config.stageWidth - this.m_rect.width)
+			// if (a_x > 0) this.m_endX = a_x + this.m_rect.width
+			// if (a_x <= 0) this.m_endX = a_x - this.m_rect.width
 			this.m_endY = beginY
 			if (this.m_data.Type == ESummonType.Balloon) {
 				this.x = beginX
@@ -64,6 +66,18 @@ class SummonActor extends BaseActor {
 				}
 				else if (a_count == 3) {
 					this.x = beginX - (-a_num + 1) * 120
+					if (a_isBoss) this.x = Config.stageHalfWidth - (-a_num + 1) * 500
+					this.x = Math.max(this.x, this.m_rect.width)
+					this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width)
+				}
+				else if (a_count == 4) {
+					this.x = beginX + (2 * a_num - 3) * 60
+					if (a_isBoss) this.x = Config.stageHalfWidth - (-a_num + 1) * 500
+					this.x = Math.max(this.x, this.m_rect.width)
+					this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width)
+				}
+				else if (a_count == 5) {
+					this.x = beginX - (a_num - 2) * 120
 					if (a_isBoss) this.x = Config.stageHalfWidth - (-a_num + 1) * 500
 					this.x = Math.max(this.x, this.m_rect.width)
 					this.x = Math.min(this.x, Config.stageWidth - this.m_rect.width)
@@ -87,6 +101,7 @@ class SummonActor extends BaseActor {
 		this.m_armatureContainer.register(this.m_armature, this._animations)
 		
 		this.m_state = EMonsterState.Ready
+		this.m_addNum = 0
 		this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent
 		this.m_speedX = 0.1
 

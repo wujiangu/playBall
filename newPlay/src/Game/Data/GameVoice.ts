@@ -11,7 +11,9 @@ module GameVoice {
     export var combo1_mp3:string = "combo1_mp3"              // 一连
     export var combo2_mp3:string = "combo2_mp3"              // 二连
     export var combo3_mp3:string = "combo3_mp3"              // 三连
+    export var combo4_mp3:string = "combo4_mp3"              // 四连
     export var spiderKingArrive_mp3:string = "spiderKingArrive_mp3"              // 蜘蛛王出场
+    export var jiesuan_mp3:string = "jiesuan_mp3"              // 结算
 
 
 
@@ -29,5 +31,7 @@ module GameVoice {
     export var combo1Sound:egret.Sound = null
     export var combo2Sound:egret.Sound = null
     export var combo3Sound:egret.Sound = null
+    export var combo4Sound:egret.Sound = null
     export var spiderKingArrive:egret.Sound = null
+    export var jiesuanSound:egret.Sound = null
 }

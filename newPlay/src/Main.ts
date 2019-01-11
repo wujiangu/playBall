@@ -126,15 +126,27 @@ class Main extends eui.UILayer {
             this.loadingView = new LoadingUI();
             this.stage.addChild(this.loadingView);
             RES.loadGroup("enter", 1)
+
+            this.m_rect = Common.createBitmap("black_png")
+            this.m_rect.width = Config.stageWidth
+            this.m_rect.height = Config.stageHeight
+            this.m_rect.visible = false
+            this.stage.addChild(this.m_rect)
         }
         else if (event.groupName == "enter") {
-            this.stage.removeChild(this.loadingView);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-            RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-            this.isResourceLoadEnd = true;
-            this.createScene();
+            this.m_rect.visible = true
+            Animations.fadeOut(this.m_rect)
+            Animations.fadeIn(this.loadingView, 500, ()=>{
+                this.m_rect.visible = false
+                this.stage.removeChild(this.loadingView);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+                RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+                this.isResourceLoadEnd = true;
+                this.createScene();
+            })
+            
         }
     }
     private createScene() {
@@ -189,4 +201,6 @@ class Main extends eui.UILayer {
     //         GameVoice.btnSound.play(0, 1)
     //     }
     // }
+
+    private m_rect:egret.Bitmap
 }

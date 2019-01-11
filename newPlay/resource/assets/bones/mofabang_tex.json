@@ -1,1 +1,1 @@
-{"imagePath":"mofabang_tex.png","width":128,"height":128,"name":"mofabang","SubTexture":[{"frameWidth":100,"y":1,"frameHeight":100,"frameY":-6,"width":90,"frameX":-5,"height":90,"name":"27","x":1}]}
+{"SubTexture":[{"frameHeight":100,"y":1,"frameWidth":100,"frameX":-5,"width":90,"frameY":-6,"height":90,"name":"27","x":1}],"width":128,"imagePath":"mofabang_tex.png","height":128,"name":"mofabang"}

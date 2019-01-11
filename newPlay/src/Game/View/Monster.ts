@@ -60,8 +60,9 @@ class Monster extends BaseActor {
 		])
 		
 		this.m_state = EMonsterState.Ready
+		this.m_addNum = 0
 		this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent
-		this.m_spFall = 0.7
+		this.m_spFall = 0.9
 		this.m_speedX = 0.2
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
@@ -114,8 +115,8 @@ class Monster extends BaseActor {
 	}
 
 	public GotoIdle() {
-		if (this.m_data.ID == 1002) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.8)
+		if (this.m_data.ID == 1009) {
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
 		}else{
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
 		}
@@ -357,7 +358,9 @@ class Monster extends BaseActor {
 		switch (evt) {
 			case "vomit":
 				if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined) {
-					let count = MathUtils.getRandom(1, this.m_summonData.count)
+					let count = 0
+					if (this.m_summonData.count > 0) count = this.m_summonData.count
+					else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
 					for (let i = 0; i < count; i++) PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y)
 				}
 			break
@@ -367,7 +370,9 @@ class Monster extends BaseActor {
 	private _OnArmatureComplet() {
 		if (this.m_state == EMonsterState.Dead) {
 			if (this.m_summonData != null) {
-				let count = MathUtils.getRandom(1, this.m_summonData.count)
+				let count = 0
+				if (this.m_summonData.count > 0) count = this.m_summonData.count
+				else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
 				for (let i = 0; i < count; i++) PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i)
 			}
 			this.Destroy()

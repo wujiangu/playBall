@@ -37,6 +37,7 @@ class GameScenePanel extends BasePanel {
         this.m_fntCombo.visible = false
         this.m_fntComboCount.visible = false
         this.m_spiderWebArmatureContainer.visible = false
+        this.m_imgBossWarning.visible = false
         this.m_imgPower.alpha = 1
         this.m_normalCount = 0
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
@@ -89,6 +90,15 @@ class GameScenePanel extends BasePanel {
     public onEnter():void{
         Common.curPanel = PanelManager.m_gameScenePanel
         Common.gameScene().uiLayer.addChild(this)
+
+
+        this.m_cloud1.x = PanelManager.m_gameStartPanel.Cloud1.x
+        this.m_cloud1.y = PanelManager.m_gameStartPanel.Cloud1.y
+        this.m_cloud2.x = PanelManager.m_gameStartPanel.Cloud2.x
+        this.m_cloud2.y = PanelManager.m_gameStartPanel.Cloud2.y
+        this.m_cloud3.x = PanelManager.m_gameStartPanel.Cloud3.x
+        this.m_cloud3.y = PanelManager.m_gameStartPanel.Cloud3.y
+
         this.m_groupPower.visible = true
         if (GameConfig.itemUseTable.length <= 0 ) {
             this.m_groupPower.visible = false
@@ -109,7 +119,7 @@ class GameScenePanel extends BasePanel {
 
         if (GameVoice.battleBGMChannel != null) GameVoice.battleBGMChannel.stop()
         GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
-        GameVoice.battleBGMChannel.volume = GameConfig.bgmValue / 100
+        GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100
         // this._CreateMonster()
     }
 
@@ -153,6 +163,17 @@ class GameScenePanel extends BasePanel {
                     this.m_isBoom = false
                     this.comboMove.stop()
                     this.comboEnd.play(0)
+                    
+                    for (let i = 0; i < this.m_monsters.length; i++) {
+                        let monster:Monster = this.m_monsters[i]
+                        monster.ResetVertical()
+                    }
+
+                    for (let i = 0; i < this.m_summonActors.length; i++) {
+                        let summon:SummonActor = this.m_summonActors[i]
+                        summon.ResetVertical()
+                    }
+                    
                     // this.m_fntCombo.visible = false
                     // this.m_fntComboCount.visible = false
                     // this.m_combo.visible = false
@@ -362,11 +383,11 @@ class GameScenePanel extends BasePanel {
 
         if (this.m_angle >= 360) {
             this.powerfull.play(0)
-            // this.m_imgEffectMask.visible = true
-            // this.effectMask.play(0)
-            // this._UpdateItemArmature(true)
-            // this.m_angle = 180
-            // this.m_power = 0
+            this.m_imgEffectMask.visible = true
+            this.effectMask.play(0)
+            this._UpdateItemArmature(true)
+            this.m_angle = 180
+            this.m_power = 0
         }
 
         this._UpdateProgress(this.m_angle)
@@ -435,31 +456,53 @@ class GameScenePanel extends BasePanel {
             this.m_comboDelay = 0
             this.m_comboCount += 1
             this.m_isBoom = false
-
             if (this.m_comboCount >= 2) {
                 this.m_fntCombo.visible = true
                 this.m_fntComboCount.visible = true
                 this.m_fntComboCount.text = "X" + this.m_comboCount
                 this.m_comboArmatureContainer.y = 80
-                if (this.m_comboCount < 6) {
+                this.m_comboArmatureContainer.visible = true
+                if (this.m_comboCount < 4) {
                     this.m_fntCombo.font = RES.getRes("comboBlueFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboBlueFnt_fnt")
                     this.m_comboArmatureContainer.play("lan", 1)
                     GameVoice.combo1Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
-                else if (this.m_comboCount >= 6 && this.m_comboCount < 11) {
+                else if (this.m_comboCount >= 4 && this.m_comboCount < 8) {
+                    this.m_fntCombo.font = RES.getRes("comboGreenFnt_fnt")
+                    this.m_fntComboCount.font = RES.getRes("comboGreenFnt_fnt")
+                    this.m_comboArmatureContainer.play("lan", 1)
+                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }
+                else if (this.m_comboCount >= 8 && this.m_comboCount < 12) {
                     this.m_fntCombo.font = RES.getRes("comboYellowFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboYellowFnt_fnt")
                     this.m_comboArmatureContainer.play("huang", 1)
-                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100
-                }else{
+                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }
+                else if (this.m_comboCount >= 12 && this.m_comboCount < 16) {
                     this.m_fntCombo.font = RES.getRes("comboRedFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboRedFnt_fnt")
                     this.m_comboArmatureContainer.play("hong", 1)
-                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                }else{
+                    this.m_fntCombo.font = RES.getRes("comboPurpleFnt_fnt")
+                    this.m_fntComboCount.font = RES.getRes("comboPurpleFnt_fnt")
+                    this.m_comboArmatureContainer.play("hong", 1)
+                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 this.comboBegin.play(0)
                 GameConfig.balloonScore *= this.m_comboCount
+
+                for (let i = 0; i < this.m_monsters.length; i++) {
+                    let monster:Monster = this.m_monsters[i]
+                    monster.SetVertical(this.m_comboCount * 0.05)
+                }
+
+                for (let i = 0; i < this.m_summonActors.length; i++) {
+                    let summon:SummonActor = this.m_summonActors[i]
+                    summon.SetVertical(this.m_comboCount * 0.05)
+                }
             }
 
             if (this.m_comboCount <= 2) GameConfig.comboDelay = 1500
@@ -467,6 +510,7 @@ class GameScenePanel extends BasePanel {
             else GameConfig.comboDelay = 1000
         }
         if (this.m_levelState == ELevelType.Normal) this.Score += GameConfig.balloonScore
+        this.Score = Math.min(this.m_currentLevel.normalCount, this.m_score)
         this.ActorDeadHandle()
     }
 
@@ -490,12 +534,18 @@ class GameScenePanel extends BasePanel {
      */
     private _EnterWarning() {
         Common.log("进入警告")
-
-        egret.setTimeout(this._EnterBoss, this, 2000)
+        this.m_imgBossWarning.visible = true
+        this.bossWarning.play(0)
+        // egret.setTimeout(this._EnterBoss, this, 2000)
     }
 
     private _EnterBoss() {
         Common.log("进入BOSS")
+        this.m_imgBossWarning.visible = false
+        egret.setTimeout(this._BossArrive, this, 1000)
+    }
+
+    private _BossArrive() {
         this.m_levelState = ELevelType.Elite
         if (this.m_currentLevel.elite[0].id == 1006) {
             this.PlaySpiderWebArmature("arrive1", 1)
@@ -667,30 +717,30 @@ class GameScenePanel extends BasePanel {
     }
 
     private _OnChangeItem() {
-        if (this.m_angle >= 360) {
-            this.m_imgEffectMask.visible = true
-            this.effectMask.play(0)
-            this._UpdateItemArmature(true)
-            this.m_angle = 180
-            this.m_power = 0
-            this.powerfull.stop()
-            this.m_imgPower.alpha = 1
-            this._UpdateProgress(this.m_angle)
-        }
-        // if (GameConfig.itemUseTable.length > 1) {
-        //     let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
-        //     if (index >= 0) {
-        //         if (index < GameConfig.itemUseTable.length - 1) {
-        //             index++
-        //         }else{
-        //             index = 0
-        //         }
-        //         this.m_currentItemId = GameConfig.itemUseTable[index]
-        //         this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()]
-        //         egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this)
-        //         this._UpdateFullArmature()
-        //     }
+        // if (this.m_angle >= 360) {
+        //     this.m_imgEffectMask.visible = true
+        //     this.effectMask.play(0)
+        //     this._UpdateItemArmature(true)
+        //     this.m_angle = 180
+        //     this.m_power = 0
+        //     this.powerfull.stop()
+        //     this.m_imgPower.alpha = 1
+        //     this._UpdateProgress(this.m_angle)
         // }
+        if (GameConfig.itemUseTable.length > 1) {
+            let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
+            if (index >= 0) {
+                if (index < GameConfig.itemUseTable.length - 1) {
+                    index++
+                }else{
+                    index = 0
+                }
+                this.m_currentItemId = GameConfig.itemUseTable[index]
+                this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()]
+                egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this)
+                this._UpdateFullArmature()
+            }
+        }
     }
 
     private _OnWaterComplete() {
@@ -746,6 +796,9 @@ class GameScenePanel extends BasePanel {
 
     }
 
+    private _ComboArmature() {
+        this.m_comboArmatureContainer.visible = false
+    }
 
 
 	private onComplete() {
@@ -764,6 +817,7 @@ class GameScenePanel extends BasePanel {
         comboArmature.ArmatureDisplay = armatureDisplay
         this.m_comboArmatureContainer.register(comboArmature, ["hong", "huang", "lan"])
         this.m_comboArmatureContainer.x = this.m_groupScore.width / 2
+        this.m_comboArmatureContainer.addCompleteCallFunc(this._ComboArmature, this)
         
 
         this.m_spiderWebArmatureContainer = new DragonBonesArmatureContainer()
@@ -796,6 +850,7 @@ class GameScenePanel extends BasePanel {
         this.comboEnd.addEventListener('complete', this._OnComboEndComplete, this)
         this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this)
         this.powerfull.addEventListener('complete', this._OnPowerfullComplete, this)
+        this.bossWarning.addEventListener('complete', this._EnterBoss, this)
         
 
         Common.addTouchBegin(this.m_btnPause)
@@ -848,7 +903,11 @@ class GameScenePanel extends BasePanel {
 
     public CreateSummonActor(a_data:any, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
         let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
-        let targetX = a_x + MathUtils.getRandom(-250, 250)
+        let flag = MathUtils.getRandom(1, 2)
+        let targetX = 0
+        if (flag == 1) targetX = a_x + MathUtils.getRandom(-250, -100)
+        else targetX = a_x + MathUtils.getRandom(100, 250)
+        // let targetX = a_x + MathUtils.getRandom(-250, 250)
         let targetY = a_y + MathUtils.getRandom(-20, 20)
         summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num, isBoss)
         this.m_summonActors.push(summon)
@@ -916,7 +975,8 @@ class GameScenePanel extends BasePanel {
     private comboEnd:egret.tween.TweenGroup
     private comboMove:egret.tween.TweenGroup
     private powerfull:egret.tween.TweenGroup
-    
+    private bossWarning:egret.tween.TweenGroup
+    private m_imgBossWarning:eui.Image
 
 	private m_groupScore:eui.Group
 	private m_groupBottom:eui.Group

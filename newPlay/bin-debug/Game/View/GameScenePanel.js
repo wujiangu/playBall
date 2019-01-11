@@ -49,6 +49,7 @@ var GameScenePanel = (function (_super) {
         this.m_fntCombo.visible = false;
         this.m_fntComboCount.visible = false;
         this.m_spiderWebArmatureContainer.visible = false;
+        this.m_imgBossWarning.visible = false;
         this.m_imgPower.alpha = 1;
         this.m_normalCount = 0;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
@@ -96,6 +97,12 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameScenePanel;
         Common.gameScene().uiLayer.addChild(this);
+        this.m_cloud1.x = PanelManager.m_gameStartPanel.Cloud1.x;
+        this.m_cloud1.y = PanelManager.m_gameStartPanel.Cloud1.y;
+        this.m_cloud2.x = PanelManager.m_gameStartPanel.Cloud2.x;
+        this.m_cloud2.y = PanelManager.m_gameStartPanel.Cloud2.y;
+        this.m_cloud3.x = PanelManager.m_gameStartPanel.Cloud3.x;
+        this.m_cloud3.y = PanelManager.m_gameStartPanel.Cloud3.y;
         this.m_groupPower.visible = true;
         if (GameConfig.itemUseTable.length <= 0) {
             this.m_groupPower.visible = false;
@@ -116,7 +123,7 @@ var GameScenePanel = (function (_super) {
         if (GameVoice.battleBGMChannel != null)
             GameVoice.battleBGMChannel.stop();
         GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0);
-        GameVoice.battleBGMChannel.volume = GameConfig.bgmValue / 100;
+        GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100;
         // this._CreateMonster()
     };
     // 退出面板
@@ -155,6 +162,14 @@ var GameScenePanel = (function (_super) {
                     this.m_isBoom = false;
                     this.comboMove.stop();
                     this.comboEnd.play(0);
+                    for (var i = 0; i < this.m_monsters.length; i++) {
+                        var monster = this.m_monsters[i];
+                        monster.ResetVertical();
+                    }
+                    for (var i = 0; i < this.m_summonActors.length; i++) {
+                        var summon = this.m_summonActors[i];
+                        summon.ResetVertical();
+                    }
                     // this.m_fntCombo.visible = false
                     // this.m_fntComboCount.visible = false
                     // this.m_combo.visible = false
@@ -344,11 +359,11 @@ var GameScenePanel = (function (_super) {
             this.m_angle = Math.min(this.m_angle, 360);
             if (this.m_angle >= 360) {
                 this.powerfull.play(0);
-                // this.m_imgEffectMask.visible = true
-                // this.effectMask.play(0)
-                // this._UpdateItemArmature(true)
-                // this.m_angle = 180
-                // this.m_power = 0
+                this.m_imgEffectMask.visible = true;
+                this.effectMask.play(0);
+                this._UpdateItemArmature(true);
+                this.m_angle = 180;
+                this.m_power = 0;
             }
             this._UpdateProgress(this.m_angle);
         },
@@ -441,26 +456,47 @@ var GameScenePanel = (function (_super) {
                 this.m_fntComboCount.visible = true;
                 this.m_fntComboCount.text = "X" + this.m_comboCount;
                 this.m_comboArmatureContainer.y = 80;
-                if (this.m_comboCount < 6) {
+                this.m_comboArmatureContainer.visible = true;
+                if (this.m_comboCount < 4) {
                     this.m_fntCombo.font = RES.getRes("comboBlueFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboBlueFnt_fnt");
                     this.m_comboArmatureContainer.play("lan", 1);
                     GameVoice.combo1Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
-                else if (this.m_comboCount >= 6 && this.m_comboCount < 11) {
+                else if (this.m_comboCount >= 4 && this.m_comboCount < 8) {
+                    this.m_fntCombo.font = RES.getRes("comboGreenFnt_fnt");
+                    this.m_fntComboCount.font = RES.getRes("comboGreenFnt_fnt");
+                    this.m_comboArmatureContainer.play("lan", 1);
+                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100;
+                }
+                else if (this.m_comboCount >= 8 && this.m_comboCount < 12) {
                     this.m_fntCombo.font = RES.getRes("comboYellowFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboYellowFnt_fnt");
                     this.m_comboArmatureContainer.play("huang", 1);
-                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100;
+                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
-                else {
+                else if (this.m_comboCount >= 12 && this.m_comboCount < 16) {
                     this.m_fntCombo.font = RES.getRes("comboRedFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboRedFnt_fnt");
                     this.m_comboArmatureContainer.play("hong", 1);
-                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100;
+                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
+                }
+                else {
+                    this.m_fntCombo.font = RES.getRes("comboPurpleFnt_fnt");
+                    this.m_fntComboCount.font = RES.getRes("comboPurpleFnt_fnt");
+                    this.m_comboArmatureContainer.play("hong", 1);
+                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
                 this.comboBegin.play(0);
                 GameConfig.balloonScore *= this.m_comboCount;
+                for (var i = 0; i < this.m_monsters.length; i++) {
+                    var monster = this.m_monsters[i];
+                    monster.SetVertical(this.m_comboCount * 0.05);
+                }
+                for (var i = 0; i < this.m_summonActors.length; i++) {
+                    var summon = this.m_summonActors[i];
+                    summon.SetVertical(this.m_comboCount * 0.05);
+                }
             }
             if (this.m_comboCount <= 2)
                 GameConfig.comboDelay = 1500;
@@ -471,6 +507,7 @@ var GameScenePanel = (function (_super) {
         }
         if (this.m_levelState == ELevelType.Normal)
             this.Score += GameConfig.balloonScore;
+        this.Score = Math.min(this.m_currentLevel.normalCount, this.m_score);
         this.ActorDeadHandle();
     };
     /**
@@ -491,10 +528,16 @@ var GameScenePanel = (function (_super) {
      */
     GameScenePanel.prototype._EnterWarning = function () {
         Common.log("进入警告");
-        egret.setTimeout(this._EnterBoss, this, 2000);
+        this.m_imgBossWarning.visible = true;
+        this.bossWarning.play(0);
+        // egret.setTimeout(this._EnterBoss, this, 2000)
     };
     GameScenePanel.prototype._EnterBoss = function () {
         Common.log("进入BOSS");
+        this.m_imgBossWarning.visible = false;
+        egret.setTimeout(this._BossArrive, this, 1000);
+    };
+    GameScenePanel.prototype._BossArrive = function () {
         this.m_levelState = ELevelType.Elite;
         if (this.m_currentLevel.elite[0].id == 1006) {
             this.PlaySpiderWebArmature("arrive1", 1);
@@ -654,30 +697,31 @@ var GameScenePanel = (function (_super) {
         egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 1 }, 300, egret.Ease.circOut);
     };
     GameScenePanel.prototype._OnChangeItem = function () {
-        if (this.m_angle >= 360) {
-            this.m_imgEffectMask.visible = true;
-            this.effectMask.play(0);
-            this._UpdateItemArmature(true);
-            this.m_angle = 180;
-            this.m_power = 0;
-            this.powerfull.stop();
-            this.m_imgPower.alpha = 1;
-            this._UpdateProgress(this.m_angle);
-        }
-        // if (GameConfig.itemUseTable.length > 1) {
-        //     let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
-        //     if (index >= 0) {
-        //         if (index < GameConfig.itemUseTable.length - 1) {
-        //             index++
-        //         }else{
-        //             index = 0
-        //         }
-        //         this.m_currentItemId = GameConfig.itemUseTable[index]
-        //         this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()]
-        //         egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this)
-        //         this._UpdateFullArmature()
-        //     }
+        // if (this.m_angle >= 360) {
+        //     this.m_imgEffectMask.visible = true
+        //     this.effectMask.play(0)
+        //     this._UpdateItemArmature(true)
+        //     this.m_angle = 180
+        //     this.m_power = 0
+        //     this.powerfull.stop()
+        //     this.m_imgPower.alpha = 1
+        //     this._UpdateProgress(this.m_angle)
         // }
+        if (GameConfig.itemUseTable.length > 1) {
+            var index = GameConfig.itemUseTable.indexOf(this.m_currentItemId);
+            if (index >= 0) {
+                if (index < GameConfig.itemUseTable.length - 1) {
+                    index++;
+                }
+                else {
+                    index = 0;
+                }
+                this.m_currentItemId = GameConfig.itemUseTable[index];
+                this.m_curItemData = GameConfig.itemTable[this.m_currentItemId.toString()];
+                egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 0 }, 300, egret.Ease.circIn).call(this._ItemArmatureFadeIn, this);
+                this._UpdateFullArmature();
+            }
+        }
     };
     GameScenePanel.prototype._OnWaterComplete = function () {
         this.water.play(0);
@@ -720,6 +764,9 @@ var GameScenePanel = (function (_super) {
     };
     GameScenePanel.prototype._OnSpiderWebArmatureFrame = function () {
     };
+    GameScenePanel.prototype._ComboArmature = function () {
+        this.m_comboArmatureContainer.visible = false;
+    };
     GameScenePanel.prototype.onComplete = function () {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer();
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2;
@@ -734,6 +781,7 @@ var GameScenePanel = (function (_super) {
         comboArmature.ArmatureDisplay = armatureDisplay;
         this.m_comboArmatureContainer.register(comboArmature, ["hong", "huang", "lan"]);
         this.m_comboArmatureContainer.x = this.m_groupScore.width / 2;
+        this.m_comboArmatureContainer.addCompleteCallFunc(this._ComboArmature, this);
         this.m_spiderWebArmatureContainer = new DragonBonesArmatureContainer();
         this.m_groupGame.addChild(this.m_spiderWebArmatureContainer);
         var spiderWebDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("wang", "wang");
@@ -760,6 +808,7 @@ var GameScenePanel = (function (_super) {
         this.comboEnd.addEventListener('complete', this._OnComboEndComplete, this);
         this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this);
         this.powerfull.addEventListener('complete', this._OnPowerfullComplete, this);
+        this.bossWarning.addEventListener('complete', this._EnterBoss, this);
         Common.addTouchBegin(this.m_btnPause);
         this._OnResize();
     };
@@ -807,7 +856,13 @@ var GameScenePanel = (function (_super) {
         if (a_num === void 0) { a_num = 0; }
         if (isBoss === void 0) { isBoss = false; }
         var summon = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor");
-        var targetX = a_x + MathUtils.getRandom(-250, 250);
+        var flag = MathUtils.getRandom(1, 2);
+        var targetX = 0;
+        if (flag == 1)
+            targetX = a_x + MathUtils.getRandom(-250, -100);
+        else
+            targetX = a_x + MathUtils.getRandom(100, 250);
+        // let targetX = a_x + MathUtils.getRandom(-250, 250)
         var targetY = a_y + MathUtils.getRandom(-20, 20);
         summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num, isBoss);
         this.m_summonActors.push(summon);

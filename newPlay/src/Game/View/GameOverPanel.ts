@@ -21,7 +21,7 @@ class GameOverPanel extends BasePanel {
 		this.m_isAgain = false
 		this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString()
 		this.m_labHistoryScore.text = GameConfig.maxScore.toString()
-		this.m_labLianji.text = GameConfig.curCombo.toString()
+		this.m_labLianji.text = "X" + GameConfig.curCombo.toString()
 
 		let comboScore:string = "D"
 
@@ -32,9 +32,12 @@ class GameOverPanel extends BasePanel {
 		else if (GameConfig.curCombo > 15 && GameConfig.curCombo <= 25) comboScore = "S"
 		else if (GameConfig.curCombo > 25 && GameConfig.curCombo <= 40) comboScore = "SS"
 		else comboScore = "SSS"
+		
 		this.m_labPingfen.text = comboScore
 		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
 		this.Show.play(0)
+
+		GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -42,6 +45,7 @@ class GameOverPanel extends BasePanel {
     public onExit():void{
 		this.touchChildren = false
 		this.Hide.play(0)
+		this.channel.stop()
     }
 
 	private _OnBtnReturn() {
@@ -104,4 +108,6 @@ class GameOverPanel extends BasePanel {
 
 	private Show:egret.tween.TweenGroup
 	private Hide:egret.tween.TweenGroup
+
+	private channel:egret.SoundChannel
 }

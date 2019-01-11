@@ -22,7 +22,7 @@ class GameStartPanel extends BasePanel {
     public onEnter():void{
 		Common.curPanel = PanelManager.m_gameStartPanel
 		this.touchChildren = true
-		this.m_maskRect.visible = false
+		// this.m_maskRect.visible = false
 		if (!this.m_isInit) {
 			this.touchChildren = false
 			this.InitGroup.play(0)
@@ -66,6 +66,17 @@ class GameStartPanel extends BasePanel {
 		}
 	}
 
+	public get Cloud1() {
+		return this.m_cloud1
+	}
+
+	public get Cloud2() {
+		return this.m_cloud2
+	}
+
+	public get Cloud3() {
+		return this.m_cloud3
+	}
 	private _OnHideCloth() {
 		// GameManager.Instance.Start()
 		Common.dispatchEvent(MainNotify.closeGameStartPanel)

@@ -33,7 +33,7 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameStartPanel;
         this.touchChildren = true;
-        this.m_maskRect.visible = false;
+        // this.m_maskRect.visible = false
         if (!this.m_isInit) {
             this.touchChildren = false;
             this.InitGroup.play(0);
@@ -77,6 +77,27 @@ var GameStartPanel = (function (_super) {
             this.m_cloud3.x = -this.m_cloud3.width;
         }
     };
+    Object.defineProperty(GameStartPanel.prototype, "Cloud1", {
+        get: function () {
+            return this.m_cloud1;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameStartPanel.prototype, "Cloud2", {
+        get: function () {
+            return this.m_cloud2;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameStartPanel.prototype, "Cloud3", {
+        get: function () {
+            return this.m_cloud3;
+        },
+        enumerable: true,
+        configurable: true
+    });
     GameStartPanel.prototype._OnHideCloth = function () {
         // GameManager.Instance.Start()
         Common.dispatchEvent(MainNotify.closeGameStartPanel);

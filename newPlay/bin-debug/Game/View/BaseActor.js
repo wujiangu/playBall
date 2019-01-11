@@ -104,6 +104,16 @@ var BaseActor = (function (_super) {
     });
     BaseActor.prototype.Update = function (timeElapsed) {
     };
+    BaseActor.prototype.ResetGestureData = function () {
+    };
+    BaseActor.prototype.SetVertical = function (addNum) {
+        this.ResetVertical();
+        this.m_addNum = this.m_speedY * addNum;
+        this.m_speedY += this.m_addNum;
+    };
+    BaseActor.prototype.ResetVertical = function () {
+        this.m_speedY -= this.m_addNum;
+    };
     BaseActor.prototype.BalloonExploreHandle = function () { };
     BaseActor.prototype.RemoveBalloon = function (balloon) { };
     BaseActor.prototype.PlayEffect = function () { };
@@ -126,7 +136,7 @@ var BaseActor = (function (_super) {
             }
             else {
                 balloon.x = (value - 1) * (balloon.width + this.m_rect.width / 2) - this.m_rect.width * 0.7;
-                balloon.y = -this.m_rect.height;
+                balloon.y = -this.m_rect.height * 1.1;
             }
             balloon.SetLine(count, value);
         }

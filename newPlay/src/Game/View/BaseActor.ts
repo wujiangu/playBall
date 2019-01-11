@@ -90,6 +90,20 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	}
 
+	public ResetGestureData() {
+		
+	}
+
+	public SetVertical(addNum:number) {
+		this.ResetVertical()
+		this.m_addNum = this.m_speedY * addNum
+		this.m_speedY += this.m_addNum
+	}
+
+	public ResetVertical() {
+		this.m_speedY -= this.m_addNum
+	}
+
 	public BalloonExploreHandle() {}
 
 	public RemoveBalloon(balloon:Balloon) {}
@@ -113,7 +127,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 				balloon.y = -this.m_rect.height * 1.4
 			}else{
 				balloon.x = (value - 1) * (balloon.width + this.m_rect.width/2) - this.m_rect.width * 0.7
-				balloon.y = -this.m_rect.height
+				balloon.y = -this.m_rect.height * 1.1
 			}
 			balloon.SetLine(count, value)
 		}
@@ -147,4 +161,5 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_gesturDiff:number
 	protected m_balloonMin:number
 	protected m_balloonMax:number
+	protected m_addNum:number
 }

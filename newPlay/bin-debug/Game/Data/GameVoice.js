@@ -12,7 +12,9 @@ var GameVoice;
     GameVoice.combo1_mp3 = "combo1_mp3"; // 一连
     GameVoice.combo2_mp3 = "combo2_mp3"; // 二连
     GameVoice.combo3_mp3 = "combo3_mp3"; // 三连
+    GameVoice.combo4_mp3 = "combo4_mp3"; // 四连
     GameVoice.spiderKingArrive_mp3 = "spiderKingArrive_mp3"; // 蜘蛛王出场
+    GameVoice.jiesuan_mp3 = "jiesuan_mp3"; // 结算
     GameVoice.beginBGMSound = null;
     GameVoice.beginBGMChannel = null;
     GameVoice.battleBGMSound = null;
@@ -27,6 +29,8 @@ var GameVoice;
     GameVoice.combo1Sound = null;
     GameVoice.combo2Sound = null;
     GameVoice.combo3Sound = null;
+    GameVoice.combo4Sound = null;
     GameVoice.spiderKingArrive = null;
+    GameVoice.jiesuanSound = null;
 })(GameVoice || (GameVoice = {}));
 //# sourceMappingURL=GameVoice.js.map

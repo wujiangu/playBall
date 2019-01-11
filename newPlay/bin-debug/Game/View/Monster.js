@@ -73,8 +73,9 @@ var Monster = (function (_super) {
             DragonBonesAnimations.Explore,
         ]);
         this.m_state = EMonsterState.Ready;
+        this.m_addNum = 0;
         this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent;
-        this.m_spFall = 0.7;
+        this.m_spFall = 0.9;
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;
@@ -117,8 +118,8 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.GotoIdle = function () {
-        if (this.m_data.ID == 1002) {
-            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.5);
+        if (this.m_data.ID == 1009) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65);
         }
         else {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
@@ -351,7 +352,11 @@ var Monster = (function (_super) {
         switch (evt) {
             case "vomit":
                 if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined) {
-                    var count = MathUtils.getRandom(1, this.m_summonData.count);
+                    var count = 0;
+                    if (this.m_summonData.count > 0)
+                        count = this.m_summonData.count;
+                    else
+                        count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max);
                     for (var i = 0; i < count; i++)
                         PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y);
                 }
@@ -361,7 +366,11 @@ var Monster = (function (_super) {
     Monster.prototype._OnArmatureComplet = function () {
         if (this.m_state == EMonsterState.Dead) {
             if (this.m_summonData != null) {
-                var count = MathUtils.getRandom(1, this.m_summonData.count);
+                var count = 0;
+                if (this.m_summonData.count > 0)
+                    count = this.m_summonData.count;
+                else
+                    count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max);
                 for (var i = 0; i < count; i++)
                     PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i);
             }

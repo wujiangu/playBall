@@ -51,9 +51,13 @@ class LuckyActor extends BaseActor{
 		this.m_width = this.m_data.Width
 		this.m_height = this.m_data.Height
 
+		this.ResetGestureData()
+	}
+
+	public ResetGestureData() {
 		this.m_gestureData.length = 0
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-			this.m_gestureData.push(GameConfig.gestureConfig[i])
+			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) this.m_gestureData.push(GameConfig.gestureConfig[i])
 		}
 	}
 

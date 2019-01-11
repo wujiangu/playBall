@@ -76,6 +76,8 @@ var Balloon = (function (_super) {
         this._balloonArmatureContainer.pause(this._animationName);
         this.scaleX = 1;
         this.scaleY = 1;
+        if (data.length <= 0)
+            this._root.ResetGestureData();
     };
     Balloon.prototype.ChangeToEasy = function () {
         this._isChangeEasy = true;
@@ -96,10 +98,10 @@ var Balloon = (function (_super) {
         this._rop.scaleX = 0.5;
         if (count == 1) {
             this._rop.rotation = 0;
-            this._rop.scaleY = 10;
+            this._rop.scaleY = 15;
         }
         else if (count == 2) {
-            this._rop.scaleY = 14;
+            this._rop.scaleY = 16;
             if (value == 0) {
                 this._rop.rotation = -45;
             }
@@ -108,7 +110,7 @@ var Balloon = (function (_super) {
             }
         }
         else if (count == 3) {
-            this._rop.scaleY = 20;
+            this._rop.scaleY = 25;
             if (value == 0) {
                 this._rop.rotation = 0;
             }

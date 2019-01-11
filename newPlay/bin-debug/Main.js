@@ -47,11 +47,6 @@ var Main = (function (_super) {
         _this.isThemeLoadEnd = false;
         _this.isResourceLoadEnd = false;
         return _this;
-        // private onClick(evt:egret.TouchEvent):void{
-        //     if(evt.currentTarget instanceof eui.Button){
-        //         GameVoice.btnSound.play(0, 1)
-        //     }
-        // }
     }
     Main.prototype._OnResize = function (event) {
         Config.stageWidth = this.stage.stageWidth;
@@ -128,21 +123,32 @@ var Main = (function (_super) {
      * preload resource group is loaded
      */
     Main.prototype.onResourceLoadComplete = function (event) {
+        var _this = this;
         if (event.groupName == "preload") {
             //Config loading process interface
             //设置加载进度界面
             this.loadingView = new LoadingUI();
             this.stage.addChild(this.loadingView);
             RES.loadGroup("enter", 1);
+            this.m_rect = Common.createBitmap("black_png");
+            this.m_rect.width = Config.stageWidth;
+            this.m_rect.height = Config.stageHeight;
+            this.m_rect.visible = false;
+            this.stage.addChild(this.m_rect);
         }
         else if (event.groupName == "enter") {
-            this.stage.removeChild(this.loadingView);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-            RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-            this.isResourceLoadEnd = true;
-            this.createScene();
+            this.m_rect.visible = true;
+            Animations.fadeOut(this.m_rect);
+            Animations.fadeIn(this.loadingView, 500, function () {
+                _this.m_rect.visible = false;
+                _this.stage.removeChild(_this.loadingView);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, _this.onResourceLoadComplete, _this);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, _this.onResourceLoadError, _this);
+                RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, _this.onResourceProgress, _this);
+                RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, _this.onItemLoadError, _this);
+                _this.isResourceLoadEnd = true;
+                _this.createScene();
+            });
         }
     };
     Main.prototype.createScene = function () {
