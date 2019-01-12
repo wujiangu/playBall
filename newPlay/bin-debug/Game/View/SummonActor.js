@@ -247,12 +247,41 @@ var SummonActor = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    // public UpdateGesture() {
-    // 	// this.m_balloon.UpdateColorAndGesture()
-    // 	// if (PanelManager.m_gameScenePanel != null) {
-    // 	// 	PanelManager.m_gameScenePanel.Score += this.m_balloon.Score
-    // 	// }
-    // }
+    /**
+     * 更新怪物身上的特效动画
+     */
+    SummonActor.prototype.UpdateEffectArmature = function (data) {
+        this.m_effectArmatureContainer.clear();
+        if (data.bullet != "") {
+            var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.step1, data.step1);
+            if (this.m_effectArmature == null) {
+                this.m_effectArmature = new DragonBonesArmature(armatureDisplay);
+            }
+            this.m_effectData = data;
+            this.m_effectArmature.ArmatureDisplay = armatureDisplay;
+            this.m_effectArmatureContainer.register(this.m_effectArmature, [data.step1]);
+            this.m_effectArmatureContainer.visible = false;
+            this.m_effectArmatureContainer.scaleX = 0.8;
+            this.m_effectArmatureContainer.scaleY = 0.8;
+            this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
+        }
+    };
+    SummonActor.prototype.PlayEffect = function () {
+        this.m_effectArmatureContainer.visible = true;
+        this.m_effectArmatureContainer.play(this.m_effectData.step1, 1);
+        if (this.m_effectData.type == EEffectType.Fire) {
+            this.m_state = EMonsterState.Stop;
+            GameConfig.balloonScore = 0;
+            PanelManager.m_gameScenePanel.Boom = true;
+            PanelManager.m_gameScenePanel.UpdateBatter();
+        }
+    };
+    SummonActor.prototype._OnEffectArmatureComplete = function () {
+        if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
+            this.Destroy();
+            PanelManager.m_gameScenePanel.RemoveSummonActor(this);
+        }
+    };
     SummonActor.prototype._OnArmatureComplet = function () {
         if (this.m_state == EMonsterState.Dead) {
             this.Destroy();

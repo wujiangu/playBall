@@ -116,7 +116,7 @@ class Monster extends BaseActor {
 
 	public GotoIdle() {
 		if (this.m_data.ID == 1009) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.55)
 		}else{
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
 		}

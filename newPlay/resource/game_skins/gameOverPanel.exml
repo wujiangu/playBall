@@ -83,11 +83,8 @@
 		<e:Image anchorOffsetY="0" source="gamBg4_png" y="70" horizontalCenter="0"/>
 		<e:Image source="gamBg5_png" y="0" scaleX="1" scaleY="1" horizontalCenter="0.5"/>
 
-		<e:Label id="m_labScore" text="1000" fontFamily="Microsoft YaHei" size="160" horizontalCenter="0" verticalCenter="-164" textColor="0x6e6f67"/>
 		<e:Label id="m_carom" text="CAROM:" x="114" y="462" fontFamily="Microsoft YaHei" size="55" textColor="0x6d3f28"/>
-		<e:Label id="m_score" text="SCORE:" x="145" y="515" fontFamily="Microsoft YaHei" size="55" textColor="0x6D3F28"/>
-		<e:Label id="m_labPingfen" text="S" x="357" y="456.5" fontFamily="Microsoft YaHei" size="66" textColor="0xfaee22" textAlign="center" width="115" verticalAlign="middle"/>
-		<e:Label id="m_labLianji" text="X12" x="361" y="509.5" fontFamily="Microsoft YaHei" size="66" textColor="0xFAEE22" width="120" textAlign="left" verticalAlign="middle"/>
+		<e:Label id="m_score" text="SCORE:" x="145" y="522.5" fontFamily="Microsoft YaHei" size="55" textColor="0x6D3F28"/>
 		<e:Label id="m_labHistory" text="Highest record：" x="115" y="587" fontFamily="Microsoft YaHei" size="35" textColor="0xfdffea"/>
 		<e:Label id="m_labHistoryScore" text="1000" x="379.5" y="589" fontFamily="Microsoft YaHei" textAlign="left" textColor="0xfdffea" size="35"/>
 		<e:Button id="m_btnReturn" label="" x="0" y="732">
@@ -106,5 +103,8 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:BitmapLabel id="m_labScore" y="193" text="1000" font="pingfenFnt_fnt" horizontalCenter="0"/>
+		<e:BitmapLabel id="m_labLianji" font="lianjiFnt_fnt" text="X12" horizontalCenter="120" verticalCenter="101"/>
+		<e:BitmapLabel id="m_labPingfen" font="pingjiFnt_fnt" text="A+" horizontalCenter="131" verticalCenter="40"/>
 	</e:Group>
 </e:Skin>

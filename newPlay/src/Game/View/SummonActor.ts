@@ -163,8 +163,6 @@ class SummonActor extends BaseActor {
 		this.m_score = this.m_gestureData[random].count
 		this._animationName = this.m_gestureData[random].balloon
 		this.m_gestureData.splice(random, 1)
-
-		
 	}
 
 	public GotoIdle() {
@@ -241,12 +239,44 @@ class SummonActor extends BaseActor {
 		return this.m_state
 	}
 
-	// public UpdateGesture() {
-	// 	// this.m_balloon.UpdateColorAndGesture()
-	// 	// if (PanelManager.m_gameScenePanel != null) {
-	// 	// 	PanelManager.m_gameScenePanel.Score += this.m_balloon.Score
-	// 	// }
-	// }
+	/**
+	 * 更新怪物身上的特效动画
+	 */
+	public UpdateEffectArmature(data:any) {
+		this.m_effectArmatureContainer.clear()
+		if (data.bullet != "") {
+			let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.step1, data.step1)
+			if (this.m_effectArmature == null) {
+				this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+			}
+			this.m_effectData = data
+			this.m_effectArmature.ArmatureDisplay = armatureDisplay
+			this.m_effectArmatureContainer.register(this.m_effectArmature,[data.step1])
+			this.m_effectArmatureContainer.visible = false
+			this.m_effectArmatureContainer.scaleX = 0.8
+			this.m_effectArmatureContainer.scaleY = 0.8
+			this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+		}
+	}
+
+	public PlayEffect() {
+		this.m_effectArmatureContainer.visible = true
+		this.m_effectArmatureContainer.play(this.m_effectData.step1, 1)
+		if (this.m_effectData.type == EEffectType.Fire) {
+			this.m_state = EMonsterState.Stop
+
+			GameConfig.balloonScore = 0
+			PanelManager.m_gameScenePanel.Boom = true
+			PanelManager.m_gameScenePanel.UpdateBatter()
+		}
+	}
+
+	private _OnEffectArmatureComplete() {
+		if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
+			this.Destroy()
+			PanelManager.m_gameScenePanel.RemoveSummonActor(this)
+		}
+	}
 
 	private _OnArmatureComplet() {
 		if (this.m_state == EMonsterState.Dead) {

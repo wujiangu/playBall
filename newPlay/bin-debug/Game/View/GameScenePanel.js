@@ -41,6 +41,7 @@ var GameScenePanel = (function (_super) {
         this.ClearAllActor();
         this.touchChildren = false;
         this.readyAnimate.play(0);
+        GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100;
         this.initData();
         this.m_imgEffectMask.visible = false;
         this.m_rectWarning.visible = false;
@@ -164,7 +165,9 @@ var GameScenePanel = (function (_super) {
                     this.comboEnd.play(0);
                     for (var i = 0; i < this.m_monsters.length; i++) {
                         var monster = this.m_monsters[i];
-                        monster.ResetVertical();
+                        if (monster.Type == EMonsterDifficult.Normal) {
+                            monster.ResetVertical();
+                        }
                     }
                     for (var i = 0; i < this.m_summonActors.length; i++) {
                         var summon = this.m_summonActors[i];
@@ -457,41 +460,43 @@ var GameScenePanel = (function (_super) {
                 this.m_fntComboCount.text = "X" + this.m_comboCount;
                 this.m_comboArmatureContainer.y = 80;
                 this.m_comboArmatureContainer.visible = true;
-                if (this.m_comboCount < 4) {
+                if (this.m_comboCount < 6) {
                     this.m_fntCombo.font = RES.getRes("comboBlueFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboBlueFnt_fnt");
                     this.m_comboArmatureContainer.play("lan", 1);
-                    GameVoice.combo1Sound.play(0, 1).volume = GameConfig.soundValue / 100;
-                }
-                else if (this.m_comboCount >= 4 && this.m_comboCount < 8) {
-                    this.m_fntCombo.font = RES.getRes("comboGreenFnt_fnt");
-                    this.m_fntComboCount.font = RES.getRes("comboGreenFnt_fnt");
-                    this.m_comboArmatureContainer.play("lan", 1);
                     GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
-                else if (this.m_comboCount >= 8 && this.m_comboCount < 12) {
+                else if (this.m_comboCount >= 6 && this.m_comboCount < 11) {
                     this.m_fntCombo.font = RES.getRes("comboYellowFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboYellowFnt_fnt");
-                    this.m_comboArmatureContainer.play("huang", 1);
+                    this.m_comboArmatureContainer.play("lan", 1);
                     GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
-                else if (this.m_comboCount >= 12 && this.m_comboCount < 16) {
+                else if (this.m_comboCount >= 11 && this.m_comboCount < 16) {
                     this.m_fntCombo.font = RES.getRes("comboRedFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboRedFnt_fnt");
-                    this.m_comboArmatureContainer.play("hong", 1);
+                    this.m_comboArmatureContainer.play("huang", 1);
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
-                else {
+                else if (this.m_comboCount >= 16 && this.m_comboCount < 26) {
                     this.m_fntCombo.font = RES.getRes("comboPurpleFnt_fnt");
                     this.m_fntComboCount.font = RES.getRes("comboPurpleFnt_fnt");
                     this.m_comboArmatureContainer.play("hong", 1);
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
+                else {
+                    this.m_fntCombo.font = RES.getRes("comboGreenFnt_fnt");
+                    this.m_fntComboCount.font = RES.getRes("comboGreenFnt_fnt");
+                    this.m_comboArmatureContainer.play("hong", 1);
+                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
+                }
                 this.comboBegin.play(0);
-                GameConfig.balloonScore *= this.m_comboCount;
+                GameConfig.balloonScore = this.m_comboCount;
                 for (var i = 0; i < this.m_monsters.length; i++) {
                     var monster = this.m_monsters[i];
-                    monster.SetVertical(this.m_comboCount * 0.08);
+                    if (monster.Type == EMonsterDifficult.Normal) {
+                        monster.SetVertical(this.m_comboCount * 0.08);
+                    }
                 }
                 for (var i = 0; i < this.m_summonActors.length; i++) {
                     var summon = this.m_summonActors[i];
@@ -656,6 +661,16 @@ var GameScenePanel = (function (_super) {
                     }
                     if (bulletCount >= count)
                         break;
+                }
+                if (bulletCount < count) {
+                    for (var index = 0; index < this.m_summonActors.length; index++) {
+                        if (this.m_summonActors[index].State == EMonsterState.Ready) {
+                            this._CreateBullete(this.m_summonActors[index]);
+                            bulletCount++;
+                        }
+                        if (bulletCount >= count)
+                            break;
+                    }
                 }
             }
             else {
@@ -864,6 +879,10 @@ var GameScenePanel = (function (_super) {
             targetX = a_x + MathUtils.getRandom(100, 250);
         // let targetX = a_x + MathUtils.getRandom(-250, 250)
         var targetY = a_y + MathUtils.getRandom(-20, 20);
+        if (this.m_curItemData != null) {
+            var effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()];
+            summon.UpdateEffectArmature(effectData);
+        }
         summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num, isBoss);
         this.m_summonActors.push(summon);
         for (var i = this.m_summonActors.length - 1; i >= 0; i--) {

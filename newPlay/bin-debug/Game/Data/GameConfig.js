@@ -29,6 +29,7 @@ var GameConfig = (function () {
         GameVoice.combo4Sound = RES.getRes(GameVoice.combo4_mp3);
         GameVoice.spiderKingArrive = RES.getRes(GameVoice.spiderKingArrive_mp3);
         GameVoice.jiesuanSound = RES.getRes(GameVoice.jiesuan_mp3);
+        GameVoice.readyGoSound = RES.getRes(GameVoice.readyGo_mp3);
     };
     GameConfig.Init = function () {
         this.summonConfig = RES.getRes("summonConfig_json");

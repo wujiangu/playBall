@@ -23,15 +23,13 @@ class GameOverPanel extends BasePanel {
 		this.m_labHistoryScore.text = GameConfig.maxScore.toString()
 		this.m_labLianji.text = "X" + GameConfig.curCombo.toString()
 
-		let comboScore:string = "D"
+		let comboScore:string = "C"
 
-		if (GameConfig.curCombo <= 3) comboScore = "D"
-		else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6) comboScore = "C"
-		else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10) comboScore = "B"
-		else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15) comboScore = "A"
-		else if (GameConfig.curCombo > 15 && GameConfig.curCombo <= 25) comboScore = "S"
-		else if (GameConfig.curCombo > 25 && GameConfig.curCombo <= 40) comboScore = "SS"
-		else comboScore = "SSS"
+		if (GameConfig.curCombo <= 3) comboScore = "C"
+		else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6) comboScore = "B"
+		else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10) comboScore = "A"
+		else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15) comboScore = "S"
+		else comboScore = "S+"
 		
 		this.m_labPingfen.text = comboScore
 		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
@@ -99,12 +97,12 @@ class GameOverPanel extends BasePanel {
 	private m_isAgain:boolean
 
 	/**本次得分 */
-	private m_labScore:eui.Label
+	private m_labScore:eui.BitmapLabel
 	/**历史最高分 */
 	private m_labHistoryScore:eui.Label
 
-	private m_labPingfen:eui.Label
-	private m_labLianji:eui.Label
+	private m_labPingfen:eui.BitmapLabel
+	private m_labLianji:eui.BitmapLabel
 
 	private Show:egret.tween.TweenGroup
 	private Hide:egret.tween.TweenGroup

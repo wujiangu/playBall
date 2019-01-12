@@ -14,6 +14,7 @@ module GameVoice {
     export var combo4_mp3:string = "combo4_mp3"              // 四连
     export var spiderKingArrive_mp3:string = "spiderKingArrive_mp3"              // 蜘蛛王出场
     export var jiesuan_mp3:string = "jiesuan_mp3"              // 结算
+    export var readyGo_mp3:string = "readyGo_mp3"
 
 
 
@@ -34,4 +35,5 @@ module GameVoice {
     export var combo4Sound:egret.Sound = null
     export var spiderKingArrive:egret.Sound = null
     export var jiesuanSound:egret.Sound = null
+    export var readyGoSound:egret.Sound = null
 }

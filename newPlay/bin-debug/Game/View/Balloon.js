@@ -95,7 +95,7 @@ var Balloon = (function (_super) {
         if (value === void 0) { value = 0; }
         this._rop.x = this._balloonArmatureContainer.x;
         this._rop.y = this._balloonArmatureContainer.y - 10;
-        this._rop.scaleX = 0.5;
+        this._rop.scaleX = 1;
         if (count == 1) {
             this._rop.rotation = 0;
             this._rop.scaleY = 15;

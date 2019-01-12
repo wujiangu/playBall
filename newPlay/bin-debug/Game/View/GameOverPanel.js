@@ -32,21 +32,17 @@ var GameOverPanel = (function (_super) {
         this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString();
         this.m_labHistoryScore.text = GameConfig.maxScore.toString();
         this.m_labLianji.text = "X" + GameConfig.curCombo.toString();
-        var comboScore = "D";
+        var comboScore = "C";
         if (GameConfig.curCombo <= 3)
-            comboScore = "D";
-        else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6)
             comboScore = "C";
-        else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10)
+        else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6)
             comboScore = "B";
-        else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15)
+        else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10)
             comboScore = "A";
-        else if (GameConfig.curCombo > 15 && GameConfig.curCombo <= 25)
+        else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15)
             comboScore = "S";
-        else if (GameConfig.curCombo > 25 && GameConfig.curCombo <= 40)
-            comboScore = "SS";
         else
-            comboScore = "SSS";
+            comboScore = "S+";
         this.m_labPingfen.text = comboScore;
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
