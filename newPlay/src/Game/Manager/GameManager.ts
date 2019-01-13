@@ -51,12 +51,13 @@ class GameManager extends egret.Sprite{
 	}
 
 	public StageToBack() {
-		this._lastStage = this._gameState
-		this._gameState = EGameState.StageBack
+		// this._lastStage = this._gameState
+		// this._gameState = EGameState.StageBack
+		if (this._gameState == EGameState.Start) GameManager.Instance.Pause()
 	}
 
 	public StageToFront() {
-		this._gameState = this._lastStage
+		// this._gameState = this._lastStage
 	}
 
 	public Continue():void

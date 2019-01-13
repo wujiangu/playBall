@@ -1,4 +1,18 @@
 {
+    "1000":{
+        "next":1001,
+        "addTime":1800,
+        "speed":1,
+        "normalTime":2000,
+        "eliteTime":2000,
+        "normalCount":1,
+        "eliteCount":1,
+        "normal":[
+            {"id":1001, "diff":1, "min":1, "max":1, "prob":100}
+        ],
+        "elite":[],
+        "boss":[]
+    },
     "1001":{
         "next":1002,
         "addTime":1800,
@@ -39,9 +53,9 @@
         "elite":[
             {
                 "id":1008, 
-                "diff":2,
-                "min":1,
-                "max":1,
+                "diff":3,
+                "min":2,
+                "max":2,
                 "prob":100
             }
         ],
@@ -58,7 +72,7 @@
         "normal":[
             {"id":1001, "diff":1, "min":2, "max":2, "prob":20},
             {"id":1003, "diff":1, "min":2, "max":2, "prob":30},
-            {"id":1004, "diff":1, "min":3, "max":3, "prob":50}
+            {"id":1004, "diff":3, "min":2, "max":2, "prob":50}
         ],
         "elite":[
             {
@@ -67,7 +81,7 @@
                 "min":2,
                 "max":2,
                 "prob":100,
-                "summon":{"id":1001, "diff":1, "ids":[], "count":2}
+                "summon":{"id":1001, "diff":1, "ids":[], "count":2, "type":1}
             }
         ],
         "boss":[]
@@ -92,7 +106,7 @@
                 "min":3,
                 "max":3,
                 "prob":100,
-                "summon":{"id":1004, "diff":1, "ids":[], "count":3, "min":0, "max":0}
+                "summon":{"id":1004, "diff":1, "ids":[], "count":3, "min":0, "max":0, "type":2}
             }
         ],
         "boss":[]
@@ -107,7 +121,7 @@
         "eliteCount":1,
         "normal":[
             {"id":1003, "diff":1, "min":3, "max":3, "prob":40},
-            {"id":1005, "diff":1, "min":2, "max":3, "prob":30, "summon":{"id":1002, "diff":1, "ids":[], "count":1}},
+            {"id":1005, "diff":1, "min":2, "max":3, "prob":30, "summon":{"id":1002, "diff":1, "ids":[], "count":1, "type":2}},
             {"id":1004, "diff":0, "min":2, "max":2, "prob":30}
         ],
         "elite":[
@@ -117,7 +131,7 @@
                 "min":3,
                 "max":3,
                 "prob":100,
-                "summon":{"id":1001, "diff":1, "ids":[], "count":2, "min":0, "max":0}
+                "summon":{"id":1001, "diff":1, "ids":[], "count":2, "min":0, "max":0, "type":1}
             }
         ],
         "boss":[]
@@ -132,7 +146,7 @@
         "eliteCount":1,
         "normal":[
             {"id":1003, "diff":0, "min":3, "max":3, "prob":25},
-            {"id":1005, "diff":1, "min":3, "max":3, "prob":50, "summon":{"id":1002, "diff":1, "ids":[], "count":2}},
+            {"id":1005, "diff":1, "min":3, "max":3, "prob":50, "summon":{"id":1002, "diff":1, "ids":[], "count":2, "type":2}},
             {"id":1004, "diff":0, "min":3, "max":3, "prob":25}
         ],
         "elite":[
@@ -158,7 +172,7 @@
         "normal":[
             {"id":1003, "diff":0, "min":3, "max":3, "prob":25},
             {"id":1004, "diff":0, "min":2, "max":2, "prob":25},
-            {"id":1005, "diff":1, "min":3, "max":3, "prob":25, "summon":{"id":1002, "diff":1, "ids":[], "count":2}},
+            {"id":1005, "diff":1, "min":3, "max":3, "prob":25, "summon":{"id":1002, "diff":1, "ids":[], "count":2, "type":2}},
             {"id":1001, "diff":1, "min":3, "max":3, "prob":25}
         ],
         "elite":[
@@ -176,7 +190,7 @@
                 "min":3,
                 "max":3,
                 "prob":30,
-                "summon":{"id":1001, "diff":0, "ids":[], "count":3}
+                "summon":{"id":1001, "diff":0, "ids":[], "count":3, "type":1}
             },
             {
                 "id":1009, 
@@ -184,7 +198,7 @@
                 "min":3,
                 "max":3,
                 "prob":40,
-                "summon":{"id":1001, "diff":1, "ids":[], "count":4}
+                "summon":{"id":1001, "diff":1, "ids":[], "count":4, "type":1}
             }
         ],
         "boss":[]

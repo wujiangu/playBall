@@ -270,6 +270,8 @@ var SummonActor = (function (_super) {
         this.m_effectArmatureContainer.visible = true;
         this.m_effectArmatureContainer.play(this.m_effectData.step1, 1);
         if (this.m_effectData.type == EEffectType.Fire) {
+            this.m_gesture.visible = false;
+            this.m_armatureContainer.visible = false;
             this.m_state = EMonsterState.Stop;
             GameConfig.balloonScore = 0;
             PanelManager.m_gameScenePanel.Boom = true;

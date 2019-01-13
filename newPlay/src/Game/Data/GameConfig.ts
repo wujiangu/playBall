@@ -36,6 +36,8 @@ class GameConfig {
 	public static monsterPos:number = 1
 	public static testSelectLevel:number = 1001
 	public static gameSpeedPercent:number = 0
+	public static isGuide:boolean = false
+	public static guideIndex:number
 	/**
      * 初始化骨骼的动画数据
      */
@@ -138,6 +140,7 @@ class GameConfig {
 
 
 		this.InitSound()
+		Common.GetGuide()
 		// this.itemUseTable.push(1002)
 		// this.itemUseTable.push(1003)
 	}

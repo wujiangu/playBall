@@ -15,7 +15,6 @@ var GameScenePanel = (function (_super) {
     __extends(GameScenePanel, _super);
     function GameScenePanel() {
         var _this = _super.call(this) || this;
-        _this.test = false;
         _this.addEventListener(eui.UIEvent.COMPLETE, _this.onComplete, _this);
         _this.skinName = "resource/game_skins/gameScenePanel.exml";
         _this.m_monsters = new Array();
@@ -42,7 +41,6 @@ var GameScenePanel = (function (_super) {
         this.touchChildren = false;
         this.readyAnimate.play(0);
         GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100;
-        this.initData();
         this.m_imgEffectMask.visible = false;
         this.m_rectWarning.visible = false;
         this.m_bitLabScore.visible = false;
@@ -55,6 +53,7 @@ var GameScenePanel = (function (_super) {
         this.m_normalCount = 0;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
+        this.initData();
     };
     GameScenePanel.prototype.Exit = function () {
         this.m_imgEffectMask.visible = false;
@@ -77,7 +76,10 @@ var GameScenePanel = (function (_super) {
         this.m_isBoom = false;
         this.m_bitLabScore.text = this.m_score.toString();
         this.powerfull.stop();
-        this.UpdeLevelData(GameConfig.testSelectLevel);
+        if (GameConfig.guideIndex == 0)
+            this.UpdeLevelData(1000);
+        else
+            this.UpdeLevelData(GameConfig.testSelectLevel);
         ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y);
     };
     GameScenePanel.prototype.UpdeLevelData = function (a_levelId) {
@@ -87,12 +89,41 @@ var GameScenePanel = (function (_super) {
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime;
         this.m_levelState = ELevelType.Normal;
         this.m_eliteCount = 0;
+        this.m_isLuck = false;
+        this.m_rectWarning.fillColor = 0xff0000;
         // this.m_normalCount = 0
         if (a_levelId == this.m_currentLevel.next) {
             this.m_currentLevel.normalCount += this.m_normalCount * 150;
             this.m_normalCount++;
         }
         GameConfig.gameSpeedPercent = this.m_currentLevel.speed;
+        if (a_levelId == 1000) {
+            GameConfig.isGuide = true;
+            this.m_rectWarning.fillColor = 0x000000;
+            this.m_isLuck = true;
+            this.m_gesture.removeEvent();
+            Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this);
+        }
+    };
+    GameScenePanel.prototype.GuideStart = function () {
+        this.m_rectWarning.visible = true;
+        this.m_guideArmatureContainer.play("xinshouyindao", 0);
+        for (var i = 0; i < this.m_monsters.length; i++) {
+            var monster = this.m_monsters[i];
+            for (var j = 0; j < monster.Balloons.length; j++) {
+                var balloon = monster.Balloons[j];
+                balloon.GuideStart();
+            }
+        }
+        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
+        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
+    };
+    GameScenePanel.prototype.GuideEnd = function () {
+        this.m_rectWarning.visible = false;
+        this.m_guideArmatureContainer.stop();
+        this.m_guideArmatureContainer.visible = false;
+        GameConfig.isGuide = false;
+        Common.UpdateGuide(1);
     };
     // 进入面板
     GameScenePanel.prototype.onEnter = function () {
@@ -126,6 +157,7 @@ var GameScenePanel = (function (_super) {
         GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0);
         GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100;
         // this._CreateMonster()
+        // this.m_guideArmatureContainer.play("xinshouyindao", 0)
     };
     // 退出面板
     GameScenePanel.prototype.onExit = function () {
@@ -173,35 +205,30 @@ var GameScenePanel = (function (_super) {
                         var summon = this.m_summonActors[i];
                         summon.ResetVertical();
                     }
-                    // this.m_fntCombo.visible = false
-                    // this.m_fntComboCount.visible = false
-                    // this.m_combo.visible = false
                 }
             }
             for (var i = 0; i < this.m_monsters.length; i++) {
                 var monster = this.m_monsters[i];
                 if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this.m_rectWarning.visible = true;
-                    this.m_isWarning = true;
-                    this.warning.play(0);
+                    this._Warning();
                 }
             }
             for (var i = 0; i < this.m_summonActors.length; i++) {
                 var summon = this.m_summonActors[i];
                 if (summon.State == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this.m_rectWarning.visible = true;
-                    this.m_isWarning = true;
-                    this.warning.play(0);
+                    this._Warning();
                 }
             }
             if (this.m_score < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
                 this.m_monsterAddDelay = 0;
                 this._CreateMonster();
+                if (GameConfig.isGuide)
+                    this.m_score++;
             }
-            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
-                this.m_luckyAddDelay = 0;
-                this._CreateLuckyActor();
-            }
+            // if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+            //     this.m_luckyAddDelay = 0
+            //     this._CreateLuckyActor()
+            // }
         }
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (var i = 0; i < this.m_monsters.length; i++) {
@@ -256,7 +283,6 @@ var GameScenePanel = (function (_super) {
                 break;
             }
         }
-        // this._EnterWarning()
         this._ChangeLevel();
     };
     GameScenePanel.prototype.RemoveBullet = function (a_bullet) {
@@ -285,7 +311,6 @@ var GameScenePanel = (function (_super) {
                 break;
             }
         }
-        // this._EnterWarning()
         this._ChangeLevel();
     };
     GameScenePanel.prototype.RemoveSpiderActor = function (a_spider) {
@@ -346,6 +371,11 @@ var GameScenePanel = (function (_super) {
         set: function (value) {
             this.m_score = value;
             this.m_bitLabScore.text = this.m_score.toString();
+            if (this.m_score >= this.m_currentLevel.normalCount - 20 && !this.m_isLuck) {
+                //引导关没有
+                this.m_isLuck = true;
+                this._CreateLuckyActor();
+            }
         },
         enumerable: true,
         configurable: true
@@ -358,15 +388,13 @@ var GameScenePanel = (function (_super) {
             if (this.m_curItemData == null)
                 return;
             this.m_power = value;
-            this.m_angle = 180 + value * 2;
+            this.m_angle = 180 + this.m_power * 2;
             this.m_angle = Math.min(this.m_angle, 360);
+            if (this.m_curItemData != null && this.m_curItemData.ID != 1003) {
+                this._ReleaseSkill();
+            }
             if (this.m_angle >= 360) {
                 this.powerfull.play(0);
-                this.m_imgEffectMask.visible = true;
-                this.effectMask.play(0);
-                this._UpdateItemArmature(true);
-                this.m_angle = 180;
-                this.m_power = 0;
             }
             this._UpdateProgress(this.m_angle);
         },
@@ -376,6 +404,13 @@ var GameScenePanel = (function (_super) {
     Object.defineProperty(GameScenePanel.prototype, "GroundPos", {
         get: function () {
             return this.m_imgGroundLine.y;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameScenePanel.prototype, "GuidePos", {
+        get: function () {
+            return this.m_imgGuide.y;
         },
         enumerable: true,
         configurable: true
@@ -427,8 +462,16 @@ var GameScenePanel = (function (_super) {
         }
         Common.log(this.m_levelState, this.m_score, this.m_currentLevel.normalCount, this.IsNoneAlive());
         if (this.m_levelState == ELevelType.EliteWarning) {
-            this.m_levelState = ELevelType.End;
-            this._EnterWarning();
+            if (GameConfig.isGuide) {
+                this.Score = 0;
+                this.Power = 0;
+                this.UpdeLevelData(this.m_currentLevel.next);
+                this.GuideEnd();
+            }
+            else {
+                this.m_levelState = ELevelType.End;
+                this._EnterWarning();
+            }
         }
     };
     Object.defineProperty(GameScenePanel.prototype, "MountBg", {
@@ -514,6 +557,26 @@ var GameScenePanel = (function (_super) {
             this.Score += GameConfig.balloonScore;
         this.Score = Math.min(this.m_currentLevel.normalCount, this.m_score);
         this.ActorDeadHandle();
+    };
+    GameScenePanel.prototype._Warning = function () {
+        this.m_rectWarning.visible = true;
+        this.m_isWarning = true;
+        this.warning.play(0);
+        if (this.m_curItemData != null && this.m_curItemData.ID == 1003) {
+            this._ReleaseSkill();
+        }
+    };
+    /**
+     * 释放技能
+     */
+    GameScenePanel.prototype._ReleaseSkill = function () {
+        if (this.m_angle >= 360) {
+            this.m_imgEffectMask.visible = true;
+            this.effectMask.play(0);
+            this._UpdateItemArmature(true);
+            this.m_angle = 180;
+            this.m_power = 0;
+        }
     };
     /**
      * 进入下一关
@@ -699,6 +762,8 @@ var GameScenePanel = (function (_super) {
         this.m_itemArmatureContainer.removeCompleteCallFunc(this._OnItemArmatureComplete, this);
         GameManager.Instance.Start();
         this._UpdateItemArmature();
+        this.powerfull.stop();
+        this.m_imgPower.alpha = 1;
     };
     GameScenePanel.prototype._OnReadyComplete = function () {
         this.touchChildren = true;
@@ -712,16 +777,7 @@ var GameScenePanel = (function (_super) {
         egret.Tween.get(this.m_itemArmatureContainer).to({ alpha: 1 }, 300, egret.Ease.circOut);
     };
     GameScenePanel.prototype._OnChangeItem = function () {
-        // if (this.m_angle >= 360) {
-        //     this.m_imgEffectMask.visible = true
-        //     this.effectMask.play(0)
-        //     this._UpdateItemArmature(true)
-        //     this.m_angle = 180
-        //     this.m_power = 0
-        //     this.powerfull.stop()
-        //     this.m_imgPower.alpha = 1
-        //     this._UpdateProgress(this.m_angle)
-        // }
+        // this._ReleaseSkill()
         if (GameConfig.itemUseTable.length > 1) {
             var index = GameConfig.itemUseTable.indexOf(this.m_currentItemId);
             if (index >= 0) {
@@ -807,8 +863,16 @@ var GameScenePanel = (function (_super) {
         this.m_spiderWebArmatureContainer.y = 400;
         this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._OnSpiderWebArmatureComplete, this);
         this.m_spiderWebArmatureContainer.addFrameCallFunc(this._OnSpiderWebArmatureFrame, this);
-        this.m_spiderWebArmatureContainer.scaleX = 2;
-        this.m_spiderWebArmatureContainer.scaleY = 2;
+        this.m_spiderWebArmatureContainer.scaleX = 2.2;
+        this.m_spiderWebArmatureContainer.scaleY = 2.2;
+        this.m_guideArmatureContainer = new DragonBonesArmatureContainer();
+        this.m_groupFull.addChild(this.m_guideArmatureContainer);
+        var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao");
+        var guideArmature = new DragonBonesArmature(guideDisplay);
+        guideArmature.ArmatureDisplay = guideDisplay;
+        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao"]);
+        this.m_guideArmatureContainer.x = 50;
+        this.m_guideArmatureContainer.y = -500;
         this.addChild(this.m_gestureShape);
         this.m_imgPower.mask = this.m_progress;
         this.m_groupPower.addChild(this.m_progress);

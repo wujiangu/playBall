@@ -46,8 +46,17 @@ var Balloon = (function (_super) {
         _this.addChild(_this._gesture);
         _this._gesture.scaleX = 0.55;
         _this._gesture.scaleY = 0.55;
-        return _this;
         // this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
+        _this.m_guideArmatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this.m_guideArmatureContainer);
+        var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao");
+        var guideArmature = new DragonBonesArmature(guideDisplay);
+        guideArmature.ArmatureDisplay = guideDisplay;
+        _this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao2"]);
+        _this.m_guideArmatureContainer.y = 30;
+        _this.m_guideArmatureContainer.scaleX = 0.8;
+        _this.m_guideArmatureContainer.scaleY = 0.8;
+        return _this;
     }
     Balloon.prototype.Init = function (data, actor) {
         this._score = 0;
@@ -56,6 +65,12 @@ var Balloon = (function (_super) {
         this._rop.scaleY = 0;
         this._isChangeEasy = false;
         this.UpdateGesture(data, true);
+        this.m_guideArmatureContainer.visible = false;
+        // this.m_guideArmatureContainer.play("xinshouyindao2", 0)
+    };
+    Balloon.prototype.GuideStart = function () {
+        this.m_guideArmatureContainer.visible = true;
+        this.m_guideArmatureContainer.play("xinshouyindao2", 0);
     };
     Balloon.prototype.UpdateGesture = function (data, isInit) {
         if (isInit === void 0) { isInit = false; }
@@ -101,24 +116,24 @@ var Balloon = (function (_super) {
             this._rop.scaleY = 15;
         }
         else if (count == 2) {
-            this._rop.scaleY = 16;
+            this._rop.scaleY = 18;
             if (value == 0) {
-                this._rop.rotation = -45;
+                this._rop.rotation = -35;
             }
             else {
-                this._rop.rotation = 45;
+                this._rop.rotation = 35;
             }
         }
         else if (count == 3) {
-            this._rop.scaleY = 25;
+            this._rop.scaleY = 24;
             if (value == 0) {
                 this._rop.rotation = 0;
             }
             else if (value == 1) {
-                this._rop.rotation = -60;
+                this._rop.rotation = -50;
             }
             else {
-                this._rop.rotation = 60;
+                this._rop.rotation = 50;
             }
         }
     };

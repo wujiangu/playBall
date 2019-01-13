@@ -69,6 +69,36 @@ namespace Common{
 		}
 	}
 
+	export function GetGuide() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.guideIndex = parseInt(message)
+				}else{
+					GameConfig.guideIndex = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"guideIndex")
+		}
+		else {
+			let score = NativeApi.getLocalData(GameConfig.game+"guideIndex")
+			if (score == null) {
+				GameConfig.guideIndex = 0
+			}else{
+				GameConfig.guideIndex = parseInt(score)
+			}
+		}
+	}
+
+	export function UpdateGuide(value:number) {
+		GameConfig.guideIndex = value
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"guideIndex:" + value)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"guideIndex", value.toString())
+		}
+	}
+
 	/**获取历史最高分数 */
 	export function GetMaxCombo() {
 		if (!GameConfig.isWebView) {

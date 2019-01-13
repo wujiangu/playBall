@@ -98,6 +98,7 @@ var GameConfig = (function () {
             this.InitBattleDragonBones(data.Animation);
         }
         this.InitSound();
+        Common.GetGuide();
         // this.itemUseTable.push(1002)
         // this.itemUseTable.push(1003)
     };
@@ -114,6 +115,7 @@ var GameConfig = (function () {
     GameConfig.monsterPos = 1;
     GameConfig.testSelectLevel = 1001;
     GameConfig.gameSpeedPercent = 0;
+    GameConfig.isGuide = false;
     return GameConfig;
 }());
 __reflect(GameConfig.prototype, "GameConfig");

@@ -22,6 +22,16 @@ var BaseActor = (function (_super) {
         _this.m_effectArmatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this.m_effectArmatureContainer);
         _this.m_gestureData = new Array();
+        _this.m_normalGesture = new Array();
+        _this.m_hardGesture = new Array();
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
+                _this.m_normalGesture.push(GameConfig.gestureConfig[i]);
+            }
+            else {
+                _this.m_hardGesture.push(GameConfig.gestureConfig[i]);
+            }
+        }
         // var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
         // var angle:number = 45;              /// 阴影的角度，0 到 360 度
         // var color:number = 0x000000;        /// 阴影的颜色，不包含透明度
@@ -40,6 +50,22 @@ var BaseActor = (function (_super) {
         // this.addChild(this.m_shape)
         // this.m_shape.graphics.beginFill( 0xff0000, 0.5);
     }
+    BaseActor.prototype.ResetNormalGesture = function () {
+        this.m_normalGesture.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
+                this.m_normalGesture.push(GameConfig.gestureConfig[i]);
+            }
+        }
+    };
+    BaseActor.prototype.ResetHardGesture = function () {
+        this.m_hardGesture.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Hard) {
+                this.m_hardGesture.push(GameConfig.gestureConfig[i]);
+            }
+        }
+    };
     BaseActor.prototype.GotoIdle = function () {
     };
     BaseActor.prototype.GotoHurt = function () {
@@ -126,17 +152,17 @@ var BaseActor = (function (_super) {
         }
         else if (count == 2) {
             balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2;
-            balloon.y = -this.m_rect.height * 1.1;
+            balloon.y = -this.m_rect.height * 1.3;
             balloon.SetLine(count, value);
         }
         else if (count == 3) {
             if (value == 0) {
                 balloon.x = 0;
-                balloon.y = -this.m_rect.height * 1.4;
+                balloon.y = -this.m_rect.height * 1.5;
             }
             else {
                 balloon.x = (value - 1) * (balloon.width + this.m_rect.width / 2) - this.m_rect.width * 0.7;
-                balloon.y = -this.m_rect.height * 1.1;
+                balloon.y = -this.m_rect.height * 1.2;
             }
             balloon.SetLine(count, value);
         }

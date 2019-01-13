@@ -86,14 +86,49 @@ var Monster = (function (_super) {
         this.m_height = this.m_data.Height;
         this.m_slowDelay = -1;
         this.m_gestureData.length = 0;
-        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
-            if (this.m_gesturDiff == EGestureDifficult.Mix) {
-                this.m_gestureData.push(GameConfig.gestureConfig[i]);
-            }
-            else {
-                if (GameConfig.gestureConfig[i].difficult == this.m_gesturDiff)
+        this.ResetHardGesture();
+        this.ResetNormalGesture();
+        switch (this.m_gesturDiff) {
+            case EGestureDifficult.Mix:
+                for (var i = 0; i < GameConfig.gestureConfig.length; i++)
                     this.m_gestureData.push(GameConfig.gestureConfig[i]);
-            }
+                break;
+            case EGestureDifficult.Normal:
+            case EGestureDifficult.Hard:
+                for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+                    if (GameConfig.gestureConfig[i].difficult == this.m_gesturDiff) {
+                        this.m_gestureData.push(GameConfig.gestureConfig[i]);
+                    }
+                }
+                break;
+            case EGestureDifficult.NAndH:
+                var random1 = MathUtils.getRandom(this.m_normalGesture.length - 1);
+                this.m_gestureData.push(this.m_normalGesture[random1]);
+                random1 = MathUtils.getRandom(this.m_hardGesture.length - 1);
+                this.m_gestureData.push(this.m_hardGesture[random1]);
+                break;
+            case EGestureDifficult.NAndHH:
+                var random2 = MathUtils.getRandom(this.m_normalGesture.length - 1);
+                this.m_gestureData.push(this.m_normalGesture[random2]);
+                random2 = MathUtils.getRandom(this.m_hardGesture.length - 1);
+                this.m_gestureData.push(this.m_hardGesture[random2]);
+                this.m_hardGesture.splice(random2, 1);
+                random2 = MathUtils.getRandom(this.m_hardGesture.length - 1);
+                this.m_gestureData.push(this.m_hardGesture[random2]);
+                break;
+            case EGestureDifficult.NNAndH:
+                var random3 = MathUtils.getRandom(this.m_hardGesture.length - 1);
+                this.m_gestureData.push(this.m_hardGesture[random3]);
+                random3 = MathUtils.getRandom(this.m_normalGesture.length - 1);
+                this.m_gestureData.push(this.m_normalGesture[random3]);
+                this.m_normalGesture.splice(random3, 1);
+                random3 = MathUtils.getRandom(this.m_normalGesture.length - 1);
+                this.m_gestureData.push(this.m_normalGesture[random3]);
+                break;
+        }
+        if (GameConfig.isGuide) {
+            this.m_gestureData.length = 0;
+            this.m_gestureData.push(this.m_normalGesture[1]);
         }
         this.m_sumBalloon = 0;
     };
@@ -119,7 +154,7 @@ var Monster = (function (_super) {
     };
     Monster.prototype.GotoIdle = function () {
         if (this.m_data.ID == 1009) {
-            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65);
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.55);
         }
         else {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
@@ -208,7 +243,7 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype.BallExplosion = function (a_ball) {
-        if (this.y >= 100 && this.m_state == EMonsterState.Ready) {
+        if ((this.y >= 100 && this.m_state == EMonsterState.Ready) || GameConfig.isGuide) {
             this.m_exploreIndex = 0;
             for (var i = 0; i < this.m_balloons.length; i++) {
                 var balloon = this.m_balloons[i];
@@ -251,10 +286,10 @@ var Monster = (function (_super) {
                 for (var i = 0; i < this.m_balloons.length; i++) {
                     var balloon = this.m_balloons[i];
                     var posX = i * (balloon.width + 5) - this.m_rect.width / 2;
-                    var posY = -this.m_rect.height * 1.1;
+                    var posY = -this.m_rect.height * 1.2;
                     var rotation = 90 * i - 45;
                     egret.Tween.get(balloon).to({ x: posX, y: posY }, 200, egret.Ease.circOut);
-                    egret.Tween.get(balloon.rop).to({ scaleY: 14, rotation: rotation }, 200, egret.Ease.circOut);
+                    egret.Tween.get(balloon.rop).to({ scaleY: 15, rotation: rotation }, 200, egret.Ease.circOut);
                 }
             }
         }
@@ -262,10 +297,19 @@ var Monster = (function (_super) {
     Monster.prototype.Update = function (timeElapsed) {
         if (this.m_state == EMonsterState.Ready) {
             this.y += timeElapsed * this.m_speedY;
-            if (this.y >= PanelManager.m_gameScenePanel.GroundPos) {
-                this.y = PanelManager.m_gameScenePanel.GroundPos;
-                this.m_state = EMonsterState.Run;
-                this.GotoRun();
+            if (GameConfig.isGuide) {
+                if (this.y >= PanelManager.m_gameScenePanel.GuidePos) {
+                    this.y = PanelManager.m_gameScenePanel.GuidePos;
+                    this.m_state = EMonsterState.Stop;
+                    PanelManager.m_gameScenePanel.GuideStart();
+                }
+            }
+            else {
+                if (this.y >= PanelManager.m_gameScenePanel.GroundPos) {
+                    this.y = PanelManager.m_gameScenePanel.GroundPos;
+                    this.m_state = EMonsterState.Run;
+                    this.GotoRun();
+                }
             }
         }
         else if (this.m_state == EMonsterState.FallDown) {
@@ -351,7 +395,7 @@ var Monster = (function (_super) {
         var evt = event.frameLabel;
         switch (evt) {
             case "vomit":
-                if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined) {
+                if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined && this.m_summonData.type == 1) {
                     var count = 0;
                     if (this.m_summonData.count > 0)
                         count = this.m_summonData.count;
@@ -365,7 +409,7 @@ var Monster = (function (_super) {
     };
     Monster.prototype._OnArmatureComplet = function () {
         if (this.m_state == EMonsterState.Dead) {
-            if (this.m_summonData != null) {
+            if (this.m_summonData != null && this.m_summonData.type == 2) {
                 var count = 0;
                 if (this.m_summonData.count > 0)
                     count = this.m_summonData.count;

@@ -12,6 +12,16 @@ class BaseActor extends egret.DisplayObjectContainer {
 		this.addChild(this.m_effectArmatureContainer)
 
 		this.m_gestureData = new Array()
+		this.m_normalGesture = new Array()
+		this.m_hardGesture = new Array()
+		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
+				this.m_normalGesture.push(GameConfig.gestureConfig[i])
+			}else{
+				this.m_hardGesture.push(GameConfig.gestureConfig[i])
+			}
+		}
+
 
 		// var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
 		// var angle:number = 45;              /// 阴影的角度，0 到 360 度
@@ -32,6 +42,24 @@ class BaseActor extends egret.DisplayObjectContainer {
 		// this.m_shape = new egret.Shape()
 		// this.addChild(this.m_shape)
 		// this.m_shape.graphics.beginFill( 0xff0000, 0.5);
+	}
+
+	public ResetNormalGesture() {
+		this.m_normalGesture.length = 0
+		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
+				this.m_normalGesture.push(GameConfig.gestureConfig[i])
+			}
+		}
+	}
+
+	public ResetHardGesture() {
+		this.m_hardGesture.length = 0
+		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Hard) {
+				this.m_hardGesture.push(GameConfig.gestureConfig[i])
+			}
+		}
 	}
 
 	public GotoIdle() {
@@ -118,16 +146,16 @@ class BaseActor extends egret.DisplayObjectContainer {
 		}
 		else if (count == 2) {
 			balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2
-			balloon.y = -this.m_rect.height * 1.1
+			balloon.y = -this.m_rect.height * 1.3
 			balloon.SetLine(count, value)
 		}
 		else if (count == 3) {
 			if (value == 0) {
 				balloon.x = 0
-				balloon.y = -this.m_rect.height * 1.4
+				balloon.y = -this.m_rect.height * 1.5
 			}else{
 				balloon.x = (value - 1) * (balloon.width + this.m_rect.width/2) - this.m_rect.width * 0.7
-				balloon.y = -this.m_rect.height * 1.1
+				balloon.y = -this.m_rect.height * 1.2
 			}
 			balloon.SetLine(count, value)
 		}
@@ -139,6 +167,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 	// protected m_dropShadowFilter:egret.DropShadowFilter
 	protected m_armature:DragonBonesArmature
 	protected m_gestureData:Array<any>
+	protected m_normalGesture:Array<any>
+	protected m_hardGesture:Array<any>
 	protected m_rect:egret.Rectangle
 	protected m_shape:egret.Shape
 

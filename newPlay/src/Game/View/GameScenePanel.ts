@@ -15,13 +15,11 @@ class GameScenePanel extends BasePanel {
         this.m_gestureShape = new egret.Shape()
         this.m_gesture = new Gesture()
 		this.m_gesture.Init()
-
         this.m_cloud1Speed = 0.6
 		this.m_cloud2Speed = 0.3
 		this.m_cloud3Speed = 0.1
         this.m_sunSpeed = 0.05
         this.m_currentItemId = 0
-
         this.m_progress = new egret.Shape()
     }
 
@@ -30,7 +28,6 @@ class GameScenePanel extends BasePanel {
         this.touchChildren = false
         this.readyAnimate.play(0)
         GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100
-        this.initData()
         this.m_imgEffectMask.visible = false
         this.m_rectWarning.visible = false
         this.m_bitLabScore.visible = false
@@ -43,6 +40,7 @@ class GameScenePanel extends BasePanel {
         this.m_normalCount = 0
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        this.initData()
     }
 
     public Exit() {
@@ -67,8 +65,8 @@ class GameScenePanel extends BasePanel {
         this.m_isBoom = false
         this.m_bitLabScore.text = this.m_score.toString()
         this.powerfull.stop()
-        this.UpdeLevelData(GameConfig.testSelectLevel)
-
+        if (GameConfig.guideIndex == 0) this.UpdeLevelData(1000)
+        else this.UpdeLevelData(GameConfig.testSelectLevel)
         ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y)
     }
 
@@ -79,19 +77,50 @@ class GameScenePanel extends BasePanel {
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime
         this.m_levelState = ELevelType.Normal
         this.m_eliteCount = 0
+        this.m_isLuck = false
+        this.m_rectWarning.fillColor = 0xff0000
         // this.m_normalCount = 0
         if (a_levelId == this.m_currentLevel.next) {
             this.m_currentLevel.normalCount += this.m_normalCount * 150
             this.m_normalCount++
         }
         GameConfig.gameSpeedPercent = this.m_currentLevel.speed
+
+        if (a_levelId == 1000) {
+            GameConfig.isGuide = true
+            this.m_rectWarning.fillColor = 0x000000
+            this.m_isLuck = true
+            this.m_gesture.removeEvent()
+            Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        }
+    }
+
+    public GuideStart() {
+        this.m_rectWarning.visible = true
+        this.m_guideArmatureContainer.play("xinshouyindao", 0)
+        for (let i = 0; i < this.m_monsters.length; i++) {
+            let monster:Monster = this.m_monsters[i]
+            for (let j = 0; j < monster.Balloons.length; j++) {
+                let balloon:Balloon = monster.Balloons[j]
+                balloon.GuideStart()
+            }
+        }
+        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
+        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
+    }
+
+    public GuideEnd() {
+        this.m_rectWarning.visible = false
+        this.m_guideArmatureContainer.stop()
+        this.m_guideArmatureContainer.visible = false
+        GameConfig.isGuide = false
+        Common.UpdateGuide(1)
     }
 
     // 进入面板
     public onEnter():void{
         Common.curPanel = PanelManager.m_gameScenePanel
         Common.gameScene().uiLayer.addChild(this)
-
 
         this.m_cloud1.x = PanelManager.m_gameStartPanel.Cloud1.x
         this.m_cloud1.y = PanelManager.m_gameStartPanel.Cloud1.y
@@ -122,6 +151,7 @@ class GameScenePanel extends BasePanel {
         GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
         GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100
         // this._CreateMonster()
+        // this.m_guideArmatureContainer.play("xinshouyindao", 0)
     }
 
     // 退出面板
@@ -176,10 +206,6 @@ class GameScenePanel extends BasePanel {
                         let summon:SummonActor = this.m_summonActors[i]
                         summon.ResetVertical()
                     }
-                    
-                    // this.m_fntCombo.visible = false
-                    // this.m_fntComboCount.visible = false
-                    // this.m_combo.visible = false
                 }
             }
 
@@ -187,30 +213,27 @@ class GameScenePanel extends BasePanel {
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
                 if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this.m_rectWarning.visible = true
-                    this.m_isWarning = true
-                    this.warning.play(0)
+                    this._Warning()
                 }
             }
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
                 if (summon.State == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this.m_rectWarning.visible = true
-                    this.m_isWarning = true
-                    this.warning.play(0)
+                    this._Warning()
                 }
             }
 
             if (this.m_score < this.m_currentLevel.normalCount && this.m_monsterAddDelay >= this.m_currentLevel.addTime) {
                 this.m_monsterAddDelay = 0
                 this._CreateMonster()
+                if (GameConfig.isGuide) this.m_score++
             }
 
-            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
-                this.m_luckyAddDelay = 0
-                this._CreateLuckyActor()
-            }
+            // if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+            //     this.m_luckyAddDelay = 0
+            //     this._CreateLuckyActor()
+            // }
         }
 
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
@@ -271,7 +294,6 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
-        // this._EnterWarning()
         this._ChangeLevel()
     }
 
@@ -303,7 +325,6 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
-        // this._EnterWarning()
         this._ChangeLevel()
     }
 
@@ -372,6 +393,11 @@ class GameScenePanel extends BasePanel {
     public set Score(value:number) {
         this.m_score = value
         this.m_bitLabScore.text = this.m_score.toString()
+        if (this.m_score >= this.m_currentLevel.normalCount - 20 && !this.m_isLuck) {
+            //引导关没有
+            this.m_isLuck = true
+            this._CreateLuckyActor()
+        }
     }
 
     public get Power() {
@@ -381,16 +407,15 @@ class GameScenePanel extends BasePanel {
     public set Power(value:number) {
         if (this.m_curItemData == null) return
         this.m_power = value
-        this.m_angle = 180 + value * 2
+        this.m_angle = 180 + this.m_power * 2
         this.m_angle = Math.min(this.m_angle, 360)
+
+        if (this.m_curItemData != null && this.m_curItemData.ID != 1003) {
+            this._ReleaseSkill()
+        }
 
         if (this.m_angle >= 360) {
             this.powerfull.play(0)
-            this.m_imgEffectMask.visible = true
-            this.effectMask.play(0)
-            this._UpdateItemArmature(true)
-            this.m_angle = 180
-            this.m_power = 0
         }
 
         this._UpdateProgress(this.m_angle)
@@ -398,6 +423,10 @@ class GameScenePanel extends BasePanel {
 
     public get GroundPos() {
         return this.m_imgGroundLine.y
+    }
+
+    public get GuidePos() {
+        return this.m_imgGuide.y
     }
 
     public get WaterPos() {
@@ -430,14 +459,20 @@ class GameScenePanel extends BasePanel {
     }
 
     public ActorDeadHandle() {
-
         if (this.m_levelState == ELevelType.Normal && this.m_score >= this.m_currentLevel.normalCount && this.IsNoneAlive()) {
             this.m_levelState = ELevelType.EliteWarning
         }
         Common.log(this.m_levelState, this.m_score, this.m_currentLevel.normalCount, this.IsNoneAlive())
         if (this.m_levelState == ELevelType.EliteWarning) {
-            this.m_levelState = ELevelType.End
-            this._EnterWarning()
+            if (GameConfig.isGuide) {
+                this.Score = 0
+                this.Power = 0
+                this.UpdeLevelData(this.m_currentLevel.next)
+                this.GuideEnd()
+            }else{
+                this.m_levelState = ELevelType.End
+                this._EnterWarning()
+            }
         }
     }
 
@@ -517,6 +552,28 @@ class GameScenePanel extends BasePanel {
         if (this.m_levelState == ELevelType.Normal) this.Score += GameConfig.balloonScore
         this.Score = Math.min(this.m_currentLevel.normalCount, this.m_score)
         this.ActorDeadHandle()
+    }
+
+    private _Warning() {
+        this.m_rectWarning.visible = true
+        this.m_isWarning = true
+        this.warning.play(0)
+        if (this.m_curItemData != null && this.m_curItemData.ID == 1003) {
+            this._ReleaseSkill()
+        }
+    }
+
+    /**
+     * 释放技能
+     */
+    private _ReleaseSkill() {
+        if (this.m_angle >= 360) {
+            this.m_imgEffectMask.visible = true
+            this.effectMask.play(0)
+            this._UpdateItemArmature(true)
+            this.m_angle = 180
+            this.m_power = 0
+        }
     }
 
     /**
@@ -713,6 +770,8 @@ class GameScenePanel extends BasePanel {
         this.m_itemArmatureContainer.removeCompleteCallFunc(this._OnItemArmatureComplete, this)
         GameManager.Instance.Start()
         this._UpdateItemArmature()
+        this.powerfull.stop()
+        this.m_imgPower.alpha = 1
     }
 
     private _OnReadyComplete() {
@@ -731,16 +790,7 @@ class GameScenePanel extends BasePanel {
     }
 
     private _OnChangeItem() {
-        // if (this.m_angle >= 360) {
-        //     this.m_imgEffectMask.visible = true
-        //     this.effectMask.play(0)
-        //     this._UpdateItemArmature(true)
-        //     this.m_angle = 180
-        //     this.m_power = 0
-        //     this.powerfull.stop()
-        //     this.m_imgPower.alpha = 1
-        //     this._UpdateProgress(this.m_angle)
-        // }
+        // this._ReleaseSkill()
         if (GameConfig.itemUseTable.length > 1) {
             let index = GameConfig.itemUseTable.indexOf(this.m_currentItemId)
             if (index >= 0) {
@@ -783,7 +833,6 @@ class GameScenePanel extends BasePanel {
         this.powerfull.play(0)
     }
 
-
     public PlaySpiderWebArmature(action:string, a_stage:number) {
         this.m_spiderWebArmatureContainer.visible = true
         this.m_spiderWebArmatureContainer.play(action, 1)
@@ -803,7 +852,6 @@ class GameScenePanel extends BasePanel {
                 for (let i = 0; i < this.m_spiderActors.length; i++) this.m_spiderActors[i].GotoMove()
             break
         }
-        
     }
 
     private _OnSpiderWebArmatureFrame() {
@@ -813,7 +861,6 @@ class GameScenePanel extends BasePanel {
     private _ComboArmature() {
         this.m_comboArmatureContainer.visible = false
     }
-
 
 	private onComplete() {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
@@ -833,7 +880,6 @@ class GameScenePanel extends BasePanel {
         this.m_comboArmatureContainer.x = this.m_groupScore.width / 2
         this.m_comboArmatureContainer.addCompleteCallFunc(this._ComboArmature, this)
         
-
         this.m_spiderWebArmatureContainer = new DragonBonesArmatureContainer()
         this.m_groupGame.addChild(this.m_spiderWebArmatureContainer)
         let spiderWebDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("wang", "wang")
@@ -844,9 +890,18 @@ class GameScenePanel extends BasePanel {
         this.m_spiderWebArmatureContainer.y = 400
         this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._OnSpiderWebArmatureComplete, this)
         this.m_spiderWebArmatureContainer.addFrameCallFunc(this._OnSpiderWebArmatureFrame, this)
-        this.m_spiderWebArmatureContainer.scaleX = 2
-        this.m_spiderWebArmatureContainer.scaleY = 2
+        this.m_spiderWebArmatureContainer.scaleX = 2.2
+        this.m_spiderWebArmatureContainer.scaleY = 2.2
 
+        this.m_guideArmatureContainer = new DragonBonesArmatureContainer()
+        this.m_groupFull.addChild(this.m_guideArmatureContainer)
+        let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao")
+        let guideArmature = new DragonBonesArmature(guideDisplay)
+        guideArmature.ArmatureDisplay = guideDisplay
+        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao"])
+        this.m_guideArmatureContainer.x = 50
+        this.m_guideArmatureContainer.y = -500
+        
 
         this.addChild( this.m_gestureShape )
         this.m_imgPower.mask = this.m_progress
@@ -859,14 +914,12 @@ class GameScenePanel extends BasePanel {
         this.water.addEventListener('complete', this._OnWaterComplete, this)
         this.warning.addEventListener('complete', this._OnWarningComplete, this)
 
-
         this.comboBegin.addEventListener('complete', this._OnComboBeginComplete, this)
         this.comboEnd.addEventListener('complete', this._OnComboEndComplete, this)
         this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this)
         this.powerfull.addEventListener('complete', this._OnPowerfullComplete, this)
         this.bossWarning.addEventListener('complete', this._EnterBoss, this)
         
-
         Common.addTouchBegin(this.m_btnPause)
         
 		this._OnResize()
@@ -936,8 +989,6 @@ class GameScenePanel extends BasePanel {
 		}
     }
 
-    private test:boolean = false
-
     protected _OnResize(event:egret.Event = null)
     {
 		this.m_fullArmatureContainer.width = Config.stageWidth
@@ -976,7 +1027,7 @@ class GameScenePanel extends BasePanel {
     private m_eliteCount:number
     private m_normalCount:number
     private m_isWarning:boolean
-
+    private m_isLuck:boolean
     ///////////////////////////////////////////////////////////////////////////
 	private m_imgScene:eui.Image
 	private m_bitLabScore:eui.BitmapLabel
@@ -984,6 +1035,7 @@ class GameScenePanel extends BasePanel {
     private m_imgGroundLine:eui.Image
     private m_imgGroundWater:eui.Image
     private m_imgGroundWarning:eui.Image
+    private m_imgGuide:eui.Image
     private m_rectWarning:eui.Rect
     private m_btnPause:eui.Button
 
@@ -1045,4 +1097,6 @@ class GameScenePanel extends BasePanel {
 
     private m_spiderWebArmatureContainer:DragonBonesArmatureContainer
     private m_spiderStage:number
+
+    private m_guideArmatureContainer:DragonBonesArmatureContainer
 }

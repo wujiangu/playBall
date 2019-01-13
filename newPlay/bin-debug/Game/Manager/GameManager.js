@@ -59,11 +59,13 @@ var GameManager = (function (_super) {
             Common.dispatchEvent(MainNotify.openGamePausePanel);
     };
     GameManager.prototype.StageToBack = function () {
-        this._lastStage = this._gameState;
-        this._gameState = EGameState.StageBack;
+        // this._lastStage = this._gameState
+        // this._gameState = EGameState.StageBack
+        if (this._gameState == EGameState.Start)
+            GameManager.Instance.Pause();
     };
     GameManager.prototype.StageToFront = function () {
-        this._gameState = this._lastStage;
+        // this._gameState = this._lastStage
     };
     GameManager.prototype.Continue = function () {
         this._gameState = EGameState.Start;

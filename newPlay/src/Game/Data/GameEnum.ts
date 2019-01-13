@@ -51,9 +51,13 @@ enum EMonsterState
 // 手势难度
 enum EGestureDifficult
 {
-    Mix = 0,
-    Normal,
-    Hard,
+    Mix = 0,            // 混合随机
+    Normal,             // 全部简单
+    Hard,               // 全部难
+    NAndH,              // 一个简单一个复杂
+    NAndHH,             // 一个简单两个复杂
+    NNAndH,             // 两个简单一个复杂
+
 }
 
 // 怪物的类型

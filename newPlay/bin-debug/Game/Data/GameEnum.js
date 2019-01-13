@@ -50,6 +50,9 @@ var EGestureDifficult;
     EGestureDifficult[EGestureDifficult["Mix"] = 0] = "Mix";
     EGestureDifficult[EGestureDifficult["Normal"] = 1] = "Normal";
     EGestureDifficult[EGestureDifficult["Hard"] = 2] = "Hard";
+    EGestureDifficult[EGestureDifficult["NAndH"] = 3] = "NAndH";
+    EGestureDifficult[EGestureDifficult["NAndHH"] = 4] = "NAndHH";
+    EGestureDifficult[EGestureDifficult["NNAndH"] = 5] = "NNAndH";
 })(EGestureDifficult || (EGestureDifficult = {}));
 // 怪物的类型
 var EMonsterType;
