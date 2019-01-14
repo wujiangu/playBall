@@ -94,8 +94,20 @@ class SpiderActor extends BaseActor {
 
 	public GotoArrival() {
 		this.m_state = EMonsterState.Arrive
-		GameVoice.spiderKingArrive.play(0, 1).volume = GameConfig.soundValue / 100
+		
+		// .volume = GameConfig.soundValue / 100
 		this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1)
+
+		let battleVolume = 0.8 * GameConfig.bgmValue / 100
+		
+		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
+			// GameVoice.battleBGMChannel.volume = battleVolume
+			let channel = GameVoice.spiderKingArrive.play(0, 1)
+			channel.volume = 0
+			egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
+				egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+			})
+		})
 	}
 
 	public Summon(a_count:number = 2) {
@@ -114,7 +126,7 @@ class SpiderActor extends BaseActor {
 	}
 
 	public GotoAttack() {
-		if (GameManager.Instance.GameState == EGameState.Start) {
+		if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
 			this.m_state = EMonsterState.Attack
 			this.m_isSpit = false
 			this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1)
@@ -124,7 +136,7 @@ class SpiderActor extends BaseActor {
 	}
 
 	public GotoSummonFinish() {
-		if (GameManager.Instance.GameState == EGameState.Start) {
+		if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
 			this.m_state = EMonsterState.SummonFinish
 			PanelManager.m_gameScenePanel.PlaySpiderWebArmature("dead", 5)
 			// this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
@@ -133,7 +145,7 @@ class SpiderActor extends BaseActor {
 	}
 
 	public GotoMove() {
-		if (GameManager.Instance.GameState == EGameState.Start) {
+		if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
 			this.m_state = EMonsterState.Move
 			this.m_sumonDelay = 0
 			this.UpdateSignSlot()
@@ -282,6 +294,7 @@ class SpiderActor extends BaseActor {
 				this.y = PanelManager.m_gameScenePanel.WaterPos
 				this.m_state = EMonsterState.Drown
 				this.m_armatureContainer.visible = false
+				GameVoice.fallDownWaterSound.play(0, 1)
 				this.GotoFallWater()
 			}
 		}

@@ -124,12 +124,13 @@ class BaseActor extends egret.DisplayObjectContainer {
 
 	public SetVertical(addNum:number) {
 		this.ResetVertical()
-		this.m_addNum = this.m_speedY * addNum
-		this.m_speedY += this.m_addNum
+		this.m_addNum += addNum
+		this.m_speedY += addNum
 	}
 
 	public ResetVertical() {
 		this.m_speedY -= this.m_addNum
+		this.m_addNum = 0
 	}
 
 	public BalloonExploreHandle() {}
@@ -181,6 +182,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_speedY:number
 	protected m_speedX:number
 	protected m_spFall:number
+	protected m_baseSpeedY:number
 
 	protected m_balloons:Array<Balloon>
 

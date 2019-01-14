@@ -40,7 +40,7 @@ class LuckyActor extends BaseActor{
 		
 		this.m_state = EMonsterState.Ready
 		this.m_speedY = 0
-		this.m_speedX = 0.18
+		this.m_speedX = 0.16
 
 		this.m_armatureContainer.scaleX = this.m_data.Scale
 		this.m_armatureContainer.scaleY = this.m_data.Scale

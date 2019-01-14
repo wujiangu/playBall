@@ -16,6 +16,9 @@ var GameVoice;
     GameVoice.spiderKingArrive_mp3 = "spiderKingArrive_mp3"; // 蜘蛛王出场
     GameVoice.jiesuan_mp3 = "jiesuan_mp3"; // 结算
     GameVoice.readyGo_mp3 = "readyGo_mp3";
+    GameVoice.smallBoss_mp3 = "smallBoss_mp3";
+    GameVoice.fallDownWater_mp3 = "fallDownWater_mp3";
+    GameVoice.bossWarning_mp3 = "bossWarning_mp3";
     GameVoice.beginBGMSound = null;
     GameVoice.beginBGMChannel = null;
     GameVoice.battleBGMSound = null;
@@ -34,5 +37,8 @@ var GameVoice;
     GameVoice.spiderKingArrive = null;
     GameVoice.jiesuanSound = null;
     GameVoice.readyGoSound = null;
+    GameVoice.smallBossSound = null;
+    GameVoice.fallDownWaterSound = null;
+    GameVoice.bossWarning = null;
 })(GameVoice || (GameVoice = {}));
 //# sourceMappingURL=GameVoice.js.map

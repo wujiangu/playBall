@@ -134,11 +134,12 @@ var BaseActor = (function (_super) {
     };
     BaseActor.prototype.SetVertical = function (addNum) {
         this.ResetVertical();
-        this.m_addNum = this.m_speedY * addNum;
-        this.m_speedY += this.m_addNum;
+        this.m_addNum += addNum;
+        this.m_speedY += addNum;
     };
     BaseActor.prototype.ResetVertical = function () {
         this.m_speedY -= this.m_addNum;
+        this.m_addNum = 0;
     };
     BaseActor.prototype.BalloonExploreHandle = function () { };
     BaseActor.prototype.RemoveBalloon = function (balloon) { };

@@ -120,6 +120,7 @@ var SummonActor = (function (_super) {
         this.m_state = EMonsterState.Ready;
         this.m_addNum = 0;
         this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent;
+        this.m_baseSpeedY = this.m_speedY;
         this.m_speedX = 0.1;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;

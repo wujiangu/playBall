@@ -20,7 +20,7 @@ class GameConfig {
 	public static baseFallSpeed:number = 0.1
 
 	public static monsterAddDelay:number = 2000
-	public static luckyActorAddDelay:number = 20000
+	public static luckyActorAddDelay:number = 18000
 	public static slowDuration:number = 3000
 	public static comboDelay:number = 1000
 	public static spiderDelay:number = 4000
@@ -66,6 +66,9 @@ class GameConfig {
 		GameVoice.spiderKingArrive = RES.getRes(GameVoice.spiderKingArrive_mp3)
 		GameVoice.jiesuanSound = RES.getRes(GameVoice.jiesuan_mp3)
 		GameVoice.readyGoSound = RES.getRes(GameVoice.readyGo_mp3)
+		GameVoice.smallBossSound = RES.getRes(GameVoice.smallBoss_mp3)
+		GameVoice.fallDownWaterSound = RES.getRes(GameVoice.fallDownWater_mp3)
+		GameVoice.bossWarning = RES.getRes(GameVoice.bossWarning_mp3)
 	}
 
 	public static Init() {
@@ -74,6 +77,7 @@ class GameConfig {
 		this.itemConfig = RES.getRes("itemConfig_json")
 		this.itemTable = {}
 		// this.itemUseTable = new Array()
+		this.itemUseTable.push(1003)
 		let itemList = {}
 		for (let i = 0; i < this.itemUseTable.length; i++) {
 			itemList[this.itemUseTable[i].toString()] = 1

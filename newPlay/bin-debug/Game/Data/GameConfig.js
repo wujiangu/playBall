@@ -30,6 +30,9 @@ var GameConfig = (function () {
         GameVoice.spiderKingArrive = RES.getRes(GameVoice.spiderKingArrive_mp3);
         GameVoice.jiesuanSound = RES.getRes(GameVoice.jiesuan_mp3);
         GameVoice.readyGoSound = RES.getRes(GameVoice.readyGo_mp3);
+        GameVoice.smallBossSound = RES.getRes(GameVoice.smallBoss_mp3);
+        GameVoice.fallDownWaterSound = RES.getRes(GameVoice.fallDownWater_mp3);
+        GameVoice.bossWarning = RES.getRes(GameVoice.bossWarning_mp3);
     };
     GameConfig.Init = function () {
         this.summonConfig = RES.getRes("summonConfig_json");
@@ -37,6 +40,7 @@ var GameConfig = (function () {
         this.itemConfig = RES.getRes("itemConfig_json");
         this.itemTable = {};
         // this.itemUseTable = new Array()
+        this.itemUseTable.push(1003);
         var itemList = {};
         for (var i = 0; i < this.itemUseTable.length; i++) {
             itemList[this.itemUseTable[i].toString()] = 1;
@@ -106,7 +110,7 @@ var GameConfig = (function () {
     GameConfig.isWebView = true;
     GameConfig.baseFallSpeed = 0.1;
     GameConfig.monsterAddDelay = 2000;
-    GameConfig.luckyActorAddDelay = 20000;
+    GameConfig.luckyActorAddDelay = 18000;
     GameConfig.slowDuration = 3000;
     GameConfig.comboDelay = 1000;
     GameConfig.spiderDelay = 4000;

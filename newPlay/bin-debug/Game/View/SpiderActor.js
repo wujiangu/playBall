@@ -102,8 +102,17 @@ var SpiderActor = (function (_super) {
     };
     SpiderActor.prototype.GotoArrival = function () {
         this.m_state = EMonsterState.Arrive;
-        GameVoice.spiderKingArrive.play(0, 1).volume = GameConfig.soundValue / 100;
+        // .volume = GameConfig.soundValue / 100
         this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1);
+        var battleVolume = 0.8 * GameConfig.bgmValue / 100;
+        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
+            // GameVoice.battleBGMChannel.volume = battleVolume
+            var channel = GameVoice.spiderKingArrive.play(0, 1);
+            channel.volume = 0;
+            egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
+                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume }, 500);
+            });
+        });
     };
     SpiderActor.prototype.Summon = function (a_count) {
         if (a_count === void 0) { a_count = 2; }
@@ -120,7 +129,7 @@ var SpiderActor = (function (_super) {
         }
     };
     SpiderActor.prototype.GotoAttack = function () {
-        if (GameManager.Instance.GameState == EGameState.Start) {
+        if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
             this.m_state = EMonsterState.Attack;
             this.m_isSpit = false;
             this.m_armatureContainer.play(DragonBonesAnimations.Attack, 1);
@@ -128,14 +137,14 @@ var SpiderActor = (function (_super) {
         }
     };
     SpiderActor.prototype.GotoSummonFinish = function () {
-        if (GameManager.Instance.GameState == EGameState.Start) {
+        if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
             this.m_state = EMonsterState.SummonFinish;
             PanelManager.m_gameScenePanel.PlaySpiderWebArmature("dead", 5);
             // this.m_armatureContainer.play(DragonBonesAnimations.ReadyFall, 1)
         }
     };
     SpiderActor.prototype.GotoMove = function () {
-        if (GameManager.Instance.GameState == EGameState.Start) {
+        if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
             this.m_state = EMonsterState.Move;
             this.m_sumonDelay = 0;
             this.UpdateSignSlot();
@@ -287,6 +296,7 @@ var SpiderActor = (function (_super) {
                 this.y = PanelManager.m_gameScenePanel.WaterPos;
                 this.m_state = EMonsterState.Drown;
                 this.m_armatureContainer.visible = false;
+                GameVoice.fallDownWaterSound.play(0, 1);
                 this.GotoFallWater();
             }
         }

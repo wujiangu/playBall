@@ -23,30 +23,62 @@ var Monster = (function (_super) {
         switch (type) {
             case ELevelType.Normal:
                 monsterData = data.normal;
+                this.m_sumWeight = 0;
+                for (var i = 0; i < monsterData.length; i++) {
+                    this.m_sumWeight += monsterData[i].prob;
+                    monsterData[i].weight = this.m_sumWeight;
+                }
+                var random = MathUtils.getRandom(1, this.m_sumWeight);
+                for (var i = 0; i < monsterData.length; i++) {
+                    if (random <= monsterData[i].weight) {
+                        this.m_gesturDiff = monsterData[i].diff;
+                        this.m_balloonMin = monsterData[i].min;
+                        this.m_balloonMax = monsterData[i].max;
+                        this.m_summonData = monsterData[i].summon;
+                        this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()];
+                        this.m_type = this.m_data.Difficult;
+                        break;
+                    }
+                }
                 break;
             case ELevelType.Elite:
-                monsterData = data.elite;
+                // monsterData = data.elite
+                this.m_gesturDiff = PanelManager.m_gameScenePanel.Boss.diff;
+                this.m_balloonMin = PanelManager.m_gameScenePanel.Boss.min;
+                this.m_balloonMax = PanelManager.m_gameScenePanel.Boss.max;
+                this.m_summonData = PanelManager.m_gameScenePanel.Boss.summon;
+                this.m_data = GameConfig.monsterTable[PanelManager.m_gameScenePanel.Boss.id.toString()];
+                this.m_type = this.m_data.Difficult;
                 PanelManager.m_gameScenePanel.EliteCount += 1;
                 GameConfig.monsterPos = 3;
+                var battleVolume_1 = 0.8 * GameConfig.bgmValue / 100;
+                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
+                    var channel = GameVoice.smallBossSound.play(0, 1);
+                    channel.volume = 0;
+                    egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
+                        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume_1 }, 500);
+                    });
+                });
+                // GameVoice.smallBossSound.play(0, 1)
                 break;
         }
-        this.m_sumWeight = 0;
-        for (var i = 0; i < monsterData.length; i++) {
-            this.m_sumWeight += monsterData[i].prob;
-            monsterData[i].weight = this.m_sumWeight;
-        }
-        var random = MathUtils.getRandom(1, this.m_sumWeight);
-        for (var i = 0; i < monsterData.length; i++) {
-            if (random <= monsterData[i].weight) {
-                this.m_gesturDiff = monsterData[i].diff;
-                this.m_balloonMin = monsterData[i].min;
-                this.m_balloonMax = monsterData[i].max;
-                this.m_summonData = monsterData[i].summon;
-                this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()];
-                this.m_type = this.m_data.Difficult;
-                break;
-            }
-        }
+        // this.m_sumWeight = 0
+        // for (let i = 0; i < monsterData.length; i++) {
+        // 	this.m_sumWeight += monsterData[i].prob
+        // 	monsterData[i].weight = this.m_sumWeight
+        // }
+        // let random = MathUtils.getRandom(1, this.m_sumWeight)
+        // for (let i = 0; i < monsterData.length; i++) {
+        // 	if (random <= monsterData[i].weight) {
+        // 		this.m_gesturDiff = monsterData[i].diff
+        // 		this.m_balloonMin = monsterData[i].min
+        // 		this.m_balloonMax = monsterData[i].max
+        // 		this.m_summonData = monsterData[i].summon
+        // 		this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()]
+        // 		this.m_type = this.m_data.Difficult
+        // 		break
+        // 	}
+        // }
         // this.m_data = this._RandomMonsterData()
         if (this.m_data) {
             this.InitData();
@@ -75,6 +107,7 @@ var Monster = (function (_super) {
         this.m_state = EMonsterState.Ready;
         this.m_addNum = 0;
         this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent;
+        this.m_baseSpeedY = this.m_speedX;
         this.m_spFall = 0.9;
         this.m_speedX = 0.2;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
@@ -195,7 +228,7 @@ var Monster = (function (_super) {
         this.m_effectArmatureContainer.scaleY = 0.8;
         this.m_effectArmatureContainer.visible = true;
         this.m_effectArmatureContainer.play("shuihua", 1);
-        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 6);
+        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 8);
         this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
     };
     Monster.prototype.GotoSlow = function () {
@@ -318,6 +351,7 @@ var Monster = (function (_super) {
                 this.y = PanelManager.m_gameScenePanel.WaterPos;
                 this.m_state = EMonsterState.Drown;
                 this.m_armatureContainer.visible = false;
+                GameVoice.fallDownWaterSound.play(0, 1);
                 this.GotoFallWater();
             }
         }

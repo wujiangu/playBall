@@ -31,7 +31,7 @@
     "Name": "毒液",
     "Animation": "duye",
     "Actions":["idle", "dead", "arrive", "run"],
-    "Speed": 25,
+    "Speed": 27,
     "Score": 0,
     "Power": 2,
     "Scale": 1,

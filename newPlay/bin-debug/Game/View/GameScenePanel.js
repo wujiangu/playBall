@@ -54,6 +54,10 @@ var GameScenePanel = (function (_super) {
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this);
         this.initData();
+        if (GameVoice.battleBGMChannel != null)
+            GameVoice.battleBGMChannel.stop();
+        GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0);
+        GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100;
     };
     GameScenePanel.prototype.Exit = function () {
         this.m_imgEffectMask.visible = false;
@@ -67,7 +71,7 @@ var GameScenePanel = (function (_super) {
         this.m_monsterAddDelay = 0;
         this.m_luckyAddDelay = 0;
         this.m_angle = 180;
-        this.Power = 90;
+        this.Power = 0;
         this.m_score = 0;
         this.m_slowDelay = -1;
         this.m_comboDelay = -1;
@@ -152,10 +156,6 @@ var GameScenePanel = (function (_super) {
             this._UpdateFullArmature();
         }
         this.Init();
-        if (GameVoice.battleBGMChannel != null)
-            GameVoice.battleBGMChannel.stop();
-        GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0);
-        GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100;
         // this._CreateMonster()
         // this.m_guideArmatureContainer.play("xinshouyindao", 0)
     };
@@ -225,10 +225,10 @@ var GameScenePanel = (function (_super) {
                 if (GameConfig.isGuide)
                     this.m_score++;
             }
-            // if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
-            //     this.m_luckyAddDelay = 0
-            //     this._CreateLuckyActor()
-            // }
+            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+                this.m_luckyAddDelay = 0;
+                this._CreateLuckyActor();
+            }
         }
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
             for (var i = 0; i < this.m_monsters.length; i++) {
@@ -374,7 +374,7 @@ var GameScenePanel = (function (_super) {
             if (this.m_score >= this.m_currentLevel.normalCount - 20 && !this.m_isLuck) {
                 //引导关没有
                 this.m_isLuck = true;
-                this._CreateLuckyActor();
+                // this._CreateLuckyActor()
             }
         },
         enumerable: true,
@@ -538,12 +538,12 @@ var GameScenePanel = (function (_super) {
                 for (var i = 0; i < this.m_monsters.length; i++) {
                     var monster = this.m_monsters[i];
                     if (monster.Type == EMonsterDifficult.Normal) {
-                        monster.SetVertical(this.m_comboCount * 0.08);
+                        monster.SetVertical(this.m_comboCount * 0.02);
                     }
                 }
                 for (var i = 0; i < this.m_summonActors.length; i++) {
                     var summon = this.m_summonActors[i];
-                    summon.SetVertical(this.m_comboCount * 0.08);
+                    summon.SetVertical(this.m_comboCount * 0.02);
                 }
             }
             if (this.m_comboCount <= 2)
@@ -598,22 +598,48 @@ var GameScenePanel = (function (_super) {
         Common.log("进入警告");
         this.m_imgBossWarning.visible = true;
         this.bossWarning.play(0);
+        GameVoice.bossWarning.play(0, 1);
         // egret.setTimeout(this._EnterBoss, this, 2000)
     };
     GameScenePanel.prototype._EnterBoss = function () {
         Common.log("进入BOSS");
         this.m_imgBossWarning.visible = false;
-        egret.setTimeout(this._BossArrive, this, 1000);
+        egret.setTimeout(this._BossArrive, this, 1500);
     };
     GameScenePanel.prototype._BossArrive = function () {
         this.m_levelState = ELevelType.Elite;
-        if (this.m_currentLevel.elite[0].id == 1006) {
+        var m_sumWeight = 0;
+        for (var i = 0; i < this.m_currentLevel.elite.length; i++) {
+            m_sumWeight += this.m_currentLevel.elite[i].prob;
+            this.m_currentLevel.elite[i].weight = m_sumWeight;
+        }
+        var random = MathUtils.getRandom(1, m_sumWeight);
+        for (var i = 0; i < this.m_currentLevel.elite.length; i++) {
+            if (random <= this.m_currentLevel.elite[i].weight) {
+                this.m_bossData = this.m_currentLevel.elite[i];
+                // this.m_gesturDiff = this.m_currentLevel.elite[i].diff
+                // this.m_balloonMin = this.m_currentLevel.elite[i].min
+                // this.m_balloonMax = this.m_currentLevel.elite[i].max
+                // this.m_summonData = this.m_currentLevel.elite[i].summon
+                // this.m_data = GameConfig.monsterTable[this.m_currentLevel.elite[i].id.toString()]
+                // this.m_type = this.m_data.Difficult
+                break;
+            }
+        }
+        if (this.m_bossData.id == 1006) {
             this.PlaySpiderWebArmature("arrive1", 1);
             // this._CreateSpiderActor()
         }
         else
             this._CreateMonster();
     };
+    Object.defineProperty(GameScenePanel.prototype, "Boss", {
+        get: function () {
+            return this.m_bossData;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * 更新道具图标动画
      *
@@ -719,7 +745,6 @@ var GameScenePanel = (function (_super) {
                 var bulletCount = 0;
                 for (var index = 0; index < this.m_monsters.length; index++) {
                     if (this.m_monsters[index].State == EMonsterState.Ready && this.m_monsters[index].Type == EMonsterDifficult.Normal) {
-                        Common.log("创建怪物子弹");
                         this._CreateBullete(this.m_monsters[index]);
                         bulletCount++;
                     }
@@ -729,7 +754,6 @@ var GameScenePanel = (function (_super) {
                 if (bulletCount < count) {
                     for (var index = 0; index < this.m_summonActors.length; index++) {
                         if (this.m_summonActors[index].State == EMonsterState.Ready) {
-                            Common.log("创建召唤物子弹");
                             this._CreateBullete(this.m_summonActors[index]);
                             bulletCount++;
                         }
@@ -862,7 +886,7 @@ var GameScenePanel = (function (_super) {
         spiderArmature.ArmatureDisplay = spiderWebDisplay;
         this.m_spiderWebArmatureContainer.register(spiderArmature, ["arrive1", "arrive2", "attack", "dead", "idle"]);
         this.m_spiderWebArmatureContainer.x = Config.stageHalfWidth;
-        this.m_spiderWebArmatureContainer.y = 400;
+        this.m_spiderWebArmatureContainer.y = 420;
         this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._OnSpiderWebArmatureComplete, this);
         this.m_spiderWebArmatureContainer.addFrameCallFunc(this._OnSpiderWebArmatureFrame, this);
         this.m_spiderWebArmatureContainer.scaleX = 2.2;
