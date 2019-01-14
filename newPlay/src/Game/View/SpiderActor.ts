@@ -105,7 +105,7 @@ class SpiderActor extends BaseActor {
 	}
 
 	public GotoIdle() {
-		if (GameManager.Instance.GameState == EGameState.Start) {
+		if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
 			this.m_state = EMonsterState.Ready
 			this.Summon()
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1)

@@ -56,7 +56,7 @@ class GameScenePanel extends BasePanel {
         this.m_monsterAddDelay = 0
         this.m_luckyAddDelay = 0
         this.m_angle = 180
-        this.Power = 0
+        this.Power = 90
         this.m_score = 0
         this.m_slowDelay = -1
         this.m_comboDelay = -1
@@ -721,13 +721,14 @@ class GameScenePanel extends BasePanel {
     private _OnItemArmatureComplete() {
         if (this.m_curItemData != null) {
             let effectData = GameConfig.effectTable[this.m_curItemData.Effect.toString()]
-            let count = Math.min(this.m_monsters.length, effectData.count)
+            let count = Math.min(this.m_monsters.length + this.m_summonActors.length, effectData.count)
             if (count > 0) {
                 let channel = GameVoice.fireBallSound.play(0, 1)
                 channel.volume = GameConfig.soundValue / 100
                 let bulletCount = 0
                 for (let index = 0; index < this.m_monsters.length; index++) {
                     if (this.m_monsters[index].State == EMonsterState.Ready && this.m_monsters[index].Type == EMonsterDifficult.Normal) {
+                        Common.log("创建怪物子弹")
                         this._CreateBullete(this.m_monsters[index])
                         bulletCount++
                     }
@@ -736,6 +737,7 @@ class GameScenePanel extends BasePanel {
                 if (bulletCount < count) {
                     for (let index = 0; index < this.m_summonActors.length; index++) {
                         if (this.m_summonActors[index].State == EMonsterState.Ready) {
+                            Common.log("创建召唤物子弹")
                             this._CreateBullete(this.m_summonActors[index])
                             bulletCount++
                         }

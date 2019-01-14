@@ -126,7 +126,7 @@ var DragonBonesArmatureContainer = (function (_super) {
         if (frame === void 0) { frame = null; }
         if (timeScale === void 0) { timeScale = 1; }
         if (this.actions[action] == null) {
-            Common.log("不存在动作---->" + action + typeof (action));
+            Common.log("play不存在动作---->" + action);
             return;
         }
         var newArmatureIndex = this.actions[action];

@@ -51,7 +51,7 @@ var LuckyActor = (function (_super) {
         ]);
         this.m_state = EMonsterState.Ready;
         this.m_speedY = 0;
-        this.m_speedX = 0.15;
+        this.m_speedX = 0.18;
         this.m_armatureContainer.scaleX = this.m_data.Scale;
         this.m_armatureContainer.scaleY = this.m_data.Scale;
         this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this);

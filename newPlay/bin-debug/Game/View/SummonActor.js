@@ -181,24 +181,25 @@ var SummonActor = (function (_super) {
         GameManager.Instance.Stop();
     };
     SummonActor.prototype.GotoExplore = function () {
-        this.m_gesture.visible = false;
-        this.m_armatureContainer.play(this._animationName, 1);
-        this.m_state = EMonsterState.Dead;
-        this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
-        PanelManager.m_gameScenePanel.Power += this.m_data.Power;
-        // if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
-        // 	PanelManager.m_gameScenePanel.Score += this.m_score
-        // }
-        if (this.m_data.Type == ESummonType.Balloon) {
-            GameConfig.balloonScore += this.m_score;
-            PanelManager.m_gameScenePanel.Boom = true;
-            var channel = GameVoice.ballonBoomSound.play(0, 1);
-            channel.volume = GameConfig.soundValue / 100;
+        if (this.m_state == EMonsterState.Ready && this.y >= 100) {
+            this.m_gesture.visible = false;
+            this.m_armatureContainer.play(this._animationName, 1);
+            this.m_state = EMonsterState.Dead;
+            this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this);
+            PanelManager.m_gameScenePanel.Power += this.m_data.Power;
+            // if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
+            // 	PanelManager.m_gameScenePanel.Score += this.m_score
+            // }
+            if (this.m_data.Type == ESummonType.Balloon) {
+                GameConfig.balloonScore += this.m_score;
+                PanelManager.m_gameScenePanel.Boom = true;
+                var channel = GameVoice.ballonBoomSound.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
+            }
+            else if (this.m_data.Type == ESummonType.Monster) {
+                this.m_balloon.BalloonExplore();
+            }
         }
-        else if (this.m_data.Type == ESummonType.Monster) {
-            this.m_balloon.BalloonExplore();
-        }
-        // PanelManager.m_gameScenePanel.ActorDeadHandle()
     };
     SummonActor.prototype.Destroy = function () {
         // this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
@@ -271,6 +272,7 @@ var SummonActor = (function (_super) {
         this.m_effectArmatureContainer.play(this.m_effectData.step1, 1);
         if (this.m_effectData.type == EEffectType.Fire) {
             this.m_gesture.visible = false;
+            this.m_groupBalloon.visible = false;
             this.m_armatureContainer.visible = false;
             this.m_state = EMonsterState.Stop;
             GameConfig.balloonScore = 0;

@@ -118,7 +118,7 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      */
     public play(action:string, playTimes:number = undefined, type:number = 1, frame:number = null, timeScale:number = 1):void {
         if (this.actions[action] == null) {
-            Common.log("不存在动作---->"+action+typeof(action));
+            Common.log("play不存在动作---->"+action);
             return;
         }
         let newArmatureIndex:number = this.actions[action];
