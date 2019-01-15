@@ -187,7 +187,7 @@ var Monster = (function (_super) {
     };
     Monster.prototype.GotoIdle = function () {
         if (this.m_data.ID == 1009) {
-            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.55);
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65);
         }
         else {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);

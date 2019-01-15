@@ -617,12 +617,6 @@ var GameScenePanel = (function (_super) {
         for (var i = 0; i < this.m_currentLevel.elite.length; i++) {
             if (random <= this.m_currentLevel.elite[i].weight) {
                 this.m_bossData = this.m_currentLevel.elite[i];
-                // this.m_gesturDiff = this.m_currentLevel.elite[i].diff
-                // this.m_balloonMin = this.m_currentLevel.elite[i].min
-                // this.m_balloonMax = this.m_currentLevel.elite[i].max
-                // this.m_summonData = this.m_currentLevel.elite[i].summon
-                // this.m_data = GameConfig.monsterTable[this.m_currentLevel.elite[i].id.toString()]
-                // this.m_type = this.m_data.Difficult
                 break;
             }
         }

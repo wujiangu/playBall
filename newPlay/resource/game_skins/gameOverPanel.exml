@@ -83,10 +83,7 @@
 		<e:Image anchorOffsetY="0" source="gamBg4_png" y="70" horizontalCenter="0"/>
 		<e:Image source="gamBg5_png" y="0" scaleX="1" scaleY="1" horizontalCenter="0.5"/>
 
-		<e:Label id="m_carom" text="CAROM:" y="462" fontFamily="Microsoft YaHei" size="55" textColor="0x6d3f28" horizontalCenter="-72"/>
-		<e:Label id="m_score" text="SCORE:" y="522.5" fontFamily="Microsoft YaHei" size="55" textColor="0x6D3F28" horizontalCenter="-56.5"/>
-		<e:Label id="m_labHistory" text="Highest record：" x="115" y="587" fontFamily="Microsoft YaHei" size="35" textColor="0xfdffea"/>
-		<e:Label id="m_labHistoryScore" text="1000" x="379.5" y="589" fontFamily="Microsoft YaHei" textAlign="left" textColor="0xfdffea" size="35"/>
+		<e:Label id="m_labHistoryScore" text="1000" x="395" y="589" fontFamily="Microsoft YaHei" textAlign="left" textColor="0xfdffea" size="35"/>
 		<e:Button id="m_btnReturn" label="" x="0" y="732">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -106,5 +103,8 @@
 		<e:BitmapLabel id="m_labScore" y="193" text="1000" font="pingfenFnt_fnt" horizontalCenter="0"/>
 		<e:BitmapLabel id="m_labLianji" font="lianjiFnt_fnt" text="X12" horizontalCenter="120" verticalCenter="101"/>
 		<e:BitmapLabel id="m_labPingfen" font="pingjiFnt_fnt" text="A+" horizontalCenter="131" verticalCenter="40"/>
+		<e:Image source="Jiesuan1_png" y="470" right="258"/>
+		<e:Image source="Jiesuan2_png" y="529" right="258"/>
+		<e:Image source="Jiesuan3_png" x="86" y="592"/>
 	</e:Group>
 </e:Skin>
