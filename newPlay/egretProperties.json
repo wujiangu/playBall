@@ -32,9 +32,6 @@
 		{
 			"name": "promise",
 			"path": "./promise"
-		},
-		{
-		"name": "particle"
 		}
 	]
 }

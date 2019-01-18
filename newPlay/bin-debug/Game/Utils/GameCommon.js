@@ -187,6 +187,8 @@ var Common;
                 }
                 else {
                     GameConfig.itemUseTable = new Array();
+                    GameConfig.itemUseTable.push(1003);
+                    Common.UpdateUseItem();
                 }
             });
             egret.ExternalInterface.call("read", GameConfig.game + "itemUseTable");
@@ -195,6 +197,8 @@ var Common;
             var itemUseTable = NativeApi.getLocalData(GameConfig.game + "itemUseTable");
             if (itemUseTable == null) {
                 GameConfig.itemUseTable = new Array();
+                GameConfig.itemUseTable.push(1003);
+                Common.UpdateUseItem();
             }
             else {
                 // GameConfig.maxScore = parseInt(score)
@@ -216,6 +220,51 @@ var Common;
         }
     }
     Common.UpdateUseItem = UpdateUseItem;
+    /**
+     * 获取解锁道具表
+     */
+    function GetUnlockItem() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.itemUnlockList = JSON.parse(message);
+                    // GameConfig.maxScore = parseInt(message)
+                }
+                else {
+                    GameConfig.itemUnlockList = new Array();
+                    GameConfig.itemUnlockList.push(1003);
+                    Common.UpdateUnlockItem();
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "itemUnlockList");
+        }
+        else {
+            var itemUnlockList = NativeApi.getLocalData(GameConfig.game + "itemUnlockList");
+            if (itemUnlockList == null) {
+                GameConfig.itemUnlockList = new Array();
+                GameConfig.itemUnlockList.push(1003);
+                Common.UpdateUnlockItem();
+            }
+            else {
+                // GameConfig.maxScore = parseInt(score)
+                GameConfig.itemUnlockList = JSON.parse(itemUnlockList);
+            }
+        }
+    }
+    Common.GetUnlockItem = GetUnlockItem;
+    /**更新解锁道具列表 */
+    function UpdateUnlockItem() {
+        if (GameConfig.itemUnlockList.length > 0) {
+            var str = JSON.stringify(GameConfig.itemUnlockList);
+            if (!GameConfig.isWebView) {
+                egret.ExternalInterface.call("write", GameConfig.game + "itemUnlockList:" + str);
+            }
+            else {
+                NativeApi.setLocalData(GameConfig.game + "itemUnlockList", str);
+            }
+        }
+    }
+    Common.UpdateUnlockItem = UpdateUnlockItem;
     /**更新分数 */
     function UpdateCurrentScore(value) {
         if (!GameConfig.isWebView) {

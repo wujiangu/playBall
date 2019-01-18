@@ -16,6 +16,16 @@ class BackpackPanel extends BasePanel {
     // 初始化面板数据
     public initData():void{
 		this.m_itemIDs = [0, 1, 2]
+
+
+		for (let i = 0; i < GameConfig.itemConfig.length; i++) {
+			let item = GameConfig.itemConfig[i]
+			if (item.ID == GameConfig.itemUseTable[0]) {
+				GameConfig.itemConfig[i] = GameConfig.itemConfig[1]
+				GameConfig.itemConfig[1] = item
+				break
+			}
+		}
     }
 
     // 进入面板
@@ -67,7 +77,14 @@ class BackpackPanel extends BasePanel {
 	private _UpdateItemInfo() {
 		let itemTableData = GameConfig.itemConfig[this.m_itemIDs[1]]
 		this.m_curItemName.text = itemTableData.Name
-		this.m_curItemDesc.text = itemTableData.Desc
+
+		let strId = itemTableData.ID.toString()
+		if (GameConfig.itemTable[strId].Open) {
+			this.m_curItemDesc.text = itemTableData.Desc
+		}else{
+			this.m_curItemDesc.text = itemTableData.LockDesc
+		}
+		
 	}
 
 	private _OnBtnReturn() {
@@ -82,7 +99,7 @@ class BackpackPanel extends BasePanel {
 			this.selectItem.play(0)
 			this.m_curItem.visible = false
 			this.m_itemAnimate.visible = true
-			this.m_itemAnimate.play("1003", 1)
+			this.m_itemAnimate.play(strId, 1)
 			if (GameConfig.itemTable[strId].IsUse == 1) {
 				// TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
 			}else{
@@ -94,7 +111,7 @@ class BackpackPanel extends BasePanel {
 				}
 				GameConfig.itemUseTable.push(currentId)
 				Common.UpdateUseItem()
-				this._UpdateBtnItem()
+				// this._UpdateBtnItem()
 				// this.selectItem.play(0)
 			}
 		}else{
@@ -144,7 +161,8 @@ class BackpackPanel extends BasePanel {
 
 	private _OnItemAnimate() {
 		this.m_itemAnimate.visible = false
-		this.m_curItem.visible = true
+		// this.m_curItem.visible = true
+		this._UpdateBtnItem()
 	}
 
 	private onComplete() {
@@ -169,7 +187,7 @@ class BackpackPanel extends BasePanel {
         let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate")
         let guideArmature = new DragonBonesArmature(guideDisplay)
         guideArmature.ArmatureDisplay = guideDisplay
-        this.m_itemAnimate.register(guideArmature, ["1003"])
+        this.m_itemAnimate.register(guideArmature, ["1001", "1002", "1003"])
         this.m_itemAnimate.x = Config.stageHalfWidth
         this.m_itemAnimate.y = 1300
 		this.m_itemAnimate.scaleX = 0.8

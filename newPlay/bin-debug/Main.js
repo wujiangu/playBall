@@ -158,6 +158,7 @@ var Main = (function (_super) {
             }
             Common.GetMaxScore();
             Common.GetUseItem();
+            Common.GetUnlockItem();
             this.startCreateScene();
         }
     };

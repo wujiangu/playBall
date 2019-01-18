@@ -318,6 +318,45 @@
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
+		<tween:TweenGroup id="guidePower">
+			<tween:TweenItem target="{m_imgReleaseSkil}">
+				<tween:Set>
+					<tween:props>
+						<e:Object y="{-99}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-90}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-99}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-90}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-99}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-90}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{-99}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image id="m_imgScene" left="-5" right="-5" height="1492" source="Bg1_png" y="-100"/>
 	<e:Rect id="m_rectWarning" left="0" right="0" top="0" bottom="0" fillAlpha="0.5" touchEnabled="false" fillColor="0xff0000"/>
@@ -356,6 +395,7 @@
 		<e:Image source="gameUISheet_json.gameProgressBg" y="21.5" scaleX="0.5" scaleY="0.5" horizontalCenter="0" x="0"/>
 		<e:Image id="m_imgPower" source="power_Pro_png" y="21.5" horizontalCenter="0" scaleX="0.5" scaleY="0.5"/>
 		<e:Group id="m_groupIcon" width="79" height="81" y="68" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0"/>
+		<e:Image id="m_imgReleaseSkil" source="guideReleaseSkill_png" y="-99" scaleX="1" scaleY="1" horizontalCenter="0"/>
 	</e:Group>
 	<e:Button id="m_btnPause" label="" right="18" top="21" width="72" height="72">
 		<e:skinName>

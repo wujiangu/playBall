@@ -156,6 +156,7 @@ class Main extends eui.UILayer {
 		    }
             Common.GetMaxScore()
             Common.GetUseItem()
+            Common.GetUnlockItem()
             this.startCreateScene();
         }
     }

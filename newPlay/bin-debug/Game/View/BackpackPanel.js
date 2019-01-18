@@ -28,6 +28,14 @@ var BackpackPanel = (function (_super) {
     // 初始化面板数据
     BackpackPanel.prototype.initData = function () {
         this.m_itemIDs = [0, 1, 2];
+        for (var i = 0; i < GameConfig.itemConfig.length; i++) {
+            var item = GameConfig.itemConfig[i];
+            if (item.ID == GameConfig.itemUseTable[0]) {
+                GameConfig.itemConfig[i] = GameConfig.itemConfig[1];
+                GameConfig.itemConfig[1] = item;
+                break;
+            }
+        }
     };
     // 进入面板
     BackpackPanel.prototype.onEnter = function () {
@@ -71,7 +79,13 @@ var BackpackPanel = (function (_super) {
     BackpackPanel.prototype._UpdateItemInfo = function () {
         var itemTableData = GameConfig.itemConfig[this.m_itemIDs[1]];
         this.m_curItemName.text = itemTableData.Name;
-        this.m_curItemDesc.text = itemTableData.Desc;
+        var strId = itemTableData.ID.toString();
+        if (GameConfig.itemTable[strId].Open) {
+            this.m_curItemDesc.text = itemTableData.Desc;
+        }
+        else {
+            this.m_curItemDesc.text = itemTableData.LockDesc;
+        }
     };
     BackpackPanel.prototype._OnBtnReturn = function () {
         Common.dispatchEvent(MainNotify.closeBackpackPanel);
@@ -84,7 +98,7 @@ var BackpackPanel = (function (_super) {
             this.selectItem.play(0);
             this.m_curItem.visible = false;
             this.m_itemAnimate.visible = true;
-            this.m_itemAnimate.play("1003", 1);
+            this.m_itemAnimate.play(strId, 1);
             if (GameConfig.itemTable[strId].IsUse == 1) {
                 // TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
             }
@@ -97,7 +111,7 @@ var BackpackPanel = (function (_super) {
                 }
                 GameConfig.itemUseTable.push(currentId);
                 Common.UpdateUseItem();
-                this._UpdateBtnItem();
+                // this._UpdateBtnItem()
                 // this.selectItem.play(0)
             }
         }
@@ -140,7 +154,8 @@ var BackpackPanel = (function (_super) {
     };
     BackpackPanel.prototype._OnItemAnimate = function () {
         this.m_itemAnimate.visible = false;
-        this.m_curItem.visible = true;
+        // this.m_curItem.visible = true
+        this._UpdateBtnItem();
     };
     BackpackPanel.prototype.onComplete = function () {
         this.m_itemIRs.push(this.m_itemIRLeft1);
@@ -161,7 +176,7 @@ var BackpackPanel = (function (_super) {
         var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate");
         var guideArmature = new DragonBonesArmature(guideDisplay);
         guideArmature.ArmatureDisplay = guideDisplay;
-        this.m_itemAnimate.register(guideArmature, ["1003"]);
+        this.m_itemAnimate.register(guideArmature, ["1001", "1002", "1003"]);
         this.m_itemAnimate.x = Config.stageHalfWidth;
         this.m_itemAnimate.y = 1300;
         this.m_itemAnimate.scaleX = 0.8;

@@ -40,10 +40,14 @@ var GameConfig = (function () {
         this.itemConfig = RES.getRes("itemConfig_json");
         this.itemTable = {};
         // this.itemUseTable = new Array()
-        this.itemUseTable.push(1003);
+        // this.itemUseTable.push(1003)
         var itemList = {};
         for (var i = 0; i < this.itemUseTable.length; i++) {
             itemList[this.itemUseTable[i].toString()] = 1;
+        }
+        var unlockList = {};
+        for (var i = 0; i < this.itemUnlockList.length; i++) {
+            unlockList[this.itemUnlockList[i].toString()] = 1;
         }
         for (var i = 0; i < this.itemConfig.length; i++) {
             var config = this.itemConfig[i];
@@ -51,6 +55,7 @@ var GameConfig = (function () {
             data["ID"] = config.ID;
             data["Name"] = config.Name;
             data["Desc"] = config.Desc;
+            data["LockDesc"] = config.LockDesc;
             data["Bg"] = config.Bg;
             data["Icon"] = config.Icon;
             data["LockIcon"] = config.LockIcon;
@@ -60,6 +65,8 @@ var GameConfig = (function () {
             data["IsUse"] = 0;
             if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0)
                 data["IsUse"] = 1;
+            if (unlockList[config.ID.toString()] != null && unlockList[config.ID.toString()] > 0)
+                data["Open"] = true;
             this.itemTable[config.ID.toString()] = data;
         }
         var effectConfig = RES.getRes("effectConfig_json");

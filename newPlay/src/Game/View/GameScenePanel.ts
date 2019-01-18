@@ -26,12 +26,12 @@ class GameScenePanel extends BasePanel {
         this._particleLayer = new egret.Sprite()
 		this.addChild(this._particleLayer)
 
-        //获取纹理
-        let image = RES.getRes("putParticle_png")
-        //获取配置
-        var config = RES.getRes("putParticle_json")
-		this._particle = new particle.GravityParticleSystem(image, config)
-        this._particleLayer.addChild(this._particle)
+        // //获取纹理
+        // let image = RES.getRes("putParticle_png")
+        // //获取配置
+        // var config = RES.getRes("putParticle_json")
+		// this._particle = new particle.GravityParticleSystem(image, config)
+        // this._particleLayer.addChild(this._particle)
     }
 
     public Init() {
@@ -47,6 +47,7 @@ class GameScenePanel extends BasePanel {
         this.m_fntComboCount.visible = false
         this.m_spiderWebArmatureContainer.visible = false
         this.m_imgBossWarning.visible = false
+        this.m_imgReleaseSkil.visible = false
         this.m_imgPower.alpha = 1
         this.m_normalCount = 0
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
@@ -112,24 +113,32 @@ class GameScenePanel extends BasePanel {
 
     public GuideStart() {
         this.m_rectWarning.visible = true
-        this.m_guideArmatureContainer.play("xinshouyindao", 0)
-        for (let i = 0; i < this.m_monsters.length; i++) {
-            let monster:Monster = this.m_monsters[i]
-            for (let j = 0; j < monster.Balloons.length; j++) {
-                let balloon:Balloon = monster.Balloons[j]
-                balloon.GuideStart()
+        if (GameConfig.guideIndex == 0) {
+            this.m_guideArmatureContainer.play("xinshouyindao", 0)
+            for (let i = 0; i < this.m_monsters.length; i++) {
+                let monster:Monster = this.m_monsters[i]
+                for (let j = 0; j < monster.Balloons.length; j++) {
+                    let balloon:Balloon = monster.Balloons[j]
+                    balloon.GuideStart()
+                }
             }
+            this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
+            Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        }else{
+            this.m_imgReleaseSkil.visible = true
+            this.guidePower.play(0)
         }
-        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
     }
 
     public GuideEnd() {
         this.m_rectWarning.visible = false
-        this.m_guideArmatureContainer.stop()
-        this.m_guideArmatureContainer.visible = false
+        // this.m_guideArmatureContainer.stop()
+        // this.m_guideArmatureContainer.visible = false
         GameConfig.isGuide = false
-        Common.UpdateGuide(1)
+        this.Power = 0
+        Common.UpdateGuide(2)
+        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
+        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
     }
 
     // 进入面板
@@ -243,7 +252,7 @@ class GameScenePanel extends BasePanel {
                 if (GameConfig.isGuide) this.m_score++
             }
 
-            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay) {
+            if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay && !GameConfig.isGuide) {
                 this.m_luckyAddDelay = 0
                 this._CreateLuckyActor()
             }
@@ -480,9 +489,20 @@ class GameScenePanel extends BasePanel {
         if (this.m_levelState == ELevelType.EliteWarning) {
             if (GameConfig.isGuide) {
                 this.Score = 0
-                this.Power = 0
-                this.UpdeLevelData(this.m_currentLevel.next)
-                this.GuideEnd()
+                if (GameConfig.guideIndex == 0) {
+                    this.Power = 90
+                    GameConfig.guideIndex = 1
+                    this.m_rectWarning.visible = false
+                    this.m_guideArmatureContainer.stop()
+                    this.m_guideArmatureContainer.visible = false
+                    this.UpdeLevelData(1000)
+                    // this._CreateMonster()
+                    this.m_gesture.removeEvent()
+                    Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this)
+                }else{
+                    this.UpdeLevelData(this.m_currentLevel.next)
+                    this.GuideEnd()
+                }
             }else{
                 this.m_levelState = ELevelType.End
                 this._EnterWarning()
@@ -544,7 +564,6 @@ class GameScenePanel extends BasePanel {
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 this.comboBegin.play(0)
-
 
                 if (this.m_comboCount <= 5) GameConfig.balloonScore += 2
                 else if (this.m_comboCount > 5 && this.m_comboCount <= 10) GameConfig.balloonScore += 3
@@ -609,6 +628,13 @@ class GameScenePanel extends BasePanel {
             && this.m_levelState == ELevelType.Elite) 
         {
             Common.log("进入下一关")
+            // 道具解锁
+            let itemId = this.m_currentLevel.unlockItem
+            if (itemId > 0 && !GameConfig.itemTable[itemId.toString()].Open) {
+                GameConfig.itemTable[itemId.toString()].Open = true
+                GameConfig.itemUnlockList.push(itemId)
+                Common.UpdateUnlockItem()
+            }
             this.UpdeLevelData(this.m_currentLevel.next)
         }
     }
@@ -767,22 +793,29 @@ class GameScenePanel extends BasePanel {
                 let channel = GameVoice.fireBallSound.play(0, 1)
                 channel.volume = GameConfig.soundValue / 100
                 let bulletCount = 0
-                for (let index = 0; index < this.m_monsters.length; index++) {
-                    if (this.m_monsters[index].State == EMonsterState.Ready && this.m_monsters[index].Type == EMonsterDifficult.Normal) {
+                if (GameConfig.isGuide) {
+                    for (let index = 0; index < this.m_monsters.length; index++) {
                         this._CreateBullete(this.m_monsters[index])
-                        bulletCount++
                     }
-                    if (bulletCount >= count) break
-                }
-                if (bulletCount < count) {
-                    for (let index = 0; index < this.m_summonActors.length; index++) {
-                        if (this.m_summonActors[index].State == EMonsterState.Ready) {
-                            this._CreateBullete(this.m_summonActors[index])
+                }else{
+                    for (let index = 0; index < this.m_monsters.length; index++) {
+                        if (this.m_monsters[index].State == EMonsterState.Ready && this.m_monsters[index].Type == EMonsterDifficult.Normal) {
+                            this._CreateBullete(this.m_monsters[index])
                             bulletCount++
                         }
                         if (bulletCount >= count) break
                     }
+                    if (bulletCount < count) {
+                        for (let index = 0; index < this.m_summonActors.length; index++) {
+                            if (this.m_summonActors[index].State == EMonsterState.Ready) {
+                                this._CreateBullete(this.m_summonActors[index])
+                                bulletCount++
+                            }
+                            if (bulletCount >= count) break
+                        }
+                    }
                 }
+                
             }else{
                 // 全屏
                 let name = effectData.step1
@@ -903,6 +936,11 @@ class GameScenePanel extends BasePanel {
         this.m_comboArmatureContainer.visible = false
     }
 
+    private _GuidePower() {
+        this.m_imgReleaseSkil.visible = false
+        this._ReleaseSkill()
+    }
+
 	private onComplete() {
         this.m_itemArmatureContainer = new DragonBonesArmatureContainer()
         this.m_itemArmatureContainer.x = this.m_groupIcon.width / 2
@@ -960,6 +998,7 @@ class GameScenePanel extends BasePanel {
         this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this)
         this.powerfull.addEventListener('complete', this._OnPowerfullComplete, this)
         this.bossWarning.addEventListener('complete', this._EnterBoss, this)
+        this.guidePower.addEventListener('complete', this._GuidePower, this)
         
         Common.addTouchBegin(this.m_btnPause)
 
@@ -969,12 +1008,12 @@ class GameScenePanel extends BasePanel {
 	}
 
     public SetParticle(a_visible:boolean, x:number, y:number) {
-		this._particle.visible = a_visible
-		if (a_visible) {
-			this._particle.start(1)
-		}
-		this._particle.emitterX = x
-		this._particle.emitterY = y
+		// this._particle.visible = a_visible
+		// if (a_visible) {
+		// 	this._particle.start(1)
+		// }
+		// this._particle.emitterX = x
+		// this._particle.emitterY = y
 	}
 
     /**
@@ -1048,7 +1087,7 @@ class GameScenePanel extends BasePanel {
     }
 
     private _particleLayer:egret.Sprite
-    private _particle:particle.GravityParticleSystem
+    // private _particle:particle.GravityParticleSystem
     /**生成怪物时间 */ 
     private m_monsterAddDelay:number
     /**生成幸运角色时间 */
@@ -1101,6 +1140,8 @@ class GameScenePanel extends BasePanel {
     private comboMove:egret.tween.TweenGroup
     private powerfull:egret.tween.TweenGroup
     private bossWarning:egret.tween.TweenGroup
+    private guidePower:egret.tween.TweenGroup
+    private m_imgReleaseSkil:eui.Image
     private m_imgBossWarning:eui.Image
 
 	private m_groupScore:eui.Group

@@ -178,6 +178,8 @@ namespace Common{
 					// GameConfig.maxScore = parseInt(message)
 				}else{
 					GameConfig.itemUseTable = new Array()
+					GameConfig.itemUseTable.push(1003)
+					Common.UpdateUseItem()
 				}
         	})
         	egret.ExternalInterface.call("read", GameConfig.game+"itemUseTable")
@@ -186,6 +188,8 @@ namespace Common{
 			let itemUseTable = NativeApi.getLocalData(GameConfig.game+"itemUseTable")
 			if (itemUseTable == null) {
 				GameConfig.itemUseTable = new Array()
+				GameConfig.itemUseTable.push(1003)
+				Common.UpdateUseItem()
 			}else{
 				// GameConfig.maxScore = parseInt(score)
 				GameConfig.itemUseTable = JSON.parse(itemUseTable)
@@ -201,6 +205,49 @@ namespace Common{
 				egret.ExternalInterface.call("write", GameConfig.game+"itemUseTable:" + str)
 			}else{
 				NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
+			}
+		}
+	}
+
+
+	/**
+	 * 获取解锁道具表
+	 */
+	export function GetUnlockItem() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.itemUnlockList = JSON.parse(message)
+					// GameConfig.maxScore = parseInt(message)
+				}else{
+					GameConfig.itemUnlockList = new Array()
+					GameConfig.itemUnlockList.push(1003)
+					Common.UpdateUnlockItem()
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"itemUnlockList")
+		}
+		else {
+			let itemUnlockList = NativeApi.getLocalData(GameConfig.game+"itemUnlockList")
+			if (itemUnlockList == null) {
+				GameConfig.itemUnlockList = new Array()
+				GameConfig.itemUnlockList.push(1003)
+				Common.UpdateUnlockItem()
+			}else{
+				// GameConfig.maxScore = parseInt(score)
+				GameConfig.itemUnlockList = JSON.parse(itemUnlockList)
+			}
+		}
+	}
+
+	/**更新解锁道具列表 */
+	export function UpdateUnlockItem() {
+		if (GameConfig.itemUnlockList.length > 0) {
+			let str = JSON.stringify(GameConfig.itemUnlockList)
+			if (!GameConfig.isWebView) {
+				egret.ExternalInterface.call("write", GameConfig.game+"itemUnlockList:" + str)
+			}else{
+				NativeApi.setLocalData(GameConfig.game+"itemUnlockList", str)
 			}
 		}
 	}

@@ -13,6 +13,7 @@ class GameConfig {
 	public static itemTable:any
 	public static itemUseTable:Array<number>
 	public static itemUse:number
+	public static itemUnlockList:Array<number>
 	public static effectTable:any
 	public static monsterTable:any
 
@@ -77,17 +78,24 @@ class GameConfig {
 		this.itemConfig = RES.getRes("itemConfig_json")
 		this.itemTable = {}
 		// this.itemUseTable = new Array()
-		this.itemUseTable.push(1003)
+		// this.itemUseTable.push(1003)
 		let itemList = {}
 		for (let i = 0; i < this.itemUseTable.length; i++) {
 			itemList[this.itemUseTable[i].toString()] = 1
 		}
+
+		let unlockList = {}
+		for (let i = 0; i < this.itemUnlockList.length; i++) {
+			unlockList[this.itemUnlockList[i].toString()] = 1
+		}
+
 		for (let i = 0; i < this.itemConfig.length; i++) {
 			let config = this.itemConfig[i]
 			let data = {}
 			data["ID"] = config.ID
 			data["Name"] = config.Name
 			data["Desc"] = config.Desc
+			data["LockDesc"] = config.LockDesc
 			data["Bg"] = config.Bg
 			data["Icon"] = config.Icon
 			data["LockIcon"] = config.LockIcon
@@ -96,6 +104,7 @@ class GameConfig {
 			data["Effect"] = config.Effect
 			data["IsUse"] = 0
 			if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0) data["IsUse"] = 1
+			if (unlockList[config.ID.toString()] != null && unlockList[config.ID.toString()] > 0) data["Open"] = true
 			this.itemTable[config.ID.toString()] = data
 		}
 
