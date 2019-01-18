@@ -3,4 +3,5 @@
 	<e:Image id="m_itemBg" source="Bg1001_png" horizontalCenter="0" verticalCenter="0"/>
 	<e:Image id="m_imgItem" source="Icon1003_png" horizontalCenter="0" verticalCenter="0"/>
 	<e:Image id="m_imgMask" source="procBg8_png" x="9" y="2" anchorOffsetY="0"/>
+	<e:Image id="m_imgLock" source="procBg9_png" horizontalCenter="0" verticalCenter="0"/>
 </e:Skin>

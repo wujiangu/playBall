@@ -1,7 +1,6 @@
 [
     {"difficult":1, "type":1,"path":"gestureSheet_json.gesture001","data":["3", "7"], "count":1, "balloon":"lv", "color":"0x1c5b52"},
     {"difficult":1, "type":2,"path":"gestureSheet_json.gesture002","data":["1", "5"], "count":1, "balloon":"lv", "color":"0xcd4a81"},
-    {"difficult":1, "type":3,"path":"gestureSheet_json.gesture003","data":["543212345"], "count":1, "balloon":"huang", "color":"0xcd4a81"},
     {"difficult":1, "type":4,"path":"gestureSheet_json.gesture004","data":["543218765"], "count":1, "balloon":"lan", "color":"0x877a5d"},
     {"difficult":1, "type":5,"path":"gestureSheet_json.gesture005","data":["141", "585"], "count":1, "balloon":"huang", "color":"0x877a5d"},
     {"difficult":2, "type":6,"path":"gestureSheet_json.gesture006","data":["781232187", "345676543"], "count":1, "balloon":"hong", "color":"0x877a5d"},

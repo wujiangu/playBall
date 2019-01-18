@@ -63,8 +63,9 @@ var BackpackPanel = (function (_super) {
         var itemData = GameConfig.itemTable[currentId];
         var image = this.m_btnUse.getChildAt(0);
         image.source = "btnUse_png";
-        if (!itemData.Open)
+        if (!itemData.Open) {
             image.source = "btnLock_png";
+        }
         this._UpdateItemInfo();
     };
     BackpackPanel.prototype._UpdateItemInfo = function () {
@@ -81,6 +82,9 @@ var BackpackPanel = (function (_super) {
         var strId = currentId.toString();
         if (GameConfig.itemTable[strId].Open) {
             this.selectItem.play(0);
+            this.m_curItem.visible = false;
+            this.m_itemAnimate.visible = true;
+            this.m_itemAnimate.play("1003", 1);
             if (GameConfig.itemTable[strId].IsUse == 1) {
                 // TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
             }
@@ -98,6 +102,7 @@ var BackpackPanel = (function (_super) {
             }
         }
         else {
+            this.selectItem.play(0);
             // TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
         }
     };
@@ -133,6 +138,10 @@ var BackpackPanel = (function (_super) {
         }
         this._UpdateAllItemList();
     };
+    BackpackPanel.prototype._OnItemAnimate = function () {
+        this.m_itemAnimate.visible = false;
+        this.m_curItem.visible = true;
+    };
     BackpackPanel.prototype.onComplete = function () {
         this.m_itemIRs.push(this.m_itemIRLeft1);
         this.m_itemIRs.push(this.m_itemIRCenter);
@@ -147,6 +156,21 @@ var BackpackPanel = (function (_super) {
         Common.addTouchBegin(this.m_btnUse);
         Common.addTouchBegin(this.m_btnLeft);
         Common.addTouchBegin(this.m_btnRight);
+        this.m_itemAnimate = new DragonBonesArmatureContainer();
+        this.addChild(this.m_itemAnimate);
+        var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate");
+        var guideArmature = new DragonBonesArmature(guideDisplay);
+        guideArmature.ArmatureDisplay = guideDisplay;
+        this.m_itemAnimate.register(guideArmature, ["1003"]);
+        this.m_itemAnimate.x = Config.stageHalfWidth;
+        this.m_itemAnimate.y = 1300;
+        this.m_itemAnimate.scaleX = 0.8;
+        this.m_itemAnimate.scaleY = 0.8;
+        this.m_itemAnimate.addCompleteCallFunc(this._OnItemAnimate, this);
+        this.m_curItem.visible = true;
+        this.m_itemAnimate.visible = false;
+        // this.m_itemAnimate.play("1003", 0)
+        // this.m_itemAnimate.play("1003", 0)
         this._OnResize();
     };
     BackpackPanel.prototype._OnResize = function (event) {
@@ -168,14 +192,35 @@ var NewItemIR = (function (_super) {
         // if (GameConfig.itemTable[strId].IsUse == 0) this.m_labstatus.text = "Idle"
         // else this.m_labstatus.text = "Equipped"
         // if (!itemData.Open) this.m_labstatus.text = "Unlock"
-        if (index == 1)
+        this.m_imgMask.alpha = 1;
+        if (index == 1) {
             this.m_imgMask.visible = false;
-        else
+            if (!itemData.Open) {
+                this.m_imgLock.visible = true;
+                this.m_imgMask.visible = true;
+                this.m_imgMask.alpha = 0.5;
+            }
+            else
+                this.m_imgLock.visible = false;
+        }
+        else {
             this.m_imgMask.visible = true;
+            this.m_imgLock.visible = false;
+        }
+        if (!itemData.Open) {
+            this.m_imgItem.texture = RES.getRes(itemData.LockIcon);
+            this.m_itemBg.texture = RES.getRes("LockBg_png");
+            // this.m_imgLock.visible = true
+        }
+        else {
+            this.m_imgItem.texture = RES.getRes(itemData.Icon);
+            this.m_itemBg.texture = RES.getRes(itemData.Bg);
+            // this.m_imgLock.visible = false
+        }
         // this.m_labName.text = itemData.Name
-        // this.m_labDesc.text = itemData.Desc
-        this.m_imgItem.texture = RES.getRes(itemData.Icon);
-        this.m_itemBg.texture = RES.getRes(itemData.Bg);
+        // // this.m_labDesc.text = itemData.Desc
+        // this.m_imgItem.texture = RES.getRes(itemData.Icon)
+        // this.m_itemBg.texture = RES.getRes(itemData.Bg)
     };
     NewItemIR.prototype.onComplete = function () {
     };

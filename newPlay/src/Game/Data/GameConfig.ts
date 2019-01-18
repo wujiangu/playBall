@@ -90,6 +90,7 @@ class GameConfig {
 			data["Desc"] = config.Desc
 			data["Bg"] = config.Bg
 			data["Icon"] = config.Icon
+			data["LockIcon"] = config.LockIcon
 			data["ItemBg"] = config.ItemBg
 			data["Open"] = config.Open
 			data["Effect"] = config.Effect

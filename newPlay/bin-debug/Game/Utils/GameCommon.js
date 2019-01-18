@@ -216,5 +216,15 @@ var Common;
         }
     }
     Common.UpdateUseItem = UpdateUseItem;
+    /**更新分数 */
+    function UpdateCurrentScore(value) {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("gameScore", value.toString());
+        }
+        else {
+            // NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
+        }
+    }
+    Common.UpdateCurrentScore = UpdateCurrentScore;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

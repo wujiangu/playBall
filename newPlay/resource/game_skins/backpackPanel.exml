@@ -126,7 +126,7 @@
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image id="m_imgBg" height="1394" bottom="0" left="0" right="0" source="procBg1_png"/>
-	<e:Button id="m_btnReturn" label="" left="2" top="14">
+	<e:Button id="m_btnReturn" label="" left="10" top="14">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnProcReturn_png"/>
@@ -134,7 +134,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="m_btnRight" label="" right="-7" verticalCenter="-147">
+	<e:Button id="m_btnRight" label="" right="2" verticalCenter="-147">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
@@ -142,7 +142,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="m_btnLeft" label="" verticalCenter="-147" left="-6" scaleX="-1">
+	<e:Button id="m_btnLeft" label="" verticalCenter="-147" left="6" scaleX="-1">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSwap_png"/>
@@ -168,9 +168,8 @@
 	<e:Image id="m_curItem" scaleX="0.7" scaleY="0.7" horizontalCenter="0" bottom="87" source="Icon1003_png"/>
 	<e:Image source="procBg6_png" horizontalCenter="0" verticalCenter="-79"/>
 	<e:Group width="500" height="177" verticalCenter="75.5" anchorOffsetX="0" horizontalCenter="0" anchorOffsetY="0">
-		<e:Image source="gameUISheet_json.game5" y="0" anchorOffsetY="0" height="53" left="0" right="0"/>
-		<e:Image source="gameUISheet_json.game4" y="54" anchorOffsetY="0" left="0" right="0" height="124"/>
+		<e:Image y="0" anchorOffsetY="0" left="0" right="0" source="procBg10_png"/>
 		<e:Label id="m_curItemName" text="Torch" y="2" fontFamily="Microsoft YaHei" size="49" horizontalCenter="0" bold="true" textAlign="center" textColor="0x26cfda"/>
-		<e:Label id="m_curItemDesc" text="Torch" y="64.5" fontFamily="Microsoft YaHei" size="27" bold="true" textAlign="left" anchorOffsetX="0" width="438" anchorOffsetY="0" height="102" x="33" textColor="0x424e5e"/>
+		<e:Label id="m_curItemDesc" text="Three objectives of combustion front row." y="64.5" fontFamily="Microsoft YaHei" size="27" bold="true" textAlign="left" anchorOffsetX="0" width="438" anchorOffsetY="0" height="102" x="33" textColor="0x424e5e" wordWrap="true"/>
 	</e:Group>
 </e:Skin>

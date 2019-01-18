@@ -58,7 +58,9 @@ class BackpackPanel extends BasePanel {
 		let itemData = GameConfig.itemTable[currentId]
 		let image:eui.Image = <eui.Image>this.m_btnUse.getChildAt(0)
 		image.source = "btnUse_png"
-		if (!itemData.Open) image.source = "btnLock_png"
+		if (!itemData.Open) {
+			image.source = "btnLock_png"
+		}
 		this._UpdateItemInfo()
 	}
 
@@ -78,6 +80,9 @@ class BackpackPanel extends BasePanel {
 		let strId = currentId.toString()
 		if (GameConfig.itemTable[strId].Open) {
 			this.selectItem.play(0)
+			this.m_curItem.visible = false
+			this.m_itemAnimate.visible = true
+			this.m_itemAnimate.play("1003", 1)
 			if (GameConfig.itemTable[strId].IsUse == 1) {
 				// TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
 			}else{
@@ -93,6 +98,7 @@ class BackpackPanel extends BasePanel {
 				// this.selectItem.play(0)
 			}
 		}else{
+			this.selectItem.play(0)
 			// TipsManager.Show(GameConfig.itemTable[strId].Name + "功能未开放！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 175)
 		}
 	}
@@ -136,6 +142,11 @@ class BackpackPanel extends BasePanel {
 		this._UpdateAllItemList()
 	}
 
+	private _OnItemAnimate() {
+		this.m_itemAnimate.visible = false
+		this.m_curItem.visible = true
+	}
+
 	private onComplete() {
 
 		this.m_itemIRs.push(this.m_itemIRLeft1)
@@ -153,6 +164,23 @@ class BackpackPanel extends BasePanel {
 		Common.addTouchBegin(this.m_btnLeft)
 		Common.addTouchBegin(this.m_btnRight)
 
+		this.m_itemAnimate = new DragonBonesArmatureContainer()
+        this.addChild(this.m_itemAnimate)
+        let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate")
+        let guideArmature = new DragonBonesArmature(guideDisplay)
+        guideArmature.ArmatureDisplay = guideDisplay
+        this.m_itemAnimate.register(guideArmature, ["1003"])
+        this.m_itemAnimate.x = Config.stageHalfWidth
+        this.m_itemAnimate.y = 1300
+		this.m_itemAnimate.scaleX = 0.8
+		this.m_itemAnimate.scaleY = 0.8
+		this.m_itemAnimate.addCompleteCallFunc(this._OnItemAnimate, this)
+
+		this.m_curItem.visible = true
+		this.m_itemAnimate.visible = false
+		// this.m_itemAnimate.play("1003", 0)
+		// this.m_itemAnimate.play("1003", 0)
+
 		this._OnResize()
 	}
 
@@ -166,6 +194,7 @@ class BackpackPanel extends BasePanel {
 
 	private m_itemTypeBg:eui.Image
 	private m_curItem:eui.Image
+	private m_itemAnimate:DragonBonesArmatureContainer
 
 
 	private m_btnReturn:eui.Button
@@ -205,14 +234,35 @@ class NewItemIR extends eui.Component {
 		// else this.m_labstatus.text = "Equipped"
 
 		// if (!itemData.Open) this.m_labstatus.text = "Unlock"
+		this.m_imgMask.alpha = 1
+		if (index == 1) {
+			this.m_imgMask.visible = false
+			if (!itemData.Open) {
+				this.m_imgLock.visible = true
+				this.m_imgMask.visible = true
+				this.m_imgMask.alpha = 0.5
+			}
+			else this.m_imgLock.visible = false
+		}
+		else {
+			this.m_imgMask.visible = true
+			this.m_imgLock.visible = false
+		}
 
-		if (index == 1) this.m_imgMask.visible = false
-		else this.m_imgMask.visible = true
-
+		if (!itemData.Open) {
+			this.m_imgItem.texture = RES.getRes(itemData.LockIcon)
+			this.m_itemBg.texture = RES.getRes("LockBg_png")
+			// this.m_imgLock.visible = true
+		}
+		else {
+			this.m_imgItem.texture = RES.getRes(itemData.Icon)
+			this.m_itemBg.texture = RES.getRes(itemData.Bg)
+			// this.m_imgLock.visible = false
+		}
 		// this.m_labName.text = itemData.Name
-		// this.m_labDesc.text = itemData.Desc
-		this.m_imgItem.texture = RES.getRes(itemData.Icon)
-		this.m_itemBg.texture = RES.getRes(itemData.Bg)
+		// // this.m_labDesc.text = itemData.Desc
+		// this.m_imgItem.texture = RES.getRes(itemData.Icon)
+		// this.m_itemBg.texture = RES.getRes(itemData.Bg)
 	}
 
 	private onComplete() {
@@ -222,6 +272,7 @@ class NewItemIR extends eui.Component {
 	private m_itemBg:eui.Image
 	private m_imgItem:eui.Image
 	private m_imgMask:eui.Image
+	private m_imgLock:eui.Image
 }
 
 class ItemIR extends eui.Component {

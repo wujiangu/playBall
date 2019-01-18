@@ -36,6 +36,10 @@ class GameOverPanel extends BasePanel {
 		this.Show.play(0)
 
 		GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+
+
+		Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
+		
         Common.gameScene().uiLayer.addChild(this)
     }
 

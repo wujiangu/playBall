@@ -394,10 +394,10 @@
 			</e:skinName>
 
 		</e:Button>
-		<e:Button id="m_btnRank" label="" y="625" x="212" scaleX="1" scaleY="1">
+		<e:Button id="m_btnRank" label="" y="625" x="212" scaleX="1" scaleY="1" enabled="false">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.7" source.down="btnSheet1_json.8"/>
+				<e:Image width="100%" height="100%" source="btnSheet1_json.7" source.down="btnSheet1_json.8" source.disabled="BtnRankLock_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
 				</e:Skin>
 			</e:skinName>

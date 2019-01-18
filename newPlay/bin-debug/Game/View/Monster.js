@@ -189,6 +189,9 @@ var Monster = (function (_super) {
         if (this.m_data.ID == 1009) {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65);
         }
+        else if (this.m_data.ID == 1002) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9);
+        }
         else {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
         }

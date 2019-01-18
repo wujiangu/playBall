@@ -21,6 +21,17 @@ class GameScenePanel extends BasePanel {
         this.m_sunSpeed = 0.05
         this.m_currentItemId = 0
         this.m_progress = new egret.Shape()
+
+
+        this._particleLayer = new egret.Sprite()
+		this.addChild(this._particleLayer)
+
+        //获取纹理
+        let image = RES.getRes("putParticle_png")
+        //获取配置
+        var config = RES.getRes("putParticle_json")
+		this._particle = new particle.GravityParticleSystem(image, config)
+        this._particleLayer.addChild(this._particle)
     }
 
     public Init() {
@@ -85,7 +96,7 @@ class GameScenePanel extends BasePanel {
         this.m_rectWarning.fillColor = 0xff0000
         // this.m_normalCount = 0
         if (a_levelId == this.m_currentLevel.next) {
-            this.m_currentLevel.normalCount += this.m_normalCount * 150
+            this.m_currentLevel.normalCount += this.m_normalCount * 200
             this.m_normalCount++
         }
         GameConfig.gameSpeedPercent = this.m_currentLevel.speed
@@ -395,9 +406,10 @@ class GameScenePanel extends BasePanel {
     public set Score(value:number) {
         this.m_score = value
         this.m_bitLabScore.text = this.m_score.toString()
-        if (this.m_score >= this.m_currentLevel.normalCount - 20 && !this.m_isLuck) {
+        if (this.m_score >= this.m_currentLevel.normalCount * 0.5 && !this.m_isLuck) {
             //引导关没有
             this.m_isLuck = true
+            GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1
             // this._CreateLuckyActor()
         }
     }
@@ -532,23 +544,31 @@ class GameScenePanel extends BasePanel {
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 this.comboBegin.play(0)
-                GameConfig.balloonScore = this.m_comboCount
 
+
+                if (this.m_comboCount <= 5) GameConfig.balloonScore += 2
+                else if (this.m_comboCount > 5 && this.m_comboCount <= 10) GameConfig.balloonScore += 3
+                else GameConfig.balloonScore += 4
+
+
+                // GameConfig.balloonScore = Math.min(5, this.m_comboCount)
+
+                let addSpeed = Math.min(6, this.m_comboCount) * 0.02
                 for (let i = 0; i < this.m_monsters.length; i++) {
                     let monster:Monster = this.m_monsters[i]
                     if (monster.Type == EMonsterDifficult.Normal) {
-                        monster.SetVertical(this.m_comboCount * 0.02)
+                        monster.SetVertical(addSpeed)
                     }
                 }
 
                 for (let i = 0; i < this.m_summonActors.length; i++) {
                     let summon:SummonActor = this.m_summonActors[i]
-                    summon.SetVertical(this.m_comboCount * 0.02)
+                    summon.SetVertical(addSpeed)
                 }
             }
 
-            if (this.m_comboCount <= 2) GameConfig.comboDelay = 1500
-            else if (this.m_comboCount > 2 && this.m_comboCount <= 3) GameConfig.comboDelay = 1200
+            if (this.m_comboCount <= 2) GameConfig.comboDelay = 1200
+            // else if (this.m_comboCount > 2 && this.m_comboCount <= 3) GameConfig.comboDelay = 1200
             else GameConfig.comboDelay = 1000
         }
         if (this.m_levelState == ELevelType.Normal) this.Score += GameConfig.balloonScore
@@ -942,8 +962,19 @@ class GameScenePanel extends BasePanel {
         this.bossWarning.addEventListener('complete', this._EnterBoss, this)
         
         Common.addTouchBegin(this.m_btnPause)
-        
+
+
+
 		this._OnResize()
+	}
+
+    public SetParticle(a_visible:boolean, x:number, y:number) {
+		this._particle.visible = a_visible
+		if (a_visible) {
+			this._particle.start(1)
+		}
+		this._particle.emitterX = x
+		this._particle.emitterY = y
 	}
 
     /**
@@ -1016,7 +1047,8 @@ class GameScenePanel extends BasePanel {
         this.m_fullArmatureContainer.height = Config.stageHeight
     }
 
-
+    private _particleLayer:egret.Sprite
+    private _particle:particle.GravityParticleSystem
     /**生成怪物时间 */ 
     private m_monsterAddDelay:number
     /**生成幸运角色时间 */

@@ -33,7 +33,6 @@
 	<e:Image source="mask_png" anchorOffsetY="0" left="0" right="0" top="-34" bottom="-29"/>
 	<e:Group id="m_groupLnstall" width="517" height="598" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" verticalCenter="-21">
 		<e:Image x="0" y="0" anchorOffsetY="0" source="gamBg6_png"/>
-		<e:Label text="LNSTALL" y="37" fontFamily="Microsoft YaHei" size="70" textAlign="center" bold="true" horizontalCenter="0"/>
 		<e:Button id="m_btnContinue" label="" y="351" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -58,5 +57,6 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:Image source="PAUSED_png" y="22" horizontalCenter="0"/>
 	</e:Group>
 </e:Skin>

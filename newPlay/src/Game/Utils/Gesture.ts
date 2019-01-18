@@ -52,7 +52,7 @@ class Gesture
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
-
+        // PanelManager.m_gameScenePanel.SetParticle(false, 0, 0)
         this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         this._group.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.mouseUp,this);
@@ -74,6 +74,7 @@ class Gesture
         this._lineData.push(p)
         this._currentPoint = p;
         this._layer.graphics.moveTo(this._currentPoint.x,this._currentPoint.y);
+        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
         // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
         
         // Common.dispatchEvent(MainNotify.beginLocus)
@@ -92,6 +93,7 @@ class Gesture
         this._layer.graphics.lineTo(p.x,p.y);
         this._layer.graphics.endFill();
         this._currentPoint = p;
+        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
         // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
     }
     private mouseUp(evt:egret.TouchEvent)
@@ -106,6 +108,7 @@ class Gesture
         // this._layer.graphics.lineStyle(8, 0xff0000, 0.8)
         // this._layer.graphics.endFill();
         // PanelManager.gamePanel.SetParticle(false, p.x, p.y)
+        // PanelManager.m_gameScenePanel.SetParticle(false, p.x, p.y)
         this.motion();
 
         // this._gestureSound.play(0, 1)

@@ -204,4 +204,13 @@ namespace Common{
 			}
 		}
 	}
+
+	/**更新分数 */
+	export function UpdateCurrentScore(value:number) {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("gameScore", value.toString())
+		}else{
+			// NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
+		}
+	}
 }

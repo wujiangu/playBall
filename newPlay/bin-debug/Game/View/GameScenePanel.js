@@ -35,6 +35,14 @@ var GameScenePanel = (function (_super) {
         this.m_sunSpeed = 0.05;
         this.m_currentItemId = 0;
         this.m_progress = new egret.Shape();
+        this._particleLayer = new egret.Sprite();
+        this.addChild(this._particleLayer);
+        //获取纹理
+        var image = RES.getRes("putParticle_png");
+        //获取配置
+        var config = RES.getRes("putParticle_json");
+        this._particle = new particle.GravityParticleSystem(image, config);
+        this._particleLayer.addChild(this._particle);
     };
     GameScenePanel.prototype.Init = function () {
         this.ClearAllActor();
@@ -97,7 +105,7 @@ var GameScenePanel = (function (_super) {
         this.m_rectWarning.fillColor = 0xff0000;
         // this.m_normalCount = 0
         if (a_levelId == this.m_currentLevel.next) {
-            this.m_currentLevel.normalCount += this.m_normalCount * 150;
+            this.m_currentLevel.normalCount += this.m_normalCount * 200;
             this.m_normalCount++;
         }
         GameConfig.gameSpeedPercent = this.m_currentLevel.speed;
@@ -371,9 +379,10 @@ var GameScenePanel = (function (_super) {
         set: function (value) {
             this.m_score = value;
             this.m_bitLabScore.text = this.m_score.toString();
-            if (this.m_score >= this.m_currentLevel.normalCount - 20 && !this.m_isLuck) {
+            if (this.m_score >= this.m_currentLevel.normalCount * 0.5 && !this.m_isLuck) {
                 //引导关没有
                 this.m_isLuck = true;
+                GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1;
                 // this._CreateLuckyActor()
             }
         },
@@ -534,21 +543,26 @@ var GameScenePanel = (function (_super) {
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
                 this.comboBegin.play(0);
-                GameConfig.balloonScore = this.m_comboCount;
+                if (this.m_comboCount <= 5)
+                    GameConfig.balloonScore += 2;
+                else if (this.m_comboCount > 5 && this.m_comboCount <= 10)
+                    GameConfig.balloonScore += 3;
+                else
+                    GameConfig.balloonScore += 4;
+                // GameConfig.balloonScore = Math.min(5, this.m_comboCount)
+                var addSpeed = Math.min(6, this.m_comboCount) * 0.02;
                 for (var i = 0; i < this.m_monsters.length; i++) {
                     var monster = this.m_monsters[i];
                     if (monster.Type == EMonsterDifficult.Normal) {
-                        monster.SetVertical(this.m_comboCount * 0.02);
+                        monster.SetVertical(addSpeed);
                     }
                 }
                 for (var i = 0; i < this.m_summonActors.length; i++) {
                     var summon = this.m_summonActors[i];
-                    summon.SetVertical(this.m_comboCount * 0.02);
+                    summon.SetVertical(addSpeed);
                 }
             }
             if (this.m_comboCount <= 2)
-                GameConfig.comboDelay = 1500;
-            else if (this.m_comboCount > 2 && this.m_comboCount <= 3)
                 GameConfig.comboDelay = 1200;
             else
                 GameConfig.comboDelay = 1000;
@@ -910,6 +924,14 @@ var GameScenePanel = (function (_super) {
         this.bossWarning.addEventListener('complete', this._EnterBoss, this);
         Common.addTouchBegin(this.m_btnPause);
         this._OnResize();
+    };
+    GameScenePanel.prototype.SetParticle = function (a_visible, x, y) {
+        this._particle.visible = a_visible;
+        if (a_visible) {
+            this._particle.start(1);
+        }
+        this._particle.emitterX = x;
+        this._particle.emitterY = y;
     };
     /**
      * 创建子弹

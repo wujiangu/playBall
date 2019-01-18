@@ -47,6 +47,7 @@ var GameOverPanel = (function (_super) {
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
         GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
+        Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score);
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
