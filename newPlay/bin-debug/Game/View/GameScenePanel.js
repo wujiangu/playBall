@@ -58,6 +58,7 @@ var GameScenePanel = (function (_super) {
         this.m_spiderWebArmatureContainer.visible = false;
         this.m_imgBossWarning.visible = false;
         this.m_imgReleaseSkil.visible = false;
+        this.itemUnlockGroup.visible = false;
         this.m_imgPower.alpha = 1;
         this.m_normalCount = 0;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
@@ -170,6 +171,11 @@ var GameScenePanel = (function (_super) {
                 this.m_currentItemId = id;
             }
             this.m_curItemData = GameConfig.itemTable[id.toString()];
+            this.m_imgScene.source = this.m_curItemData.Scene;
+            this.m_imgSun.source = this.m_curItemData.Sun;
+            this.m_cloud1.source = this.m_curItemData.cloud1;
+            this.m_cloud2.source = this.m_curItemData.cloud2;
+            this.m_cloud3.source = this.m_curItemData.cloud3;
             this._UpdateItemArmature();
             this._UpdateFullArmature();
         }
@@ -630,6 +636,13 @@ var GameScenePanel = (function (_super) {
                 GameConfig.itemTable[itemId.toString()].Open = true;
                 GameConfig.itemUnlockList.push(itemId);
                 Common.UpdateUnlockItem();
+                this.itemUnlockGroup.visible = true;
+                var itemData = GameConfig.itemTable[itemId.toString()];
+                this.itemIcon.texture = RES.getRes(itemData.Icon);
+                this.itemBg.texture = RES.getRes(itemData.Bg);
+                this.itemUnlock.play(1);
+                var channel = GameVoice.unlockItem.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
             }
             this.UpdeLevelData(this.m_currentLevel.next);
         }

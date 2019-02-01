@@ -35,7 +35,7 @@
 		"bin-debug/Game/Utils/GameScene.js",
 		"bin-debug/Game/Utils/Gesture.js",
 		"bin-debug/Game/View/BackpackPanel.js",
-		"bin-debug/LoadingUI.js",
+		"bin-debug/Utils/ShakeTools.js",
 		"bin-debug/AssetAdapter.js",
 		"bin-debug/Main.js",
 		"bin-debug/Game/View/BottomBtnPanel.js",
@@ -59,6 +59,6 @@
 		"bin-debug/Utils/MathUtils.js",
 		"bin-debug/Utils/md5.js",
 		"bin-debug/Utils/NativeApi.js",
-		"bin-debug/Utils/ShakeTools.js"
+		"bin-debug/LoadingUI.js"
 	]
 }

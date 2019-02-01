@@ -191,7 +191,14 @@ class Monster extends BaseActor {
 		}
 		else if (this.m_data.ID == 1002) {
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
-		}else{
+		}
+		else if (this.m_data.ID == 1011) {
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
+		}
+		else if (this.m_data.ID == 1012) {
+			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
+		}
+		else{
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
 		}
 	}
@@ -243,10 +250,16 @@ class Monster extends BaseActor {
 
 	public ChangeToEasy() {
 		this.m_gestureData.length = 0
+		// for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+		// 	let data = GameConfig.gestureConfig[i]
+		// 	if (data.difficult == 1) {
+		// 		this.m_gestureData.push(data)
+		// 	}
+		// }
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			let data = GameConfig.gestureConfig[i]
-			if (data.difficult == 1) {
-				this.m_gestureData.push(data)
+			if (data.type == 2) {
+				for (let j = 0; j < 3; j ++) this.m_gestureData.push(data)
 			}
 		}
 		for (let i = 0; i < this.m_balloons.length; i++) {
@@ -436,6 +449,12 @@ class Monster extends BaseActor {
 		}
 	}
 
+	private _Spide(data, posX, posY) {
+		let channel = GameVoice.spideBall.play(0, 1)
+		channel.volume = GameConfig.soundValue / 100
+        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY)
+	}
+
 	private _OnArmatureFrame(event:dragonBones.EgretEvent) {
 		let evt:string = event.frameLabel
 		switch (evt) {
@@ -444,10 +463,18 @@ class Monster extends BaseActor {
 					let count = 0
 					if (this.m_summonData.count > 0) count = this.m_summonData.count
 					else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
-					for (let i = 0; i < count; i++) PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y)
+					for (let i = 0; i < count; i++) {
+						egret.setTimeout(this._Spide, this, i*200, this.m_summonData, this.x, this.y)
+					}
 				}
 			break
 		}
+	}
+
+	private _Summon(data, posX, posY, count, i) {
+		let channel = GameVoice.summon.play(0, 1)
+		channel.volume = GameConfig.soundValue / 100
+        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY)
 	}
 
 	private _OnArmatureComplet() {
@@ -456,7 +483,12 @@ class Monster extends BaseActor {
 				let count = 0
 				if (this.m_summonData.count > 0) count = this.m_summonData.count
 				else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
-				for (let i = 0; i < count; i++) PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i)
+				for (let i = 0; i < count; i++) {
+					egret.setTimeout(this._Summon, this, i*100, this.m_summonData, this.x, this.y, count, i)
+				}
+				// for (let i = 0; i < count; i++) {
+					
+				// }PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i)
 			}
 			this.Destroy()
 			PanelManager.m_gameScenePanel.RemoveMonster(this)

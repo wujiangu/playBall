@@ -46,20 +46,55 @@ var GameOverPanel = (function (_super) {
         this.m_labPingfen.text = comboScore;
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
-        GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
-        Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score);
+        // GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+        // this.channel = GameVoice.jiesuanSound.play(0, 1)
+        // this.channel.volume = GameConfig.soundValue / 100
+        // Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
+        // this.m_isClose = false
+        var battleVolume = 0.8 * GameConfig.bgmValue / 100;
+        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
+            var channel = GameVoice.jiesuanSound.play(0, 1);
+            channel.volume = 0;
+            egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
+                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume }, 500);
+            });
+        });
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
     GameOverPanel.prototype.onExit = function () {
         this.touchChildren = false;
         this.Hide.play(0);
-        this.channel.stop();
     };
+    Object.defineProperty(GameOverPanel.prototype, "Channel", {
+        get: function () {
+            return this.channel;
+        },
+        set: function (value) {
+            this.channel = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameOverPanel.prototype, "IsClose", {
+        get: function () {
+            return this.m_isClose;
+        },
+        set: function (value) {
+            this.m_isClose = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     GameOverPanel.prototype._OnBtnReturn = function () {
+        // if (this.m_isClose == true) {
+        // 	Common.dispatchEvent(MainNotify.closeGameOverPanel)
+        // }
+        this.touchChildren = false;
         Common.dispatchEvent(MainNotify.closeGameOverPanel);
     };
     GameOverPanel.prototype._OnBtnAgain = function () {
+        this.touchChildren = false;
         this.m_isAgain = true;
         this.Hide.play(0);
     };

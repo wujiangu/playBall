@@ -231,7 +231,7 @@ var SpiderActor = (function (_super) {
             }
             else {
                 balloon.x = (value - 1) * (balloon.width + 120) - 100;
-                balloon.y = -this.m_rect.height;
+                balloon.y = -this.m_rect.height * 0.8;
             }
             balloon.BossSetLine(count, value);
         }
@@ -308,6 +308,33 @@ var SpiderActor = (function (_super) {
         GameObjectPool.getInstance().destroyObject(this);
     };
     SpiderActor.prototype.BalloonExploreHandle = function () {
+        if (this.m_balloons.length <= 0) {
+            this.m_sumBalloon = 0;
+            // this.GotoDead()
+        }
+        else {
+            if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
+                var balloon = this.m_balloons[0];
+                var posx = 0;
+                egret.Tween.get(balloon).to({ x: posx }, 200, egret.Ease.circOut);
+                egret.Tween.get(balloon.rop).to({ scaleY: 40, rotation: 0 }, 200, egret.Ease.circOut);
+                this.m_sumBalloon = 1;
+            }
+            if (this.m_sumBalloon == 3 && this.m_balloons.length > 0) {
+                this.m_sumBalloon = 2;
+                if (this.m_exploreIndex == 2) {
+                    this.m_balloons.reverse();
+                }
+                for (var i = 0; i < this.m_balloons.length; i++) {
+                    var balloon = this.m_balloons[i];
+                    var posX = i * (balloon.width + 20) - this.m_rect.width / 5;
+                    var posY = -this.m_rect.height * 1;
+                    var rotation = 30 * i - 15;
+                    egret.Tween.get(balloon).to({ x: posX, y: posY }, 200, egret.Ease.circOut);
+                    egret.Tween.get(balloon.rop).to({ scaleY: 40, rotation: rotation }, 200, egret.Ease.circOut);
+                }
+            }
+        }
     };
     SpiderActor.prototype.RemoveBalloon = function (balloon) {
     };
@@ -380,6 +407,8 @@ var SpiderActor = (function (_super) {
         }
     };
     SpiderActor.prototype._Spide = function (data, posX, posY, count, i) {
+        var channel = GameVoice.spiderKingDrug.play(0, 1);
+        channel.volume = GameConfig.soundValue / 100;
         PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY, count, i);
     };
     SpiderActor.prototype._DestroyBalloon = function () {

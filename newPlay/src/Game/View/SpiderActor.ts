@@ -208,6 +208,7 @@ class SpiderActor extends BaseActor {
 		}
 	}
 
+
 	public UpdateSignSlot() {
 		this._DestroyBalloon()
 		this.m_sumBalloon = MathUtils.getRandom(this.m_balloonMin, this.m_balloonMax)
@@ -241,7 +242,7 @@ class SpiderActor extends BaseActor {
 				balloon.y = -this.m_rect.height * 1.1
 			}else{
 				balloon.x = (value - 1) * (balloon.width + 120) - 100
-				balloon.y = -this.m_rect.height
+				balloon.y = -this.m_rect.height * 0.8
 			}
 			balloon.BossSetLine(count, value)
 		}
@@ -308,7 +309,33 @@ class SpiderActor extends BaseActor {
 	}
 
 	public BalloonExploreHandle() {
+		if (this.m_balloons.length <= 0) {
+			this.m_sumBalloon = 0
+			// this.GotoDead()
+		}else{
+			if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
+				let balloon:Balloon = this.m_balloons[0]
+				let posx = 0
+				egret.Tween.get(balloon).to({x:posx}, 200, egret.Ease.circOut)
+				egret.Tween.get(balloon.rop).to({scaleY:40, rotation:0}, 200, egret.Ease.circOut)
+				this.m_sumBalloon = 1
+			}
 
+			if (this.m_sumBalloon == 3 && this.m_balloons.length > 0) {
+				this.m_sumBalloon = 2
+				if (this.m_exploreIndex == 2) {
+					this.m_balloons.reverse()
+				}
+				for (let i = 0; i < this.m_balloons.length; i++) {
+					let balloon:Balloon = this.m_balloons[i]
+					let posX = i * (balloon.width+20) - this.m_rect.width / 5
+					let posY = -this.m_rect.height * 1
+					let rotation = 30 * i - 15
+					egret.Tween.get(balloon).to({x:posX, y:posY}, 200, egret.Ease.circOut)
+					egret.Tween.get(balloon.rop).to({scaleY:40, rotation:rotation}, 200, egret.Ease.circOut)
+				}
+			}
+		}
 	}
 
 	public RemoveBalloon(balloon:Balloon) {
@@ -389,6 +416,8 @@ class SpiderActor extends BaseActor {
 	}
 
 	private _Spide(data, posX, posY, count, i) {
+		let channel = GameVoice.spiderKingDrug.play(0, 1)
+		channel.volume = GameConfig.soundValue / 100
 		PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY, count, i)
 	}
 

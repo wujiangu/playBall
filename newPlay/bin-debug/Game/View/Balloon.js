@@ -97,7 +97,7 @@ var Balloon = (function (_super) {
     Balloon.prototype.ChangeToEasy = function () {
         this._isChangeEasy = true;
         this._type = 0;
-        this._effectArmatureContainer.play("bianhua", 1);
+        this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6);
         // this.UpdateColorAndGesture()		
     };
     Balloon.prototype.UpdateColorAndGesture = function () {
@@ -145,10 +145,10 @@ var Balloon = (function (_super) {
         this._rop.scaleX = 0.5;
         if (count == 1) {
             this._rop.rotation = 0;
-            this._rop.scaleY = 40;
+            this._rop.scaleY = 30;
         }
         else if (count == 2) {
-            this._rop.scaleY = 60;
+            this._rop.scaleY = 50;
             if (value == 0) {
                 this._rop.rotation = -15;
             }
@@ -157,7 +157,7 @@ var Balloon = (function (_super) {
             }
         }
         else if (count == 3) {
-            this._rop.scaleY = 40;
+            this._rop.scaleY = 30;
             if (value == 0) {
                 this._rop.rotation = 0;
             }

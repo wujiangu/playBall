@@ -36,9 +36,20 @@ class GameOverPanel extends BasePanel {
 		this.Show.play(0)
 
 		GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+		// this.channel = GameVoice.jiesuanSound.play(0, 1)
+		// this.channel.volume = GameConfig.soundValue / 100
+		// Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
+		// this.m_isClose = false
+		// let battleVolume = 0.8 * GameConfig.bgmValue / 100
+		// egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
+		// 	let channel = GameVoice.jiesuanSound.play(0, 1)
+		// 	channel.volume = 0
+		// 	egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
+		// 		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+		// 	})
+		// })
 
 
-		Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
 		
         Common.gameScene().uiLayer.addChild(this)
     }
@@ -47,14 +58,35 @@ class GameOverPanel extends BasePanel {
     public onExit():void{
 		this.touchChildren = false
 		this.Hide.play(0)
-		this.channel.stop()
     }
 
+	public set Channel(value) {
+		this.channel = value 
+	}
+
+	public get Channel() {
+		return this.channel
+	}
+
+	public set IsClose(value) {
+		this.m_isClose = value
+	}
+
+	public get IsClose() {
+		return this.m_isClose
+	}
+
 	private _OnBtnReturn() {
+		// if (this.m_isClose == true) {
+		// 	Common.dispatchEvent(MainNotify.closeGameOverPanel)
+		// }
+		this.touchChildren = false
 		Common.dispatchEvent(MainNotify.closeGameOverPanel)
+		
 	}
 
 	private _OnBtnAgain() {
+		this.touchChildren = false
 		this.m_isAgain = true
 		this.Hide.play(0)
 	}
@@ -112,4 +144,6 @@ class GameOverPanel extends BasePanel {
 	private Hide:egret.tween.TweenGroup
 
 	private channel:egret.SoundChannel
+
+	private m_isClose:boolean
 }

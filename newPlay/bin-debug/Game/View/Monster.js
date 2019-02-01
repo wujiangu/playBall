@@ -192,6 +192,12 @@ var Monster = (function (_super) {
         else if (this.m_data.ID == 1002) {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9);
         }
+        else if (this.m_data.ID == 1011) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65);
+        }
+        else if (this.m_data.ID == 1012) {
+            this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9);
+        }
         else {
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0);
         }
@@ -238,10 +244,17 @@ var Monster = (function (_super) {
     };
     Monster.prototype.ChangeToEasy = function () {
         this.m_gestureData.length = 0;
+        // for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+        // 	let data = GameConfig.gestureConfig[i]
+        // 	if (data.difficult == 1) {
+        // 		this.m_gestureData.push(data)
+        // 	}
+        // }
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             var data = GameConfig.gestureConfig[i];
-            if (data.difficult == 1) {
-                this.m_gestureData.push(data);
+            if (data.type == 2) {
+                for (var j = 0; j < 3; j++)
+                    this.m_gestureData.push(data);
             }
         }
         for (var i = 0; i < this.m_balloons.length; i++) {
@@ -428,6 +441,11 @@ var Monster = (function (_super) {
             PanelManager.m_gameScenePanel.RemoveMonster(this);
         }
     };
+    Monster.prototype._Spide = function (data, posX, posY) {
+        var channel = GameVoice.spideBall.play(0, 1);
+        channel.volume = GameConfig.soundValue / 100;
+        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY);
+    };
     Monster.prototype._OnArmatureFrame = function (event) {
         var evt = event.frameLabel;
         switch (evt) {
@@ -438,11 +456,17 @@ var Monster = (function (_super) {
                         count = this.m_summonData.count;
                     else
                         count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max);
-                    for (var i = 0; i < count; i++)
-                        PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y);
+                    for (var i = 0; i < count; i++) {
+                        egret.setTimeout(this._Spide, this, i * 200, this.m_summonData, this.x, this.y);
+                    }
                 }
                 break;
         }
+    };
+    Monster.prototype._Summon = function (data, posX, posY, count, i) {
+        var channel = GameVoice.summon.play(0, 1);
+        channel.volume = GameConfig.soundValue / 100;
+        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY);
     };
     Monster.prototype._OnArmatureComplet = function () {
         if (this.m_state == EMonsterState.Dead) {
@@ -452,8 +476,11 @@ var Monster = (function (_super) {
                     count = this.m_summonData.count;
                 else
                     count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max);
-                for (var i = 0; i < count; i++)
-                    PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i);
+                for (var i = 0; i < count; i++) {
+                    egret.setTimeout(this._Summon, this, i * 100, this.m_summonData, this.x, this.y, count, i);
+                }
+                // for (let i = 0; i < count; i++) {
+                // }PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i)
             }
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveMonster(this);

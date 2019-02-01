@@ -44,6 +44,13 @@ var GameStartPanel = (function (_super) {
             this.m_maskRect.visible = true;
             this.initGame.play(0);
         }
+        var id = GameConfig.itemUseTable[0];
+        var data = GameConfig.itemTable[id.toString()];
+        this.m_imgBg.source = data.Scene;
+        this.m_imgSun.source = data.Sun;
+        this.m_cloud1.source = data.cloud1;
+        this.m_cloud2.source = data.cloud2;
+        this.m_cloud3.source = data.cloud3;
         // this.m_imgCloth.y = Config.stageHeight - 1375
         if (GameVoice.beginBGMChannel != null)
             GameVoice.beginBGMChannel.stop();

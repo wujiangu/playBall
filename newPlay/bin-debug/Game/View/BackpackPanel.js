@@ -43,6 +43,11 @@ var BackpackPanel = (function (_super) {
         this.touchChildren = true;
         this.initData();
         this._UpdateBtnItem();
+        var id = GameConfig.itemUseTable[0];
+        var data = GameConfig.itemTable[id.toString()];
+        this.m_imgBg.source = data.Scene;
+        this.m_itemTypeBg.visible = false;
+        this.m_curItem.visible = false;
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -97,8 +102,8 @@ var BackpackPanel = (function (_super) {
         if (GameConfig.itemTable[strId].Open) {
             this.selectItem.play(0);
             this.m_curItem.visible = false;
-            this.m_itemAnimate.visible = true;
-            this.m_itemAnimate.play(strId, 1);
+            // this.m_itemAnimate.visible = true
+            // this.m_itemAnimate.play(strId, 1)
             if (GameConfig.itemTable[strId].IsUse == 1) {
                 // TipsManager.Show(GameConfig.itemTable[strId].Name + "装备中！", Common.TextColors.red, ETipsType.DownToUp, 40, "", Config.stageHalfWidth, Config.stageHalfHeight - 190)
             }
@@ -111,6 +116,7 @@ var BackpackPanel = (function (_super) {
                 }
                 GameConfig.itemUseTable.push(currentId);
                 Common.UpdateUseItem();
+                this._OnBtnReturn();
                 // this._UpdateBtnItem()
                 // this.selectItem.play(0)
             }
@@ -153,9 +159,11 @@ var BackpackPanel = (function (_super) {
         this._UpdateAllItemList();
     };
     BackpackPanel.prototype._OnItemAnimate = function () {
-        this.m_itemAnimate.visible = false;
-        // this.m_curItem.visible = true
+        // this.m_itemAnimate.visible = false
         this._UpdateBtnItem();
+    };
+    BackpackPanel.prototype._OnWaterComplete = function () {
+        this.water.play(0);
     };
     BackpackPanel.prototype.onComplete = function () {
         this.m_itemIRs.push(this.m_itemIRLeft1);
@@ -167,25 +175,25 @@ var BackpackPanel = (function (_super) {
         this.m_btnRight.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRight, this);
         this.leftAnimation.addEventListener("complete", this._OnLeftComplete, this);
         this.rightAnimation.addEventListener("complete", this._OnRightComplete, this);
+        this.water.play(0);
+        this.water.addEventListener('complete', this._OnWaterComplete, this);
         Common.addTouchBegin(this.m_btnReturn);
         Common.addTouchBegin(this.m_btnUse);
         Common.addTouchBegin(this.m_btnLeft);
         Common.addTouchBegin(this.m_btnRight);
-        this.m_itemAnimate = new DragonBonesArmatureContainer();
-        this.addChild(this.m_itemAnimate);
-        var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate");
-        var guideArmature = new DragonBonesArmature(guideDisplay);
-        guideArmature.ArmatureDisplay = guideDisplay;
-        this.m_itemAnimate.register(guideArmature, ["1001", "1002", "1003"]);
-        this.m_itemAnimate.x = Config.stageHalfWidth;
-        this.m_itemAnimate.y = 1300;
-        this.m_itemAnimate.scaleX = 0.8;
-        this.m_itemAnimate.scaleY = 0.8;
-        this.m_itemAnimate.addCompleteCallFunc(this._OnItemAnimate, this);
+        // this.m_itemAnimate = new DragonBonesArmatureContainer()
+        // this.addChild(this.m_itemAnimate)
+        // let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("ItemAnimate", "ItemAnimate")
+        // let guideArmature = new DragonBonesArmature(guideDisplay)
+        // guideArmature.ArmatureDisplay = guideDisplay
+        // this.m_itemAnimate.register(guideArmature, ["1001", "1002", "1003"])
+        // this.m_itemAnimate.x = Config.stageHalfWidth
+        // this.m_itemAnimate.y = 1300
+        // this.m_itemAnimate.scaleX = 0.8
+        // this.m_itemAnimate.scaleY = 0.8
+        // this.m_itemAnimate.addCompleteCallFunc(this._OnItemAnimate, this)
         this.m_curItem.visible = true;
-        this.m_itemAnimate.visible = false;
-        // this.m_itemAnimate.play("1003", 0)
-        // this.m_itemAnimate.play("1003", 0)
+        // this.m_itemAnimate.visible = false
         this._OnResize();
     };
     BackpackPanel.prototype._OnResize = function (event) {

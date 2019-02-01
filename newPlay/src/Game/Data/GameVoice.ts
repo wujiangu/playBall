@@ -13,11 +13,15 @@ module GameVoice {
     export var combo3_mp3:string = "combo3_mp3"              // 三连
     export var combo4_mp3:string = "combo4_mp3"              // 四连
     export var spiderKingArrive_mp3:string = "spiderKingArrive_mp3"              // 蜘蛛王出场
+    export var spiderKingDrug_mp3:string = "spiderKingDrug_mp3"              // 蜘蛛王吐毒
     export var jiesuan_mp3:string = "jiesuan_mp3"              // 结算
     export var readyGo_mp3:string = "readyGo_mp3"
     export var smallBoss_mp3:string = "smallBoss_mp3"
     export var fallDownWater_mp3:string = "fallDownWater_mp3"
     export var bossWarning_mp3:string = "bossWarning_mp3"
+    export var spideBall_mp3:string = "spideBall_mp3"
+    export var summon_mp3:string = "summon_mp3"
+    export var unlockItem_mp3:string = "unlockItem_mp3"
 
 
     export var beginBGMSound:egret.Sound = null
@@ -36,9 +40,13 @@ module GameVoice {
     export var combo3Sound:egret.Sound = null
     export var combo4Sound:egret.Sound = null
     export var spiderKingArrive:egret.Sound = null
+    export var spiderKingDrug:egret.Sound = null
     export var jiesuanSound:egret.Sound = null
     export var readyGoSound:egret.Sound = null
     export var smallBossSound:egret.Sound = null
     export var fallDownWaterSound:egret.Sound = null
     export var bossWarning:egret.Sound = null
+    export var spideBall:egret.Sound = null
+    export var summon:egret.Sound = null
+    export var unlockItem:egret.Sound = null
 }

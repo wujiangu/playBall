@@ -48,6 +48,7 @@ class GameScenePanel extends BasePanel {
         this.m_spiderWebArmatureContainer.visible = false
         this.m_imgBossWarning.visible = false
         this.m_imgReleaseSkil.visible = false
+        this.itemUnlockGroup.visible = false
         this.m_imgPower.alpha = 1
         this.m_normalCount = 0
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
@@ -165,6 +166,13 @@ class GameScenePanel extends BasePanel {
                 this.m_currentItemId = id
             }
             this.m_curItemData = GameConfig.itemTable[id.toString()]
+
+            this.m_imgScene.source = this.m_curItemData.Scene
+            this.m_imgSun.source = this.m_curItemData.Sun
+            this.m_cloud1.source = this.m_curItemData.cloud1
+            this.m_cloud2.source = this.m_curItemData.cloud2
+            this.m_cloud3.source = this.m_curItemData.cloud3
+
             this._UpdateItemArmature()
             this._UpdateFullArmature()
         }
@@ -634,6 +642,14 @@ class GameScenePanel extends BasePanel {
                 GameConfig.itemTable[itemId.toString()].Open = true
                 GameConfig.itemUnlockList.push(itemId)
                 Common.UpdateUnlockItem()
+                this.itemUnlockGroup.visible = true
+                let itemData = GameConfig.itemTable[itemId.toString()]
+                this.itemIcon.texture = RES.getRes(itemData.Icon)
+			    this.itemBg.texture = RES.getRes(itemData.Bg)
+                this.itemUnlock.play(1)
+
+                let channel = GameVoice.unlockItem.play(0, 1)
+		        channel.volume = GameConfig.soundValue / 100
             }
             this.UpdeLevelData(this.m_currentLevel.next)
         }
@@ -1121,7 +1137,12 @@ class GameScenePanel extends BasePanel {
     private m_isWarning:boolean
     private m_isLuck:boolean
     ///////////////////////////////////////////////////////////////////////////
-	private m_imgScene:eui.Image
+
+    private itemUnlockGroup:eui.Group
+    private itemBg:eui.Image
+    private itemIcon:eui.Image
+    private itemUnlock:egret.tween.TweenGroup
+
 	private m_bitLabScore:eui.BitmapLabel
     private m_imgEffectMask:eui.Image
     private m_imgGroundLine:eui.Image
@@ -1155,6 +1176,8 @@ class GameScenePanel extends BasePanel {
 	private m_gesture:Gesture
 
     /**云朵 */
+    private m_imgScene:eui.Image
+    private m_imgSun:eui.Image
 	private m_cloud1:eui.Image
 	private m_cloud2:eui.Image
 	private m_cloud3:eui.Image
@@ -1162,7 +1185,6 @@ class GameScenePanel extends BasePanel {
 	private m_cloud2Speed:number
 	private m_cloud3Speed:number
 
-    private m_imgSun:eui.Image
     private m_sunSpeed:number
 
     /**能量释放组 */

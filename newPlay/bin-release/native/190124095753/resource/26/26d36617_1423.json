@@ -1,0 +1,12 @@
+[
+    {"difficult":1, "type":1,"path":"gestureSheet_json.gesture001","data":["3", "7"], "count":1, "balloon":"lv", "color":"0x1c5b52"},
+    {"difficult":1, "type":2,"path":"gestureSheet_json.gesture002","data":["1", "5"], "count":1, "balloon":"lv", "color":"0xcd4a81"},
+    {"difficult":1, "type":4,"path":"gestureSheet_json.gesture004","data":["543218765"], "count":1, "balloon":"lan", "color":"0x877a5d"},
+    {"difficult":1, "type":5,"path":"gestureSheet_json.gesture005","data":["141", "585"], "count":1, "balloon":"huang", "color":"0x877a5d"},
+    {"difficult":2, "type":6,"path":"gestureSheet_json.gesture006","data":["781232187", "345676543"], "count":1, "balloon":"hong", "color":"0x877a5d"},
+    {"difficult":1, "type":101,"path":"gestureSheet_json.gesture101","data":["2345678"], "count":2, "balloon":"lan", "color":"0xaa69e9"},
+    {"difficult":2, "type":102,"path":"gestureSheet_json.gesture102","data":["1875431345681"], "count":2, "balloon":"hong", "color":"0xaa69e9"},
+    {"difficult":2, "type":103,"path":"gestureSheet_json.gesture103","data":["764321876543"], "count":2, "balloon":"zi", "color":"0xaa69e9"},
+    {"difficult":2, "type":105,"path":"gestureSheet_json.gesture105","data":["3456781876543"], "count":2, "balloon":"zi", "color":"0xaa69e9"},
+    {"difficult":2, "type":106,"path":"gestureSheet_json.gesture106","data":["1234567812345"], "count":2, "balloon":"zi", "color":"0xaa69e9"}
+]
