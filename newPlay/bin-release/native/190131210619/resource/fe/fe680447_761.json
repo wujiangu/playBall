@@ -1,9 +1,0 @@
-{"file":"itemSheet.png","frames":{
-"item04":{"x":113,"y":329,"w":116,"h":133,"offX":24,"offY":25,"sourceW":170,"sourceH":170},
-"item05":{"x":0,"y":352,"w":113,"h":156,"offX":27,"offY":7,"sourceW":170,"sourceH":170},
-"item06":{"x":0,"y":196,"w":113,"h":156,"offX":27,"offY":7,"sourceW":170,"sourceH":170},
-"itemBg1":{"x":196,"y":132,"w":194,"h":51,"offX":0,"offY":0,"sourceW":194,"sourceH":51},
-"itemBox":{"x":0,"y":0,"w":196,"h":196,"offX":0,"offY":0,"sourceW":196,"sourceH":196},
-"item01":{"x":297,"y":0,"w":101,"h":132,"offX":33,"offY":27,"sourceW":170,"sourceH":170},
-"item02":{"x":196,"y":0,"w":101,"h":132,"offX":33,"offY":27,"sourceW":170,"sourceH":170},
-"item03":{"x":113,"y":196,"w":116,"h":133,"offX":24,"offY":25,"sourceW":170,"sourceH":170}}}
