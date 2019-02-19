@@ -1,54 +1,75 @@
-{
-  "1001":{
-    "ID": 1001,
-    "Type": 1,
-    "Name": "气球",
-    "Animation": "qiqiu",
-    "Actions":["hong", "huang", "lan", "lv", "zi"],
-    "Speed": 11,
-    "Score": 0,
-    "Power": 2,
-    "Scale": 1,
-    "Width": 60,
-    "Height": 60
-  },
-  "1002":{
-    "ID": 1002,
-    "Type": 2,
-    "Name": "小蜘蛛",
-    "Animation": "zhizhu",
-    "Actions":["idle", "dead", "arrive", "run"],
-    "Speed": 11,
-    "Score": 0,
-    "Power": 2,
-    "Scale": 0.5,
-    "Width": 60,
-    "Height": 100
-  },
-  "1003":{
-    "ID": 1003,
-    "Type": 2,
-    "Name": "毒液",
-    "Animation": "duye",
-    "Actions":["idle", "dead", "arrive", "run"],
-    "Speed": 27,
-    "Score": 0,
-    "Power": 2,
-    "Scale": 1,
-    "Width": 60,
-    "Height": 100
-  },
-  "1004":{
-    "ID": 1004,
-    "Type": 2,
-    "Name": "毒液",
-    "Animation": "duye",
-    "Actions":["idle", "dead", "arrive", "run"],
-    "Speed": 15,
-    "Score": 0,
-    "Power": 2,
-    "Scale": 1,
-    "Width": 60,
-    "Height": 100
-  }
-}
+[
+    {
+        "Scale": 1.0, 
+        "Name": "气球", 
+        "Power": 2, 
+        "Type": 1, 
+        "Score": 0, 
+        "Actions": [
+            "hong", 
+            "huang", 
+            "lan", 
+            "lv", 
+            "zi"
+        ], 
+        "Height": 60, 
+        "Width": 60, 
+        "Animation": "qiqiu", 
+        "Speed": 11, 
+        "ID": 1001
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "小蜘蛛", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "zhizhu", 
+        "Speed": 11, 
+        "ID": 1002
+    }, 
+    {
+        "Scale": 1.0, 
+        "Name": "毒液(大蜘蛛)", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "duye", 
+        "Speed": 27, 
+        "ID": 1003
+    }, 
+    {
+        "Scale": 1.0, 
+        "Name": "毒液", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "duye", 
+        "Speed": 15, 
+        "ID": 1004
+    }
+]

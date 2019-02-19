@@ -88,7 +88,7 @@ class GameScenePanel extends BasePanel {
     }
 
     public UpdeLevelData(a_levelId:number) {
-        this.m_currentLevel = GameConfig.levelConfig[a_levelId.toString()]
+        this.m_currentLevel = GameConfig.levelTable[a_levelId.toString()]
         this.m_passTime = 0
         this.m_monsterAddDelay = 0
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime

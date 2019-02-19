@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,summonSkillConfig_json",
 			"name": "preload"
 		}
 	],
@@ -1285,6 +1285,11 @@
 			"url": "assets/voice/unlockItem.mp3",
 			"type": "sound",
 			"name": "unlockItem_mp3"
+		},
+		{
+			"name": "summonSkillConfig_json",
+			"type": "json",
+			"url": "config/summonSkillConfig.json"
 		}
 	]
 }

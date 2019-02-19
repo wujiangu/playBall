@@ -20,11 +20,11 @@ class SummonActor extends BaseActor {
 
 		// this.m_data = this._RandomSummonActorData()
 
-		this.m_data = GameConfig.summonConfig[a_data.id.toString()]
+		this.m_data = GameConfig.summonTable[a_data.id.toString()]
 		this._animations = this.m_data.Actions
 		this.m_gesturDiff = a_data.diff
 		this.m_gestureData.length = 0
-		if (a_data.ids.length > 0) {
+		if (a_data.ids != undefined && a_data.ids.length > 0) {
 			for (let i = 0; i < a_data.ids.length; i++) {
 				let id = a_data.ids[i]
 				for (let i = 0; i < GameConfig.gestureConfig.length; i++) {

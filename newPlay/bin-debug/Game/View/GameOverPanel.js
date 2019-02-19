@@ -46,19 +46,19 @@ var GameOverPanel = (function (_super) {
         this.m_labPingfen.text = comboScore;
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
-        // GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+        GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
         // this.channel = GameVoice.jiesuanSound.play(0, 1)
         // this.channel.volume = GameConfig.soundValue / 100
         // Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
         // this.m_isClose = false
-        var battleVolume = 0.8 * GameConfig.bgmValue / 100;
-        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
-            var channel = GameVoice.jiesuanSound.play(0, 1);
-            channel.volume = 0;
-            egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
-                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume }, 500);
-            });
-        });
+        // let battleVolume = 0.8 * GameConfig.bgmValue / 100
+        // egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
+        // 	let channel = GameVoice.jiesuanSound.play(0, 1)
+        // 	channel.volume = 0
+        // 	egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
+        // 		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+        // 	})
+        // })
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板

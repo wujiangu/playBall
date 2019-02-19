@@ -5,10 +5,14 @@ class GameConfig {
 	public static luckyConfig:Array<any>
 
 	public static summonConfig:any
+	public static summonTable:any
 	public static levelConfig:any
+	public static levelTable:any
 
 	public static gestureConfig:Array<any>
 	public static itemConfig:Array<any>
+	public static summonSkillConfig:Array<any>
+	public static summonSkillTable:any
 
 	public static itemTable:any
 	public static itemUseTable:Array<number>
@@ -80,6 +84,7 @@ class GameConfig {
 		this.summonConfig = RES.getRes("summonConfig_json")
 		this.levelConfig = RES.getRes("levelConfig_json")
 		this.itemConfig = RES.getRes("itemConfig_json")
+		this.summonSkillConfig = RES.getRes("summonSkillConfig_json")
 		this.itemTable = {}
 		// this.itemUseTable = new Array()
 		// this.itemUseTable.push(1003)
@@ -161,10 +166,61 @@ class GameConfig {
             this.InitBattleDragonBones(data.Animation)
         }
 
-
+		this.InitConfig()
 		this.InitSound()
 		Common.GetGuide()
 		// this.itemUseTable.push(1002)
 		// this.itemUseTable.push(1003)
+	}
+
+	public static InitConfig() {
+		this.summonTable = {}
+        for (let i = 0; i < this.summonConfig.length; i++) {
+            let config = this.summonConfig[i]
+			let data = {}
+			data["ID"] = config.ID
+			data["Type"] = config.Type
+			data["Actions"] = config.Actions
+			data["Animation"] = config.Animation
+			data["Speed"] = config.Speed
+			data["Score"] = config.Score
+			data["Power"] = config.Power
+			data["Scale"] = config.Scale
+			data["Width"] = config.Width
+			data["Height"] = config.Height
+			this.summonTable[config.ID.toString()] = data
+        }
+
+
+		this.levelTable = {}
+        for (let i = 0; i < this.levelConfig.length; i++) {
+            let config = this.levelConfig[i]
+			let data = {}
+			data["key"] = config.key
+			data["next"] = config.next
+			data["addTime"] = config.addTime
+			data["speed"] = config.speed
+			data["normalCount"] = config.normalCount
+			data["eliteCount"] = config.eliteCount
+			data["unlockItem"] = config.unlockItem
+			data["normal"] = config.normal
+			data["elite"] = config.elite
+			this.levelTable[config.key.toString()] = data
+        }
+
+		this.summonSkillTable = {}
+        for (let i = 0; i < this.summonSkillConfig.length; i++) {
+            let config = this.summonSkillConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["type"] = config.type
+			data["diff"] = config.diff
+			data["key"] = config.key
+			data["max"] = config.max
+			data["min"] = config.min
+			data["count"] = config.count
+			data["ids"] = config.ids
+			this.summonSkillTable[config.key.toString()] = data
+        }
 	}
 }

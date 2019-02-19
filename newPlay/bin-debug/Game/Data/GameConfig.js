@@ -42,6 +42,7 @@ var GameConfig = (function () {
         this.summonConfig = RES.getRes("summonConfig_json");
         this.levelConfig = RES.getRes("levelConfig_json");
         this.itemConfig = RES.getRes("itemConfig_json");
+        this.summonSkillConfig = RES.getRes("summonSkillConfig_json");
         this.itemTable = {};
         // this.itemUseTable = new Array()
         // this.itemUseTable.push(1003)
@@ -118,10 +119,58 @@ var GameConfig = (function () {
             var data = this.luckyConfig[i];
             this.InitBattleDragonBones(data.Animation);
         }
+        this.InitConfig();
         this.InitSound();
         Common.GetGuide();
         // this.itemUseTable.push(1002)
         // this.itemUseTable.push(1003)
+    };
+    GameConfig.InitConfig = function () {
+        this.summonTable = {};
+        for (var i = 0; i < this.summonConfig.length; i++) {
+            var config = this.summonConfig[i];
+            var data = {};
+            data["ID"] = config.ID;
+            data["Type"] = config.Type;
+            data["Actions"] = config.Actions;
+            data["Animation"] = config.Animation;
+            data["Speed"] = config.Speed;
+            data["Score"] = config.Score;
+            data["Power"] = config.Power;
+            data["Scale"] = config.Scale;
+            data["Width"] = config.Width;
+            data["Height"] = config.Height;
+            this.summonTable[config.ID.toString()] = data;
+        }
+        this.levelTable = {};
+        for (var i = 0; i < this.levelConfig.length; i++) {
+            var config = this.levelConfig[i];
+            var data = {};
+            data["key"] = config.key;
+            data["next"] = config.next;
+            data["addTime"] = config.addTime;
+            data["speed"] = config.speed;
+            data["normalCount"] = config.normalCount;
+            data["eliteCount"] = config.eliteCount;
+            data["unlockItem"] = config.unlockItem;
+            data["normal"] = config.normal;
+            data["elite"] = config.elite;
+            this.levelTable[config.key.toString()] = data;
+        }
+        this.summonSkillTable = {};
+        for (var i = 0; i < this.summonSkillConfig.length; i++) {
+            var config = this.summonSkillConfig[i];
+            var data = {};
+            data["id"] = config.id;
+            data["type"] = config.type;
+            data["diff"] = config.diff;
+            data["key"] = config.key;
+            data["max"] = config.max;
+            data["min"] = config.min;
+            data["count"] = config.count;
+            data["ids"] = config.ids;
+            this.summonSkillTable[config.key.toString()] = data;
+        }
     };
     GameConfig.game = "HT";
     GameConfig.isWebView = true;

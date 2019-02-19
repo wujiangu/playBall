@@ -34,7 +34,10 @@ var Monster = (function (_super) {
                         this.m_gesturDiff = monsterData[i].diff;
                         this.m_balloonMin = monsterData[i].min;
                         this.m_balloonMax = monsterData[i].max;
-                        this.m_summonData = monsterData[i].summon;
+                        var summonId_1 = monsterData[i].summon;
+                        if (summonId_1 > 0) {
+                            this.m_summonData = GameConfig.summonSkillTable[summonId_1];
+                        }
                         this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()];
                         this.m_type = this.m_data.Difficult;
                         break;
@@ -46,7 +49,10 @@ var Monster = (function (_super) {
                 this.m_gesturDiff = PanelManager.m_gameScenePanel.Boss.diff;
                 this.m_balloonMin = PanelManager.m_gameScenePanel.Boss.min;
                 this.m_balloonMax = PanelManager.m_gameScenePanel.Boss.max;
-                this.m_summonData = PanelManager.m_gameScenePanel.Boss.summon;
+                var summonId = PanelManager.m_gameScenePanel.Boss.summon;
+                if (summonId > 0) {
+                    this.m_summonData = GameConfig.summonSkillTable[summonId];
+                }
                 this.m_data = GameConfig.monsterTable[PanelManager.m_gameScenePanel.Boss.id.toString()];
                 this.m_type = this.m_data.Difficult;
                 PanelManager.m_gameScenePanel.EliteCount += 1;

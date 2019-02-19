@@ -1,15 +1,15 @@
 [
-  {
-    "ID": 1101,
-    "Type": 1,
-    "Name": "蓝脸怪",
-    "Animation": "xinyunguai",
-    "Prob": 30,
-    "Speed": 12,
-    "Score": 0,
-    "Power": 10,
-    "Scale": 2,
-    "Width": 100,
-    "Height": 100
-  }
+    {
+        "Scale": 2.0, 
+        "Name": "蓝脸怪", 
+        "Power": 10, 
+        "Type": 1, 
+        "Score": 0, 
+        "ID": 1101, 
+        "Width": 100, 
+        "Animation": "xinyunguai", 
+        "Height": 100, 
+        "Speed": 12, 
+        "Prob": 100
+    }
 ]

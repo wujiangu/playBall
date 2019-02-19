@@ -97,7 +97,7 @@ var GameScenePanel = (function (_super) {
         ShakeTool.getInstance().setInitPos(this.m_imgScene.x, this.m_imgScene.y);
     };
     GameScenePanel.prototype.UpdeLevelData = function (a_levelId) {
-        this.m_currentLevel = GameConfig.levelConfig[a_levelId.toString()];
+        this.m_currentLevel = GameConfig.levelTable[a_levelId.toString()];
         this.m_passTime = 0;
         this.m_monsterAddDelay = 0;
         this.m_allTime = this.m_currentLevel.normalTime + this.m_currentLevel.eliteTime;
