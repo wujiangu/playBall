@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,summonSkillConfig_json",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,summonSkillConfig_json,actorList4_png,actorList1_png,actorList2_png,actorList3_png,actorList6_png,actorList5_png,btnReturn_png",
 			"name": "preload"
 		}
 	],
@@ -1290,6 +1290,41 @@
 			"name": "summonSkillConfig_json",
 			"type": "json",
 			"url": "config/summonSkillConfig.json"
+		},
+		{
+			"name": "actorList4_png",
+			"type": "image",
+			"url": "assets/actorList/actorList4.png"
+		},
+		{
+			"name": "actorList1_png",
+			"type": "image",
+			"url": "assets/actorList/actorList1.png"
+		},
+		{
+			"name": "actorList2_png",
+			"type": "image",
+			"url": "assets/actorList/actorList2.png"
+		},
+		{
+			"name": "actorList3_png",
+			"type": "image",
+			"url": "assets/actorList/actorList3.png"
+		},
+		{
+			"name": "actorList6_png",
+			"type": "image",
+			"url": "assets/actorList/actorList6.png"
+		},
+		{
+			"name": "actorList5_png",
+			"type": "image",
+			"url": "assets/actorList/actorList5.png"
+		},
+		{
+			"name": "btnReturn_png",
+			"type": "image",
+			"url": "assets/Button/btnReturn.png"
 		}
 	]
 }

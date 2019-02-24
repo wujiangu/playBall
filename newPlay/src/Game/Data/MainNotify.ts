@@ -42,6 +42,9 @@ module MainNotify {
 	//暂停
 	export var openGamePausePanel:string = "openGamePausePanel"
 	export var closeGamePausePanel:string = "closeGamePausePanel"
+
+	export var openActorListPanel:string = "openActorListPanel"
+	export var closeActorListPanel:string = "closeActorListPanel"
 }
 
 

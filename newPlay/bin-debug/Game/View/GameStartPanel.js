@@ -118,7 +118,8 @@ var GameStartPanel = (function (_super) {
         // this.CloseGroup.play(0)
     };
     GameStartPanel.prototype._OnBtnSetting = function () {
-        Common.dispatchEvent(MainNotify.openSettingPanel);
+        // Common.dispatchEvent(MainNotify.openSettingPanel)
+        Common.dispatchEvent(MainNotify.openActorListPanel);
     };
     GameStartPanel.prototype._OnBtnRank = function () {
     };

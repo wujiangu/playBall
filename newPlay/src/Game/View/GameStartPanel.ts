@@ -101,7 +101,8 @@ class GameStartPanel extends BasePanel {
 	}
 
 	private _OnBtnSetting() {
-		Common.dispatchEvent(MainNotify.openSettingPanel)
+		// Common.dispatchEvent(MainNotify.openSettingPanel)
+		Common.dispatchEvent(MainNotify.openActorListPanel)
 	}
 
 	private _OnBtnRank() {

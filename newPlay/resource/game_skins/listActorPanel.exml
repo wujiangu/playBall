@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="listActorPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="groupList" width="669" height="789" horizontalCenter="0" bottom="39">
+		<e:Image source="actorList2_png" x="0" y="0"/>
+		<e:Group id="groupPage" width="200" height="27" anchorOffsetY="0" horizontalCenter="0" bottom="36" x="234" y="748" scaleX="1" scaleY="1">
+			<e:Image id="m_imgPage1" source="actorList4_png" width="27" height="27" y="0" x="0"/>
+			<e:Image id="m_imgPage2" source="actorList4_png" width="27" height="27" y="0" x="43"/>
+			<e:Image id="m_imgPage3" source="actorList4_png" width="27" height="27" y="0" x="86"/>
+			<e:Image id="m_imgPage4" source="actorList4_png" width="27" height="27" y="0" x="130"/>
+			<e:Image id="m_imgPage5" source="actorList4_png" width="27" height="27" y="0" x="173"/>
+		</e:Group>
+		<ns1:ScrollView id="m_srollView" width="628" height="628" scaleX="1" scaleY="1" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-24.5">
+			<e:Group anchorOffsetX="0" width="628">
+			<e:layout>
+				<e:HorizontalLayout gap="0"/>
+			</e:layout>
+				<e:Group id="m_page1" width="628" height="628" x="71" y="205">
+				</e:Group>
+				<e:Group width="628" height="628" x="91" y="225" id="m_page2"/>
+				<e:Group width="628" height="628" x="101" y="235" id="m_page3"/>
+				<e:Group width="628" height="628" x="111" y="245" id="m_page4"/>
+				<e:Group id="m_page5" width="628" height="628" x="81" y="215"/>
+			</e:Group>
+		</ns1:ScrollView>
+	</e:Group>
+	<e:Button id="m_btnReturn" label="" left="17" top="26">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnReturn_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+</e:Skin>

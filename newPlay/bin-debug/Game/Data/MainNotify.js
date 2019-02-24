@@ -35,5 +35,7 @@ var MainNotify;
     //暂停
     MainNotify.openGamePausePanel = "openGamePausePanel";
     MainNotify.closeGamePausePanel = "closeGamePausePanel";
+    MainNotify.openActorListPanel = "openActorListPanel";
+    MainNotify.closeActorListPanel = "closeActorListPanel";
 })(MainNotify || (MainNotify = {}));
 //# sourceMappingURL=MainNotify.js.map
