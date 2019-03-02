@@ -17,25 +17,22 @@ class Balloon extends egret.Sprite {
 		}
 		this._balloonArmature.ArmatureDisplay = armatureDisplay
 		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
-
 		this._balloonArmatureContainer.scaleX = 1
 		this._balloonArmatureContainer.scaleY = 1
-
 		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
-
 
 
 		this._effectArmatureContainer = new DragonBonesArmatureContainer()
 		this.addChild(this._effectArmatureContainer)
-		let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua")
-		if (this._effectArmature == null) {
-			this._effectArmature = new DragonBonesArmature(effectArmatureDisplay)
-		}
-		this._effectArmature.ArmatureDisplay = effectArmatureDisplay
-		this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
-		this._effectArmatureContainer.scaleX = 1
-		this._effectArmatureContainer.scaleY = 1
-		this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+		// let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua")
+		// if (this._effectArmature == null) {
+		// 	this._effectArmature = new DragonBonesArmature(effectArmatureDisplay)
+		// }
+		// this._effectArmature.ArmatureDisplay = effectArmatureDisplay
+		// this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
+		// this._effectArmatureContainer.scaleX = 1
+		// this._effectArmatureContainer.scaleY = 1
+		// this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
 
 		this._gesture = new egret.Bitmap()
 		this.addChild(this._gesture)
@@ -70,6 +67,30 @@ class Balloon extends egret.Sprite {
 		this.m_guideArmatureContainer.play("xinshouyindao2", 0)
 	}
 
+	/**
+	 * 更新气球身上的特效动画
+	 */
+	public UpdateEffectArmature(data:any) {
+		this._effectArmatureContainer.clear()
+		let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile)
+		if (this._effectArmature == null) {
+			this._effectArmature = new DragonBonesArmature(effectArmatureDisplay)
+		}
+		this._effectArmature.ArmatureDisplay = effectArmatureDisplay
+		this._effectArmatureContainer.register(this._effectArmature, [data.skill])
+		this._effectArmatureContainer.scaleX = 1
+		this._effectArmatureContainer.scaleY = 1
+		this._effectArmatureContainer.x = data.skillPosX
+		this._effectArmatureContainer.y = data.skillPosY
+		this._changeType = data.param[1]
+		this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+	}
+
+	public PlayEffect(data:any) {
+		this._type = 0
+		this._effectArmatureContainer.play(data.skill, 1)	
+	}
+
 	public UpdateGesture(data:Array<any>, isInit:boolean = false) {
 		let random = MathUtils.getRandom(data.length - 1)
 		this._gesture.texture = RES.getRes(data[random].path)
@@ -82,10 +103,6 @@ class Balloon extends egret.Sprite {
 		this._score = data[random].count
 		this._animationName = data[random].balloon
 		data.splice(random, 1)
-
-		// let colorIndex = MathUtils.getRandom(2)
-		// this._animationName = this._animations[colorIndex]
-		
 		this._balloonArmatureContainer.play(this._animationName, 1)
 		this._balloonArmatureContainer.pause(this._animationName)
 
@@ -98,8 +115,7 @@ class Balloon extends egret.Sprite {
 	public ChangeToEasy() {
 		this._isChangeEasy = true
 		this._type = 0
-		this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6)
-		// this.UpdateColorAndGesture()		
+		this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6)	
 	}
 
 	public UpdateColorAndGesture() {
@@ -239,7 +255,14 @@ class Balloon extends egret.Sprite {
 	}
 
 	private _OnEffectArmatureComplete(e:egret.Event) {
-		this.UpdateGesture(this._root.GestureData)
+		// this.UpdateGesture(this._root.GestureData)
+		this._gestureData.length = 0
+		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+			if (GameConfig.gestureConfig[i].type == this._changeType) {
+				this._gestureData.push(GameConfig.gestureConfig[i])
+			}
+		}
+		this.UpdateGesture(this._gestureData)
 	}
 
 	private _gesture:egret.Bitmap
@@ -263,4 +286,6 @@ class Balloon extends egret.Sprite {
 	private _gestureData:Array<any>
 
 	private _isChangeEasy:boolean
+
+	private _changeType:number
 }

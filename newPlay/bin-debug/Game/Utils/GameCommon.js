@@ -275,5 +275,152 @@ var Common;
         }
     }
     Common.UpdateCurrentScore = UpdateCurrentScore;
+    /**获取解锁宝宝表 */
+    function GetUnlockBaby() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.babyUnlockList = JSON.parse(message);
+                }
+                else {
+                    GameConfig.babyUnlockList = new Array();
+                    GameConfig.babyUnlockList.push(10010);
+                    Common.UpdateUnlockBaby();
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "babyUnlockList");
+        }
+        else {
+            var babyUnlockList = NativeApi.getLocalData(GameConfig.game + "babyUnlockList");
+            if (babyUnlockList == null) {
+                GameConfig.babyUnlockList = new Array();
+                GameConfig.babyUnlockList.push(10010);
+                Common.UpdateUnlockBaby();
+            }
+            else {
+                GameConfig.babyUnlockList = JSON.parse(babyUnlockList);
+            }
+        }
+    }
+    Common.GetUnlockBaby = GetUnlockBaby;
+    /**更新解锁表 */
+    function UpdateUnlockBaby() {
+        if (GameConfig.babyUnlockList.length > 0) {
+            var str = JSON.stringify(GameConfig.babyUnlockList);
+            if (!GameConfig.isWebView) {
+                egret.ExternalInterface.call("write", GameConfig.game + "babyUnlockList:" + str);
+            }
+            else {
+                NativeApi.setLocalData(GameConfig.game + "babyUnlockList", str);
+            }
+        }
+    }
+    Common.UpdateUnlockBaby = UpdateUnlockBaby;
+    /**获取当前的宝宝 */
+    function GetCurBaby() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.curBaby = parseInt(message);
+                }
+                else {
+                    GameConfig.curBaby = 10010;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "curBaby");
+        }
+        else {
+            var score = NativeApi.getLocalData(GameConfig.game + "curBaby");
+            if (score == null) {
+                GameConfig.curBaby = 10010;
+            }
+            else {
+                GameConfig.curBaby = parseInt(score);
+            }
+        }
+    }
+    Common.GetCurBaby = GetCurBaby;
+    /**更新当前的宝宝 */
+    function UpdateCurBaby(value) {
+        GameConfig.curBaby = value;
+        GameConfig.curBabyData = GameConfig.actorTable[value.toString()];
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "curBaby:" + value);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "curBaby", value.toString());
+        }
+    }
+    Common.UpdateCurBaby = UpdateCurBaby;
+    /**获取当前的挑战章节进度 */
+    function GetCurChpter() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.curChpter = parseInt(message);
+                }
+                else {
+                    GameConfig.curChpter = 1001;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "curChpter");
+        }
+        else {
+            var score = NativeApi.getLocalData(GameConfig.game + "curChpter");
+            if (score == null) {
+                GameConfig.curChpter = 1001;
+            }
+            else {
+                GameConfig.curChpter = parseInt(score);
+            }
+        }
+    }
+    Common.GetCurChpter = GetCurChpter;
+    /**更新当前的挑战章节进度 */
+    function UpdateCurChpter(value) {
+        GameConfig.curChpter = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "curChpter:" + value);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "curChpter", value.toString());
+        }
+    }
+    Common.UpdateCurChpter = UpdateCurChpter;
+    /**获取当前的挑战关卡进度 */
+    function GetCurLevel() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.curLevel = parseInt(message);
+                }
+                else {
+                    GameConfig.curLevel = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "curLevel");
+        }
+        else {
+            var score = NativeApi.getLocalData(GameConfig.game + "curLevel");
+            if (score == null) {
+                GameConfig.curLevel = 0;
+            }
+            else {
+                GameConfig.curLevel = parseInt(score);
+            }
+        }
+    }
+    Common.GetCurLevel = GetCurLevel;
+    /**更新当前的挑战关卡进度 */
+    function UpdateCurLevel(value) {
+        GameConfig.curLevel = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "curLevel:" + value);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "curLevel", value.toString());
+        }
+    }
+    Common.UpdateCurLevel = UpdateCurLevel;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

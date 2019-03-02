@@ -1,0 +1,6 @@
+class BabySkill {
+	public constructor() {
+	}
+
+	
+}

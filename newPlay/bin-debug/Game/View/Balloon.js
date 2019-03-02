@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var Balloon = (function (_super) {
     __extends(Balloon, _super);
     function Balloon() {
@@ -33,15 +30,15 @@ var Balloon = (function (_super) {
         _this._balloonArmatureContainer.addCompleteCallFunc(_this._OnBalloonComplete, _this);
         _this._effectArmatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this._effectArmatureContainer);
-        var effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua");
-        if (_this._effectArmature == null) {
-            _this._effectArmature = new DragonBonesArmature(effectArmatureDisplay);
-        }
-        _this._effectArmature.ArmatureDisplay = effectArmatureDisplay;
-        _this._effectArmatureContainer.register(_this._effectArmature, ["bianhua"]);
-        _this._effectArmatureContainer.scaleX = 1;
-        _this._effectArmatureContainer.scaleY = 1;
-        _this._effectArmatureContainer.addCompleteCallFunc(_this._OnEffectArmatureComplete, _this);
+        // let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua")
+        // if (this._effectArmature == null) {
+        // 	this._effectArmature = new DragonBonesArmature(effectArmatureDisplay)
+        // }
+        // this._effectArmature.ArmatureDisplay = effectArmatureDisplay
+        // this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
+        // this._effectArmatureContainer.scaleX = 1
+        // this._effectArmatureContainer.scaleY = 1
+        // this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
         _this._gesture = new egret.Bitmap();
         _this.addChild(_this._gesture);
         _this._gesture.scaleX = 0.55;
@@ -72,6 +69,28 @@ var Balloon = (function (_super) {
         this.m_guideArmatureContainer.visible = true;
         this.m_guideArmatureContainer.play("xinshouyindao2", 0);
     };
+    /**
+     * 更新气球身上的特效动画
+     */
+    Balloon.prototype.UpdateEffectArmature = function (data) {
+        this._effectArmatureContainer.clear();
+        var effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile);
+        if (this._effectArmature == null) {
+            this._effectArmature = new DragonBonesArmature(effectArmatureDisplay);
+        }
+        this._effectArmature.ArmatureDisplay = effectArmatureDisplay;
+        this._effectArmatureContainer.register(this._effectArmature, [data.skill]);
+        this._effectArmatureContainer.scaleX = 1;
+        this._effectArmatureContainer.scaleY = 1;
+        this._effectArmatureContainer.x = data.skillPosX;
+        this._effectArmatureContainer.y = data.skillPosY;
+        this._changeType = data.param[1];
+        this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
+    };
+    Balloon.prototype.PlayEffect = function (data) {
+        this._type = 0;
+        this._effectArmatureContainer.play(data.skill, 1);
+    };
     Balloon.prototype.UpdateGesture = function (data, isInit) {
         if (isInit === void 0) { isInit = false; }
         var random = MathUtils.getRandom(data.length - 1);
@@ -85,8 +104,6 @@ var Balloon = (function (_super) {
         this._score = data[random].count;
         this._animationName = data[random].balloon;
         data.splice(random, 1);
-        // let colorIndex = MathUtils.getRandom(2)
-        // this._animationName = this._animations[colorIndex]
         this._balloonArmatureContainer.play(this._animationName, 1);
         this._balloonArmatureContainer.pause(this._animationName);
         this.scaleX = 1;
@@ -98,7 +115,6 @@ var Balloon = (function (_super) {
         this._isChangeEasy = true;
         this._type = 0;
         this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6);
-        // this.UpdateColorAndGesture()		
     };
     Balloon.prototype.UpdateColorAndGesture = function () {
         this._type = 0;
@@ -247,7 +263,14 @@ var Balloon = (function (_super) {
         }
     };
     Balloon.prototype._OnEffectArmatureComplete = function (e) {
-        this.UpdateGesture(this._root.GestureData);
+        // this.UpdateGesture(this._root.GestureData)
+        this._gestureData.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            if (GameConfig.gestureConfig[i].type == this._changeType) {
+                this._gestureData.push(GameConfig.gestureConfig[i]);
+            }
+        }
+        this.UpdateGesture(this._gestureData);
     };
     return Balloon;
 }(egret.Sprite));

@@ -110,8 +110,20 @@ class BaseActor extends egret.DisplayObjectContainer {
 		this.m_speedX = value
 	}
 
+	public get EPos() {
+		return this.m_ePos
+	}
+
+	public set EPos(value:EMonsterPos) {
+		this.m_ePos = value
+	}
+
 	public get ActorTableData() {
 		return this.m_data
+	}
+
+	public get Type() {
+		return this.m_type
 	}
 
 	public Update(timeElapsed:number) {
@@ -123,6 +135,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	}
 
 	public SetVertical(addNum:number) {
+		if (this.m_speedY <= 0) return
 		this.ResetVertical()
 		this.m_addNum += addNum
 		this.m_speedY += addNum
@@ -133,11 +146,67 @@ class BaseActor extends egret.DisplayObjectContainer {
 		this.m_addNum = 0
 	}
 
+	/**
+	 * 更新怪物身上的特效动画
+	 */
+	public UpdateEffectArmature(data:any) {
+		this.m_effectArmatureContainer.clear()
+		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile)
+		if (this.m_effectArmature == null) {
+			this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+		}
+		this.m_effectData = data
+		this.m_effectResult = data.result
+		this.m_effectArmature.ArmatureDisplay = armatureDisplay
+		this.m_effectArmatureContainer.register(this.m_effectArmature, [data.skill])
+		this.m_effectArmatureContainer.visible = false
+		this.m_effectArmatureContainer.scaleX = 1
+		this.m_effectArmatureContainer.scaleY = 1
+		this.m_effectArmatureContainer.x = data.skillPosX
+		this.m_effectArmatureContainer.y = data.skillPosY
+		this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this)
+		this.m_effectArmatureContainer.addFrameCallFunc(this.OnEffectArmatureFram, this)
+		this.m_effectArmatureContainer.visible = false
+	}
+
+	public get State() {
+		return this.m_state
+	}
+
+	public PlayEffect(data:any) {}
+
 	public BalloonExploreHandle() {}
 
 	public RemoveBalloon(balloon:Balloon) {}
 
-	public PlayEffect() {}
+	public OnEffectArmatureComplete() {
+		if (this.m_state == EMonsterState.Stop) {
+			switch (this.m_effectResult) {
+				case ESkillResult.Kill:
+					this.m_effectResult = ESkillResult.Invalid
+					this.GotoDead()
+					this._DestroyBalloon()
+				break
+				case ESkillResult.StopSpeed:
+					this.m_speedY = 0
+					this.m_state = EMonsterState.Ready
+				break
+				case ESkillResult.ChangeLucky:
+				break
+			}
+		}
+	}
+
+	public OnEffectArmatureFram(event:dragonBones.EgretEvent) {}
+
+	protected _DestroyBalloon() {
+		this.m_sumBalloon = 0
+		while(this.m_balloons.length > 0) {
+			let balloon:Balloon = this.m_balloons.pop()
+			GameObjectPool.getInstance().destroyObject(balloon)
+			this.m_groupBalloon.removeChild(balloon)
+		}
+	}
 
 	protected _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {
 		if (count == 1) {
@@ -162,6 +231,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 		}
 	}
 
+	protected m_sumBalloon:number
 	protected m_groupBalloon:egret.DisplayObjectContainer
 	protected m_armatureContainer:DragonBonesArmatureContainer
 	protected m_type:EMonsterDifficult
@@ -176,6 +246,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_effectArmatureContainer:DragonBonesArmatureContainer
 	protected m_effectArmature:DragonBonesArmature
 	protected m_effectData:any
+	protected m_effectResult:ESkillResult
 	protected m_width:number
 	protected m_height:number
 
@@ -194,4 +265,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected m_balloonMin:number
 	protected m_balloonMax:number
 	protected m_addNum:number
+
+	protected m_ePos:EMonsterPos
+	protected m_state:EMonsterState
 }

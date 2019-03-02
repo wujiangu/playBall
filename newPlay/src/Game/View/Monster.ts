@@ -32,8 +32,6 @@ class Monster extends BaseActor {
 			break
 			case ELevelType.Elite:
 				// monsterData = data.elite
-
-
 				this.m_gesturDiff = PanelManager.m_gameScenePanel.Boss.diff
 				this.m_balloonMin = PanelManager.m_gameScenePanel.Boss.min
 				this.m_balloonMax = PanelManager.m_gameScenePanel.Boss.max
@@ -43,7 +41,6 @@ class Monster extends BaseActor {
 				}
 				this.m_data = GameConfig.monsterTable[PanelManager.m_gameScenePanel.Boss.id.toString()]
 				this.m_type = this.m_data.Difficult
-				PanelManager.m_gameScenePanel.EliteCount += 1
 				GameConfig.monsterPos = 3
 
 				let battleVolume = 0.8 * GameConfig.bgmValue / 100
@@ -177,14 +174,17 @@ class Monster extends BaseActor {
 		switch (GameConfig.monsterPos) {
 			case 1:
 				this.x = MathUtils.getRandom(this.m_rect.width, Config.stageLeft - this.m_rect.width)
+				this.EPos = EMonsterPos.Left
 				GameConfig.monsterPos = 2
 			break
 			case 2:
 				this.x = MathUtils.getRandom(Config.stageCenter + this.m_rect.width, Config.stageWidth - this.m_rect.width)
+				this.EPos = EMonsterPos.Middle
 				GameConfig.monsterPos = 3
 			break
 			case 3:
 				this.x = MathUtils.getRandom(Config.stageLeft + this.m_rect.width, Config.stageCenter - this.m_rect.width)
+				this.EPos = EMonsterPos.Right
 				GameConfig.monsterPos = 1
 			break
 		}
@@ -219,10 +219,8 @@ class Monster extends BaseActor {
 		if (this.m_data.Type == EMonsterType.FallDown) this.m_state = EMonsterState.FallDown
 		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
 		PanelManager.m_gameScenePanel.Power += this.m_data.Power
-		// if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Normal) {
-		// 	PanelManager.m_gameScenePanel.Score += this.m_data.Score
-		// }
-		// PanelManager.m_gameScenePanel.ActorDeadHandle()
+
+		// 精英怪死亡游戏速度变慢
 		if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
 			GameManager.Instance.GameSlow()
 		}
@@ -246,8 +244,8 @@ class Monster extends BaseActor {
 		this.m_effectArmatureContainer.scaleY = 0.8
 		this.m_effectArmatureContainer.visible = true
 		this.m_effectArmatureContainer.play("shuihua", 1)
-		ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 8)
-		this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+		ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 2.3, 4, 8)
+		this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this)
 	}
 
 	public GotoSlow() {
@@ -277,33 +275,19 @@ class Monster extends BaseActor {
 	 * 更新怪物身上的特效动画
 	 */
 	public UpdateEffectArmature(data:any) {
-		this.m_effectArmatureContainer.clear()
-		if (data.bullet != "") {
-			let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.step1, data.step1)
-			if (this.m_effectArmature == null) {
-				this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
-			}
-			this.m_effectData = data
-			this.m_effectArmature.ArmatureDisplay = armatureDisplay
-			this.m_effectArmatureContainer.register(this.m_effectArmature,[data.step1])
-			this.m_effectArmatureContainer.visible = false
-			this.m_effectArmatureContainer.scaleX = 0.8
-			this.m_effectArmatureContainer.scaleY = 0.8
-			this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
-			this.m_effectArmatureContainer.addFrameCallFunc(this._OnEffectFrame, this)
-		}
+		super.UpdateEffectArmature(data)
 	}
 
-	public PlayEffect() {
+	public PlayEffect(data:any) {
 		this.m_effectArmatureContainer.visible = true
-		this.m_effectArmatureContainer.play(this.m_effectData.step1, 1)
-		if (this.m_effectData.type == EEffectType.Fire) {
-			this.m_state = EMonsterState.Stop
-
-			GameConfig.balloonScore = 0
-			PanelManager.m_gameScenePanel.Boom = true
-			PanelManager.m_gameScenePanel.UpdateBatter()
-		}
+		this.m_effectArmatureContainer.play(data.skill, 1)
+		this.m_state = EMonsterState.Stop
+		// if (this.m_effectData.type == EEffectType.Fire) {
+		// 	this.m_state = EMonsterState.Stop
+		// 	GameConfig.balloonScore = 0
+		// 	PanelManager.m_gameScenePanel.Boom = true
+		// 	PanelManager.m_gameScenePanel.UpdateBatter()
+		// }
 	}
 
 	public BallExplosion(a_ball:Balloon) {
@@ -393,6 +377,8 @@ class Monster extends BaseActor {
 
 	public Destroy() {
 		this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
+		this.m_effectArmatureContainer.removeCompleteCallFunc(this.OnEffectArmatureComplete, this)
+		this.m_effectArmatureContainer.removeFrameCallFunc(this.OnEffectArmatureFram, this)
 		this._DestroyBalloon()
 		this.m_armatureContainer.clear()
 		this.m_effectArmatureContainer.clear()
@@ -417,10 +403,6 @@ class Monster extends BaseActor {
 		}
 	}
 
-	public get State() {
-		return this.m_state
-	}
-
 	public get Score() {
 		return this.m_score
 	}
@@ -429,15 +411,20 @@ class Monster extends BaseActor {
 		this.m_score = value
 	}
 
-	public get Balloons() {
-		return this.m_balloons
-	}
-
 	public get Type() {
 		return this.m_type
 	}
 
-	private _OnEffectFrame(event:dragonBones.EgretEvent) {
+	public OnEffectArmatureComplete() {
+		super.OnEffectArmatureComplete()
+		if (this.m_state == EMonsterState.Drown) {
+			this.Destroy()
+			PanelManager.m_gameScenePanel.RemoveMonster(this)
+		}
+	}
+
+	public OnEffectArmatureFram(event:dragonBones.EgretEvent) {
+		super.OnEffectArmatureFram(event)
 		let evt:string = event.frameLabel
 		switch (evt) {
 			case "xiaoshi":
@@ -445,13 +432,6 @@ class Monster extends BaseActor {
 				this._DestroyBalloon()
 				this.m_armatureContainer.visible = false
 			break
-		}
-	}
-
-	private _OnEffectArmatureComplete() {
-		if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
-			this.Destroy()
-			PanelManager.m_gameScenePanel.RemoveMonster(this)
 		}
 	}
 
@@ -516,19 +496,10 @@ class Monster extends BaseActor {
 		return null
 	}
 
-	private _DestroyBalloon() {
-		this.m_sumBalloon = 0
-		while(this.m_balloons.length > 0) {
-			let balloon:Balloon = this.m_balloons.pop()
-			GameObjectPool.getInstance().destroyObject(balloon)
-			this.m_groupBalloon.removeChild(balloon)
-		}
-	}
-
 	private m_sumWeight:number
-	private m_state:EMonsterState
+	
 	//////////////////////////////////////////////////////////////////
-	private m_sumBalloon:number
+	
 	private m_score:number
 	private m_exploreIndex:number
 

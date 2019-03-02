@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="settingPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="settingPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="show">
+			<tween:TweenItem target="{m_groupSetting}">
+				<tween:Set>
+					<tween:props>
+						<e:Object scaleX="{0.7}" scaleY="{0.7}" x="{384}" y="{642.5}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object scaleX="{1.1}" scaleY="{1.1}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="hide">
+			<tween:TweenItem target="{m_groupSetting}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{-353}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
 	<e:Image id="m_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0"/>
-	<e:Button id="m_btnReturn" label="" left="12" top="11">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="btnProcReturn_png" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-
-	</e:Button>
-	<e:Group id="m_groupSetting" horizontalCenter="0" verticalCenter="0" anchorOffsetY="0" anchorOffsetX="0">
+	<e:Group id="m_groupSetting" anchorOffsetY="299.5" anchorOffsetX="288" x="384" y="642.5">
 		<e:Image y="0" anchorOffsetY="0" source="gamBg3_png" x="0"/>
 		<e:HSlider id="m_sliderSound" x="222" y="205.5" skinName="skins.gameSettingSlider"/>
 		<e:HSlider id="m_sliderBGM" x="222" y="391.5" skinName="skins.gameSettingSlider"/>

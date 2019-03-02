@@ -9,6 +9,7 @@ enum EGameState
     StageBack,
     StageFront,
     Warning,
+    EndLevel,
 }
 
 enum EGamePauseState
@@ -29,6 +30,57 @@ enum EPanelAnimation
     UpToDown = 5,
     DownToUp = 6,
     CenterZoomOut = 7,
+}
+
+// 宝宝状态
+enum EBabyState
+{
+    Idle = 0,
+    Run,
+    Attack,
+    Tired,
+}
+
+// 宝宝技能释放方式
+enum ESkillReleaseType
+{
+    Immediately = 1,
+    Range,
+}
+
+// 技能效果
+enum ESkillResult
+{
+    Invalid = 0,
+    Kill,
+    ContinuedKill,
+    GestureChange,
+    SlowSpeed,
+    StopSpeed,
+    ChangeLucky,
+}
+
+// 技能挂载
+enum ESkillHand
+{
+    Monster = 1,
+    Ballon,
+}
+
+// 技能范围类型
+enum ESkillRange
+{
+    Random = 1,
+    FrontToBack,
+    All,
+}
+
+// 游戏模式
+enum EBattleMode
+{
+    Level = 1,
+    Endless,
+    Timelimite,
 }
 
 // 怪物的状态
@@ -70,6 +122,8 @@ enum EMonsterDifficult
 {
     Normal = 1,
     Elite,
+    BOSS,
+    Summon,
 }
 
 // 召唤物类型
@@ -77,6 +131,14 @@ enum ESummonType
 {
     Balloon = 1,
     Monster
+}
+
+// 怪物的位置
+enum EMonsterPos
+{
+    Left = 1,
+    Middle,
+    Right,
 }
 
 // 特效的类型

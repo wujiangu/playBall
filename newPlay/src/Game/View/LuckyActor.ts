@@ -133,8 +133,6 @@ class LuckyActor extends BaseActor{
 	}
 
 	private m_sumWeight:number
-	
-	private m_state:EMonsterState
 	//////////////////////////////////////////////////////////////////
 	private m_balloon:Balloon
 	private m_score:number

@@ -13,5 +13,6 @@
     {"ID":1012, "name":"duye", "release":"", "bullet":"", "step1":"", "step2":""},
     {"ID":1013, "name":"wang", "release":"", "bullet":"", "step1":"", "step2":""},
     {"ID":1014, "name":"xinshouyindao", "release":"", "bullet":"", "step1":"", "step2":""},
-    {"ID":1015, "name":"ItemAnimate", "release":"", "bullet":"", "step1":"", "step2":""}
+    {"ID":1015, "name":"ItemAnimate", "release":"", "bullet":"", "step1":"", "step2":""},
+    {"ID":1016, "name":"actorEffect", "release":"", "bullet":"", "step1":"", "step2":""}
 ]

@@ -92,6 +92,28 @@ var PanelManager;
             PanelManager.m_actorListPanel.onExit();
         }
     }
+    function _OpenGameSelectLevelPanel() {
+        if (PanelManager.m_gameSelectLevel == null) {
+            PanelManager.m_gameSelectLevel = new GameSelectLevel();
+        }
+        PanelManager.m_gameSelectLevel.onEnter();
+    }
+    function _CloseGameSelectLevelPanel() {
+        if (PanelManager.m_gameSelectLevel != null) {
+            PanelManager.m_gameSelectLevel.onExit();
+        }
+    }
+    function _OpenRechargePanel() {
+        if (PanelManager.m_rechargePanel == null) {
+            PanelManager.m_rechargePanel = new RechargeUI();
+        }
+        PanelManager.m_rechargePanel.onEnter();
+    }
+    function _CloseRechargePanel() {
+        if (PanelManager.m_rechargePanel != null) {
+            PanelManager.m_rechargePanel.onExit();
+        }
+    }
     function initPanel() {
         Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager);
         Common.addEventListener(MainNotify.closeGameStartPanel, _CloseGameStartPanel, PanelManager);
@@ -109,6 +131,10 @@ var PanelManager;
         Common.addEventListener(MainNotify.closeGamePausePanel, _CloseGamePausePanel, PanelManager);
         Common.addEventListener(MainNotify.openActorListPanel, _OpenActorListPanel, PanelManager);
         Common.addEventListener(MainNotify.closeActorListPanel, _CloseActorListPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGameSelectLevel, _OpenGameSelectLevelPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGameSelectLevel, _CloseGameSelectLevelPanel, PanelManager);
+        Common.addEventListener(MainNotify.openRechargePanel, _OpenRechargePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeRechargePanel, _CloseRechargePanel, PanelManager);
     }
     PanelManager.initPanel = initPanel;
 })(PanelManager || (PanelManager = {}));

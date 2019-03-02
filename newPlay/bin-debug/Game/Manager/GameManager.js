@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 /**
  * 游戏管理
  */
@@ -30,10 +27,10 @@ var GameManager = (function (_super) {
         configurable: true
     });
     GameManager.prototype.Init = function () {
-        // this.Start()
         GameConfig.Init();
         PanelManager.initPanel();
-        // this._bgMusic = RES.getRes("bgMusic_mp3")
+        this.m_permanentUI = new PermanentUI();
+        Common.gameScene().uiLayer.addChild(this.m_permanentUI);
         this._gameState = EGameState.Ready;
         Common.dispatchEvent(MainNotify.openGameStartPanel);
         // Common.dispatchEvent(MainNotify.openBottomBtnPanel)
@@ -42,7 +39,15 @@ var GameManager = (function (_super) {
         if (this._gameState == EGameState.Start) {
             this._gameState = EGameState.End;
             PanelManager.m_gameScenePanel.Exit();
-            ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this);
+            ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 5, 4, 10, this._Onshake, this);
+        }
+    };
+    // 关卡模式打完一关
+    GameManager.prototype.EndLevel = function () {
+        if (this._gameState == EGameState.Start) {
+            this._gameState = EGameState.EndLevel;
+            PanelManager.m_gameScenePanel.Exit();
+            Common.dispatchEvent(MainNotify.openGameOverPanel);
         }
     };
     GameManager.prototype.Start = function () {
@@ -75,18 +80,24 @@ var GameManager = (function (_super) {
     GameManager.prototype.GameSlow = function () {
         this._gameSlowDelay = 0;
     };
+    Object.defineProperty(GameManager.prototype, "imageScene", {
+        get: function () {
+            return this.m_permanentUI.sceneBg;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    GameManager.prototype.updateSceneBg = function (path) {
+        this.m_permanentUI.updateScene(path);
+    };
     GameManager.prototype.Update = function () {
         if (this._gameState == EGameState.StageBack)
             return;
+        if (this.m_permanentUI != null)
+            this.m_permanentUI.update();
         this._startTime = egret.getTimer();
         var timeElapsed = this._startTime - this._lastTime;
         if (this._gameState == EGameState.Ready) {
-            if (PanelManager.m_gameStartPanel != null) {
-                PanelManager.m_gameStartPanel.Update();
-            }
-            if (PanelManager.m_gameScenePanel != null) {
-                PanelManager.m_gameScenePanel.Update(timeElapsed);
-            }
             return;
         }
         if (this._gameSlowDelay >= 0) {

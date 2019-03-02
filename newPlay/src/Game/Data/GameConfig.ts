@@ -6,13 +6,18 @@ class GameConfig {
 
 	public static summonConfig:any
 	public static summonTable:any
-	public static levelConfig:any
+	public static levelConfig:Array<any>
 	public static levelTable:any
 
 	public static gestureConfig:Array<any>
 	public static itemConfig:Array<any>
 	public static summonSkillConfig:Array<any>
 	public static summonSkillTable:any
+	public static actorConfig:Array<any>
+	public static actorTable:any
+	public static chapterConfig:Array<any>
+	public static chapterTable:any
+	public static babySkillTable:any
 
 	public static itemTable:any
 	public static itemUseTable:Array<number>
@@ -39,10 +44,24 @@ class GameConfig {
 	public static soundValue:number = 100
 	public static balloonScore:number
 	public static monsterPos:number = 1
-	public static testSelectLevel:number = 1001
+	public static testSelectLevel:number = 10001
 	public static gameSpeedPercent:number = 0
 	public static isGuide:boolean = false
 	public static guideIndex:number
+	// 当前的宝宝
+	public static curBaby:number
+	public static curBabyData:any
+	// 解锁的宝宝ID
+	public static babyUnlockList:Array<number>
+	// 开放的宝宝ID
+	public static babyOpenList:Array<number> = new Array()
+	// 挑战模式
+	public static gameMode:EBattleMode = EBattleMode.Level
+	// 挑战进度(关卡)
+	public static curLevel:number
+	// 挑战进度(章节)
+	public static curChpter:number
+
 	/**
      * 初始化骨骼的动画数据
      */
@@ -151,14 +170,20 @@ class GameConfig {
 			data["Type"] = config.Type
 			data["Difficult"] = config.Difficult
 			data["Animation"] = config.Animation
+			data["Actions"] = config.Actions
 			data["Speed"] = config.Speed
 			data["Score"] = config.Score
 			data["Power"] = config.Power
 			data["Scale"] = config.Scale
 			data["Width"] = config.Width
 			data["Height"] = config.Height
+			data["BalloonScale"] = config.BalloonScale
+			data["BalloonX"] = config.BalloonX
+			data["BalloonY"] = config.BalloonY
 			this.monsterTable[config.ID.toString()] = data
-			this.InitBattleDragonBones(config.Animation)
+			if (config.Animation != null && config.Animation != "") {
+				this.InitBattleDragonBones(config.Animation)
+			}
         }
 
         for (let i = 0; i < this.luckyConfig.length; i++) {
@@ -169,8 +194,6 @@ class GameConfig {
 		this.InitConfig()
 		this.InitSound()
 		Common.GetGuide()
-		// this.itemUseTable.push(1002)
-		// this.itemUseTable.push(1003)
 	}
 
 	public static InitConfig() {
@@ -205,7 +228,10 @@ class GameConfig {
 			data["unlockItem"] = config.unlockItem
 			data["normal"] = config.normal
 			data["elite"] = config.elite
-			this.levelTable[config.key.toString()] = data
+			data["section"] = config.section
+			if (config.key != null && config.key > 0) {
+				this.levelTable[config.key.toString()] = data
+			}
         }
 
 		this.summonSkillTable = {}
@@ -222,5 +248,81 @@ class GameConfig {
 			data["ids"] = config.ids
 			this.summonSkillTable[config.key.toString()] = data
         }
+
+		this.actorConfig = RES.getRes("actorConfig_json")
+		this.actorTable = {}
+		this.babyOpenList.length = 0
+		for (let i = 0; i < this.actorConfig.length; i++) {
+			let config = this.actorConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["level"] = config.level
+			data["nextId"] = config.nextId
+			data["name"] = config.name
+			data["desc"] = config.desc
+			data["action"] = config.action
+			data["icon"] = config.icon
+			data["lockIcon"] = config.lockIcon
+			data["direction"] = config.direction
+			data["skillId"] = config.skillId
+			data["fusion"] = config.fusion
+			if (config.level <= 1) this.babyOpenList.push(config.id)
+			this.actorTable[config.id.toString()] = data
+			if (config.action != null && config.action != "") {
+				this.InitBattleDragonBones(config.action)
+			}
+		}
+		// 修改开放宝宝表数据
+		for (let i = 0; i < this.babyOpenList.length; i++) {
+			let openId = this.babyOpenList[i]
+			for (let j = 0; j < this.babyUnlockList.length; j++) {
+				let unlockId = this.babyUnlockList[j]
+				let level = this.actorTable[unlockId.toString()].level
+				if (level >= 2 && unlockId-level-1 == openId) {
+					this.babyOpenList[i] = unlockId
+					break
+				}
+			}
+		}
+		this.curBabyData = this.actorTable[this.curBaby.toString()]
+
+		// 章节配置
+		this.chapterConfig = RES.getRes("chapterConfig_json")
+		this.chapterTable = {}
+		for (let i = 0; i < this.chapterConfig.length; i++) {
+			let config = this.chapterConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["name"] = config.name
+			data["icon"] = config.icon
+			data["unlockIcon"] = config.unlockIcon
+			data["bg"] = config.bg
+			data["bgm"] = config.bgm
+			data["begin"] = config.begin
+			this.chapterTable[config.id.toString()] = data
+		}
+
+		let babySkillConfig:Array<any> = RES.getRes("babySkillConfig_json")
+		this.babySkillTable = {}
+		for (let i = 0; i < babySkillConfig.length; i++) {
+			let config = babySkillConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["skillFile"] = config.skillFile
+			data["skillHang"] = config.skillHang
+			data["boss"] = config.boss
+			data["auto"] = config.auto
+			data["param"] = config.param
+			data["skillPosX"] = config.skillPosX
+			data["range"] = config.range
+			data["result"] = config.result
+			data["time"] = config.time
+			data["skill"] = config.skill
+			data["method"] = config.method
+			data["sceneEffect"] = config.sceneEffect
+			data["skillPosY"] = config.skillPosY
+			data["rangeType"] = config.rangeType
+			this.babySkillTable[config.id.toString()] = data
+		}
 	}
 }

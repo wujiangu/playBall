@@ -72,13 +72,11 @@ class GamePausePanel extends BasePanel {
 		this._OnResize()
 
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
-		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this)
 		this.m_btnContinue.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnContinue, this)
 
 
 
 		Common.addTouchBegin(this.m_btnReturn)
-		Common.addTouchBegin(this.m_btnAgain)
 		Common.addTouchBegin(this.m_btnContinue)
 		this.show.addEventListener('complete', this._OnShow, this)
 		this.hide.addEventListener('complete', this._OnHide, this)
@@ -91,7 +89,6 @@ class GamePausePanel extends BasePanel {
 	private m_state:EGamePauseState
 
 	private m_btnReturn:eui.Button
-	private m_btnAgain:eui.Button
 	private m_btnContinue:eui.Button
 
 	private show:egret.tween.TweenGroup

@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 /**
 *  文 件 名：ItemScroll.ts
 *  功    能： 滚动组件
@@ -29,6 +26,8 @@ var ScrollView = (function (_super) {
         _this.curItemCount = 0;
         /**滚动时间*/
         _this.delayScroll = 250;
+        /**间隔 */
+        _this.spacing = 0;
         /**滚动中*/
         _this.bScrolling = false;
         return _this;
@@ -40,12 +39,12 @@ var ScrollView = (function (_super) {
         var widthDist = this.viewport.contentWidth - this.viewport.width;
         if (widthDist > 0) {
             this.isHScroller = true;
-            this.itemSize = this.viewport.width;
+            this.itemSize = this.viewport.width + this.spacing;
             // this.itemNum = this.viewport.contentWidth / this.viewport.width;
         }
         else {
             this.isHScroller = false;
-            this.itemSize = this.viewport.height;
+            this.itemSize = this.viewport.height + this.spacing;
             // this.itemNum = this.viewport.contentHeight / this.viewport.height;
         }
         //滚动容器设置

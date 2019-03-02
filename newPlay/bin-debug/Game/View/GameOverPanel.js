@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var GameOverPanel = (function (_super) {
     __extends(GameOverPanel, _super);
     function GameOverPanel() {
@@ -30,7 +27,6 @@ var GameOverPanel = (function (_super) {
         this.touchChildren = false;
         this.m_isAgain = false;
         this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString();
-        this.m_labHistoryScore.text = GameConfig.maxScore.toString();
         this.m_labLianji.text = "X" + GameConfig.curCombo.toString();
         var comboScore = "C";
         if (GameConfig.curCombo <= 3)
@@ -47,18 +43,6 @@ var GameOverPanel = (function (_super) {
         Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score);
         this.Show.play(0);
         GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
-        // this.channel = GameVoice.jiesuanSound.play(0, 1)
-        // this.channel.volume = GameConfig.soundValue / 100
-        // Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
-        // this.m_isClose = false
-        // let battleVolume = 0.8 * GameConfig.bgmValue / 100
-        // egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
-        // 	let channel = GameVoice.jiesuanSound.play(0, 1)
-        // 	channel.volume = 0
-        // 	egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
-        // 		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
-        // 	})
-        // })
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -87,9 +71,6 @@ var GameOverPanel = (function (_super) {
         configurable: true
     });
     GameOverPanel.prototype._OnBtnReturn = function () {
-        // if (this.m_isClose == true) {
-        // 	Common.dispatchEvent(MainNotify.closeGameOverPanel)
-        // }
         this.touchChildren = false;
         Common.dispatchEvent(MainNotify.closeGameOverPanel);
     };
@@ -104,8 +85,13 @@ var GameOverPanel = (function (_super) {
     GameOverPanel.prototype._OnHide = function () {
         Common.gameScene().uiLayer.removeChild(this);
         if (this.m_isAgain) {
-            GameManager.Instance.Start();
-            PanelManager.m_gameScenePanel.Init();
+            if (GameManager.Instance.GameState == EGameState.EndLevel) {
+                PanelManager.m_gameScenePanel.ContinueLevel();
+            }
+            else {
+                PanelManager.m_gameScenePanel.Init();
+                GameManager.Instance.Start();
+            }
         }
         else {
             GameManager.Instance.GameState = EGameState.Ready;

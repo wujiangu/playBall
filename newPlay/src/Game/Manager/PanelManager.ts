@@ -11,6 +11,8 @@ namespace PanelManager {
 	export var m_gameOverPanel:GameOverPanel
 	export var m_gamePausetPanel:GamePausePanel
 	export var m_actorListPanel:ActorListPanel
+	export var m_gameSelectLevel:GameSelectLevel
+	export var m_rechargePanel:RechargeUI
 
 	function _OpenBottomBtnPanel() {
 		if (m_bottomBtnPanel == null) {
@@ -116,6 +118,32 @@ namespace PanelManager {
 		}
 	}
 
+	function _OpenGameSelectLevelPanel() {
+		if (m_gameSelectLevel == null) {
+			m_gameSelectLevel = new GameSelectLevel()
+		}
+		m_gameSelectLevel.onEnter()
+	}
+
+	function _CloseGameSelectLevelPanel() {
+		if (m_gameSelectLevel != null) {
+			m_gameSelectLevel.onExit()
+		}
+	}
+
+	function _OpenRechargePanel() {
+		if (m_rechargePanel == null) {
+			m_rechargePanel = new RechargeUI()
+		}
+		m_rechargePanel.onEnter()
+	}
+
+	function _CloseRechargePanel() {
+		if (m_rechargePanel != null) {
+			m_rechargePanel.onExit()
+		}
+	}
+
 	
 	export function initPanel(){
 		Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager)
@@ -141,5 +169,11 @@ namespace PanelManager {
 
 		Common.addEventListener(MainNotify.openActorListPanel, _OpenActorListPanel, PanelManager)
 		Common.addEventListener(MainNotify.closeActorListPanel, _CloseActorListPanel, PanelManager)
+
+		Common.addEventListener(MainNotify.openGameSelectLevel, _OpenGameSelectLevelPanel, PanelManager)
+		Common.addEventListener(MainNotify.closeGameSelectLevel, _CloseGameSelectLevelPanel, PanelManager)
+
+		Common.addEventListener(MainNotify.openRechargePanel, _OpenRechargePanel, PanelManager)
+		Common.addEventListener(MainNotify.closeRechargePanel, _CloseRechargePanel, PanelManager)
 	}
 }

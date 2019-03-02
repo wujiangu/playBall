@@ -20,7 +20,6 @@ class GameOverPanel extends BasePanel {
 		this.touchChildren = false
 		this.m_isAgain = false
 		this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString()
-		this.m_labHistoryScore.text = GameConfig.maxScore.toString()
 		this.m_labLianji.text = "X" + GameConfig.curCombo.toString()
 
 		let comboScore:string = "C"
@@ -34,23 +33,7 @@ class GameOverPanel extends BasePanel {
 		this.m_labPingfen.text = comboScore
 		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
 		this.Show.play(0)
-
 		GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
-		// this.channel = GameVoice.jiesuanSound.play(0, 1)
-		// this.channel.volume = GameConfig.soundValue / 100
-		// Common.UpdateCurrentScore(PanelManager.m_gameScenePanel.Score)
-		// this.m_isClose = false
-		// let battleVolume = 0.8 * GameConfig.bgmValue / 100
-		// egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
-		// 	let channel = GameVoice.jiesuanSound.play(0, 1)
-		// 	channel.volume = 0
-		// 	egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
-		// 		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
-		// 	})
-		// })
-
-
-		
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -77,9 +60,6 @@ class GameOverPanel extends BasePanel {
 	}
 
 	private _OnBtnReturn() {
-		// if (this.m_isClose == true) {
-		// 	Common.dispatchEvent(MainNotify.closeGameOverPanel)
-		// }
 		this.touchChildren = false
 		Common.dispatchEvent(MainNotify.closeGameOverPanel)
 		
@@ -98,8 +78,12 @@ class GameOverPanel extends BasePanel {
 	private _OnHide() {
 		Common.gameScene().uiLayer.removeChild(this)
 		if (this.m_isAgain) {
-			GameManager.Instance.Start()
-			PanelManager.m_gameScenePanel.Init()
+			if (GameManager.Instance.GameState == EGameState.EndLevel) {
+				PanelManager.m_gameScenePanel.ContinueLevel()
+			}else{
+				PanelManager.m_gameScenePanel.Init()
+				GameManager.Instance.Start()
+			}
 		}else{
 			GameManager.Instance.GameState = EGameState.Ready
 			Common.dispatchEvent(MainNotify.closeGamePanel)
@@ -108,13 +92,9 @@ class GameOverPanel extends BasePanel {
 	}
 
 	private onComplete() {
-		
 		this._OnResize()
-
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
 		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this)
-
-
 		Common.addTouchBegin(this.m_btnReturn)
 		Common.addTouchBegin(this.m_btnAgain)
 		
@@ -134,8 +114,6 @@ class GameOverPanel extends BasePanel {
 
 	/**本次得分 */
 	private m_labScore:eui.BitmapLabel
-	/**历史最高分 */
-	private m_labHistoryScore:eui.Label
 
 	private m_labPingfen:eui.BitmapLabel
 	private m_labLianji:eui.BitmapLabel

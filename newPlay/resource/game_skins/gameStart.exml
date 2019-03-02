@@ -1,377 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="gameStart" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Config id="16924118ac3"/>
 	<w:Declarations>
-		<tween:TweenGroup id="InitGroup">
-			<tween:TweenItem target="{m_imgTitle}">
+		<tween:TweenGroup id="show">
+			<tween:TweenItem target="{groupTang}">
 				<tween:Set>
 					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{-189.37}" alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="50">
-					<tween:props>
-						<e:Object alpha="{0}" y="{-190}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object alpha="{1}" y="{-180}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnGameStart}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{200}" alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="50">
-					<tween:props>
-						<e:Object alpha="{0}" y="{200}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="350">
-					<tween:props>
-						<e:Object alpha="{0}" y="{200}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object alpha="{1}" y="{210}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnProc}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{413}" alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="50">
-					<tween:props>
-						<e:Object alpha="{0}" y="{413}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="700">
-					<tween:props>
-						<e:Object alpha="{0}" y="{413}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object alpha="{1}" y="{423}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnRank}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{625}" alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="50">
-					<tween:props>
-						<e:Object alpha="{0}" y="{625}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="1050">
-					<tween:props>
-						<e:Object alpha="{0}" y="{625}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object alpha="{1}" y="{635}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_maskRect}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{1}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="300">
-					<tween:props>
-						<e:Object alpha="{0.8}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="500">
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-		</tween:TweenGroup>
-		<tween:TweenGroup id="CloseGroup">
-			<tween:TweenItem target="{m_groupStart}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{1}"/>
+						<e:Object rotation="{0}" y="{-101}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:To duration="500">
 					<tween:props>
-						<e:Object alpha="{0}"/>
+						<e:Object y="{3}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
-		</tween:TweenGroup>
-		<tween:TweenGroup id="water">
-			<tween:TweenItem target="{shui3}">
-				<tween:Set/>
-				<tween:To duration="750">
+			<tween:TweenItem target="{groupTopRight}">
+				<tween:Set>
 					<tween:props>
-						<e:Object y="{23}"/>
+						<e:Object y="{-92}"/>
 					</tween:props>
-				</tween:To>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{23}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="1250">
-					<tween:props>
-						<e:Object y="{18}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{shui2}">
-				<tween:Set/>
-				<tween:To duration="750">
-					<tween:props>
-						<e:Object y="{34}"/>
-					</tween:props>
-				</tween:To>
+				</tween:Set>
 				<tween:To duration="500">
 					<tween:props>
-						<e:Object y="{38}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object y="{38}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="1250">
-					<tween:props>
-						<e:Object y="{29}"/>
+						<e:Object y="{-1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
-			<tween:TweenItem target="{shui1}">
-				<tween:Set/>
-				<tween:To duration="750">
+			<tween:TweenItem target="{groupTitle}">
+				<tween:Set>
 					<tween:props>
-						<e:Object y="{46}"/>
+						<e:Object x="{-588}"/>
 					</tween:props>
-				</tween:To>
-				<tween:To duration="500">
-					<tween:props>
-						<e:Object y="{50}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object y="{52}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="1250">
-					<tween:props>
-						<e:Object y="{41}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-		</tween:TweenGroup>
-		<tween:TweenGroup id="startGame">
-			<tween:TweenItem target="{m_btnRank}">
-				<tween:Set/>
-				<tween:To duration="150">
-					<tween:props>
-						<e:Object y="{1119}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnProc}">
-				<tween:Wait duration="100"/>
-				<tween:Set/>
-				<tween:To duration="150">
-					<tween:props>
-						<e:Object y="{1119}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnGameStart}">
+				</tween:Set>
 				<tween:Wait duration="200"/>
 				<tween:Set/>
-				<tween:To duration="150">
+				<tween:To duration="350">
 					<tween:props>
-						<e:Object y="{1119}"/>
+						<e:Object x="{76}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
-			<tween:TweenItem target="{m_imgTitle}">
+			<tween:TweenItem target="{m_btnAd}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-191}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="350"/>
 				<tween:Set/>
 				<tween:To duration="350">
 					<tween:props>
-						<e:Object x="{-584}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnSetting}">
-				<tween:Set/>
-				<tween:To duration="350">
-					<tween:props>
-						<e:Object y="{-81}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_maskRect}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="400"/>
-				<tween:To duration="300">
-					<tween:props>
-						<e:Object alpha="{1}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="300">
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-		</tween:TweenGroup>
-		<tween:TweenGroup id="initGame">
-			<tween:TweenItem target="{m_imgTitle}">
-				<tween:Set>
-					<tween:props>
-						<e:Object y="{-876}" x="{87}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="650">
-					<tween:props>
-						<e:Object y="{-410}"/>
-					</tween:props>
-				</tween:To>
-				<tween:To duration="350">
-					<tween:props>
-						<e:Object y="{-180}"/>
+						<e:Object x="{-22}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_btnGameStart}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{-300}" y="{200}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:Wait duration="650"/>
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{-300}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="150">
-					<tween:props>
-						<e:Object x="{212}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnProc}">
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{-300}" y="{413}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:Wait duration="750"/>
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{-300}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="150">
-					<tween:props>
-						<e:Object x="{212}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnRank}">
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{-300}" y="{625}"/>
+						<e:Object alpha="{-1.1}"/>
 					</tween:props>
 				</tween:Set>
 				<tween:Wait duration="850"/>
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{-300}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="150">
-					<tween:props>
-						<e:Object x="{212}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_btnSetting}">
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{741}" y="{12}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:Wait duration="650"/>
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{741}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="350">
-					<tween:props>
-						<e:Object x="{651}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
-			<tween:TweenItem target="{m_maskRect}">
-				<tween:Set>
-					<tween:props>
-						<e:Object alpha="{0}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="300">
+				<tween:Set/>
+				<tween:To duration="700">
 					<tween:props>
 						<e:Object alpha="{1}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="300">
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupChapter}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{-0.9}" x="{95}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="550"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{-0.5}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="550">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupActor}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="700"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1.2}" scaleY="{1.2}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object scaleX="{0.9}" scaleY="{0.9}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="hide">
+			<tween:TweenItem target="{groupTang}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{0}" y="{-85}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupTopRight}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object y="{-90}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupTitle}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{-600}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupChapter}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{-600}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnAd}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{-192}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{groupActor}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
 					<tween:props>
 						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="400">
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnGameStart}">
+				<tween:Set/>
+				<tween:To duration="150"/>
+				<tween:To duration="100">
 					<tween:props>
 						<e:Object alpha="{0}"/>
 					</tween:props>
@@ -379,59 +175,64 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Image id="m_imgBg" height="1492" source="Bg1_png" width="740" bottom="0" horizontalCenter="0"/>
-	<e:Image id="m_cloud1" x="447" source="gameUISheet_json.game104" y="599"/>
-	<e:Image id="m_cloud2" x="75.66" source="gameUISheet_json.game103" y="339"/>
-	<e:Image id="m_cloud3" x="565" scaleX="-1" bottom="1158" source="gameUISheet_json.game104"/>
-	<e:Image id="m_imgSun" width="123" height="123" source="gameUISheet_json.game105" x="113" scaleX="1" scaleY="1" y="129"/>
-	<e:Group id="m_groupStart" height="566.67" anchorOffsetX="0" touchEnabled="false" anchorOffsetY="0" left="0" right="0" top="310">
-		<e:Button id="m_btnProc" label="" y="413" scaleX="1" scaleY="1" x="212">
-			<e:skinName>
-				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.5" source.down="btnSheet1_json.6"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
-				</e:Skin>
-			</e:skinName>
-
-		</e:Button>
-		<e:Button id="m_btnRank" label="" y="625" x="212" scaleX="1" scaleY="1" enabled="false">
-			<e:skinName>
-				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.7" source.down="btnSheet1_json.8" source.disabled="BtnRankLock_png"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
-				</e:Skin>
-			</e:skinName>
-
-		</e:Button>
-		<e:Image id="m_imgTitle" y="-180" scaleX="1" scaleY="1" source="imgTitle_png" x="87"/>
-		<e:Button id="m_btnGameStart" label="" y="200" scaleX="1" x="212" scaleY="1">
-			<e:skinName>
-				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.3" source.down="btnSheet1_json.4"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" size="30" size.down="27"/>
-				</e:Skin>
-			</e:skinName>
-
-		</e:Button>
-	</e:Group>
-	<e:Button id="m_btnSetting" label="" width="72" height="72" x="651" y="12">
+	<e:Group id="groupTang" width="310" height="87" y="2" anchorOffsetY="0" anchorOffsetX="0">
+		<e:Image source="icon3_png" x="16.16" y="9.5" anchorOffsetX="0" width="59" anchorOffsetY="0" height="68"/>
+		<e:Label id="m_labCandy" text="560" x="88" y="10" fontFamily="Microsoft YaHei" size="61" textAlign="left" bold="true" anchorOffsetX="0" width="194"/>
+		<e:Button id="m_btnAddCandy" label="" x="219" y="12.5">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnSetting" source.down="btnSheet_json.btnSetting"/>
+			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnAdd_png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 			</e:Skin>
 		</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="groupTopRight" width="356" height="88" x="372" y="2" anchorOffsetX="0" anchorOffsetY="0">
+		<e:Button id="m_btnGift" label="" x="168" y="11">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnLiwu_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="m_btnSetting" label="" width="72" height="72" x="279" y="10" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnSetting_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="groupTitle" width="588" height="500" y="196" x="76">
+		<e:Image id="m_imgTitle" y="33" scaleX="1" scaleY="1" source="imgTitle_png" x="0"/>
+	</e:Group>
+	<e:Group id="groupBtnAd" width="200" height="136" left="0" y="614" anchorOffsetY="0">
+		<e:Button id="m_btnAd" label="" x="-22" y="4" scaleX="1" scaleY="1">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnAd_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="groupChapter" width="539" height="96" x="95" y="522" anchorOffsetY="0" anchorOffsetX="0">
+		<e:Image source="gameStart2_png" x="44.2" y="26.5" anchorOffsetX="0" width="168" anchorOffsetY="0" height="37" scaleX="0.95"/>
+		<e:Image source="gameStart3_png" x="266" y="24" anchorOffsetX="0" width="42" anchorOffsetY="0" height="42"/>
+		<e:Image source="gameStart1_png" x="321.87" y="24.5" anchorOffsetX="0" width="144.13" anchorOffsetY="0" height="39"/>
+		<e:Label id="m_labGrade" text="100" x="177.5" y="24.5" fontFamily="Microsoft YaHei" bold="true" size="43"/>
+		<e:Label id="m_labEvent" text="100" x="422" y="25" fontFamily="Microsoft YaHei" bold="true" size="43"/>
+	</e:Group>
+	<e:Group id="groupActor" width="200" height="200" horizontalCenter="1" y="826" scaleX="0.9" scaleY="0.9"/>
+	<e:Button id="m_btnGameStart" label="" x="222" y="1046">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btnStartGame_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
 	</e:Button>
-	<e:Group id="groupWater" height="78.67" bottom="0" anchorOffsetY="0" left="0" right="0">
-		<e:Image id="shui3" source="shui3_png" scaleX="1" scaleY="1" horizontalCenter="0" y="18"/>
-		<e:Image id="shui2" source="shui2_png" horizontalCenter="0" y="29"/>
-		<e:Image id="shui1" source="shui1_png" horizontalCenter="0" y="41"/>
-	</e:Group>
-	<e:Group id="m_groupLevel" width="619" height="64" y="1114" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" visible="false">
-		<e:Button id="m_btn1" label="第一关" x="44" y="9"/>
-		<e:Button id="m_btn2" label="第二关" x="188" y="9"/>
-		<e:Button id="m_btn3" label="第三关" x="331" y="9"/>
-		<e:Button id="m_btnLoop" label="循环关" x="475" y="9"/>
-	</e:Group>
 	<e:Rect id="m_maskRect" left="0" right="0" top="0" bottom="0" touchEnabled="false" visible="false"/>
 </e:Skin>

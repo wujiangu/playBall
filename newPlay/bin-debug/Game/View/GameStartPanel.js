@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var GameStartPanel = (function (_super) {
     __extends(GameStartPanel, _super);
     function GameStartPanel() {
@@ -21,37 +18,36 @@ var GameStartPanel = (function (_super) {
     }
     // 初始化面板
     GameStartPanel.prototype.initPanel = function () {
-        this.m_cloud1Speed = 0.6;
-        this.m_cloud2Speed = 0.3;
-        this.m_cloud3Speed = 0.1;
         this.m_isInit = false;
     };
     // 初始化面板数据
     GameStartPanel.prototype.initData = function () {
+        this.m_actorArmatureContainer.clear();
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(GameConfig.curBabyData.action, GameConfig.curBabyData.action);
+        if (this.m_actorArmature == null) {
+            this.m_actorArmature = new DragonBonesArmature(armatureDisplay);
+        }
+        this.m_actorArmature.ArmatureDisplay = armatureDisplay;
+        this.m_actorArmatureContainer.register(this.m_actorArmature, ["fangdazhao", "idle", "zoulu"]);
+        this.m_actorArmatureContainer.play("idle");
     };
     // 进入面板
     GameStartPanel.prototype.onEnter = function () {
         Common.curPanel = PanelManager.m_gameStartPanel;
-        this.touchChildren = true;
+        this.touchChildren = false;
         // this.m_maskRect.visible = false
-        if (!this.m_isInit) {
-            this.touchChildren = false;
-            this.InitGroup.play(0);
-            this.m_isInit = true;
-        }
-        else {
-            this.m_groupStart.alpha = 1;
-            this.m_maskRect.visible = true;
-            this.initGame.play(0);
-        }
+        // if (!this.m_isInit) {
+        // 	this.touchChildren = true
+        // 	this.m_isInit = true
+        // }else{
+        // 	// this.m_groupStart.alpha = 1
+        // 	// this.m_maskRect.visible = true
+        // }
+        GameManager.Instance.updateSceneBg("Bg1_png");
+        this.show.play(0);
         var id = GameConfig.itemUseTable[0];
         var data = GameConfig.itemTable[id.toString()];
-        this.m_imgBg.source = data.Scene;
-        this.m_imgSun.source = data.Sun;
-        this.m_cloud1.source = data.cloud1;
-        this.m_cloud2.source = data.cloud2;
-        this.m_cloud3.source = data.cloud3;
-        // this.m_imgCloth.y = Config.stageHeight - 1375
+        this.initData();
         if (GameVoice.beginBGMChannel != null)
             GameVoice.beginBGMChannel.stop();
         GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0);
@@ -64,47 +60,6 @@ var GameStartPanel = (function (_super) {
             GameVoice.beginBGMChannel.stop();
         Common.gameScene().uiLayer.removeChild(this);
     };
-    GameStartPanel.prototype.Update = function () {
-        if (this.m_cloud1.x >= -this.m_cloud1.width) {
-            this.m_cloud1.x -= this.m_cloud1Speed;
-        }
-        else {
-            this.m_cloud1.x = Config.stageWidth;
-        }
-        if (this.m_cloud2.x >= -this.m_cloud2.width) {
-            this.m_cloud2.x -= this.m_cloud2Speed;
-        }
-        else {
-            this.m_cloud2.x = Config.stageWidth;
-        }
-        if (this.m_cloud3.x <= Config.stageWidth + this.m_cloud3.width) {
-            this.m_cloud3.x += this.m_cloud1Speed;
-        }
-        else {
-            this.m_cloud3.x = -this.m_cloud3.width;
-        }
-    };
-    Object.defineProperty(GameStartPanel.prototype, "Cloud1", {
-        get: function () {
-            return this.m_cloud1;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GameStartPanel.prototype, "Cloud2", {
-        get: function () {
-            return this.m_cloud2;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GameStartPanel.prototype, "Cloud3", {
-        get: function () {
-            return this.m_cloud3;
-        },
-        enumerable: true,
-        configurable: true
-    });
     GameStartPanel.prototype._OnHideCloth = function () {
         // GameManager.Instance.Start()
         Common.dispatchEvent(MainNotify.closeGameStartPanel);
@@ -113,76 +68,65 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype._OnStartGame = function () {
         this.touchChildren = false;
         this.m_sceneType = 1;
-        this.m_maskRect.visible = true;
-        this.startGame.play(0);
-        // this.CloseGroup.play(0)
+        this.m_maskRect.visible = false;
+        this.hide.play(0);
+        // Common.dispatchEvent(MainNotify.openGameSelectLevel)
     };
     GameStartPanel.prototype._OnBtnSetting = function () {
-        // Common.dispatchEvent(MainNotify.openSettingPanel)
-        Common.dispatchEvent(MainNotify.openActorListPanel);
+        Common.dispatchEvent(MainNotify.openSettingPanel);
     };
-    GameStartPanel.prototype._OnBtnRank = function () {
+    GameStartPanel.prototype._OnBtnAddCandy = function () {
+        Common.dispatchEvent(MainNotify.openRechargePanel);
     };
     GameStartPanel.prototype._OnBtnProc = function () {
-        this.m_sceneType = 2;
         this.m_maskRect.visible = true;
-        this.startGame.play(0);
     };
-    GameStartPanel.prototype._OnInitComplete = function () {
-        this.touchChildren = true;
+    GameStartPanel.prototype._OnBtnAd = function () {
     };
-    GameStartPanel.prototype._OnCloseComplete = function () {
-        this._OnHideCloth();
-    };
-    GameStartPanel.prototype._OnWaterComplete = function () {
-        this.water.play(0);
-    };
-    GameStartPanel.prototype._OnBtn1 = function () {
-        GameConfig.testSelectLevel = 1001;
-    };
-    GameStartPanel.prototype._OnBtn2 = function () {
-        GameConfig.testSelectLevel = 1002;
-    };
-    GameStartPanel.prototype._OnBtn3 = function () {
-        GameConfig.testSelectLevel = 1003;
-    };
-    GameStartPanel.prototype._OnBtnLoop = function () {
-        GameConfig.testSelectLevel = 1004;
-    };
-    GameStartPanel.prototype._OnGameStartComplete = function () {
-        if (this.m_sceneType == 1) {
-            this._OnHideCloth();
-        }
-        else if (this.m_sceneType == 2) {
-            Common.dispatchEvent(MainNotify.closeGameStartPanel);
-            Common.dispatchEvent(MainNotify.openBackpackPanel);
-        }
+    GameStartPanel.prototype._OnActorClick = function () {
+        this.touchChildren = false;
+        this.m_sceneType = 2;
+        this.hide.play(0);
     };
     GameStartPanel.prototype._OnInitGameComplete = function () {
         this.touchChildren = true;
     };
+    GameStartPanel.prototype._OnShow = function () {
+        this.touchChildren = true;
+    };
+    GameStartPanel.prototype._OnHide = function () {
+        Common.dispatchEvent(MainNotify.closeGameStartPanel);
+        switch (this.m_sceneType) {
+            case 1:
+                Common.dispatchEvent(MainNotify.openGameSelectLevel);
+                break;
+            case 2:
+                Common.dispatchEvent(MainNotify.openActorListPanel);
+                break;
+            default:
+                break;
+        }
+    };
     GameStartPanel.prototype.onComplete = function () {
         // this.m_imgCloth.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this)
         this._OnResize();
-        this.water.play(0);
         this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnStartGame, this);
         this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnSetting, this);
-        this.m_btnRank.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnRank, this);
-        this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this);
+        this.m_btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAddCandy, this);
+        // this.m_btnProc.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnProc, this)
+        this.m_btnAd.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAd, this);
         Common.addTouchBegin(this.m_btnGameStart);
         Common.addTouchBegin(this.m_btnSetting);
-        Common.addTouchBegin(this.m_btnRank);
-        Common.addTouchBegin(this.m_btnProc);
-        this.InitGroup.addEventListener('complete', this._OnInitComplete, this);
-        this.CloseGroup.addEventListener('complete', this._OnCloseComplete, this);
-        this.water.addEventListener('complete', this._OnWaterComplete, this);
-        this.startGame.addEventListener('complete', this._OnGameStartComplete, this);
-        this.initGame.addEventListener('complete', this._OnInitGameComplete, this);
-        this.m_groupLevel.visible = false;
-        this.m_btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn1, this);
-        this.m_btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn2, this);
-        this.m_btn3.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtn3, this);
-        this.m_btnLoop.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnLoop, this);
+        Common.addTouchBegin(this.m_btnAd);
+        Common.addTouchBegin(this.m_btnAddCandy);
+        // Common.addTouchBegin(this.m_btnProc)
+        this.m_actorArmatureContainer = new DragonBonesArmatureContainer();
+        this.m_actorArmatureContainer.x = this.groupActor.width / 2;
+        this.m_actorArmatureContainer.y = this.groupActor.height;
+        this.groupActor.addChild(this.m_actorArmatureContainer);
+        this.groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnActorClick, this);
+        this.show.addEventListener('complete', this._OnShow, this);
+        this.hide.addEventListener('complete', this._OnHide, this);
     };
     GameStartPanel.prototype._OnResize = function (event) {
         if (event === void 0) { event = null; }

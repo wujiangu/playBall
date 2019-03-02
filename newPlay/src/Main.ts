@@ -154,9 +154,14 @@ class Main extends eui.UILayer {
             if (NativeApi.getLocalData("webView") == null) {
 			    GameConfig.isWebView = false
 		    }
+
             Common.GetMaxScore()
             Common.GetUseItem()
             Common.GetUnlockItem()
+            Common.GetUnlockBaby()
+            Common.GetCurBaby()
+            Common.GetCurChpter()
+            Common.GetCurLevel()
             this.startCreateScene();
         }
     }

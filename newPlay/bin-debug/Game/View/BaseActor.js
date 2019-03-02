@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var BaseActor = (function (_super) {
     __extends(BaseActor, _super);
     function BaseActor() {
@@ -121,9 +118,26 @@ var BaseActor = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(BaseActor.prototype, "EPos", {
+        get: function () {
+            return this.m_ePos;
+        },
+        set: function (value) {
+            this.m_ePos = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(BaseActor.prototype, "ActorTableData", {
         get: function () {
             return this.m_data;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "Type", {
+        get: function () {
+            return this.m_type;
         },
         enumerable: true,
         configurable: true
@@ -133,6 +147,8 @@ var BaseActor = (function (_super) {
     BaseActor.prototype.ResetGestureData = function () {
     };
     BaseActor.prototype.SetVertical = function (addNum) {
+        if (this.m_speedY <= 0)
+            return;
         this.ResetVertical();
         this.m_addNum += addNum;
         this.m_speedY += addNum;
@@ -141,9 +157,64 @@ var BaseActor = (function (_super) {
         this.m_speedY -= this.m_addNum;
         this.m_addNum = 0;
     };
+    /**
+     * 更新怪物身上的特效动画
+     */
+    BaseActor.prototype.UpdateEffectArmature = function (data) {
+        this.m_effectArmatureContainer.clear();
+        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile);
+        if (this.m_effectArmature == null) {
+            this.m_effectArmature = new DragonBonesArmature(armatureDisplay);
+        }
+        this.m_effectData = data;
+        this.m_effectResult = data.result;
+        this.m_effectArmature.ArmatureDisplay = armatureDisplay;
+        this.m_effectArmatureContainer.register(this.m_effectArmature, [data.skill]);
+        this.m_effectArmatureContainer.visible = false;
+        this.m_effectArmatureContainer.scaleX = 1;
+        this.m_effectArmatureContainer.scaleY = 1;
+        this.m_effectArmatureContainer.x = data.skillPosX;
+        this.m_effectArmatureContainer.y = data.skillPosY;
+        this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this);
+        this.m_effectArmatureContainer.addFrameCallFunc(this.OnEffectArmatureFram, this);
+        this.m_effectArmatureContainer.visible = false;
+    };
+    Object.defineProperty(BaseActor.prototype, "State", {
+        get: function () {
+            return this.m_state;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BaseActor.prototype.PlayEffect = function (data) { };
     BaseActor.prototype.BalloonExploreHandle = function () { };
     BaseActor.prototype.RemoveBalloon = function (balloon) { };
-    BaseActor.prototype.PlayEffect = function () { };
+    BaseActor.prototype.OnEffectArmatureComplete = function () {
+        if (this.m_state == EMonsterState.Stop) {
+            switch (this.m_effectResult) {
+                case ESkillResult.Kill:
+                    this.m_effectResult = ESkillResult.Invalid;
+                    this.GotoDead();
+                    this._DestroyBalloon();
+                    break;
+                case ESkillResult.StopSpeed:
+                    this.m_speedY = 0;
+                    this.m_state = EMonsterState.Ready;
+                    break;
+                case ESkillResult.ChangeLucky:
+                    break;
+            }
+        }
+    };
+    BaseActor.prototype.OnEffectArmatureFram = function (event) { };
+    BaseActor.prototype._DestroyBalloon = function () {
+        this.m_sumBalloon = 0;
+        while (this.m_balloons.length > 0) {
+            var balloon = this.m_balloons.pop();
+            GameObjectPool.getInstance().destroyObject(balloon);
+            this.m_groupBalloon.removeChild(balloon);
+        }
+    };
     BaseActor.prototype._SetBallonPosition = function (balloon, count, value) {
         if (value === void 0) { value = 0; }
         if (count == 1) {

@@ -6,7 +6,6 @@ class SpiderActor extends BaseActor {
 
 	public Init(data:any) {
 		let monsterData = data.elite
-		PanelManager.m_gameScenePanel.EliteCount += 1
 		this.m_sumWeight = 0
 		for (let i = 0; i < monsterData.length; i++) {
 			this.m_sumWeight += monsterData[i].prob
@@ -86,6 +85,7 @@ class SpiderActor extends BaseActor {
 	public InitGraph() {
 		this.y = Config.stageHalfHeight - 350
 		this.x = Config.stageHalfWidth
+		this.EPos = EMonsterPos.Middle
 		// this.filters = [this.m_dropShadowFilter]
 		this.m_armatureContainer.visible = true
 		this.GotoArrival()
@@ -94,14 +94,10 @@ class SpiderActor extends BaseActor {
 
 	public GotoArrival() {
 		this.m_state = EMonsterState.Arrive
-		
-		// .volume = GameConfig.soundValue / 100
 		this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1)
-
 		let battleVolume = 0.8 * GameConfig.bgmValue / 100
 		
 		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
-			// GameVoice.battleBGMChannel.volume = battleVolume
 			let channel = GameVoice.spiderKingArrive.play(0, 1)
 			channel.volume = 0
 			egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
@@ -119,7 +115,7 @@ class SpiderActor extends BaseActor {
 	public GotoIdle() {
 		if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
 			this.m_state = EMonsterState.Ready
-			this.Summon()
+			// this.Summon()
 			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1)
 			PanelManager.m_gameScenePanel.PlaySpiderWebArmature("idle", 4)
 		}
@@ -149,7 +145,7 @@ class SpiderActor extends BaseActor {
 			this.m_state = EMonsterState.Move
 			this.m_sumonDelay = 0
 			this.UpdateSignSlot()
-			this.Summon(3)
+			// this.Summon(3)
 			this.m_armatureContainer.play(DragonBonesAnimations.Move, 0)
 		}
 	}
@@ -184,7 +180,7 @@ class SpiderActor extends BaseActor {
 		this.m_effectArmatureContainer.scaleY = 1
 		this.m_effectArmatureContainer.visible = true
 		this.m_effectArmatureContainer.play("shuihua", 1)
-		ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 6)
+		ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 2.3, 4, 6)
 		this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
 	}
 
@@ -248,10 +244,6 @@ class SpiderActor extends BaseActor {
 		}
 	}
 
-	public get Balloons() {
-		return this.m_balloons
-	}
-
 	public get GestureData() {
 		return this.m_gestureData
 	}
@@ -285,7 +277,7 @@ class SpiderActor extends BaseActor {
 				this.m_sumonDelay += timeElapsed
 				if (this.m_sumonDelay >= GameConfig.spiderDelay) {
 					this.m_sumonDelay = 0
-					this.Summon()
+					// this.Summon()
 				}
 			}
 		}
@@ -342,10 +334,8 @@ class SpiderActor extends BaseActor {
 
 	}
 
-	public PlayEffect() {}
-
 	private _OnEffectArmatureComplete() {
-		if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
+		if (this.m_state == EMonsterState.Drown) {
 			this.Destroy()
 			PanelManager.m_gameScenePanel.RemoveSpiderActor(this)
 		}
@@ -421,24 +411,13 @@ class SpiderActor extends BaseActor {
 		PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY, count, i)
 	}
 
-	private _DestroyBalloon() {
-		this.m_sumBalloon = 0
-		while(this.m_balloons.length > 0) {
-			let balloon:Balloon = this.m_balloons.pop()
-			GameObjectPool.getInstance().destroyObject(balloon)
-			this.m_groupBalloon.removeChild(balloon)
-		}
-	}
-
 	private m_sumWeight:number
-	private m_state:EMonsterState
 	private m_isSpit:boolean
 	private m_spitStage:number
 	private m_summonWave:number
 	private m_sumonDelay:number
 	private m_exploreIndex:number
 	//////////////////////////////////////////////////////////////////
-	private m_sumBalloon:number
 	private m_score:number
 	private m_summonData:any
 }

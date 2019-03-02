@@ -1,16 +1,13 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 var SpiderActor = (function (_super) {
     __extends(SpiderActor, _super);
     function SpiderActor() {
@@ -20,7 +17,6 @@ var SpiderActor = (function (_super) {
     }
     SpiderActor.prototype.Init = function (data) {
         var monsterData = data.elite;
-        PanelManager.m_gameScenePanel.EliteCount += 1;
         this.m_sumWeight = 0;
         for (var i = 0; i < monsterData.length; i++) {
             this.m_sumWeight += monsterData[i].prob;
@@ -96,17 +92,16 @@ var SpiderActor = (function (_super) {
     SpiderActor.prototype.InitGraph = function () {
         this.y = Config.stageHalfHeight - 350;
         this.x = Config.stageHalfWidth;
+        this.EPos = EMonsterPos.Middle;
         // this.filters = [this.m_dropShadowFilter]
         this.m_armatureContainer.visible = true;
         this.GotoArrival();
     };
     SpiderActor.prototype.GotoArrival = function () {
         this.m_state = EMonsterState.Arrive;
-        // .volume = GameConfig.soundValue / 100
         this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1);
         var battleVolume = 0.8 * GameConfig.bgmValue / 100;
         egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
-            // GameVoice.battleBGMChannel.volume = battleVolume
             var channel = GameVoice.spiderKingArrive.play(0, 1);
             channel.volume = 0;
             egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
@@ -123,7 +118,7 @@ var SpiderActor = (function (_super) {
     SpiderActor.prototype.GotoIdle = function () {
         if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.Pause) {
             this.m_state = EMonsterState.Ready;
-            this.Summon();
+            // this.Summon()
             this.m_armatureContainer.play(DragonBonesAnimations.Idle, 1);
             PanelManager.m_gameScenePanel.PlaySpiderWebArmature("idle", 4);
         }
@@ -148,7 +143,7 @@ var SpiderActor = (function (_super) {
             this.m_state = EMonsterState.Move;
             this.m_sumonDelay = 0;
             this.UpdateSignSlot();
-            this.Summon(3);
+            // this.Summon(3)
             this.m_armatureContainer.play(DragonBonesAnimations.Move, 0);
         }
     };
@@ -179,7 +174,7 @@ var SpiderActor = (function (_super) {
         this.m_effectArmatureContainer.scaleY = 1;
         this.m_effectArmatureContainer.visible = true;
         this.m_effectArmatureContainer.play("shuihua", 1);
-        ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 2.3, 4, 6);
+        ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 2.3, 4, 6);
         this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
     };
     SpiderActor.prototype.GotoSlow = function () {
@@ -236,13 +231,6 @@ var SpiderActor = (function (_super) {
             balloon.BossSetLine(count, value);
         }
     };
-    Object.defineProperty(SpiderActor.prototype, "Balloons", {
-        get: function () {
-            return this.m_balloons;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(SpiderActor.prototype, "GestureData", {
         get: function () {
             return this.m_gestureData;
@@ -286,7 +274,7 @@ var SpiderActor = (function (_super) {
                 this.m_sumonDelay += timeElapsed;
                 if (this.m_sumonDelay >= GameConfig.spiderDelay) {
                     this.m_sumonDelay = 0;
-                    this.Summon();
+                    // this.Summon()
                 }
             }
         }
@@ -338,9 +326,8 @@ var SpiderActor = (function (_super) {
     };
     SpiderActor.prototype.RemoveBalloon = function (balloon) {
     };
-    SpiderActor.prototype.PlayEffect = function () { };
     SpiderActor.prototype._OnEffectArmatureComplete = function () {
-        if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
+        if (this.m_state == EMonsterState.Drown) {
             this.Destroy();
             PanelManager.m_gameScenePanel.RemoveSpiderActor(this);
         }
@@ -410,14 +397,6 @@ var SpiderActor = (function (_super) {
         var channel = GameVoice.spiderKingDrug.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
         PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY, count, i);
-    };
-    SpiderActor.prototype._DestroyBalloon = function () {
-        this.m_sumBalloon = 0;
-        while (this.m_balloons.length > 0) {
-            var balloon = this.m_balloons.pop();
-            GameObjectPool.getInstance().destroyObject(balloon);
-            this.m_groupBalloon.removeChild(balloon);
-        }
     };
     return SpiderActor;
 }(BaseActor));

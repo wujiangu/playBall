@@ -1,0 +1,92 @@
+[
+    {
+        "begin": 10101, 
+        "bg": "chapterBg1001_png", 
+        "name": "第一章", 
+        "bgm": "chapterBgm1001_mp3", 
+        "unlockIcon": "chapterUnlockIcon1001_png", 
+        "id": 1001, 
+        "icon": "chapterIcon1001_png"
+    }, 
+    {
+        "begin": 10201, 
+        "bg": "chapterBg1002_png", 
+        "name": "第二章", 
+        "bgm": "chapterBgm1002_mp3", 
+        "unlockIcon": "chapterUnlockIcon1002_png", 
+        "id": 1002, 
+        "icon": "chapterIcon1002_png"
+    }, 
+    {
+        "begin": 10301, 
+        "bg": "chapterBg1003_png", 
+        "name": "第三章", 
+        "bgm": "chapterBgm1003_mp3", 
+        "unlockIcon": "chapterUnlockIcon1003_png", 
+        "id": 1003, 
+        "icon": "chapterIcon1003_png"
+    }, 
+    {
+        "begin": 10401, 
+        "bg": "chapterBg1004_png", 
+        "name": "第四章", 
+        "bgm": "chapterBgm1004_mp3", 
+        "unlockIcon": "chapterUnlockIcon1004_png", 
+        "id": 1004, 
+        "icon": "chapterIcon1004_png"
+    }, 
+    {
+        "begin": 10501, 
+        "bg": "chapterBg1005_png", 
+        "name": "第五章", 
+        "bgm": "chapterBgm1005_mp3", 
+        "unlockIcon": "chapterUnlockIcon1005_png", 
+        "id": 1005, 
+        "icon": "chapterIcon1005_png"
+    }, 
+    {
+        "begin": 10601, 
+        "bg": "chapterBg1006_png", 
+        "name": "第六章", 
+        "bgm": "chapterBgm1006_mp3", 
+        "unlockIcon": "chapterUnlockIcon1006_png", 
+        "id": 1006, 
+        "icon": "chapterIcon1006_png"
+    }, 
+    {
+        "begin": 10701, 
+        "bg": "chapterBg1007_png", 
+        "name": "第七章", 
+        "bgm": "chapterBgm1007_mp3", 
+        "unlockIcon": "chapterUnlockIcon1007_png", 
+        "id": 1007, 
+        "icon": "chapterIcon1007_png"
+    }, 
+    {
+        "begin": 10801, 
+        "bg": "chapterBg1008_png", 
+        "name": "第八章", 
+        "bgm": "chapterBgm1008_mp3", 
+        "unlockIcon": "chapterUnlockIcon1008_png", 
+        "id": 1008, 
+        "icon": "chapterIcon1008_png"
+    }, 
+    {
+        "begin": 10901, 
+        "bg": "chapterBg1009_png", 
+        "name": "第九章", 
+        "bgm": "chapterBgm1009_mp3", 
+        "unlockIcon": "chapterUnlockIcon1009_png", 
+        "id": 1009, 
+        "icon": "chapterIcon1009_png"
+    }, 
+    {
+        "begin": 11001, 
+        "bg": "chapterBg1010_png", 
+        "name": "第十章", 
+        "bgm": "chapterBgm1010_mp3", 
+        "unlockIcon": "chapterUnlockIcon1010_png", 
+        "id": 1010, 
+        "icon": "chapterIcon1010_png"
+    }
+]

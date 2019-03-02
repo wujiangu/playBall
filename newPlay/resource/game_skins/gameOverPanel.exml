@@ -81,9 +81,7 @@
 
 	<e:Group id="m_groupGameOver" width="596" height="902" horizontalCenter="0" verticalCenter="-65" anchorOffsetX="0" anchorOffsetY="0">
 		<e:Image anchorOffsetY="0" source="gamBg4_png" y="22.5" horizontalCenter="0.5"/>
-		<e:Image source="gamBg5_png" y="0" scaleX="1" scaleY="1" horizontalCenter="0.5" visible="false"/>
 
-		<e:Label id="m_labHistoryScore" text="1000" x="395" y="589" fontFamily="Microsoft YaHei" textAlign="left" textColor="0xfdffea" size="35"/>
 		<e:Button id="m_btnReturn" label="" x="0" y="732">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -101,10 +99,12 @@
 			</e:skinName>
 		</e:Button>
 		<e:BitmapLabel id="m_labScore" y="193" text="1000" font="pingfenFnt_fnt" horizontalCenter="0"/>
-		<e:BitmapLabel id="m_labLianji" font="lianjiFnt_fnt" text="X12" horizontalCenter="120" verticalCenter="101"/>
-		<e:BitmapLabel id="m_labPingfen" font="pingjiFnt_fnt" text="A+" horizontalCenter="131" verticalCenter="40"/>
-		<e:Image source="Jiesuan1_png" y="470" right="258"/>
-		<e:Image source="Jiesuan2_png" y="529" right="258"/>
-		<e:Image source="Jiesuan3_png" x="86" y="592"/>
+		<e:BitmapLabel id="m_labLianji" y="575" text="X100" font="lianjiFnt_fnt" left="185" letterSpacing="-3"/>
+		<e:BitmapLabel id="m_labPingfen" y="576.5" text="S+" left="404" font="pingjiFnt_fnt"/>
+		<e:Image source="gameOver2_png" x="134.5" y="571.44" anchorOffsetX="0" width="51" anchorOffsetY="0" height="58.56"/>
+		<e:Image source="gameOver3_png" x="337.5" y="575" anchorOffsetX="0" width="61.42" anchorOffsetY="0" height="55"/>
+		<e:Image source="gameOver4_png" x="158.5" y="464.09" anchorOffsetX="0" width="80" anchorOffsetY="0" height="90.91"/>
+		<e:Label text="X" x="258" y="479.5" fontFamily="Microsoft JhengHei" size="60" bold="true"/>
+		<e:Label text="100" x="306" y="469" size="82" bold="true"/>
 	</e:Group>
 </e:Skin>

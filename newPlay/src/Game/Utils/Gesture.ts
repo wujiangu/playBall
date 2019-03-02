@@ -359,8 +359,11 @@ class Gesture
         
         let controlPoint = []
         //生成4控制点，产生贝塞尔曲线
-        this._layer.graphics.moveTo(this._lineData[0].x, this._lineData[0].y)        
-        this._layer.graphics.lineTo(this._lineData[1].x, this._lineData[1].y)
+        if (this._lineData[0] && this._lineData[1]) {
+            this._layer.graphics.moveTo(this._lineData[0].x, this._lineData[0].y)        
+            this._layer.graphics.lineTo(this._lineData[1].x, this._lineData[1].y)
+        }
+        
         
         for(let i = 1 ;i < originCount; i++){  
             controlPoint[0] = this._lineData[i];  

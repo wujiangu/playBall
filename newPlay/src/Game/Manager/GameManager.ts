@@ -16,10 +16,12 @@ class GameManager extends egret.Sprite{
 
 	public Init()
 	{
-		// this.Start()
 		GameConfig.Init()
 		PanelManager.initPanel()
-		// this._bgMusic = RES.getRes("bgMusic_mp3")
+
+		this.m_permanentUI = new PermanentUI()
+		Common.gameScene().uiLayer.addChild(this.m_permanentUI)
+
 		this._gameState = EGameState.Ready
 		Common.dispatchEvent(MainNotify.openGameStartPanel)
 		// Common.dispatchEvent(MainNotify.openBottomBtnPanel)
@@ -30,9 +32,18 @@ class GameManager extends egret.Sprite{
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.End
 			PanelManager.m_gameScenePanel.Exit()
-			ShakeTool.getInstance().shakeObj(PanelManager.m_gameScenePanel.MountBg, 5, 4, 10, this._Onshake, this)
+			ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 5, 4, 10, this._Onshake, this)
 		}
-		
+	}
+
+	// 关卡模式打完一关
+	public EndLevel():void
+	{
+		if (this._gameState == EGameState.Start) {
+			this._gameState = EGameState.EndLevel
+			PanelManager.m_gameScenePanel.Exit()
+			Common.dispatchEvent(MainNotify.openGameOverPanel)
+		}
 	}
 
 	public Start():void
@@ -71,22 +82,25 @@ class GameManager extends egret.Sprite{
 		this._gameSlowDelay = 0
 	}
 
+	public get imageScene() {
+		return this.m_permanentUI.sceneBg
+	}
+
+	public updateSceneBg(path:string) {
+		this.m_permanentUI.updateScene(path)
+	}
+
 	public Update():void
 	{
 		if (this._gameState == EGameState.StageBack) return
+
+		if (this.m_permanentUI != null) this.m_permanentUI.update()
+
 		this._startTime = egret.getTimer()
 		let timeElapsed = this._startTime - this._lastTime
 		if (this._gameState == EGameState.Ready) {
-			if (PanelManager.m_gameStartPanel != null) {
-				PanelManager.m_gameStartPanel.Update()
-			}
-
-			if (PanelManager.m_gameScenePanel != null) {
-				PanelManager.m_gameScenePanel.Update(timeElapsed)
-			}
 			return
 		}
-		
 		
 		if (this._gameSlowDelay >= 0) {
 			this._gameSlowDelay += timeElapsed
@@ -99,6 +113,7 @@ class GameManager extends egret.Sprite{
 			PanelManager.m_gameScenePanel.Update(timeElapsed)
 		}
 		DragonBonesFactory.getInstance().Update(timeElapsed)
+
 		this._lastTime = this._startTime
 	}
 
@@ -123,6 +138,8 @@ class GameManager extends egret.Sprite{
 	private _lastStage:EGameState
 	private _gameSpeed:number
 	private _gameSlowDelay:number
+
+	private m_permanentUI:PermanentUI
 
 	private static _Instance:GameManager
 }

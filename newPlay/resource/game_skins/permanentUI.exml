@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="permanentUI" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+        <tween:TweenGroup id="water">
+			<tween:TweenItem target="{shui3}">
+				<tween:Set/>
+				<tween:To duration="750">
+					<tween:props>
+						<e:Object y="{23}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="750">
+					<tween:props>
+						<e:Object y="{23}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="1250">
+					<tween:props>
+						<e:Object y="{18}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{shui2}">
+				<tween:Set/>
+				<tween:To duration="750">
+					<tween:props>
+						<e:Object y="{34}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{38}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object y="{38}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="1250">
+					<tween:props>
+						<e:Object y="{29}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{shui1}">
+				<tween:Set/>
+				<tween:To duration="750">
+					<tween:props>
+						<e:Object y="{46}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object y="{50}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object y="{52}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="1250">
+					<tween:props>
+						<e:Object y="{41}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image id="m_imgBg" source="Bg1_png" x="-5" y="-100"/>
+	<e:Image id="m_imgGroundLine" source="imgRop_png" height="2" left="0" right="0" bottom="151" visible="false"/>
+	<e:Image id="m_imgSun" width="123" height="123" source="gameUISheet_json.game105" y="129" x="113"/>
+	<e:Image id="m_cloud1" x="447" y="522.52" source="cloudXue2_png"/>
+	<e:Image id="m_cloud2" x="75.66" y="263" source="cloudXue2_png"/>
+	<e:Image id="m_cloud3" x="565" scaleX="-1" bottom="1158" source="cloudXue1_png"/>
+	<e:Group id="groupRiver" height="78.67" bottom="0" anchorOffsetY="0" left="0" right="0">
+		<e:Image id="shui3" source="shui3_png" scaleX="1" scaleY="1" horizontalCenter="0" y="18" x="-30"/>
+		<e:Image id="shui2" source="shui2_png" horizontalCenter="0" y="29" x="-13" scaleX="1" scaleY="1"/>
+		<e:Image id="shui1" source="shui1_png" horizontalCenter="0" y="41" x="-2" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>

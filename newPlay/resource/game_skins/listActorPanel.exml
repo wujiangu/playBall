@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="listActorPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="groupList" width="669" height="789" horizontalCenter="0" bottom="39">
-		<e:Image source="actorList2_png" x="0" y="0"/>
-		<e:Group id="groupPage" width="200" height="27" anchorOffsetY="0" horizontalCenter="0" bottom="36" x="234" y="748" scaleX="1" scaleY="1">
-			<e:Image id="m_imgPage1" source="actorList4_png" width="27" height="27" y="0" x="0"/>
-			<e:Image id="m_imgPage2" source="actorList4_png" width="27" height="27" y="0" x="43"/>
-			<e:Image id="m_imgPage3" source="actorList4_png" width="27" height="27" y="0" x="86"/>
-			<e:Image id="m_imgPage4" source="actorList4_png" width="27" height="27" y="0" x="130"/>
-			<e:Image id="m_imgPage5" source="actorList4_png" width="27" height="27" y="0" x="173"/>
-		</e:Group>
-		<ns1:ScrollView id="m_srollView" width="628" height="628" scaleX="1" scaleY="1" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-24.5">
-			<e:Group anchorOffsetX="0" width="628">
-			<e:layout>
-				<e:HorizontalLayout gap="0"/>
-			</e:layout>
-				<e:Group id="m_page1" width="628" height="628" x="71" y="205">
-				</e:Group>
-				<e:Group width="628" height="628" x="91" y="225" id="m_page2"/>
-				<e:Group width="628" height="628" x="101" y="235" id="m_page3"/>
-				<e:Group width="628" height="628" x="111" y="245" id="m_page4"/>
-				<e:Group id="m_page5" width="628" height="628" x="81" y="215"/>
-			</e:Group>
-		</ns1:ScrollView>
-	</e:Group>
-	<e:Button id="m_btnReturn" label="" left="17" top="26">
+<e:Skin class="listActorPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="xuanzhuan">
+			<tween:TweenItem target="{m_imgLight}">
+				<tween:Set>
+					<tween:props>
+						<e:Object rotation="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="6850">
+					<tween:props>
+						<e:Object rotation="{360}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image id="m_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0" alpha="0"/>
+	<e:Button id="m_btnReturn" label="" left="14" top="13">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnReturn_png"/>
@@ -31,4 +25,64 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
+	<e:Group id="groupTopRight" width="373" height="113" x="357" y="0" anchorOffsetY="0" anchorOffsetX="0">
+		<e:Image source="icon3_png" x="125.2" y="19.5" anchorOffsetX="0" anchorOffsetY="0" scaleX="0.5" scaleY="0.5"/>
+		<e:Label id="m_labCount" text="560" x="174" y="17" fontFamily="Microsoft YaHei" size="57" textAlign="left" bold="true" anchorOffsetX="0" width="194"/>
+		<e:Button id="m_btnAddCandy" label="" x="288.5" y="17">
+			<e:skinName>
+			<e:Skin states="up,down,disabled" xmlns:tween="egret.tween.*">
+				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnAdd_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="groupActor" width="552" height="394" x="91" y="143" anchorOffsetY="0" anchorOffsetX="0">
+		<e:Image id="m_imgLight" source="actorList8_png" scaleX="0.9" scaleY="0.9" horizontalCenter="-3" verticalCenter="-57"/>
+		<e:Group id="m_groupActor" width="200" height="200" x="150" y="-43" scaleX="1.2" scaleY="1.2"/>
+		<e:Image x="-56.5" y="216" source="actorList1_png"/>
+		<e:Label id="m_labActorName" text="怪物名字" y="233" fontFamily="Microsoft YaHei" size="40" textAlign="center" bold="true" anchorOffsetX="0" width="194" horizontalCenter="-9"/>
+		<e:Label id="m_labDesc" text="怪物描述" y="292" fontFamily="Microsoft YaHei" size="30" textAlign="left" bold="true" anchorOffsetX="0" width="627" horizontalCenter="0.5" verticalAlign="top" anchorOffsetY="0" height="98"/>
+		<e:Button id="m_btnGradeUp" label="" x="-3" y="41">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnShengji_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Button id="m_btnFusion" label="" x="-3" y="155">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnRonghe_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="groupList" width="669" height="789" horizontalCenter="0.5" bottom="37">
+		<e:Image source="actorList2_png" x="0" y="0"/>
+		<e:Group id="groupPage" width="200" height="27" anchorOffsetY="0" horizontalCenter="0" bottom="36" x="234" y="748" scaleX="1" scaleY="1">
+		<e:Image id="m_imgPage1" source="actorList4_png" width="27" height="27" y="0" x="0"/>
+		<e:Image id="m_imgPage2" source="actorList4_png" width="27" height="27" y="0" x="43"/>
+		<e:Image id="m_imgPage3" source="actorList4_png" width="27" height="27" y="0" x="86"/>
+		<e:Image id="m_imgPage4" source="actorList4_png" width="27" height="27" y="0" x="130"/>
+		<e:Image id="m_imgPage5" source="actorList4_png" width="27" height="27" y="0" x="173"/>
+		</e:Group>
+		<ns1:ScrollView id="m_srollView" width="628" height="628" scaleX="1" scaleY="1" horizontalCenter="0" anchorOffsetX="0" verticalCenter="-24.5">
+		<e:Group anchorOffsetX="0" width="628">
+			<e:layout>
+			<e:HorizontalLayout gap="20"/>
+			</e:layout>
+			<e:Group id="m_page1" width="628" height="628" x="71" y="205">
+			</e:Group>
+			<e:Group width="628" height="628" x="91" y="225" id="m_page2">
+			</e:Group>
+			<e:Group width="628" height="628" x="101" y="235" id="m_page3"/>
+			<e:Group width="628" height="628" x="111" y="245" id="m_page4"/>
+			<e:Group id="m_page5" width="628" height="628" x="81" y="215"/>
+		</e:Group>
+		</ns1:ScrollView>
+	</e:Group>
+	<e:Rect id="m_maskRect" left="0" right="0" top="0" bottom="0" touchEnabled="false" visible="false"/>
 </e:Skin>

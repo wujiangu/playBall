@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="chongzhi" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Config id="1692353f795"/>
+	<w:Declarations>
+		<tween:TweenGroup id="show">
+			<tween:TweenItem target="{DFDS}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-581}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object x="{90}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{QEQ}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-491}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object x="{-490}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="350">
+					<tween:props>
+						<e:Object x="{132}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{WQEQW}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-490}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="500"/>
+				<tween:Set/>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object x="{132}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{QWQE}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-503}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{-503}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="700">
+					<tween:props>
+						<e:Object x="{-502}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object x="{133}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{group}">
+				<tween:Set>
+					<tween:props>
+						<e:Object y="{-74}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object y="{3}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="hide">
+			<tween:TweenItem target="{DFDS}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{88}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{750}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{QEQ}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{790}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{WQEQW}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{790}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{QWQE}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{790}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{group}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object y="{-89}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image id="m_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="DFDS" source="chongzhi1_png" x="88" y="249.5" scaleX="1" scaleY="1" anchorOffsetX="0"/>
+	<e:Group id="QEQ" width="482" height="121" x="129" y="382.5">
+		<e:Image source="chongzhi2_png" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Button label="" x="322" scaleX="1" scaleY="1" verticalCenter="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="chongzhi5_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="QWQE" width="482" height="121" x="129" y="697">
+		<e:Image source="chongzhi4_png" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Button label="" x="322" scaleX="1" scaleY="1" verticalCenter="0">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="chongzhi7_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="WQEQW" width="482" height="121" x="129" y="540">
+		<e:Image id="image" source="chongzhi3_png" x="0" y="0" scaleX="1" scaleY="1"/>
+		<e:Button label="" x="322" scaleX="1" scaleY="1" verticalCenter="0">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="chongzhi6_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="group" width="727" height="77" x="0.5" y="8" anchorOffsetX="0" anchorOffsetY="0">
+		<e:Button id="m_btnReturn" label="" x="17.5" y="4" scaleX="1" scaleY="1">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnReturn2_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Image id="m_imgCandy" source="icon2_png" x="577.5" y="8" anchorOffsetX="0" width="50.52" anchorOffsetY="0" height="58" scaleX="1" scaleY="1"/>
+		<e:Label id="m_labCount" text="56" y="5" fontFamily="Microsoft JhengHei" size="61" bold="true" scaleX="1" scaleY="1" textAlign="right" right="18"/>
+	</e:Group>
+</e:Skin>

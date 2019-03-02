@@ -2,8 +2,9 @@ class SummonActor extends BaseActor {
 	public constructor() {
 		super()
 
-		this.m_balloon = new Balloon()
-		this.m_groupBalloon.addChild(this.m_balloon)
+		// this.m_balloon = new Balloon()
+		// this.m_groupBalloon.addChild(this.m_balloon)
+		this.m_balloons = new Array()
 
 		this.m_gesture = new egret.Bitmap()
 		this.addChild(this.m_gesture)
@@ -13,13 +14,7 @@ class SummonActor extends BaseActor {
 
 	public Init(a_data:any, a_x:number, a_y:number, beginX:number, beginY:number, a_count:number = 0, a_num:number = 0, a_isBoss:boolean = false) {
 		this.m_sumWeight = 0
-		// for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
-		// 	this.m_sumWeight += GameConfig.luckyConfig[i].Prob
-		// 	GameConfig.luckyConfig[i].weight = this.m_sumWeight
-		// }
-
-		// this.m_data = this._RandomSummonActorData()
-
+		this.m_type = EMonsterDifficult.Summon
 		this.m_data = GameConfig.summonTable[a_data.id.toString()]
 		this._animations = this.m_data.Actions
 		this.m_gesturDiff = a_data.diff
@@ -113,11 +108,6 @@ class SummonActor extends BaseActor {
 		this.m_rect.height = this.m_data.Height
 		this.m_width = this.m_data.Width
 		this.m_height = this.m_data.Height
-
-		// this.m_gestureData.length = 0
-		// for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-		// 	this.m_gestureData.push(GameConfig.gestureConfig[i])
-		// }
 	}
 
 	public InitGraph() {
@@ -127,6 +117,7 @@ class SummonActor extends BaseActor {
 		this.m_gesture.visible = false
 		this.m_groupBalloon.visible = false
 		this.m_armatureContainer.visible = true
+		this._DestroyBalloon()
 		if (this.m_data.Type == ESummonType.Balloon) {
 			this.m_isArrive = false
 			this.UpdateGesture()
@@ -137,11 +128,19 @@ class SummonActor extends BaseActor {
 		}
 		else if (this.m_data.Type == ESummonType.Monster) {
 			this.m_isArrive = true
-			this.m_balloon.Init(this.m_gestureData, this)
-			this._SetBallonPosition(this.m_balloon, 1, 0)
+			this.m_sumBalloon = 1
+			for (let i = 0; i < this.m_sumBalloon; i++) {
+				let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
+				balloon.Init(this.m_gestureData, this)
+				this._SetBallonPosition(balloon, this.m_sumBalloon, i)
+				this.m_groupBalloon.addChild(balloon)
+				this.m_balloons.push(balloon)
+			}
+			// this.m_balloon.Init(this.m_gestureData, this)
+			// this._SetBallonPosition(this.m_balloon, 1, 0)
 			// this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
 			this._animationName = DragonBonesAnimations.Dead
-			this.m_gestureType = this.m_balloon.type
+			this.m_gestureType = this.m_balloons[0].type
 
 			this.m_state = EMonsterState.Summon
 			this.m_armatureContainer.play(DragonBonesAnimations.Arrive, 1, 1, 0, 3)
@@ -175,7 +174,11 @@ class SummonActor extends BaseActor {
 		GameManager.Instance.Stop()
 	}
 
-	public GotoExplore() {
+	public get Type() {
+		return this.m_type
+	}
+
+	public GotoDead() {
 		if (this.m_state == EMonsterState.Ready && this.y >= 100) {
 			this.m_gesture.visible = false
 			this.m_armatureContainer.play(this._animationName, 1)
@@ -192,13 +195,14 @@ class SummonActor extends BaseActor {
 				channel.volume = GameConfig.soundValue / 100
 			}
 			else if (this.m_data.Type == ESummonType.Monster) {
-				this.m_balloon.BalloonExplore()
+				this.m_balloons[0].BalloonExplore()
 			}
 		}
 	}
 
 	public Destroy() {
 		// this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
+		this._DestroyBalloon()
 		this.m_armatureContainer.clear()
 		this.m_armatureContainer.visible = false
 		GameObjectPool.getInstance().destroyObject(this)
@@ -235,49 +239,36 @@ class SummonActor extends BaseActor {
 		return this.m_gestureType
 	}
 
-	public get State() {
-		return this.m_state
-	}
-
 	/**
 	 * 更新怪物身上的特效动画
 	 */
 	public UpdateEffectArmature(data:any) {
-		this.m_effectArmatureContainer.clear()
-		if (data.bullet != "") {
-			let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.step1, data.step1)
-			if (this.m_effectArmature == null) {
-				this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
-			}
-			this.m_effectData = data
-			this.m_effectArmature.ArmatureDisplay = armatureDisplay
-			this.m_effectArmatureContainer.register(this.m_effectArmature,[data.step1])
-			this.m_effectArmatureContainer.visible = false
-			this.m_effectArmatureContainer.scaleX = 0.8
-			this.m_effectArmatureContainer.scaleY = 0.8
-			this.m_effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
-		}
+		super.UpdateEffectArmature(data)
 	}
 
-	public PlayEffect() {
+	public PlayEffect(data:any) {
 		this.m_effectArmatureContainer.visible = true
-		this.m_effectArmatureContainer.play(this.m_effectData.step1, 1)
-		if (this.m_effectData.type == EEffectType.Fire) {
-			this.m_gesture.visible = false
-			this.m_groupBalloon.visible = false
-			this.m_armatureContainer.visible = false
-			this.m_state = EMonsterState.Stop
-			GameConfig.balloonScore = 0
-			PanelManager.m_gameScenePanel.Boom = true
-			PanelManager.m_gameScenePanel.UpdateBatter()
-		}
+		this.m_effectArmatureContainer.play(data.skill, 1)
+		// if (this.m_effectData.type == EEffectType.Fire) {
+		// 	this.m_gesture.visible = false
+		// 	this.m_groupBalloon.visible = false
+		// 	this.m_armatureContainer.visible = false
+		// 	this.m_state = EMonsterState.Stop
+		// 	GameConfig.balloonScore = 0
+		// 	PanelManager.m_gameScenePanel.Boom = true
+		// 	PanelManager.m_gameScenePanel.UpdateBatter()
+		// }
 	}
 
-	private _OnEffectArmatureComplete() {
-		if (this.m_state == EMonsterState.Stop || this.m_state == EMonsterState.Drown) {
+	public OnEffectArmatureComplete() {
+		if (this.m_state == EMonsterState.Drown) {
 			this.Destroy()
 			PanelManager.m_gameScenePanel.RemoveSummonActor(this)
 		}
+	}
+
+	public OnEffectArmatureFram(event:dragonBones.EgretEvent) {
+		
 	}
 
 	private _OnArmatureComplet() {
@@ -295,10 +286,8 @@ class SummonActor extends BaseActor {
 	}
 
 	private m_sumWeight:number
-	
-	private m_state:EMonsterState
 	//////////////////////////////////////////////////////////////////
-	private m_balloon:Balloon
+	// private m_balloon:Balloon
 	private m_score:number
 
 	private m_gesture:egret.Bitmap

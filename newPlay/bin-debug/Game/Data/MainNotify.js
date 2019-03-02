@@ -37,5 +37,9 @@ var MainNotify;
     MainNotify.closeGamePausePanel = "closeGamePausePanel";
     MainNotify.openActorListPanel = "openActorListPanel";
     MainNotify.closeActorListPanel = "closeActorListPanel";
+    MainNotify.openGameSelectLevel = "openGameSelectLevel";
+    MainNotify.closeGameSelectLevel = "closeGameSelectLevel";
+    MainNotify.openRechargePanel = "openRechargePanel";
+    MainNotify.closeRechargePanel = "closeRechargePanel";
 })(MainNotify || (MainNotify = {}));
 //# sourceMappingURL=MainNotify.js.map

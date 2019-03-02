@@ -1,11 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,balloonYellow_png,balloonBlue_json,balloonBlue_png,balloonGray_json,balloonGray_png,balloonGreen_json,balloonGreen_png,balloonOrange_json,balloonOrange_png,balloonPink_json,balloonPink_png,balloonPurple_json,balloonPurple_png,balloonRed_json,balloonRed_png,balloonYellow_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,itemSheet_json,gameUISheet_json,commonPanel_png,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,btnLock_png,btnProcReturn_png,btnSwap_png,btnUse_png,procBg1_png,procBg2_png,procBg5_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Bg1001_png,ItemBg1001_png,Icon1001_png,Bg1002_png,Icon1002_png,ItemBg1002_png,procBg4_png,Bg1003_png,Icon1003_png,ItemBg1003_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json,procBg6_png,procBg7_png,btnSheet1_json,gamBg5_png,gamBg1_png,gamBg2_png,gamBg3_png,gamBg4_png,procBg8_png,btnContinue_png,btnContinueDown_png,gamBg7_png,jiupingwang_tex_png,bianyixuegao_ske_json,bianyixuegao_tex_json,bianyixuegao_tex_png,huoxingrenwang_ske_json,huoxingrenwang_tex_json,huoxingrenwang_tex_png,jiupingwang_ske_json,jiupingwang_tex_json,comboGreenFnt_fnt,comboGreenFnt_png,comboPurpleFnt_fnt,comboPurpleFnt_png,imgWarning_png,combo4_mp3,jiesuan_mp3,bianyizhizhu_tex_png,bianyizhizhu_ske_json,bianyizhizhu_tex_json,readyGo_mp3,pingfenFnt_fnt,pingfenFnt_png,lianjiFnt_fnt,lianjiFnt_png,pingjiFnt_fnt,pingjiFnt_png,xinshouyindao_tex_png,xinshouyindao_ske_json,xinshouyindao_tex_json,smallBoss_mp3,fallDownWater_mp3,bossWarning_mp3,Jiesuan1_png,Jiesuan2_png,Jiesuan3_png,LockIcon1002_png,LockBg_png,LockIcon1001_png,SRTTING_png,PAUSED_png,BtnRankLock_png,ItemAnimate_tex_png,ItemAnimate_ske_json,ItemAnimate_tex_json,procBg9_png,procBg10_png,guideReleaseSkill_png,fireParticle_png,fireParticle_json,putParticle_png,putParticle_json,gamBg9_png,gamBg8_png,pangxieguai_tex_json,pangxieguai_tex_png,shutiaoguai_ske_json,shutiaoguai_tex_json,shutiaoguai_tex_png,pangxieguai_ske_json,Bg2_png,Bg3_png,sunXue_png,cloudXue1_png,cloudXue2_png,spiderKingDrug_mp3,spideBall_mp3,summon_mp3,itemLight_png,itemUNLOCK_png,unlockItem_mp3",
+			"keys": "btnSheet_json,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,itemConfig_json,monsterConfig_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,gameUISheet_json,commonPanel_png,power_Pro_png,READY_png,GO_png,effectConfig_json,huoba_ske_json,huoba_tex_json,huoba_tex_png,huoqiu_ske_json,huoqiu_tex_json,huoqiu_tex_png,huoshao_ske_json,huoshao_tex_json,huoshao_tex_png,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json,btnSheet1_json,gamBg5_png,gamBg1_png,gamBg2_png,gamBg3_png,gamBg4_png,btnContinue_png,btnContinueDown_png,gamBg7_png,jiupingwang_tex_png,bianyixuegao_ske_json,bianyixuegao_tex_json,bianyixuegao_tex_png,huoxingrenwang_ske_json,huoxingrenwang_tex_json,huoxingrenwang_tex_png,jiupingwang_ske_json,jiupingwang_tex_json,comboGreenFnt_fnt,comboGreenFnt_png,comboPurpleFnt_fnt,comboPurpleFnt_png,imgWarning_png,combo4_mp3,jiesuan_mp3,bianyizhizhu_tex_png,bianyizhizhu_ske_json,bianyizhizhu_tex_json,readyGo_mp3,pingfenFnt_fnt,pingfenFnt_png,lianjiFnt_fnt,lianjiFnt_png,pingjiFnt_fnt,pingjiFnt_png,xinshouyindao_tex_png,xinshouyindao_ske_json,xinshouyindao_tex_json,smallBoss_mp3,fallDownWater_mp3,bossWarning_mp3,Jiesuan1_png,Jiesuan2_png,Jiesuan3_png,SRTTING_png,PAUSED_png,BtnRankLock_png,ItemAnimate_tex_png,ItemAnimate_ske_json,ItemAnimate_tex_json,guideReleaseSkill_png,fireParticle_png,fireParticle_json,putParticle_png,putParticle_json,gamBg9_png,gamBg8_png,pangxieguai_tex_json,pangxieguai_tex_png,shutiaoguai_ske_json,shutiaoguai_tex_json,shutiaoguai_tex_png,pangxieguai_ske_json,Bg2_png,Bg3_png,sunXue_png,cloudXue1_png,cloudXue2_png,spiderKingDrug_mp3,spideBall_mp3,summon_mp3,itemLight_png,itemUNLOCK_png,unlockItem_mp3,btnRenwu_png,btnShengji_png,btnRonghe_png,btnSetting_png,actorList8_png,btnAd_png,btnAdd_png,btnLiwu_png,btnPause_png,btnReturn_png,btnReturnFirst_png,btnStartGame_png,summonSkillConfig_json,chongzhi4_png,btnReturnFirst1_png,chongzhi1_png,chongzhi2_png,chongzhi3_png,chongzhi5_png,chongzhi6_png,chongzhi7_png,gameOver4_png,btnReturn2_png,guankajiemian1_png,guankajiemian13_png,guankajiemian14_png,guankajiemian15_png,guankajiemian3_png,guankajiemian4_png,guankajiemian5_png,guankajiemian6_png,guankajiemian7_png,actorConfig_json,gameProgressBg_png,actorList4_png,actorList3_png,actorList2_png,actorList1_png,zhuanshiwang_tex_png,B-1_ske_json,B-1_tex_json,B-1_tex_png,B-2_ske_json,B-2_tex_json,B-2_tex_png,B-4_ske_json,B-4_tex_json,B-4_tex_png,B-4by_ske_json,B-4by_tex_json,B-4by_tex_png,B-5_ske_json,B-5_tex_json,B-5_tex_png,B-5by_ske_json,B-5by_tex_json,B-5by_tex_png,BDdabengxiong_ske_json,BDdabengxiong_tex_json,BDdabengxiong_tex_png,dabengxiong_ske_json,dabengxiong_tex_json,dabengxiong_tex_png,dandanshe_ske_json,dandanshe_tex_json,dandanshe_tex_png,dandansheby_ske_json,dandansheby_tex_json,dandansheby_tex_png,dujiaoshe_ske_json,dujiaoshe_tex_json,dujiaoshe_tex_png,duyandawang_ske_json,duyandawang_tex_json,duyandawang_tex_png,eyuguai_ske_json,eyuguai_tex_json,eyuguai_tex_png,eyuguaiBY_ske_json,eyuguaiBY_tex_json,eyuguaiBY_tex_png,eyulaoban_ske_json,eyulaoban_tex_json,eyulaoban_tex_png,hudieguai_ske_json,hudieguai_tex_json,hudieguai_tex_png,hudieguaiby_ske_json,hudieguaiby_tex_json,hudieguaiby_tex_png,hudiewang_ske_json,hudiewang_tex_json,hudiewang_tex_png,huoxingguaiBY_ske_json,huoxingguaiBY_tex_json,huoxingguaiBY_tex_png,jiupingxiaochou_ske_json,jiupingxiaochou_tex_json,jiupingxiaochou_tex_png,kuangzhuren_ske_json,kuangzhuren_tex_json,kuangzhuren_tex_png,meiyazai_ske_json,meiyazai_tex_json,meiyazai_tex_png,meiyazaiby_ske_json,meiyazaiby_tex_json,meiyazaiby_tex_png,menyazaiwang_ske_json,menyazaiwang_tex_json,menyazaiwang_tex_png,muwang_ske_json,muwang_tex_json,muwang_tex_png,sdxuerenwang_ske_json,sdxuerenwang_tex_json,sdxuerenwang_tex_png,shanpangxie_ske_json,shanpangxie_tex_json,shanpangxie_tex_png,shanpangxiewang_ske_json,shanpangxiewang_tex_json,shanpangxiewang_tex_png,shihuakonglongguai_ske_json,shihuakonglongguai_tex_json,shihuakonglongguai_tex_png,shoubeiren_ske_json,shoubeiren_tex_json,shoubeiren_tex_png,shoumuren_ske_json,shoumuren_tex_json,shoumuren_tex_png,wenxiangwa_ske_json,wenxiangwa_tex_json,wenxiangwa_tex_png,wenxiangwaby_ske_json,wenxiangwaby_tex_json,wenxiangwaby_tex_png,wenxiangwawang_ske_json,wenxiangwawang_tex_json,wenxiangwawang_tex_png,xuegaowang_ske_json,xuegaowang_tex_json,xuegaowang_tex_png,xuerenguaiby_ske_json,xuerenguaiby_tex_json,xuerenguaiby_tex_png,zhizhuxia_ske_json,zhizhuxia_tex_json,zhizhuxia_tex_png,zhuanshiguai_ske_json,zhuanshiguai_tex_json,zhuanshiguai_tex_png,zhuanshiguaiby_ske_json,zhuanshiguaiby_tex_json,zhuanshiguaiby_tex_png,zhuanshiwang_ske_json,zhuanshiwang_tex_json,dabengxiongBY_ske_json,dabengxiongBY_tex_json,dabengxiongBY_tex_png,guaiboshi_ske_json,guaiboshi_tex_json,guaiboshi_tex_png,xuerenguai_tex_png,xuerenguai_ske_json,xuerenguai_tex_json,fuhuo_png,btnStartGame1_png,btnStartGame2_png,tangguo_png,actorEffect_tex_png,actor10010_ske_json,actor10010_tex_json,actor10010_tex_png,actor10020_ske_json,actor10020_tex_json,actor10020_tex_png,actor10030_ske_json,actor10030_tex_json,actor10030_tex_png,actor10040_ske_json,actor10040_tex_json,actor10040_tex_png,actor10050_ske_json,actor10050_tex_json,actor10050_tex_png,actor10060_ske_json,actor10060_tex_json,actor10060_tex_png,actor10070_ske_json,actor10070_tex_json,actor10070_tex_png,actor10080_ske_json,actor10080_tex_json,actor10080_tex_png,actor10090_ske_json,actor10090_tex_json,actor10090_tex_png,actor10100_ske_json,actor10100_tex_json,actor10100_tex_png,actorEffect_ske_json,actorEffect_tex_json,actorList10020_png,actorList10030_png,actorList10040_png,actorList10050_png,actorList10060_png,actorList10070_png,actorList10080_png,actorList10090_png,actorList10100_png,actorList10010_png,chapterUnlockIcon1005_png,chapterBg1001_png,chapterBg1002_png,chapterBg1003_png,chapterBg1004_png,chapterBg1005_png,chapterBgm1001_mp3,chapterBgm1002_mp3,chapterBgm1003_mp3,chapterBgm1004_mp3,chapterBgm1005_mp3,chapterIcon1001_png,chapterIcon1002_png,chapterIcon1003_png,chapterIcon1004_png,chapterIcon1005_png,chapterUnlockIcon1001_png,chapterUnlockIcon1002_png,chapterUnlockIcon1003_png,chapterUnlockIcon1004_png,chapterConfig_json,guankajiemian12_png,faguang_png,babySkillConfig_json",
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,summonSkillConfig_json,actorList4_png,actorList1_png,actorList2_png,actorList3_png,actorList6_png,actorList5_png,btnReturn_png",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png",
 			"name": "preload"
 		}
 	],
@@ -174,86 +174,6 @@
 			"name": "monsterConfig_json"
 		},
 		{
-			"url": "assets/movieClip/balloonYellow.png",
-			"type": "image",
-			"name": "balloonYellow_png"
-		},
-		{
-			"url": "assets/movieClip/balloonBlue.json",
-			"type": "json",
-			"name": "balloonBlue_json"
-		},
-		{
-			"url": "assets/movieClip/balloonBlue.png",
-			"type": "image",
-			"name": "balloonBlue_png"
-		},
-		{
-			"url": "assets/movieClip/balloonGray.json",
-			"type": "json",
-			"name": "balloonGray_json"
-		},
-		{
-			"url": "assets/movieClip/balloonGray.png",
-			"type": "image",
-			"name": "balloonGray_png"
-		},
-		{
-			"url": "assets/movieClip/balloonGreen.json",
-			"type": "json",
-			"name": "balloonGreen_json"
-		},
-		{
-			"url": "assets/movieClip/balloonGreen.png",
-			"type": "image",
-			"name": "balloonGreen_png"
-		},
-		{
-			"url": "assets/movieClip/balloonOrange.json",
-			"type": "json",
-			"name": "balloonOrange_json"
-		},
-		{
-			"url": "assets/movieClip/balloonOrange.png",
-			"type": "image",
-			"name": "balloonOrange_png"
-		},
-		{
-			"url": "assets/movieClip/balloonPink.json",
-			"type": "json",
-			"name": "balloonPink_json"
-		},
-		{
-			"url": "assets/movieClip/balloonPink.png",
-			"type": "image",
-			"name": "balloonPink_png"
-		},
-		{
-			"url": "assets/movieClip/balloonPurple.json",
-			"type": "json",
-			"name": "balloonPurple_json"
-		},
-		{
-			"url": "assets/movieClip/balloonPurple.png",
-			"type": "image",
-			"name": "balloonPurple_png"
-		},
-		{
-			"url": "assets/movieClip/balloonRed.json",
-			"type": "json",
-			"name": "balloonRed_json"
-		},
-		{
-			"url": "assets/movieClip/balloonRed.png",
-			"type": "image",
-			"name": "balloonRed_png"
-		},
-		{
-			"url": "assets/movieClip/balloonYellow.json",
-			"type": "json",
-			"name": "balloonYellow_json"
-		},
-		{
 			"url": "assets/game/imgRop.png",
 			"type": "image",
 			"name": "imgRop_png"
@@ -268,12 +188,6 @@
 			"type": "sheet",
 			"name": "gameUISheet_json",
 			"subkeys": "game1,game101,game102,game103,game104,game105,game2,game3,game4,game5,gameJiangbei,gameProgressBg"
-		},
-		{
-			"url": "assets/Icon/itemSheet.json",
-			"type": "sheet",
-			"name": "itemSheet_json",
-			"subkeys": "item01,item02,item03,item04,item05,item06,itemBg1,itemBox"
 		},
 		{
 			"url": "assets/bones/lajitong_ske.json",
@@ -651,41 +565,6 @@
 			"name": "huoyedoudong_tex_json"
 		},
 		{
-			"url": "assets/backpack/btnLock.png",
-			"type": "image",
-			"name": "btnLock_png"
-		},
-		{
-			"url": "assets/backpack/btnProcReturn.png",
-			"type": "image",
-			"name": "btnProcReturn_png"
-		},
-		{
-			"url": "assets/backpack/btnSwap.png",
-			"type": "image",
-			"name": "btnSwap_png"
-		},
-		{
-			"url": "assets/backpack/btnUse.png",
-			"type": "image",
-			"name": "btnUse_png"
-		},
-		{
-			"url": "assets/backpack/procBg1.png",
-			"type": "image",
-			"name": "procBg1_png"
-		},
-		{
-			"url": "assets/backpack/procBg2.png",
-			"type": "image",
-			"name": "procBg2_png"
-		},
-		{
-			"url": "assets/backpack/procBg5.png",
-			"type": "image",
-			"name": "procBg5_png"
-		},
-		{
 			"url": "assets/fnt/comboBlueFnt.fnt",
 			"type": "font",
 			"name": "comboBlueFnt_fnt"
@@ -714,56 +593,6 @@
 			"url": "assets/fnt/comboYellowFnt.png",
 			"type": "image",
 			"name": "comboYellowFnt_png"
-		},
-		{
-			"url": "assets/backpack/Bg1001.png",
-			"type": "image",
-			"name": "Bg1001_png"
-		},
-		{
-			"url": "assets/backpack/ItemBg1001.png",
-			"type": "image",
-			"name": "ItemBg1001_png"
-		},
-		{
-			"url": "assets/backpack/Icon1001.png",
-			"type": "image",
-			"name": "Icon1001_png"
-		},
-		{
-			"url": "assets/backpack/Bg1002.png",
-			"type": "image",
-			"name": "Bg1002_png"
-		},
-		{
-			"url": "assets/backpack/Icon1002.png",
-			"type": "image",
-			"name": "Icon1002_png"
-		},
-		{
-			"url": "assets/backpack/ItemBg1002.png",
-			"type": "image",
-			"name": "ItemBg1002_png"
-		},
-		{
-			"url": "assets/backpack/procBg4.png",
-			"type": "image",
-			"name": "procBg4_png"
-		},
-		{
-			"url": "assets/backpack/Bg1003.png",
-			"type": "image",
-			"name": "Bg1003_png"
-		},
-		{
-			"url": "assets/backpack/Icon1003.png",
-			"type": "image",
-			"name": "Icon1003_png"
-		},
-		{
-			"url": "assets/backpack/ItemBg1003.png",
-			"type": "image",
-			"name": "ItemBg1003_png"
 		},
 		{
 			"url": "assets/bones/Detonationexplosion_tex.png",
@@ -866,16 +695,6 @@
 			"name": "longmao_tex_json"
 		},
 		{
-			"url": "assets/backpack/procBg6.png",
-			"type": "image",
-			"name": "procBg6_png"
-		},
-		{
-			"url": "assets/backpack/procBg7.png",
-			"type": "image",
-			"name": "procBg7_png"
-		},
-		{
 			"url": "assets/Button/btnSheet1.json",
 			"type": "sheet",
 			"name": "btnSheet1_json",
@@ -905,11 +724,6 @@
 			"url": "assets/game/gamBg4.png",
 			"type": "image",
 			"name": "gamBg4_png"
-		},
-		{
-			"url": "assets/backpack/procBg8.png",
-			"type": "image",
-			"name": "procBg8_png"
 		},
 		{
 			"url": "assets/game/gamBg6.png",
@@ -1112,21 +926,6 @@
 			"name": "Jiesuan3_png"
 		},
 		{
-			"url": "assets/backpack/LockIcon1002.png",
-			"type": "image",
-			"name": "LockIcon1002_png"
-		},
-		{
-			"url": "assets/backpack/LockBg.png",
-			"type": "image",
-			"name": "LockBg_png"
-		},
-		{
-			"url": "assets/backpack/LockIcon1001.png",
-			"type": "image",
-			"name": "LockIcon1001_png"
-		},
-		{
 			"url": "assets/game/SRTTING.png",
 			"type": "image",
 			"name": "SRTTING_png"
@@ -1175,16 +974,6 @@
 			"url": "assets/Particle/putParticle.json",
 			"type": "json",
 			"name": "putParticle_json"
-		},
-		{
-			"url": "assets/backpack/procBg9.png",
-			"type": "image",
-			"name": "procBg9_png"
-		},
-		{
-			"url": "assets/backpack/procBg10.png",
-			"type": "image",
-			"name": "procBg10_png"
 		},
 		{
 			"url": "assets/game/guideReleaseSkill.png",
@@ -1287,44 +1076,1264 @@
 			"name": "unlockItem_mp3"
 		},
 		{
-			"name": "summonSkillConfig_json",
+			"url": "config/summonSkillConfig.json",
 			"type": "json",
-			"url": "config/summonSkillConfig.json"
+			"name": "summonSkillConfig_json"
 		},
 		{
-			"name": "actorList4_png",
+			"url": "assets/actorList/actorList4.png",
 			"type": "image",
-			"url": "assets/actorList/actorList4.png"
+			"name": "actorList4_png"
 		},
 		{
-			"name": "actorList1_png",
+			"url": "assets/actorList/actorList1.png",
 			"type": "image",
-			"url": "assets/actorList/actorList1.png"
+			"name": "actorList1_png"
 		},
 		{
-			"name": "actorList2_png",
+			"url": "assets/actorList/actorList2.png",
 			"type": "image",
-			"url": "assets/actorList/actorList2.png"
+			"name": "actorList2_png"
 		},
 		{
-			"name": "actorList3_png",
+			"url": "assets/actorList/actorList3.png",
 			"type": "image",
-			"url": "assets/actorList/actorList3.png"
+			"name": "actorList3_png"
 		},
 		{
-			"name": "actorList6_png",
+			"url": "assets/Button/btnReturn.png",
 			"type": "image",
-			"url": "assets/actorList/actorList6.png"
+			"name": "btnReturn_png"
 		},
 		{
-			"name": "actorList5_png",
+			"url": "assets/Button/btnStartGame.png",
 			"type": "image",
-			"url": "assets/actorList/actorList5.png"
+			"name": "btnStartGame_png"
 		},
 		{
-			"name": "btnReturn_png",
+			"url": "assets/Button/btnAd.png",
 			"type": "image",
-			"url": "assets/Button/btnReturn.png"
+			"name": "btnAd_png"
+		},
+		{
+			"url": "assets/Button/btnAdd.png",
+			"type": "image",
+			"name": "btnAdd_png"
+		},
+		{
+			"url": "assets/Button/btnLiwu.png",
+			"type": "image",
+			"name": "btnLiwu_png"
+		},
+		{
+			"url": "assets/Button/btnPause.png",
+			"type": "image",
+			"name": "btnPause_png"
+		},
+		{
+			"url": "assets/Button/btnRenwu.png",
+			"type": "image",
+			"name": "btnRenwu_png"
+		},
+		{
+			"url": "assets/Button/btnReturnFirst.png",
+			"type": "image",
+			"name": "btnReturnFirst_png"
+		},
+		{
+			"url": "assets/Button/btnRonghe.png",
+			"type": "image",
+			"name": "btnRonghe_png"
+		},
+		{
+			"url": "assets/Button/btnSetting.png",
+			"type": "image",
+			"name": "btnSetting_png"
+		},
+		{
+			"url": "assets/Button/btnShengji.png",
+			"type": "image",
+			"name": "btnShengji_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao5.png",
+			"type": "image",
+			"name": "qiandao5_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao1.png",
+			"type": "image",
+			"name": "qiandao1_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao2.png",
+			"type": "image",
+			"name": "qiandao2_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao3.png",
+			"type": "image",
+			"name": "qiandao3_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao4.png",
+			"type": "image",
+			"name": "qiandao4_png"
+		},
+		{
+			"url": "assets/Icon/icon3.png",
+			"type": "image",
+			"name": "icon3_png"
+		},
+		{
+			"url": "assets/Icon/icon1.png",
+			"type": "image",
+			"name": "icon1_png"
+		},
+		{
+			"url": "assets/Icon/icon2.png",
+			"type": "image",
+			"name": "icon2_png"
+		},
+		{
+			"url": "assets/gameOver/gameOver3.png",
+			"type": "image",
+			"name": "gameOver3_png"
+		},
+		{
+			"url": "assets/gameOver/gameOver1.png",
+			"type": "image",
+			"name": "gameOver1_png"
+		},
+		{
+			"url": "assets/gameOver/gameOver2.png",
+			"type": "image",
+			"name": "gameOver2_png"
+		},
+		{
+			"url": "assets/actorList/actorList8.png",
+			"type": "image",
+			"name": "actorList8_png"
+		},
+		{
+			"url": "assets/gameStart/gameStart3.png",
+			"type": "image",
+			"name": "gameStart3_png"
+		},
+		{
+			"url": "assets/gameStart/gameStart1.png",
+			"type": "image",
+			"name": "gameStart1_png"
+		},
+		{
+			"url": "assets/gameStart/gameStart2.png",
+			"type": "image",
+			"name": "gameStart2_png"
+		},
+		{
+			"url": "config/actorConfig.json",
+			"type": "json",
+			"name": "actorConfig_json"
+		},
+		{
+			"url": "assets/Button/btnReturnFirst1.png",
+			"type": "image",
+			"name": "btnReturnFirst1_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi1.png",
+			"type": "image",
+			"name": "chongzhi1_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi2.png",
+			"type": "image",
+			"name": "chongzhi2_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi3.png",
+			"type": "image",
+			"name": "chongzhi3_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi4.png",
+			"type": "image",
+			"name": "chongzhi4_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi5.png",
+			"type": "image",
+			"name": "chongzhi5_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi6.png",
+			"type": "image",
+			"name": "chongzhi6_png"
+		},
+		{
+			"url": "assets/chongzhi/chongzhi7.png",
+			"type": "image",
+			"name": "chongzhi7_png"
+		},
+		{
+			"url": "assets/gameOver/gameOver4.png",
+			"type": "image",
+			"name": "gameOver4_png"
+		},
+		{
+			"url": "assets/guankajiemian/btnReturn.png",
+			"type": "image",
+			"name": "btnReturn2_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian1.png",
+			"type": "image",
+			"name": "guankajiemian1_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian13.png",
+			"type": "image",
+			"name": "guankajiemian13_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian14.png",
+			"type": "image",
+			"name": "guankajiemian14_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian15.png",
+			"type": "image",
+			"name": "guankajiemian15_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian3.png",
+			"type": "image",
+			"name": "guankajiemian3_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian4.png",
+			"type": "image",
+			"name": "guankajiemian4_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian5.png",
+			"type": "image",
+			"name": "guankajiemian5_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian6.png",
+			"type": "image",
+			"name": "guankajiemian6_png"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian7.png",
+			"type": "image",
+			"name": "guankajiemian7_png"
+		},
+		{
+			"url": "assets/game/gameProgressBg.png",
+			"type": "image",
+			"name": "gameProgressBg_png"
+		},
+		{
+			"url": "assets/bones2/zhuanshiwang_tex.png",
+			"type": "image",
+			"name": "zhuanshiwang_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-1_ske.json",
+			"type": "json",
+			"name": "B-1_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-1_tex.json",
+			"type": "json",
+			"name": "B-1_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-1_tex.png",
+			"type": "image",
+			"name": "B-1_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-2_ske.json",
+			"type": "json",
+			"name": "B-2_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-2_tex.json",
+			"type": "json",
+			"name": "B-2_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-2_tex.png",
+			"type": "image",
+			"name": "B-2_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-4_ske.json",
+			"type": "json",
+			"name": "B-4_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-4_tex.json",
+			"type": "json",
+			"name": "B-4_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-4_tex.png",
+			"type": "image",
+			"name": "B-4_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-4by_ske.json",
+			"type": "json",
+			"name": "B-4by_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-4by_tex.json",
+			"type": "json",
+			"name": "B-4by_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-4by_tex.png",
+			"type": "image",
+			"name": "B-4by_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-5_ske.json",
+			"type": "json",
+			"name": "B-5_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-5_tex.json",
+			"type": "json",
+			"name": "B-5_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-5_tex.png",
+			"type": "image",
+			"name": "B-5_tex_png"
+		},
+		{
+			"url": "assets/bones2/B-5by_ske.json",
+			"type": "json",
+			"name": "B-5by_ske_json"
+		},
+		{
+			"url": "assets/bones2/B-5by_tex.json",
+			"type": "json",
+			"name": "B-5by_tex_json"
+		},
+		{
+			"url": "assets/bones2/B-5by_tex.png",
+			"type": "image",
+			"name": "B-5by_tex_png"
+		},
+		{
+			"url": "assets/bones2/BDdabengxiong_ske.json",
+			"type": "json",
+			"name": "BDdabengxiong_ske_json"
+		},
+		{
+			"url": "assets/bones2/BDdabengxiong_tex.json",
+			"type": "json",
+			"name": "BDdabengxiong_tex_json"
+		},
+		{
+			"url": "assets/bones2/BDdabengxiong_tex.png",
+			"type": "image",
+			"name": "BDdabengxiong_tex_png"
+		},
+		{
+			"url": "assets/bones2/dabengxiong_ske.json",
+			"type": "json",
+			"name": "dabengxiong_ske_json"
+		},
+		{
+			"url": "assets/bones2/dabengxiong_tex.json",
+			"type": "json",
+			"name": "dabengxiong_tex_json"
+		},
+		{
+			"url": "assets/bones2/dabengxiong_tex.png",
+			"type": "image",
+			"name": "dabengxiong_tex_png"
+		},
+		{
+			"url": "assets/bones2/dandanshe_ske.json",
+			"type": "json",
+			"name": "dandanshe_ske_json"
+		},
+		{
+			"url": "assets/bones2/dandanshe_tex.json",
+			"type": "json",
+			"name": "dandanshe_tex_json"
+		},
+		{
+			"url": "assets/bones2/dandanshe_tex.png",
+			"type": "image",
+			"name": "dandanshe_tex_png"
+		},
+		{
+			"url": "assets/bones2/dandansheby_ske.json",
+			"type": "json",
+			"name": "dandansheby_ske_json"
+		},
+		{
+			"url": "assets/bones2/dandansheby_tex.json",
+			"type": "json",
+			"name": "dandansheby_tex_json"
+		},
+		{
+			"url": "assets/bones2/dandansheby_tex.png",
+			"type": "image",
+			"name": "dandansheby_tex_png"
+		},
+		{
+			"url": "assets/bones2/dujiaoshe_ske.json",
+			"type": "json",
+			"name": "dujiaoshe_ske_json"
+		},
+		{
+			"url": "assets/bones2/dujiaoshe_tex.json",
+			"type": "json",
+			"name": "dujiaoshe_tex_json"
+		},
+		{
+			"url": "assets/bones2/dujiaoshe_tex.png",
+			"type": "image",
+			"name": "dujiaoshe_tex_png"
+		},
+		{
+			"url": "assets/bones2/duyandawang_ske.json",
+			"type": "json",
+			"name": "duyandawang_ske_json"
+		},
+		{
+			"url": "assets/bones2/duyandawang_tex.json",
+			"type": "json",
+			"name": "duyandawang_tex_json"
+		},
+		{
+			"url": "assets/bones2/duyandawang_tex.png",
+			"type": "image",
+			"name": "duyandawang_tex_png"
+		},
+		{
+			"url": "assets/bones2/eyuguai_ske.json",
+			"type": "json",
+			"name": "eyuguai_ske_json"
+		},
+		{
+			"url": "assets/bones2/eyuguai_tex.json",
+			"type": "json",
+			"name": "eyuguai_tex_json"
+		},
+		{
+			"url": "assets/bones2/eyuguai_tex.png",
+			"type": "image",
+			"name": "eyuguai_tex_png"
+		},
+		{
+			"url": "assets/bones2/eyuguaiBY_ske.json",
+			"type": "json",
+			"name": "eyuguaiBY_ske_json"
+		},
+		{
+			"url": "assets/bones2/eyuguaiBY_tex.json",
+			"type": "json",
+			"name": "eyuguaiBY_tex_json"
+		},
+		{
+			"url": "assets/bones2/eyuguaiBY_tex.png",
+			"type": "image",
+			"name": "eyuguaiBY_tex_png"
+		},
+		{
+			"url": "assets/bones2/eyulaoban_ske.json",
+			"type": "json",
+			"name": "eyulaoban_ske_json"
+		},
+		{
+			"url": "assets/bones2/eyulaoban_tex.json",
+			"type": "json",
+			"name": "eyulaoban_tex_json"
+		},
+		{
+			"url": "assets/bones2/eyulaoban_tex.png",
+			"type": "image",
+			"name": "eyulaoban_tex_png"
+		},
+		{
+			"url": "assets/bones2/hudieguai_ske.json",
+			"type": "json",
+			"name": "hudieguai_ske_json"
+		},
+		{
+			"url": "assets/bones2/hudieguai_tex.json",
+			"type": "json",
+			"name": "hudieguai_tex_json"
+		},
+		{
+			"url": "assets/bones2/hudieguai_tex.png",
+			"type": "image",
+			"name": "hudieguai_tex_png"
+		},
+		{
+			"url": "assets/bones2/hudieguaiby_ske.json",
+			"type": "json",
+			"name": "hudieguaiby_ske_json"
+		},
+		{
+			"url": "assets/bones2/hudieguaiby_tex.json",
+			"type": "json",
+			"name": "hudieguaiby_tex_json"
+		},
+		{
+			"url": "assets/bones2/hudieguaiby_tex.png",
+			"type": "image",
+			"name": "hudieguaiby_tex_png"
+		},
+		{
+			"url": "assets/bones2/hudiewang_ske.json",
+			"type": "json",
+			"name": "hudiewang_ske_json"
+		},
+		{
+			"url": "assets/bones2/hudiewang_tex.json",
+			"type": "json",
+			"name": "hudiewang_tex_json"
+		},
+		{
+			"url": "assets/bones2/hudiewang_tex.png",
+			"type": "image",
+			"name": "hudiewang_tex_png"
+		},
+		{
+			"url": "assets/bones2/huoxingguaiBY_ske.json",
+			"type": "json",
+			"name": "huoxingguaiBY_ske_json"
+		},
+		{
+			"url": "assets/bones2/huoxingguaiBY_tex.json",
+			"type": "json",
+			"name": "huoxingguaiBY_tex_json"
+		},
+		{
+			"url": "assets/bones2/huoxingguaiBY_tex.png",
+			"type": "image",
+			"name": "huoxingguaiBY_tex_png"
+		},
+		{
+			"url": "assets/bones2/jiupingxiaochou_ske.json",
+			"type": "json",
+			"name": "jiupingxiaochou_ske_json"
+		},
+		{
+			"url": "assets/bones2/jiupingxiaochou_tex.json",
+			"type": "json",
+			"name": "jiupingxiaochou_tex_json"
+		},
+		{
+			"url": "assets/bones2/jiupingxiaochou_tex.png",
+			"type": "image",
+			"name": "jiupingxiaochou_tex_png"
+		},
+		{
+			"url": "assets/bones2/kuangzhuren_ske.json",
+			"type": "json",
+			"name": "kuangzhuren_ske_json"
+		},
+		{
+			"url": "assets/bones2/kuangzhuren_tex.json",
+			"type": "json",
+			"name": "kuangzhuren_tex_json"
+		},
+		{
+			"url": "assets/bones2/kuangzhuren_tex.png",
+			"type": "image",
+			"name": "kuangzhuren_tex_png"
+		},
+		{
+			"url": "assets/bones2/meiyazai_ske.json",
+			"type": "json",
+			"name": "meiyazai_ske_json"
+		},
+		{
+			"url": "assets/bones2/meiyazai_tex.json",
+			"type": "json",
+			"name": "meiyazai_tex_json"
+		},
+		{
+			"url": "assets/bones2/meiyazai_tex.png",
+			"type": "image",
+			"name": "meiyazai_tex_png"
+		},
+		{
+			"url": "assets/bones2/meiyazaiby_ske.json",
+			"type": "json",
+			"name": "meiyazaiby_ske_json"
+		},
+		{
+			"url": "assets/bones2/meiyazaiby_tex.json",
+			"type": "json",
+			"name": "meiyazaiby_tex_json"
+		},
+		{
+			"url": "assets/bones2/meiyazaiby_tex.png",
+			"type": "image",
+			"name": "meiyazaiby_tex_png"
+		},
+		{
+			"url": "assets/bones2/menyazaiwang_ske.json",
+			"type": "json",
+			"name": "menyazaiwang_ske_json"
+		},
+		{
+			"url": "assets/bones2/menyazaiwang_tex.json",
+			"type": "json",
+			"name": "menyazaiwang_tex_json"
+		},
+		{
+			"url": "assets/bones2/menyazaiwang_tex.png",
+			"type": "image",
+			"name": "menyazaiwang_tex_png"
+		},
+		{
+			"url": "assets/bones2/muwang_ske.json",
+			"type": "json",
+			"name": "muwang_ske_json"
+		},
+		{
+			"url": "assets/bones2/muwang_tex.json",
+			"type": "json",
+			"name": "muwang_tex_json"
+		},
+		{
+			"url": "assets/bones2/muwang_tex.png",
+			"type": "image",
+			"name": "muwang_tex_png"
+		},
+		{
+			"url": "assets/bones2/sdxuerenwang_ske.json",
+			"type": "json",
+			"name": "sdxuerenwang_ske_json"
+		},
+		{
+			"url": "assets/bones2/sdxuerenwang_tex.json",
+			"type": "json",
+			"name": "sdxuerenwang_tex_json"
+		},
+		{
+			"url": "assets/bones2/sdxuerenwang_tex.png",
+			"type": "image",
+			"name": "sdxuerenwang_tex_png"
+		},
+		{
+			"url": "assets/bones2/shanpangxie_ske.json",
+			"type": "json",
+			"name": "shanpangxie_ske_json"
+		},
+		{
+			"url": "assets/bones2/shanpangxie_tex.json",
+			"type": "json",
+			"name": "shanpangxie_tex_json"
+		},
+		{
+			"url": "assets/bones2/shanpangxie_tex.png",
+			"type": "image",
+			"name": "shanpangxie_tex_png"
+		},
+		{
+			"url": "assets/bones2/shanpangxiewang_ske.json",
+			"type": "json",
+			"name": "shanpangxiewang_ske_json"
+		},
+		{
+			"url": "assets/bones2/shanpangxiewang_tex.json",
+			"type": "json",
+			"name": "shanpangxiewang_tex_json"
+		},
+		{
+			"url": "assets/bones2/shanpangxiewang_tex.png",
+			"type": "image",
+			"name": "shanpangxiewang_tex_png"
+		},
+		{
+			"url": "assets/bones2/shihuakonglongguai_ske.json",
+			"type": "json",
+			"name": "shihuakonglongguai_ske_json"
+		},
+		{
+			"url": "assets/bones2/shihuakonglongguai_tex.json",
+			"type": "json",
+			"name": "shihuakonglongguai_tex_json"
+		},
+		{
+			"url": "assets/bones2/shihuakonglongguai_tex.png",
+			"type": "image",
+			"name": "shihuakonglongguai_tex_png"
+		},
+		{
+			"url": "assets/bones2/shoubeiren_ske.json",
+			"type": "json",
+			"name": "shoubeiren_ske_json"
+		},
+		{
+			"url": "assets/bones2/shoubeiren_tex.json",
+			"type": "json",
+			"name": "shoubeiren_tex_json"
+		},
+		{
+			"url": "assets/bones2/shoubeiren_tex.png",
+			"type": "image",
+			"name": "shoubeiren_tex_png"
+		},
+		{
+			"url": "assets/bones2/shoumuren_ske.json",
+			"type": "json",
+			"name": "shoumuren_ske_json"
+		},
+		{
+			"url": "assets/bones2/shoumuren_tex.json",
+			"type": "json",
+			"name": "shoumuren_tex_json"
+		},
+		{
+			"url": "assets/bones2/shoumuren_tex.png",
+			"type": "image",
+			"name": "shoumuren_tex_png"
+		},
+		{
+			"url": "assets/bones2/wenxiangwa_ske.json",
+			"type": "json",
+			"name": "wenxiangwa_ske_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwa_tex.json",
+			"type": "json",
+			"name": "wenxiangwa_tex_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwa_tex.png",
+			"type": "image",
+			"name": "wenxiangwa_tex_png"
+		},
+		{
+			"url": "assets/bones2/wenxiangwaby_ske.json",
+			"type": "json",
+			"name": "wenxiangwaby_ske_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwaby_tex.json",
+			"type": "json",
+			"name": "wenxiangwaby_tex_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwaby_tex.png",
+			"type": "image",
+			"name": "wenxiangwaby_tex_png"
+		},
+		{
+			"url": "assets/bones2/wenxiangwawang_ske.json",
+			"type": "json",
+			"name": "wenxiangwawang_ske_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwawang_tex.json",
+			"type": "json",
+			"name": "wenxiangwawang_tex_json"
+		},
+		{
+			"url": "assets/bones2/wenxiangwawang_tex.png",
+			"type": "image",
+			"name": "wenxiangwawang_tex_png"
+		},
+		{
+			"url": "assets/bones2/xuegaowang_ske.json",
+			"type": "json",
+			"name": "xuegaowang_ske_json"
+		},
+		{
+			"url": "assets/bones2/xuegaowang_tex.json",
+			"type": "json",
+			"name": "xuegaowang_tex_json"
+		},
+		{
+			"url": "assets/bones2/xuegaowang_tex.png",
+			"type": "image",
+			"name": "xuegaowang_tex_png"
+		},
+		{
+			"url": "assets/bones2/xuerenguaiby_ske.json",
+			"type": "json",
+			"name": "xuerenguaiby_ske_json"
+		},
+		{
+			"url": "assets/bones2/xuerenguaiby_tex.json",
+			"type": "json",
+			"name": "xuerenguaiby_tex_json"
+		},
+		{
+			"url": "assets/bones2/xuerenguaiby_tex.png",
+			"type": "image",
+			"name": "xuerenguaiby_tex_png"
+		},
+		{
+			"url": "assets/bones2/zhizhuxia_ske.json",
+			"type": "json",
+			"name": "zhizhuxia_ske_json"
+		},
+		{
+			"url": "assets/bones2/zhizhuxia_tex.json",
+			"type": "json",
+			"name": "zhizhuxia_tex_json"
+		},
+		{
+			"url": "assets/bones2/zhizhuxia_tex.png",
+			"type": "image",
+			"name": "zhizhuxia_tex_png"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguai_ske.json",
+			"type": "json",
+			"name": "zhuanshiguai_ske_json"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguai_tex.json",
+			"type": "json",
+			"name": "zhuanshiguai_tex_json"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguai_tex.png",
+			"type": "image",
+			"name": "zhuanshiguai_tex_png"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguaiby_ske.json",
+			"type": "json",
+			"name": "zhuanshiguaiby_ske_json"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguaiby_tex.json",
+			"type": "json",
+			"name": "zhuanshiguaiby_tex_json"
+		},
+		{
+			"url": "assets/bones2/zhuanshiguaiby_tex.png",
+			"type": "image",
+			"name": "zhuanshiguaiby_tex_png"
+		},
+		{
+			"url": "assets/bones2/zhuanshiwang_ske.json",
+			"type": "json",
+			"name": "zhuanshiwang_ske_json"
+		},
+		{
+			"url": "assets/bones2/zhuanshiwang_tex.json",
+			"type": "json",
+			"name": "zhuanshiwang_tex_json"
+		},
+		{
+			"url": "assets/bones2/dabengxiongBY_ske.json",
+			"type": "json",
+			"name": "dabengxiongBY_ske_json"
+		},
+		{
+			"url": "assets/bones2/dabengxiongBY_tex.json",
+			"type": "json",
+			"name": "dabengxiongBY_tex_json"
+		},
+		{
+			"url": "assets/bones2/dabengxiongBY_tex.png",
+			"type": "image",
+			"name": "dabengxiongBY_tex_png"
+		},
+		{
+			"url": "assets/bones2/guaiboshi_ske.json",
+			"type": "json",
+			"name": "guaiboshi_ske_json"
+		},
+		{
+			"url": "assets/bones2/guaiboshi_tex.json",
+			"type": "json",
+			"name": "guaiboshi_tex_json"
+		},
+		{
+			"url": "assets/bones2/guaiboshi_tex.png",
+			"type": "image",
+			"name": "guaiboshi_tex_png"
+		},
+		{
+			"url": "assets/bones2/xuerenguai_tex.png",
+			"type": "image",
+			"name": "xuerenguai_tex_png"
+		},
+		{
+			"url": "assets/bones2/xuerenguai_ske.json",
+			"type": "json",
+			"name": "xuerenguai_ske_json"
+		},
+		{
+			"url": "assets/bones2/xuerenguai_tex.json",
+			"type": "json",
+			"name": "xuerenguai_tex_json"
+		},
+		{
+			"url": "assets/Button/fuhuo.png",
+			"type": "image",
+			"name": "fuhuo_png"
+		},
+		{
+			"url": "assets/Button/btnStartGame1.png",
+			"type": "image",
+			"name": "btnStartGame1_png"
+		},
+		{
+			"url": "assets/Button/btnStartGame2.png",
+			"type": "image",
+			"name": "btnStartGame2_png"
+		},
+		{
+			"url": "assets/game/tangguo.png",
+			"type": "image",
+			"name": "tangguo_png"
+		},
+		{
+			"url": "assets/actorBones/actorEffect_tex.png",
+			"type": "image",
+			"name": "actorEffect_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10010_ske.json",
+			"type": "json",
+			"name": "actor10010_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10010_tex.json",
+			"type": "json",
+			"name": "actor10010_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10010_tex.png",
+			"type": "image",
+			"name": "actor10010_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10020_ske.json",
+			"type": "json",
+			"name": "actor10020_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10020_tex.json",
+			"type": "json",
+			"name": "actor10020_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10020_tex.png",
+			"type": "image",
+			"name": "actor10020_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10030_ske.json",
+			"type": "json",
+			"name": "actor10030_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10030_tex.json",
+			"type": "json",
+			"name": "actor10030_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10030_tex.png",
+			"type": "image",
+			"name": "actor10030_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10040_ske.json",
+			"type": "json",
+			"name": "actor10040_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10040_tex.json",
+			"type": "json",
+			"name": "actor10040_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10040_tex.png",
+			"type": "image",
+			"name": "actor10040_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10050_ske.json",
+			"type": "json",
+			"name": "actor10050_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10050_tex.json",
+			"type": "json",
+			"name": "actor10050_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10050_tex.png",
+			"type": "image",
+			"name": "actor10050_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10060_ske.json",
+			"type": "json",
+			"name": "actor10060_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10060_tex.json",
+			"type": "json",
+			"name": "actor10060_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10060_tex.png",
+			"type": "image",
+			"name": "actor10060_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10070_ske.json",
+			"type": "json",
+			"name": "actor10070_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10070_tex.json",
+			"type": "json",
+			"name": "actor10070_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10070_tex.png",
+			"type": "image",
+			"name": "actor10070_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10080_ske.json",
+			"type": "json",
+			"name": "actor10080_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10080_tex.json",
+			"type": "json",
+			"name": "actor10080_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10080_tex.png",
+			"type": "image",
+			"name": "actor10080_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10090_ske.json",
+			"type": "json",
+			"name": "actor10090_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10090_tex.json",
+			"type": "json",
+			"name": "actor10090_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10090_tex.png",
+			"type": "image",
+			"name": "actor10090_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10100_ske.json",
+			"type": "json",
+			"name": "actor10100_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10100_tex.json",
+			"type": "json",
+			"name": "actor10100_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10100_tex.png",
+			"type": "image",
+			"name": "actor10100_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actorEffect_ske.json",
+			"type": "json",
+			"name": "actorEffect_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actorEffect_tex.json",
+			"type": "json",
+			"name": "actorEffect_tex_json"
+		},
+		{
+			"url": "assets/actorList/actorList10020.png",
+			"type": "image",
+			"name": "actorList10020_png"
+		},
+		{
+			"url": "assets/actorList/actorList10030.png",
+			"type": "image",
+			"name": "actorList10030_png"
+		},
+		{
+			"url": "assets/actorList/actorList10040.png",
+			"type": "image",
+			"name": "actorList10040_png"
+		},
+		{
+			"url": "assets/actorList/actorList10050.png",
+			"type": "image",
+			"name": "actorList10050_png"
+		},
+		{
+			"url": "assets/actorList/actorList10060.png",
+			"type": "image",
+			"name": "actorList10060_png"
+		},
+		{
+			"url": "assets/actorList/actorList10070.png",
+			"type": "image",
+			"name": "actorList10070_png"
+		},
+		{
+			"url": "assets/actorList/actorList10080.png",
+			"type": "image",
+			"name": "actorList10080_png"
+		},
+		{
+			"url": "assets/actorList/actorList10090.png",
+			"type": "image",
+			"name": "actorList10090_png"
+		},
+		{
+			"url": "assets/actorList/actorList10100.png",
+			"type": "image",
+			"name": "actorList10100_png"
+		},
+		{
+			"url": "assets/actorList/actorList10010.png",
+			"type": "image",
+			"name": "actorList10010_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterUnlockIcon1005.png",
+			"type": "image",
+			"name": "chapterUnlockIcon1005_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBg1001.png",
+			"type": "image",
+			"name": "chapterBg1001_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBg1002.png",
+			"type": "image",
+			"name": "chapterBg1002_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBg1003.png",
+			"type": "image",
+			"name": "chapterBg1003_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBg1004.png",
+			"type": "image",
+			"name": "chapterBg1004_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBg1005.png",
+			"type": "image",
+			"name": "chapterBg1005_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBgm1001.mp3",
+			"type": "sound",
+			"name": "chapterBgm1001_mp3"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBgm1002.mp3",
+			"type": "sound",
+			"name": "chapterBgm1002_mp3"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBgm1003.mp3",
+			"type": "sound",
+			"name": "chapterBgm1003_mp3"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBgm1004.mp3",
+			"type": "sound",
+			"name": "chapterBgm1004_mp3"
+		},
+		{
+			"url": "assets/guankajiemian/chapterBgm1005.mp3",
+			"type": "sound",
+			"name": "chapterBgm1005_mp3"
+		},
+		{
+			"url": "assets/guankajiemian/chapterIcon1001.png",
+			"type": "image",
+			"name": "chapterIcon1001_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterIcon1002.png",
+			"type": "image",
+			"name": "chapterIcon1002_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterIcon1003.png",
+			"type": "image",
+			"name": "chapterIcon1003_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterIcon1004.png",
+			"type": "image",
+			"name": "chapterIcon1004_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterIcon1005.png",
+			"type": "image",
+			"name": "chapterIcon1005_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterUnlockIcon1001.png",
+			"type": "image",
+			"name": "chapterUnlockIcon1001_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterUnlockIcon1002.png",
+			"type": "image",
+			"name": "chapterUnlockIcon1002_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterUnlockIcon1003.png",
+			"type": "image",
+			"name": "chapterUnlockIcon1003_png"
+		},
+		{
+			"url": "assets/guankajiemian/chapterUnlockIcon1004.png",
+			"type": "image",
+			"name": "chapterUnlockIcon1004_png"
+		},
+		{
+			"url": "config/chapterConfig.json",
+			"type": "json",
+			"name": "chapterConfig_json"
+		},
+		{
+			"url": "assets/guankajiemian/guankajiemian12.png",
+			"type": "image",
+			"name": "guankajiemian12_png"
+		},
+		{
+			"url": "assets/actorList/faguang.png",
+			"type": "image",
+			"name": "faguang_png"
+		},
+		{
+			"url": "config/babySkillConfig.json",
+			"type": "json",
+			"name": "babySkillConfig_json"
 		}
 	]
 }

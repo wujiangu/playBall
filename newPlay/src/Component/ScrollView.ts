@@ -21,6 +21,8 @@ class ScrollView extends eui.Scroller {
     public delayScroll: number = 250;
     /**是否是水平滚动*/
     public isHScroller: Boolean;
+    /**间隔 */
+    public spacing: number = 0
     /**触摸起始位置*/
     private touchStartPos: number;
     /**当前触摸位置和起始触摸位置距离*/
@@ -42,11 +44,11 @@ class ScrollView extends eui.Scroller {
         var widthDist: number = this.viewport.contentWidth - this.viewport.width;
         if(widthDist > 0) {
             this.isHScroller = true;
-            this.itemSize = this.viewport.width;
+            this.itemSize = this.viewport.width + this.spacing;
             // this.itemNum = this.viewport.contentWidth / this.viewport.width;
         } else {
             this.isHScroller = false;
-            this.itemSize = this.viewport.height;
+            this.itemSize = this.viewport.height + this.spacing;
             // this.itemNum = this.viewport.contentHeight / this.viewport.height;
         }
         

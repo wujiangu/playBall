@@ -2,13 +2,35 @@
 <e:Skin class="quitPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
 	<w:Declarations>
 		<tween:TweenGroup id="show">
-			<tween:TweenItem target="{m_groupLnstall}">
+			<tween:TweenItem target="{m_btnReturn}">
 				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{0}" scaleY="{0}"/>
+						<e:Object scaleY="{0.7}" y="{45}" scaleX="{0.7}" alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="500" ease="backOut">
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1.2}" scaleY="{1.2}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnContinue}">
+				<tween:Set>
+					<tween:props>
+						<e:Object scaleX="{0.7}" scaleY="{0.7}" alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1.2}" scaleY="{1.2}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
 					<tween:props>
 						<e:Object scaleX="{1}" scaleY="{1}"/>
 					</tween:props>
@@ -16,47 +38,59 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="hide">
-			<tween:TweenItem target="{m_groupLnstall}">
+			<tween:TweenItem target="{m_btnContinue}">
 				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{1}" scaleY="{1}"/>
+						<e:Object x="{379}" y="{643.27}" alpha="{1}" scaleX="{1}" scaleY="{1}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="500" ease="backIn">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object scaleX="{0}" scaleY="{0}"/>
+						<e:Object x="{415.6}" y="{684.27}" alpha="{0}" scaleX="{0.7}" scaleY="{0.7}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnReturn}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{0.7}" scaleY="{0.7}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image source="mask_png" anchorOffsetY="0" left="0" right="0" top="-34" bottom="-29"/>
-	<e:Group id="m_groupLnstall" width="517" height="598" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" verticalCenter="-21">
-		<e:Image x="0" y="0" anchorOffsetY="0" source="gamBg6_png"/>
-		<e:Button id="m_btnContinue" label="" y="345" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
+	<e:Button label="" x="655" y="16">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btnPause_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Group id="group" width="239" height="241" x="107" y="641">
+		<e:Button id="m_btnReturn" label="" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" x="0" scaleX="1" scaleY="1" verticalCenter="0">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnReturnFirst_png" source.down="btnReturnFirst1_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+		</e:Button>
+	</e:Group>
+	<e:Group id="group0" width="239" height="241" x="385" y="641">
+		<e:Button id="m_btnContinue" label="" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" x="0" scaleX="1" scaleY="1" verticalCenter="0">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="btnContinue_png" source.down="btnContinueDown_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
+			</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Button id="m_btnAgain" label="" y="336" anchorOffsetX="0" width="248" anchorOffsetY="0" height="111" x="134.5" visible="false">
-			<e:skinName>
-				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSheet_json.btnAgain"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
-			</e:skinName>
-		</e:Button>
-		<e:Button id="m_btnReturn" label="" y="150.5" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
-			<e:skinName>
-				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.16" source.down="btnSheet1_json.17"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
-			</e:skinName>
-		</e:Button>
-		<e:Image source="PAUSED_png" y="9" horizontalCenter="0.5"/>
 	</e:Group>
 </e:Skin>

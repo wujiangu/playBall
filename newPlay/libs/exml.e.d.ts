@@ -56,11 +56,13 @@ declare module skins{
 	class gameSettingSlider extends eui.Skin{
 	}
 }
+declare class fuHUO extends eui.Skin{
+}
 declare class actorIR extends eui.Skin{
 }
 declare class backpackPanel extends eui.Skin{
 }
-declare class bottomBtn extends eui.Skin{
+declare class chongzhi extends eui.Skin{
 }
 declare class victoryPanel extends eui.Skin{
 }
@@ -68,11 +70,17 @@ declare class gameScenePanel extends eui.Skin{
 }
 declare class gameStart extends eui.Skin{
 }
+declare class guankajiemian extends eui.Skin{
+}
 declare class itemIR extends eui.Skin{
 }
 declare class listActorPanel extends eui.Skin{
 }
 declare class newItemIR extends eui.Skin{
+}
+declare class permanentUI extends eui.Skin{
+}
+declare class qiandao extends eui.Skin{
 }
 declare class quitPanel extends eui.Skin{
 }

@@ -45,6 +45,12 @@ module MainNotify {
 
 	export var openActorListPanel:string = "openActorListPanel"
 	export var closeActorListPanel:string = "closeActorListPanel"
+
+	export var openGameSelectLevel:string = "openGameSelectLevel"
+	export var closeGameSelectLevel:string = "closeGameSelectLevel"
+
+	export var openRechargePanel:string = "openRechargePanel"
+	export var closeRechargePanel:string = "closeRechargePanel"
 }
 
 
