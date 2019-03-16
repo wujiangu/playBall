@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="skins.gameSettingSlider" minWidth="20" minHeight="8" xmlns:e="http://ns.egret.com/eui">
-    <e:Image id="track" scale9Grid="1,1,4,4"
-             verticalCenter="0" source="gamBg1_png" width="100%"/>
-    <e:Image id="thumb" verticalCenter="0" source="gamBg2_png"/>
-</e:Skin>
