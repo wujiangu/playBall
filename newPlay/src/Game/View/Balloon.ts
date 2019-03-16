@@ -19,7 +19,7 @@ class Balloon extends egret.Sprite {
 		this._balloonArmatureContainer.register(this._balloonArmature, this._animations)
 		this._balloonArmatureContainer.scaleX = 1
 		this._balloonArmatureContainer.scaleY = 1
-		this._balloonArmatureContainer.addCompleteCallFunc(this._OnBalloonComplete, this)
+		
 
 
 		this._effectArmatureContainer = new DragonBonesArmatureContainer()
@@ -32,45 +32,49 @@ class Balloon extends egret.Sprite {
 		// this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
 		// this._effectArmatureContainer.scaleX = 1
 		// this._effectArmatureContainer.scaleY = 1
-		// this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+		// this._effectArmatureContainer.addCompleteCallFunc(this._onEffectArmatureComplete, this)
 
 		this._gesture = new egret.Bitmap()
 		this.addChild(this._gesture)
 		this._gesture.scaleX = 0.55
 		this._gesture.scaleY = 0.55
-		// this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
+		// this._balloon.addEventListener(egret.Event.COMPLETE, this._onBalloonComplete, this)
 
-		this.m_guideArmatureContainer = new DragonBonesArmatureContainer()
-        this.addChild(this.m_guideArmatureContainer)
+		this._guideArmatureContainer = new DragonBonesArmatureContainer()
+        this.addChild(this._guideArmatureContainer)
         let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao")
         let guideArmature = new DragonBonesArmature(guideDisplay)
         guideArmature.ArmatureDisplay = guideDisplay
-        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao2"])
-		this.m_guideArmatureContainer.y = 30
-		this.m_guideArmatureContainer.scaleX = 0.8
-		this.m_guideArmatureContainer.scaleY = 0.8
+        this._guideArmatureContainer.register(guideArmature, ["xinshouyindao2"])
+		this._guideArmatureContainer.y = 30
+		this._guideArmatureContainer.scaleX = 0.8
+		this._guideArmatureContainer.scaleY = 0.8
 	}
 
-	public Init(data:Array<any>, actor:BaseActor) {
+	public init(data:Array<any>, actor:BaseActor) {
 		this._score = 0
 		this._root = actor
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0
+		this._rop.height = 0
 		this._isChangeEasy = false
-		this.UpdateGesture(data, true)
-		this.m_guideArmatureContainer.visible = false
-		// this.m_guideArmatureContainer.play("xinshouyindao2", 0)
+		this.updateGesture(data, true)
+		this._guideArmatureContainer.visible = false
+		this._effectResult = ESkillResult.Invalid
+		this._effectArmatureContainer.visible = false
+		this._balloonArmatureContainer.removeCompleteCallFunc(this._onBalloonComplete, this)
+		// this._guideArmatureContainer.play("xinshouyindao2", 0)
 	}
 
-	public GuideStart() {
-		this.m_guideArmatureContainer.visible = true
-		this.m_guideArmatureContainer.play("xinshouyindao2", 0)
+	public guideStart() {
+		this._guideArmatureContainer.visible = true
+		this._guideArmatureContainer.play("xinshouyindao2", 0)
 	}
 
 	/**
 	 * 更新气球身上的特效动画
 	 */
-	public UpdateEffectArmature(data:any) {
+	public updateEffectArmature(data:any) {
 		this._effectArmatureContainer.clear()
 		let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile)
 		if (this._effectArmature == null) {
@@ -83,106 +87,82 @@ class Balloon extends egret.Sprite {
 		this._effectArmatureContainer.x = data.skillPosX
 		this._effectArmatureContainer.y = data.skillPosY
 		this._changeType = data.param[1]
-		this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+		this._effectResult = data.result
+		this._effectArmatureContainer.addCompleteCallFunc(this._onEffectArmatureComplete, this)
 	}
 
-	public PlayEffect(data:any) {
-		this._type = 0
-		this._effectArmatureContainer.play(data.skill, 1)	
+	public playEffect(data:any) {
+		if (this._root.state == EMonsterState.Ready) {
+			switch (this._effectResult) {
+				case ESkillResult.Kill:
+					this._type = -1
+				break
+				case ESkillResult.GestureChange:
+					this._type = 0
+				break
+			}
+			this._effectArmatureContainer.visible = true
+			this._effectArmatureContainer.play(data.skill, 1)
+		}
+		
 	}
 
-	public UpdateGesture(data:Array<any>, isInit:boolean = false) {
-		let random = MathUtils.getRandom(data.length - 1)
-		this._gesture.texture = RES.getRes(data[random].path)
-		this._gesture.anchorOffsetX = this._gesture.width / 2
-		this._gesture.anchorOffsetY = this._gesture.height / 2
-		this._gesture.x = this._balloonArmatureContainer.x + 1
-		this._gesture.y = this._balloonArmatureContainer.y - 38
-		this._gesture.visible = true
-		this._type = data[random].type
-		this._score = data[random].count
-		this._animationName = data[random].balloon
-		data.splice(random, 1)
-		this._balloonArmatureContainer.play(this._animationName, 1)
-		this._balloonArmatureContainer.pause(this._animationName)
-
+	public updateGesture(data:Array<any>, isInit:boolean = false) {
+		if (data.length > 0) {
+			let random = MathUtils.getRandom(data.length - 1)
+			this._gesture.texture = RES.getRes(data[random].path)
+			this._gesture.anchorOffsetX = this._gesture.width / 2
+			this._gesture.anchorOffsetY = this._gesture.height / 2
+			this._gesture.x = this._balloonArmatureContainer.x + 1
+			this._gesture.y = this._balloonArmatureContainer.y - 38
+			this._gesture.visible = true
+			this._type = data[random].type
+			this._score = data[random].count
+			this._animationName = data[random].balloon
+			data.splice(random, 1)
+			this._balloonArmatureContainer.play(this._animationName, 1)
+			this._balloonArmatureContainer.pause(this._animationName)
+		}
 		this.scaleX = 1
 		this.scaleY = 1
-
-		if (data.length <= 0) this._root.ResetGestureData()
+		if (data.length <= 0) this._root.resetGestureData()
 	}
 
-	public ChangeToEasy() {
+	public changeToEasy() {
 		this._isChangeEasy = true
 		this._type = 0
 		this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6)	
 	}
 
-	public UpdateColorAndGesture() {
+	public updateColorAndGesture() {
 		this._type = 0
 		this._gesture.visible = false
 		this._balloonArmatureContainer.play("explore", 1, 1, 0, 3)
+		this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this)
 	}
 
-	public SetLine(count:number = 1, value:number = 0) {
+	public calculateRop(x1:number, y1:number) {
+		let distance = MathUtils.getDistance(x1, y1, 0, -60)
+		let radian = MathUtils.getRadian2(x1, y1, 0, -60)
+		let rotation = MathUtils.getAngle(radian) - 90
+		this._ropRotation = rotation
+		this._rop.height = distance
+	}
+
+	public get ropRotation() {
+		return this._ropRotation
+	}
+
+	public setLine() {
 		this._rop.x = this._balloonArmatureContainer.x
 		this._rop.y = this._balloonArmatureContainer.y - 10
+		this.calculateRop(this.x, this.y)
+		this._rop.rotation = this._ropRotation
 		this._rop.scaleX = 1
-		if (count == 1) {
-			this._rop.rotation = 0
-			this._rop.scaleY = 15
-		}
-		else if (count == 2) {
-			this._rop.scaleY = 18
-			if (value == 0) {
-				this._rop.rotation = -35
-			}else{
-				this._rop.rotation = 35
-			}
-		}
-		else if (count == 3) {
-			this._rop.scaleY = 24
-			if (value == 0) {
-				this._rop.rotation = 0
-			}
-			else if (value == 1) {
-				this._rop.rotation = -50
-			}else{
-				this._rop.rotation = 50
-			}
-		}
+		this._rop.scaleY = 1
 	}
 
-	public BossSetLine(count:number = 1, value:number = 0) {
-		this._rop.x = this._balloonArmatureContainer.x
-		this._rop.y = this._balloonArmatureContainer.y - 10
-		this._rop.scaleX = 0.5
-		if (count == 1) {
-			this._rop.rotation = 0
-			this._rop.scaleY = 30
-		}
-		else if (count == 2) {
-			this._rop.scaleY = 50
-			if (value == 0) {
-				this._rop.rotation = -15
-			}else{
-				this._rop.rotation = 15
-			}
-		}
-		else if (count == 3) {
-			this._rop.scaleY = 30
-			if (value == 0) {
-				this._rop.rotation = 0
-			}
-			else if (value == 1) {
-				this._rop.rotation = -30
-			}else{
-				this._rop.rotation = 30
-			}
-		}
-	}
-
-	public BalloonExplore(isGestureExplore:boolean = true) {
+	public balloonExplore(isSummon:boolean = false) {
 		this._rop.scaleX = 0
 		this._rop.scaleY = 0
 		this._gesture.visible = false
@@ -192,16 +172,16 @@ class Balloon extends egret.Sprite {
 		channel.volume = GameConfig.soundValue / 100
 
 		GameConfig.balloonScore += this._score
-		// if (PanelManager.m_gameScenePanel != null) {
-		// 	PanelManager.m_gameScenePanel.Score += this._score
-		// }
-
-		if (isGestureExplore) PanelManager.m_gameScenePanel.Boom = true
-
-		if (this._root.Balloons != null && this._root.Balloons.length <= 0) {
-			this._root.GotoDead()
+		
+		if (isSummon == false) {
+			this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this)
 		}
-		// if (this._root.State == EMonsterState.Ready) {
+
+		if (isSummon == false && this._root.balloons != null && this._root.balloons.length <= 0) {
+			this._root.gotoDead()
+			// this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this)
+		}
+		// if (this._root.state == EMonsterState.Ready) {
 		// 	let posY = this._root.y - 20
 		// 	egret.Tween.get(this._root).to({y:posY}, 50)
 		// }
@@ -209,16 +189,16 @@ class Balloon extends egret.Sprite {
 		// egret.setTimeout(this._OnBalloonBoom, this, 200)
 	}
 
-	private _OnBalloonBoom() {
+	private _onBalloonBoom() {
 		// this._boomSound.play(0, 1)
 	}
 
 
-	public Destroy() {
+	public destroy() {
 
 	}
 
-	public Update(delay:number) {
+	public update(delay:number) {
 
 	}
 
@@ -239,30 +219,45 @@ class Balloon extends egret.Sprite {
 		return this._root
 	}
 
-	public get Score():number {
+	public get score():number {
 		return this._score
 	}
 
-	private _OnBalloonComplete(e:egret.Event) {
+	private _onBalloonComplete(e:egret.Event) {
 		if (this._type == 0) {
-			this.UpdateGesture(this._root.GestureData)
-		}else{
-			this._root.BalloonExploreHandle()
+			this.updateGesture(this._root.gestureData)
+		}
+		else if (this.type == -1) {
+			this._root.balloonExploreHandle()
 			GameObjectPool.getInstance().destroyObject(this)
-			this._root.RemoveBalloon(this)
+		}else{
+			this._root.balloonExploreHandle()
+			GameObjectPool.getInstance().destroyObject(this)
+			Common.log("_onBalloonComplete")
+			this._root.removeBalloon(this)
 		}
 		
 	}
 
-	private _OnEffectArmatureComplete(e:egret.Event) {
-		// this.UpdateGesture(this._root.GestureData)
-		this._gestureData.length = 0
-		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-			if (GameConfig.gestureConfig[i].type == this._changeType) {
-				this._gestureData.push(GameConfig.gestureConfig[i])
-			}
+	private _onEffectArmatureComplete(e:egret.Event) {
+		// this.updateGesture(this._root.gestureData)
+		switch (this._effectResult) {
+			case ESkillResult.Kill:
+				this._effectResult = ESkillResult.Invalid
+				this._root.ballExplosion(this)
+				this.balloonExplore()
+			break
+			case ESkillResult.GestureChange:
+				this._gestureData.length = 0
+				for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+					if (GameConfig.gestureConfig[i].type == this._changeType) {
+						this._gestureData.push(GameConfig.gestureConfig[i])
+					}
+				}
+				Common.log("_onEffectArmatureComplete")
+				this.updateGesture(this._gestureData)
+			break
 		}
-		this.UpdateGesture(this._gestureData)
 	}
 
 	private _gesture:egret.Bitmap
@@ -278,7 +273,7 @@ class Balloon extends egret.Sprite {
 	private _effectArmatureContainer:DragonBonesArmatureContainer
 	private _effectArmature:DragonBonesArmature
 
-	private m_guideArmatureContainer:DragonBonesArmatureContainer
+	private _guideArmatureContainer:DragonBonesArmatureContainer
 
 	private _animationName:string
 	private _animations:Array<string>
@@ -288,4 +283,10 @@ class Balloon extends egret.Sprite {
 	private _isChangeEasy:boolean
 
 	private _changeType:number
+
+	private _effectResult:ESkillResult
+
+	private _pointBall:egret.Point
+	private _pointRoot:egret.Point
+	private _ropRotation:number
 }

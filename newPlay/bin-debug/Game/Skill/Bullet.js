@@ -1,39 +1,42 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Bullet = (function (_super) {
     __extends(Bullet, _super);
     function Bullet() {
         var _this = _super.call(this) || this;
-        _this.m_armatureContainer = new DragonBonesArmatureContainer();
-        _this.addChild(_this.m_armatureContainer);
+        _this._armatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this._armatureContainer);
         return _this;
     }
     Bullet.prototype.Init = function (target, name, type) {
         this.m_target = target;
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name);
-        if (this.m_armature == null) {
-            this.m_armature = new DragonBonesArmature(armatureDisplay);
+        if (this._armature == null) {
+            this._armature = new DragonBonesArmature(armatureDisplay);
         }
-        this.m_armature.ArmatureDisplay = armatureDisplay;
-        this.m_armatureContainer.register(this.m_armature, [name]);
-        this.m_armatureContainer.play(name, 0);
+        this._armature.ArmatureDisplay = armatureDisplay;
+        this._armatureContainer.register(this._armature, [name]);
+        this._armatureContainer.play(name, 0);
         this.m_isDead = false;
-        this.m_type = type;
+        this._type = type;
     };
-    Bullet.prototype.Destroy = function () {
+    Bullet.prototype.destroy = function () {
         this.m_isDead = true;
-        this.m_armatureContainer.clear();
+        this._armatureContainer.clear();
         GameObjectPool.getInstance().destroyObject(this);
     };
-    Bullet.prototype.Update = function (timeElapsed) {
+    Bullet.prototype.update = function (timeElapsed) {
         if (this.m_isDead)
             return;
         var endY = this.m_target.y - this.m_target.h / 2;
@@ -42,10 +45,10 @@ var Bullet = (function (_super) {
         var distance = MathUtils.getDistance(this.m_target.x, endY, this.x, this.y);
         // Common.log(this.m_radian, this.rotation, distance)
         if (distance <= 140) {
-            this.Destroy();
-            PanelManager.m_gameScenePanel.RemoveBullet(this);
-            if (this.m_type == EEffectType.Fire) {
-                // this.m_target.PlayEffect()
+            this.destroy();
+            PanelManager.gameScenePanel.removeBullet(this);
+            if (this._type == EEffectType.Fire) {
+                // this.m_target.playEffect()
                 var channel = GameVoice.burnSound.play(0, 1);
                 channel.volume = GameConfig.soundValue / 100;
             }

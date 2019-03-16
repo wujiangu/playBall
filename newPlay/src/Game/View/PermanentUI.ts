@@ -14,18 +14,28 @@ class PermanentUI extends BasePanel {
 		return this.m_imgBg
 	}
 
-	public updateScene(path:string) {
+	public updateScene(path:string, water:number) {
 		this.m_imgBg.source = path
+		if (water == 0) {
+			this.groupRiver.visible = false
+		}else{
+			this.groupRiver.visible = true
+		}
 	}
 
 	public updateSun(path:string) {
-		this.m_imgSun.source = path
+		if (path == null) this.m_imgSun.visible = false
+		else {
+			this.m_imgSun.visible = true
+			this.m_imgSun.source = path
+		}
+		
 	}
 
-	public updateCloud(a_bottom:string, a_middle:string, a_top:string) {
-		this.m_cloud1.source = a_bottom
-		this.m_cloud2.source = a_middle
-		this.m_cloud3.source = a_top
+	public updateCloud(a_bottom:string, a_top:string) {
+		// this.m_cloud1.source = a_middle
+		this.m_cloud2.source = a_top
+		this.m_cloud3.source = a_bottom
 	}
 
 	public update() {
@@ -54,14 +64,14 @@ class PermanentUI extends BasePanel {
 		}
 	}
 
-	private _OnWaterComplete() {
+	private _onWaterComplete() {
 		this.water.play(0)
 	}
 
 	private _onComplete() {
 		ShakeTool.getInstance().setInitPos(this.m_imgBg.x, this.m_imgBg.y)
 		this.water.play(0)
-		this.water.addEventListener('complete', this._OnWaterComplete, this)
+		this.water.addEventListener('complete', this._onWaterComplete, this)
 	}
 
 	private m_imgBg:eui.Image
@@ -69,6 +79,7 @@ class PermanentUI extends BasePanel {
 	private m_cloud1:eui.Image
 	private m_cloud2:eui.Image
 	private m_cloud3:eui.Image
+	private groupRiver:eui.Group
 
 
 	private m_cloud1Speed:number

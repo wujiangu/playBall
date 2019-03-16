@@ -2,9 +2,9 @@ class ActorListPanel extends BasePanel {
 	public constructor() {
 		super()
 
-		this.m_imgPages = new Array()
-		this.m_pages = new Array()
-		this.m_actors = new Array()
+		this._imgPages = new Array()
+		this._pages = new Array()
+		this._actors = new Array()
 		this.addEventListener(eui.UIEvent.COMPLETE, this._onComplete, this)
         this.skinName = "resource/game_skins/listActorPanel.exml"
 	}
@@ -22,6 +22,10 @@ class ActorListPanel extends BasePanel {
 		this._pageReset(pageCount)
 
 		this.updateBabyInfo(GameConfig.curBaby)
+		this._labCount.text = GameConfig.candy.toString()
+
+		this._labCount.x = 280 - this._labCount.width
+		this._imgCandy.x = this._labCount.x - 63
     }
 
     // 进入面板
@@ -29,6 +33,7 @@ class ActorListPanel extends BasePanel {
 		this.touchChildren = true
 		this.initData()
 		this.xuanzhuan.play(0)
+		Common.updateBabylistIndex(1)
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -41,61 +46,72 @@ class ActorListPanel extends BasePanel {
 
 	public updateBabyInfo(a_id:number) {
 		let data = GameConfig.actorTable[a_id.toString()]
-		this.m_labActorName.text = data.name
-		this.m_labDesc.text = data.desc
-		this.m_actorArmatureContainer.clear()
-		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action)
-		if (this.m_actorArmature == null) {
-			this.m_actorArmature = new DragonBonesArmature(armatureDisplay)
+		this._labActorName.text = data.name
+		this._labDesc.text = data.desc
+		let index = GameConfig.babyUnlockList.indexOf(a_id)
+		if (index < 0) {
+			this._labDesc.text = data.unlockDesc
 		}
-		this.m_actorArmature.ArmatureDisplay = armatureDisplay
-		this.m_actorArmatureContainer.register(this.m_actorArmature,["fangdazhao", "idle", "zoulu"])
-		this.m_actorArmatureContainer.play("idle")
-		this.m_actorArmatureContainer.scaleX = 0.5
-		this.m_actorArmatureContainer.scaleY = 0.5
+
+		this._actorArmatureContainer.clear()
+		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action)
+		if (this._actorArmature == null) {
+			this._actorArmature = new DragonBonesArmature(armatureDisplay)
+		}
+		this._actorArmature.ArmatureDisplay = armatureDisplay
+		this._actorArmatureContainer.register(this._actorArmature,["fangdazhao", "idle", "zoulu"])
+		this._actorArmatureContainer.play("idle", 0)
+		this._actorState = EMonsterState.Ready
+		this._actorArmatureContainer.scaleX = 0.5
+		this._actorArmatureContainer.scaleY = 0.5
+		this._actorArmatureContainer.addCompleteCallFunc(this._actorArmatureComplete, this)
 
 		for (let i = 0; i < GameConfig.babyOpenList.length; i++) {
 			let id = GameConfig.babyOpenList[i]
 			let data = GameConfig.actorTable[id]
-			this.m_actors[i].visible = true
-			this.m_actors[i].actorIcon = data.icon
-			this.m_actors[i].id = data.id
-			this.m_actors[i].SetLight(false)
-			if (id == a_id) this.m_actors[i].SetLight(true)
+			let index = GameConfig.babyUnlockList.indexOf(id)
+			this._actors[i].visible = true
+			if (index < 0) {
+				this._actors[i].actorIcon = data.lockIcon
+			}else{
+				this._actors[i].actorIcon = data.icon
+			}
+			this._actors[i].id = data.id
+			this._actors[i].setLight(false)
+			if (id == a_id) this._actors[i].setLight(true)
 		}
 	}
-
-
 
 	private _pageReset(a_pageCount) {
 		let distance = 43
-		for (let i= 0; i < this.m_imgPages.length; i++) {
-			this.m_imgPages[i].visible = false
-			this.m_imgPages[i].source = "actorList3_png"
+		for (let i= 0; i < this._imgPages.length; i++) {
+			this._imgPages[i].visible = false
+			this._imgPages[i].source = "actorList3_png"
 		}
 		for (let i= 0; i < a_pageCount; i++) {
 			let begin = 108 - 21.5 * a_pageCount
-			this.m_imgPages[i].visible = true
-			this.m_imgPages[i].x = begin + 43 * i
+			this._imgPages[i].visible = true
+			this._imgPages[i].x = begin + 43 * i
 		}
-		this.m_imgPages[0].source = "actorList4_png"
+		this._imgPages[0].source = "actorList4_png"
 
-		for (let i= 0; i < this.m_pages.length; i++) {
-			this.m_pages[i].visible = false
+		for (let i= 0; i < this._pages.length; i++) {
+			this._pages[i].visible = false
 		}
 		for (let i= 0; i < a_pageCount; i++) {
-			this.m_pages[i].visible = true
+			this._pages[i].visible = true
 		}
 
 		this._initActorIcon()
-		this.m_srollView.itemNum = a_pageCount
-		this.m_srollView.reset(this.m_imgPages)
-		this.m_srollView.spacing = 20
+		this._srollView.itemNum = a_pageCount
+		this._srollView.reset(this._imgPages)
+		this._srollView.spacing = 20
+		
 	}
 
 	private _initActorIcon() {
-		for (let i = 0; i < this.m_actors.length; i++) {
-			this.m_actors[i].visible = false
+		for (let i = 0; i < this._actors.length; i++) {
+			this._actors[i].visible = false
 		}
 	}
 
@@ -108,82 +124,116 @@ class ActorListPanel extends BasePanel {
 		Common.dispatchEvent(MainNotify.openRechargePanel)
 	}
 
+	private _onBtnFusion() {
+		GameConfig.sceneType = 1
+		Common.dispatchEvent(MainNotify.openCapsulePanel)
+	}
+
+	private _onGroupActor() {
+		this._actorArmatureContainer.play("fangdazhao", 1)
+		this._actorState = EMonsterState.Attack
+	}
+
+	private _actorArmatureComplete() {
+		Common.log(this._actorState)
+		if (this._actorState == EMonsterState.Attack) {
+			this._actorArmatureContainer.play("idle", 0)
+			this._actorState = EMonsterState.Ready
+		}
+	}
+
 	private _onLoop() {
 		this.xuanzhuan.play(0)
 	}
 
+	private _updateCandy() {
+		this._labCount.text = GameConfig.candy.toString()
+		this._labCount.x = 280 - this._labCount.width
+		this._imgCandy.x = this._labCount.x - 63
+	}
+
 	private _onComplete() {
-		this.m_imgPages.push(this.m_imgPage1)
-		this.m_imgPages.push(this.m_imgPage2)
-		this.m_imgPages.push(this.m_imgPage3)
-		this.m_imgPages.push(this.m_imgPage4)
-		this.m_imgPages.push(this.m_imgPage5)
+		this._imgPages.push(this._imgPage1)
+		this._imgPages.push(this._imgPage2)
+		this._imgPages.push(this._imgPage3)
+		this._imgPages.push(this._imgPage4)
+		this._imgPages.push(this._imgPage5)
 
-		this.m_pages.push(this.m_page1)
-		this.m_pages.push(this.m_page2)
-		this.m_pages.push(this.m_page3)
-		this.m_pages.push(this.m_page4)
-		this.m_pages.push(this.m_page5)
+		this._pages.push(this._page1)
+		this._pages.push(this._page2)
+		this._pages.push(this._page3)
+		this._pages.push(this._page4)
+		this._pages.push(this._page5)
 
-		let distance = 216
+		let distance = 203
 
-		for (let i = 0; i < this.m_pages.length; i++) {
+		for (let i = 0; i < this._pages.length; i++) {
 			for (let j = 0; j < 9; j++) {
 				let actor = new ActorIR()
 				let col = j % 3
 				let row = Math.floor(j/3)
 				actor.x = distance * col
 				actor.y = distance * row
-				actor.scaleX = 0.8
-				actor.scaleY = 0.8
-				this.m_actors.push(actor)
-				actor.id = this.m_actors.length
-				this.m_pages[i].addChild(actor)
+				actor.scaleX = 0.9
+				actor.scaleY = 0.9
+				this._actors.push(actor)
+				actor.id = this._actors.length
+				this._pages[i].addChild(actor)
 			}
 		}
 
-		this.m_actorArmatureContainer = new DragonBonesArmatureContainer()
-		this.m_actorArmatureContainer.x = this.m_groupActor.width / 2
-        this.m_actorArmatureContainer.y = this.m_groupActor.height
-		this.m_groupActor.addChild(this.m_actorArmatureContainer)
+		this._actorArmatureContainer = new DragonBonesArmatureContainer()
+		this._actorArmatureContainer.x = this._groupActor.width / 2
+        this._actorArmatureContainer.y = this._groupActor.height
+		this._groupActor.addChild(this._actorArmatureContainer)
+		
 
-		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
-		this.m_btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAddCandy, this)
+		this._btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
+		this._btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAddCandy, this)
+		this._btnFusion.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnFusion, this)
+		this._groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onGroupActor, this)
 
 		this.xuanzhuan.addEventListener('complete', this._onLoop, this)
 
+		Common.addTouchBegin(this._btnReturn)
+		Common.addTouchBegin(this._btnAddCandy)
+
+		Common.addEventListener(MainNotify.updateCandy, this._updateCandy, this)
 	}
 
 	private m_pageNum = 5
 	// 底部标签
-	private m_imgPage1:eui.Image
-	private m_imgPage2:eui.Image
-	private m_imgPage3:eui.Image
-	private m_imgPage4:eui.Image
-	private m_imgPage5:eui.Image
-	private m_imgPages:Array<eui.Image>
+	private _imgPage1:eui.Image
+	private _imgPage2:eui.Image
+	private _imgPage3:eui.Image
+	private _imgPage4:eui.Image
+	private _imgPage5:eui.Image
+	private _imgPages:Array<eui.Image>
 
-	private m_srollView:ScrollView
-	private m_pages:Array<eui.Group>
-	private m_page1:eui.Group
-	private m_page2:eui.Group
-	private m_page3:eui.Group
-	private m_page4:eui.Group
-	private m_page5:eui.Group
+	private _srollView:ScrollView
+	private _pages:Array<eui.Group>
+	private _page1:eui.Group
+	private _page2:eui.Group
+	private _page3:eui.Group
+	private _page4:eui.Group
+	private _page5:eui.Group
 
-	private m_actors:Array<ActorIR>
+	private _actors:Array<ActorIR>
 
-	private m_btnReturn:eui.Button
+	private _btnReturn:eui.Button
 
-	private m_labActorName:eui.Label
-	private m_labDesc:eui.Label
-	private m_groupActor:eui.Group
+	private _labActorName:eui.Label
+	private _labDesc:eui.Label
+	private _groupActor:eui.Group
 
-	private m_labCount:eui.Label
-	private m_btnAddCandy:eui.Button
+	private _labCount:eui.Label
+	private _btnAddCandy:eui.Button
+	private _btnFusion:eui.Button
+	private _imgCandy:eui.Image
 
-	private m_actorArmatureContainer:DragonBonesArmatureContainer
-    private m_actorArmature:DragonBonesArmature
+	private _actorArmatureContainer:DragonBonesArmatureContainer
+    private _actorArmature:DragonBonesArmature
+	private _actorState:EMonsterState
 
 	private xuanzhuan:egret.tween.TweenGroup
 }
@@ -196,19 +246,19 @@ class ActorIR extends eui.Component {
 	}
 
 	public set id(value) {
-		this.m_id = value
+		this._id = value
 	}
 
 	public get id() {
-		return this.m_id
+		return this._id
 	}
 
 	public set actorIcon(value) {
-		this.m_imgActor.source = value
+		this._imgActor.source = value
 	}
 
-	public SetLight(a_status) {
-		this.m_imgBox.visible = a_status
+	public setLight(a_status) {
+		this._imgBox.visible = a_status
 	}
 
 
@@ -218,16 +268,19 @@ class ActorIR extends eui.Component {
 	}
 
 	private _onActorClick() {
-		Common.log("选择了 " + this.m_id)
-		PanelManager.m_actorListPanel.updateBabyInfo(this.m_id)
-		Common.UpdateCurBaby(this.m_id)
+		PanelManager.actorListPanel.updateBabyInfo(this._id)
+		// 判断是否在已解锁列表中
+		let index = GameConfig.babyUnlockList.indexOf(this._id)
+		if (index >= 0) {
+			Common.updateCurBaby(this._id)
+		}
 	}
 
 	private _onComplete() {
-		this.m_imgActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onActorClick, this)
+		this._imgActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onActorClick, this)
 	}
 
-	private m_imgActor:eui.Image
-	private m_imgBox:eui.Image
-	private m_id:number
+	private _imgActor:eui.Image
+	private _imgBox:eui.Image
+	private _id:number
 }

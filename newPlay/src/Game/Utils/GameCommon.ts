@@ -19,8 +19,33 @@ namespace Common{
 	}
 
 
+	export function isTowDataSame(date:string) {
+		var isSame = false
+		var curDate = new Date()
+		var lastDate = new Date(date)
+		if (curDate != null && lastDate != null) {
+			let curYear = curDate.getFullYear()
+			let lastYear = lastDate.getFullYear()
+			let curMonth = curDate.getMonth()
+			let lastMonth = lastDate.getMonth()
+			let curDay = curDate.getDate()
+			let lastDay = lastDate.getDate()
+			if (curYear == lastYear && curMonth == lastMonth && curDay == lastDay) isSame = true
+			let loginTime = getCurDateString(curDate)
+			Common.updatelastLoginTime(loginTime)
+		}
+		return isSame
+	}
+
+	export function getCurDateString(date:Date) {
+		let year = date.getFullYear()
+		let month = date.getMonth() + 1
+		let day = date.getDate()
+		return year + "/" + month + "/" + day
+	}
+
 	/**获取账号 */
-	export function GetAccount() {
+	export function getAccount() {
 		egret.ExternalInterface.addCallback("sendToEgret", function (message) {
             GameConfig.account = message
         })
@@ -28,13 +53,13 @@ namespace Common{
 	}
 
 	/**更新账号到本机 */
-	export function UpdateAccount(value:string) {
+	export function updateAccount(value:string) {
 		GameConfig.account = value
 		egret.ExternalInterface.call("write", GameConfig.game+"account:" + value)
 	}
 
 	/**获取历史最高分数 */
-	export function GetMaxScore() {
+	export function getMaxScore() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -58,7 +83,7 @@ namespace Common{
 	/**更新历史最高分
 	 * @param value 当前分数
 	 */
-	export function UpdateMaxScore(value:number) {
+	export function updateMaxScore(value:number) {
 		if (value > GameConfig.maxScore) {
 			GameConfig.maxScore = value
 			if (!GameConfig.isWebView) {
@@ -69,7 +94,7 @@ namespace Common{
 		}
 	}
 
-	export function GetGuide() {
+	export function getGuide() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -90,7 +115,7 @@ namespace Common{
 		}
 	}
 
-	export function UpdateGuide(value:number) {
+	export function updateGuide(value:number) {
 		GameConfig.guideIndex = value
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.call("write", GameConfig.game+"guideIndex:" + value)
@@ -100,7 +125,7 @@ namespace Common{
 	}
 
 	/**获取历史最高分数 */
-	export function GetMaxCombo() {
+	export function getMaxCombo() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -124,7 +149,7 @@ namespace Common{
 	/**更新历史最高分
 	 * @param value 当前分数
 	 */
-	export function UpdateMaxCombo(value:number) {
+	export function updateMaxCombo(value:number) {
 		if (value > GameConfig.maxCombo) {
 			GameConfig.maxCombo = value
 			if (!GameConfig.isWebView) {
@@ -135,125 +160,9 @@ namespace Common{
 		}
 	}
 
-	/**获取当前使用道具 */
-	export function GetItem() {
-		if (!GameConfig.isWebView) {
-			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-				if (message != null && message.length > 0) {
-					GameConfig.itemUse = parseInt(message)
-				}else{
-					GameConfig.itemUse = -1
-				}
-        	})
-        	egret.ExternalInterface.call("read", GameConfig.game+"itemUse")
-		}
-		else {
-			let itemUse = NativeApi.getLocalData(GameConfig.game+"itemUse")
-			if (itemUse == null) {
-				GameConfig.itemUse = -1
-			}else{
-				// GameConfig.maxScore = parseInt(score)
-				GameConfig.itemUse = parseInt(itemUse)
-			}
-		}
-	}
-
-	/**更新当前使用道具 */
-	export function UpdateItem(value:number) {
-		if (!GameConfig.isWebView) {
-			egret.ExternalInterface.call("write", GameConfig.game+"itemUse:" + value)
-		}else{
-			NativeApi.setLocalData(GameConfig.game+"itemUse", value.toString())
-		}
-	}
-
-	/**
-	 * 获取使用道具表
-	 */
-	export function GetUseItem() {
-		if (!GameConfig.isWebView) {
-			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-				if (message != null && message.length > 0) {
-					GameConfig.itemUseTable = JSON.parse(message)
-					// GameConfig.maxScore = parseInt(message)
-				}else{
-					GameConfig.itemUseTable = new Array()
-					GameConfig.itemUseTable.push(1003)
-					Common.UpdateUseItem()
-				}
-        	})
-        	egret.ExternalInterface.call("read", GameConfig.game+"itemUseTable")
-		}
-		else {
-			let itemUseTable = NativeApi.getLocalData(GameConfig.game+"itemUseTable")
-			if (itemUseTable == null) {
-				GameConfig.itemUseTable = new Array()
-				GameConfig.itemUseTable.push(1003)
-				Common.UpdateUseItem()
-			}else{
-				// GameConfig.maxScore = parseInt(score)
-				GameConfig.itemUseTable = JSON.parse(itemUseTable)
-			}
-		}
-	}
-
-	/**更新道具列表 */
-	export function UpdateUseItem() {
-		if (GameConfig.itemUseTable.length > 0) {
-			let str = JSON.stringify(GameConfig.itemUseTable)
-			if (!GameConfig.isWebView) {
-				egret.ExternalInterface.call("write", GameConfig.game+"itemUseTable:" + str)
-			}else{
-				NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
-			}
-		}
-	}
-
-
-	/**
-	 * 获取解锁道具表
-	 */
-	export function GetUnlockItem() {
-		if (!GameConfig.isWebView) {
-			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-				if (message != null && message.length > 0) {
-					GameConfig.itemUnlockList = JSON.parse(message)
-					// GameConfig.maxScore = parseInt(message)
-				}else{
-					GameConfig.itemUnlockList = new Array()
-					GameConfig.itemUnlockList.push(1003)
-					Common.UpdateUnlockItem()
-				}
-        	})
-        	egret.ExternalInterface.call("read", GameConfig.game+"itemUnlockList")
-		}
-		else {
-			let itemUnlockList = NativeApi.getLocalData(GameConfig.game+"itemUnlockList")
-			if (itemUnlockList == null) {
-				GameConfig.itemUnlockList = new Array()
-				GameConfig.itemUnlockList.push(1003)
-				Common.UpdateUnlockItem()
-			}else{
-				// GameConfig.maxScore = parseInt(score)
-				GameConfig.itemUnlockList = JSON.parse(itemUnlockList)
-			}
-		}
-	}
-
-	/**更新解锁道具列表 */
-	export function UpdateUnlockItem() {
-		if (GameConfig.itemUnlockList.length > 0) {
-			let str = JSON.stringify(GameConfig.itemUnlockList)
-			if (!GameConfig.isWebView) {
-				egret.ExternalInterface.call("write", GameConfig.game+"itemUnlockList:" + str)
-			}else{
-				NativeApi.setLocalData(GameConfig.game+"itemUnlockList", str)
-			}
-		}
-	}
 
 	/**更新分数 */
-	export function UpdateCurrentScore(value:number) {
+	export function updateCurrentScore(value:number) {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.call("gameScore", value.toString())
 		}else{
@@ -262,7 +171,7 @@ namespace Common{
 	}
 
 	/**获取解锁宝宝表 */
-	export function GetUnlockBaby() {
+	export function getUnlockBaby() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -270,7 +179,7 @@ namespace Common{
 				}else{
 					GameConfig.babyUnlockList = new Array()
 					GameConfig.babyUnlockList.push(10010)
-					Common.UpdateUnlockBaby()
+					Common.updateUnlockBaby()
 				}
         	})
         	egret.ExternalInterface.call("read", GameConfig.game+"babyUnlockList")
@@ -280,7 +189,7 @@ namespace Common{
 			if (babyUnlockList == null) {
 				GameConfig.babyUnlockList = new Array()
 				GameConfig.babyUnlockList.push(10010)
-				Common.UpdateUnlockBaby()
+				Common.updateUnlockBaby()
 			}else{
 				GameConfig.babyUnlockList = JSON.parse(babyUnlockList)
 			}
@@ -288,7 +197,7 @@ namespace Common{
 	}
 
 	/**更新解锁表 */
-	export function UpdateUnlockBaby() {
+	export function updateUnlockBaby() {
 		if (GameConfig.babyUnlockList.length > 0) {
 			let str = JSON.stringify(GameConfig.babyUnlockList)
 			if (!GameConfig.isWebView) {
@@ -300,7 +209,7 @@ namespace Common{
 	}
 
 	/**获取当前的宝宝 */
-	export function GetCurBaby() {
+	export function getCurBaby() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -322,7 +231,7 @@ namespace Common{
 	}
 
 	/**更新当前的宝宝 */
-	export function UpdateCurBaby(value:number) {
+	export function updateCurBaby(value:number) {
 		GameConfig.curBaby = value
 		GameConfig.curBabyData = GameConfig.actorTable[value.toString()]
 		if (!GameConfig.isWebView) {
@@ -333,7 +242,7 @@ namespace Common{
 	}
 
 	/**获取当前的挑战章节进度 */
-	export function GetCurChpter() {
+	export function getCurChpter() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -355,7 +264,7 @@ namespace Common{
 	}
 
 	/**更新当前的挑战章节进度 */
-	export function UpdateCurChpter(value:number) {
+	export function updateCurChpter(value:number) {
 		GameConfig.curChpter = value
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.call("write", GameConfig.game+"curChpter:" + value)
@@ -365,7 +274,7 @@ namespace Common{
 	}
 
 	/**获取当前的挑战关卡进度 */
-	export function GetCurLevel() {
+	export function getCurLevel() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
@@ -387,12 +296,179 @@ namespace Common{
 	}
 
 	/**更新当前的挑战关卡进度 */
-	export function UpdateCurLevel(value:number) {
+	export function updateCurLevel(value:number) {
 		GameConfig.curLevel = value
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.call("write", GameConfig.game+"curLevel:" + value)
 		}else{
 			NativeApi.setLocalData(GameConfig.game+"curLevel", value.toString())
+		}
+	}
+
+	/**获取当前的糖果 */
+	export function getCurCandy() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.candy = parseInt(message)
+				}else{
+					GameConfig.candy = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"candy")
+		}
+		else {
+			let candy = NativeApi.getLocalData(GameConfig.game+"candy")
+			if (candy == null) {
+				GameConfig.candy = 0
+			}else{
+				GameConfig.candy = parseInt(candy)
+			}
+		}
+	}
+
+	/**更新当前的糖果 */
+	export function updateCurCandy(value:number) {
+		GameConfig.candy += value
+		GameConfig.candy = Math.max(0, GameConfig.candy)
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"candy:" + GameConfig.candy)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"candy", GameConfig.candy.toString())
+		}
+	}
+
+
+	/**获取上次的登录时间 */
+	export function getlastLoginTime() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.lastLoginTime = message
+				}else{
+					let date = new Date()
+					GameConfig.lastLoginTime = getCurDateString(date)
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"lastLoginTime")
+		}
+		else {
+			let lastLoginTime = NativeApi.getLocalData(GameConfig.game+"lastLoginTime")
+			if (lastLoginTime == null) {
+				let date = new Date()
+				GameConfig.lastLoginTime = getCurDateString(date)
+			}else{
+				GameConfig.lastLoginTime = lastLoginTime
+			}
+		}
+	}
+
+	/**更新上次登录时间 */
+	export function updatelastLoginTime(value:string) {
+		GameConfig.lastLoginTime = value
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"lastLoginTime:" + value)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"lastLoginTime", value)
+		}
+	}
+
+
+	/**获取签到标识 */
+	export function getSign() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.sign = parseInt(message)
+				}else{
+					GameConfig.sign = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"sign")
+		}
+		else {
+			let sign = NativeApi.getLocalData(GameConfig.game+"sign")
+			if (sign == null) {
+				GameConfig.sign = 0
+			}else{
+				GameConfig.sign = parseInt(sign)
+			}
+		}
+	}
+
+	/**更新当前签到标识 */
+	export function updateSign(value:number) {
+		GameConfig.sign = value
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"sign:" + GameConfig.sign)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"sign", GameConfig.sign.toString())
+		}
+	}
+
+
+	/**获取签到标识 */
+	export function getBabylistIndex() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.babylistIndex = parseInt(message)
+				}else{
+					GameConfig.babylistIndex = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"babylistIndex")
+		}
+		else {
+			let babylistIndex = NativeApi.getLocalData(GameConfig.game+"babylistIndex")
+			if (babylistIndex == null) {
+				GameConfig.babylistIndex = 0
+			}else{
+				GameConfig.babylistIndex = parseInt(babylistIndex)
+			}
+		}
+	}
+
+	/**更新当前签到标识 */
+	export function updateBabylistIndex(value:number) {
+		GameConfig.babylistIndex = value
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"babylistIndex:" + GameConfig.babylistIndex)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"babylistIndex", GameConfig.babylistIndex.toString())
+		}
+	}
+
+
+	/**获取签到天数 */
+	export function getSignCount() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.signCount = parseInt(message)
+				}else{
+					GameConfig.signCount = 0
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"signCount")
+		}
+		else {
+			let signCount = NativeApi.getLocalData(GameConfig.game+"signCount")
+			if (signCount == null) {
+				GameConfig.signCount = 0
+			}else{
+				GameConfig.signCount = parseInt(signCount)
+			}
+		}
+	}
+
+	/**更新当前签到天数 */
+	export function updateSignCount(value:number) {
+		GameConfig.signCount = value
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"signCount:" + GameConfig.signCount)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"signCount", GameConfig.signCount.toString())
 		}
 	}
 }

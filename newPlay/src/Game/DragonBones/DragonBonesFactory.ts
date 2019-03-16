@@ -3,9 +3,9 @@
  */
 class DragonBonesFactory {
     public constructor() {
-        this.factory = new dragonBones.EgretFactory();
-        this.clocks = new Array<dragonBones.WorldClock>();
-        this.clockLen = 0;
+        this._factory = new dragonBones.EgretFactory();
+        this._clocks = new Array<dragonBones.WorldClock>();
+        this._clockLen = 0;
     }
 
     public static getInstance():DragonBonesFactory {
@@ -21,16 +21,16 @@ class DragonBonesFactory {
      * 
      */
     public addTextureAtlas(texture:egret.Texture, textureData:any):void {
-        return this.factory.addTextureAtlas(new dragonBones.EgretTextureAtlas(texture, textureData));
+        return this._factory.addTextureAtlas(new dragonBones.EgretTextureAtlas(texture, textureData));
     }
 
     /**
      * 初始化一个动画文件
      */
     public initDragonBonesArmatureFile(skeletonData:any, textureData:any, texture:egret.Texture):void {
-        this.factory.parseDragonBonesData(skeletonData);
-        this.factory.parseTextureAtlasData(textureData, texture);
-        // this.factory.addSkeletonData(dragonBones.DataParser.parseDragonBonesData(skeletonData));
+        this._factory.parseDragonBonesData(skeletonData);
+        this._factory.parseTextureAtlasData(textureData, texture);
+        // this._factory.addSkeletonData(dragonBones.DataParser.parseDragonBonesData(skeletonData));
         // this.addTextureAtlas(texture, textureData);
     }
 
@@ -38,7 +38,7 @@ class DragonBonesFactory {
      * 创建一个动画
      */
     // public makeArmature(name:string, dragonBonesName?:string, playSpeed:number = -1):DragonBonesArmature {
-    //     let armature:dragonBones.Armature = this.factory.buildArmature(name, dragonBonesName);
+    //     let armature:dragonBones.Armature = this._factory.buildArmature(name, dragonBonesName);
     //     if (!armature) {
     //         return null;
     //     }
@@ -49,33 +49,33 @@ class DragonBonesFactory {
 
 
     public buildArmature(name:string, dragonBonesName?:string) {
-        return this.factory.buildArmature(name, dragonBonesName)
+        return this._factory.buildArmature(name, dragonBonesName)
     }
 
     public buildArmatureDisplay(name:string, dragonBonesName?:string) {
-        return this.factory.buildArmatureDisplay(name, dragonBonesName)
+        return this._factory.buildArmatureDisplay(name, dragonBonesName)
     }
 
     /**
      * 创建WorldClock
      */
     public createWorldClock(playSpeed:number):dragonBones.WorldClock {
-        for (let i = 0; i < this.clockLen; i++) {
-            if (this.clocks[i].timeScale == playSpeed) {
-                return this.clocks[i]
+        for (let i = 0; i < this._clockLen; i++) {
+            if (this._clocks[i].timeScale == playSpeed) {
+                return this._clocks[i]
             }
         }
         let clock:dragonBones.WorldClock = new dragonBones.WorldClock();
         clock.timeScale = playSpeed;
-        this.clocks.push(clock);
-        this.clockLen = this.clocks.length;
+        this._clocks.push(clock);
+        this._clockLen = this._clocks.length;
         return clock;
     }
 
     /**
      * 注册并启动一个定时器
      */
-    public Update(timeElapsed:number) {
+    public update(timeElapsed:number) {
         this.onStartTick(timeElapsed)
         // TimerManager.getInstance().doFrame(1, 0, this.onStartTick, this);
         // egret.startTick(this.onStartTick, this);
@@ -85,9 +85,9 @@ class DragonBonesFactory {
      * 计时器回调
      */
     private onStartTick(timeStamp:number) {
-        for (let i = 0; i < this.clocks.length; i++)
+        for (let i = 0; i < this._clocks.length; i++)
         {
-            let clock:dragonBones.WorldClock = this.clocks[i];
+            let clock:dragonBones.WorldClock = this._clocks[i];
             clock.advanceTime(0.001);
         }
         return false
@@ -109,7 +109,7 @@ class DragonBonesFactory {
     // }
 
     public static _instance:DragonBonesFactory;
-    private factory:dragonBones.EgretFactory;
-    private clocks:Array<dragonBones.WorldClock>;
-    private clockLen:number;
+    private _factory:dragonBones.EgretFactory;
+    private _clocks:Array<dragonBones.WorldClock>;
+    private _clockLen:number;
 }

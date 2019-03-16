@@ -1,13 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Balloon = (function (_super) {
     __extends(Balloon, _super);
     function Balloon() {
@@ -27,7 +30,6 @@ var Balloon = (function (_super) {
         _this._balloonArmatureContainer.register(_this._balloonArmature, _this._animations);
         _this._balloonArmatureContainer.scaleX = 1;
         _this._balloonArmatureContainer.scaleY = 1;
-        _this._balloonArmatureContainer.addCompleteCallFunc(_this._OnBalloonComplete, _this);
         _this._effectArmatureContainer = new DragonBonesArmatureContainer();
         _this.addChild(_this._effectArmatureContainer);
         // let effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("bianhua", "bianhua")
@@ -38,41 +40,45 @@ var Balloon = (function (_super) {
         // this._effectArmatureContainer.register(this._effectArmature, ["bianhua"])
         // this._effectArmatureContainer.scaleX = 1
         // this._effectArmatureContainer.scaleY = 1
-        // this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this)
+        // this._effectArmatureContainer.addCompleteCallFunc(this._onEffectArmatureComplete, this)
         _this._gesture = new egret.Bitmap();
         _this.addChild(_this._gesture);
         _this._gesture.scaleX = 0.55;
         _this._gesture.scaleY = 0.55;
-        // this._balloon.addEventListener(egret.Event.COMPLETE, this._OnBalloonComplete, this)
-        _this.m_guideArmatureContainer = new DragonBonesArmatureContainer();
-        _this.addChild(_this.m_guideArmatureContainer);
+        // this._balloon.addEventListener(egret.Event.COMPLETE, this._onBalloonComplete, this)
+        _this._guideArmatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this._guideArmatureContainer);
         var guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao");
         var guideArmature = new DragonBonesArmature(guideDisplay);
         guideArmature.ArmatureDisplay = guideDisplay;
-        _this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao2"]);
-        _this.m_guideArmatureContainer.y = 30;
-        _this.m_guideArmatureContainer.scaleX = 0.8;
-        _this.m_guideArmatureContainer.scaleY = 0.8;
+        _this._guideArmatureContainer.register(guideArmature, ["xinshouyindao2"]);
+        _this._guideArmatureContainer.y = 30;
+        _this._guideArmatureContainer.scaleX = 0.8;
+        _this._guideArmatureContainer.scaleY = 0.8;
         return _this;
     }
-    Balloon.prototype.Init = function (data, actor) {
+    Balloon.prototype.init = function (data, actor) {
         this._score = 0;
         this._root = actor;
         this._rop.scaleX = 0;
         this._rop.scaleY = 0;
+        this._rop.height = 0;
         this._isChangeEasy = false;
-        this.UpdateGesture(data, true);
-        this.m_guideArmatureContainer.visible = false;
-        // this.m_guideArmatureContainer.play("xinshouyindao2", 0)
+        this.updateGesture(data, true);
+        this._guideArmatureContainer.visible = false;
+        this._effectResult = ESkillResult.Invalid;
+        this._effectArmatureContainer.visible = false;
+        this._balloonArmatureContainer.removeCompleteCallFunc(this._onBalloonComplete, this);
+        // this._guideArmatureContainer.play("xinshouyindao2", 0)
     };
-    Balloon.prototype.GuideStart = function () {
-        this.m_guideArmatureContainer.visible = true;
-        this.m_guideArmatureContainer.play("xinshouyindao2", 0);
+    Balloon.prototype.guideStart = function () {
+        this._guideArmatureContainer.visible = true;
+        this._guideArmatureContainer.play("xinshouyindao2", 0);
     };
     /**
      * 更新气球身上的特效动画
      */
-    Balloon.prototype.UpdateEffectArmature = function (data) {
+    Balloon.prototype.updateEffectArmature = function (data) {
         this._effectArmatureContainer.clear();
         var effectArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile);
         if (this._effectArmature == null) {
@@ -85,108 +91,80 @@ var Balloon = (function (_super) {
         this._effectArmatureContainer.x = data.skillPosX;
         this._effectArmatureContainer.y = data.skillPosY;
         this._changeType = data.param[1];
-        this._effectArmatureContainer.addCompleteCallFunc(this._OnEffectArmatureComplete, this);
+        this._effectResult = data.result;
+        this._effectArmatureContainer.addCompleteCallFunc(this._onEffectArmatureComplete, this);
     };
-    Balloon.prototype.PlayEffect = function (data) {
-        this._type = 0;
-        this._effectArmatureContainer.play(data.skill, 1);
+    Balloon.prototype.playEffect = function (data) {
+        if (this._root.state == EMonsterState.Ready) {
+            switch (this._effectResult) {
+                case ESkillResult.Kill:
+                    this._type = -1;
+                    break;
+                case ESkillResult.GestureChange:
+                    this._type = 0;
+                    break;
+            }
+            this._effectArmatureContainer.visible = true;
+            this._effectArmatureContainer.play(data.skill, 1);
+        }
     };
-    Balloon.prototype.UpdateGesture = function (data, isInit) {
+    Balloon.prototype.updateGesture = function (data, isInit) {
         if (isInit === void 0) { isInit = false; }
-        var random = MathUtils.getRandom(data.length - 1);
-        this._gesture.texture = RES.getRes(data[random].path);
-        this._gesture.anchorOffsetX = this._gesture.width / 2;
-        this._gesture.anchorOffsetY = this._gesture.height / 2;
-        this._gesture.x = this._balloonArmatureContainer.x + 1;
-        this._gesture.y = this._balloonArmatureContainer.y - 38;
-        this._gesture.visible = true;
-        this._type = data[random].type;
-        this._score = data[random].count;
-        this._animationName = data[random].balloon;
-        data.splice(random, 1);
-        this._balloonArmatureContainer.play(this._animationName, 1);
-        this._balloonArmatureContainer.pause(this._animationName);
+        if (data.length > 0) {
+            var random = MathUtils.getRandom(data.length - 1);
+            this._gesture.texture = RES.getRes(data[random].path);
+            this._gesture.anchorOffsetX = this._gesture.width / 2;
+            this._gesture.anchorOffsetY = this._gesture.height / 2;
+            this._gesture.x = this._balloonArmatureContainer.x + 1;
+            this._gesture.y = this._balloonArmatureContainer.y - 38;
+            this._gesture.visible = true;
+            this._type = data[random].type;
+            this._score = data[random].count;
+            this._animationName = data[random].balloon;
+            data.splice(random, 1);
+            this._balloonArmatureContainer.play(this._animationName, 1);
+            this._balloonArmatureContainer.pause(this._animationName);
+        }
         this.scaleX = 1;
         this.scaleY = 1;
         if (data.length <= 0)
-            this._root.ResetGestureData();
+            this._root.resetGestureData();
     };
-    Balloon.prototype.ChangeToEasy = function () {
+    Balloon.prototype.changeToEasy = function () {
         this._isChangeEasy = true;
         this._type = 0;
         this._effectArmatureContainer.play("bianhua", 1, 1, 0, 1.6);
     };
-    Balloon.prototype.UpdateColorAndGesture = function () {
+    Balloon.prototype.updateColorAndGesture = function () {
         this._type = 0;
         this._gesture.visible = false;
         this._balloonArmatureContainer.play("explore", 1, 1, 0, 3);
+        this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this);
     };
-    Balloon.prototype.SetLine = function (count, value) {
-        if (count === void 0) { count = 1; }
-        if (value === void 0) { value = 0; }
+    Balloon.prototype.calculateRop = function (x1, y1) {
+        var distance = MathUtils.getDistance(x1, y1, 0, -60);
+        var radian = MathUtils.getRadian2(x1, y1, 0, -60);
+        var rotation = MathUtils.getAngle(radian) - 90;
+        this._ropRotation = rotation;
+        this._rop.height = distance;
+    };
+    Object.defineProperty(Balloon.prototype, "ropRotation", {
+        get: function () {
+            return this._ropRotation;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Balloon.prototype.setLine = function () {
         this._rop.x = this._balloonArmatureContainer.x;
         this._rop.y = this._balloonArmatureContainer.y - 10;
+        this.calculateRop(this.x, this.y);
+        this._rop.rotation = this._ropRotation;
         this._rop.scaleX = 1;
-        if (count == 1) {
-            this._rop.rotation = 0;
-            this._rop.scaleY = 15;
-        }
-        else if (count == 2) {
-            this._rop.scaleY = 18;
-            if (value == 0) {
-                this._rop.rotation = -35;
-            }
-            else {
-                this._rop.rotation = 35;
-            }
-        }
-        else if (count == 3) {
-            this._rop.scaleY = 24;
-            if (value == 0) {
-                this._rop.rotation = 0;
-            }
-            else if (value == 1) {
-                this._rop.rotation = -50;
-            }
-            else {
-                this._rop.rotation = 50;
-            }
-        }
+        this._rop.scaleY = 1;
     };
-    Balloon.prototype.BossSetLine = function (count, value) {
-        if (count === void 0) { count = 1; }
-        if (value === void 0) { value = 0; }
-        this._rop.x = this._balloonArmatureContainer.x;
-        this._rop.y = this._balloonArmatureContainer.y - 10;
-        this._rop.scaleX = 0.5;
-        if (count == 1) {
-            this._rop.rotation = 0;
-            this._rop.scaleY = 30;
-        }
-        else if (count == 2) {
-            this._rop.scaleY = 50;
-            if (value == 0) {
-                this._rop.rotation = -15;
-            }
-            else {
-                this._rop.rotation = 15;
-            }
-        }
-        else if (count == 3) {
-            this._rop.scaleY = 30;
-            if (value == 0) {
-                this._rop.rotation = 0;
-            }
-            else if (value == 1) {
-                this._rop.rotation = -30;
-            }
-            else {
-                this._rop.rotation = 30;
-            }
-        }
-    };
-    Balloon.prototype.BalloonExplore = function (isGestureExplore) {
-        if (isGestureExplore === void 0) { isGestureExplore = true; }
+    Balloon.prototype.balloonExplore = function (isSummon) {
+        if (isSummon === void 0) { isSummon = false; }
         this._rop.scaleX = 0;
         this._rop.scaleY = 0;
         this._gesture.visible = false;
@@ -195,26 +173,25 @@ var Balloon = (function (_super) {
         var channel = GameVoice.ballonBoomSound.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
         GameConfig.balloonScore += this._score;
-        // if (PanelManager.m_gameScenePanel != null) {
-        // 	PanelManager.m_gameScenePanel.Score += this._score
-        // }
-        if (isGestureExplore)
-            PanelManager.m_gameScenePanel.Boom = true;
-        if (this._root.Balloons != null && this._root.Balloons.length <= 0) {
-            this._root.GotoDead();
+        if (isSummon == false) {
+            this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this);
         }
-        // if (this._root.State == EMonsterState.Ready) {
+        if (isSummon == false && this._root.balloons != null && this._root.balloons.length <= 0) {
+            this._root.gotoDead();
+            // this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this)
+        }
+        // if (this._root.state == EMonsterState.Ready) {
         // 	let posY = this._root.y - 20
         // 	egret.Tween.get(this._root).to({y:posY}, 50)
         // }
         // egret.setTimeout(this._OnBalloonBoom, this, 200)
     };
-    Balloon.prototype._OnBalloonBoom = function () {
+    Balloon.prototype._onBalloonBoom = function () {
         // this._boomSound.play(0, 1)
     };
-    Balloon.prototype.Destroy = function () {
+    Balloon.prototype.destroy = function () {
     };
-    Balloon.prototype.Update = function (delay) {
+    Balloon.prototype.update = function (delay) {
     };
     Object.defineProperty(Balloon.prototype, "type", {
         get: function () {
@@ -245,32 +222,47 @@ var Balloon = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Balloon.prototype, "Score", {
+    Object.defineProperty(Balloon.prototype, "score", {
         get: function () {
             return this._score;
         },
         enumerable: true,
         configurable: true
     });
-    Balloon.prototype._OnBalloonComplete = function (e) {
+    Balloon.prototype._onBalloonComplete = function (e) {
         if (this._type == 0) {
-            this.UpdateGesture(this._root.GestureData);
+            this.updateGesture(this._root.gestureData);
+        }
+        else if (this.type == -1) {
+            this._root.balloonExploreHandle();
+            GameObjectPool.getInstance().destroyObject(this);
         }
         else {
-            this._root.BalloonExploreHandle();
+            this._root.balloonExploreHandle();
             GameObjectPool.getInstance().destroyObject(this);
-            this._root.RemoveBalloon(this);
+            Common.log("_onBalloonComplete");
+            this._root.removeBalloon(this);
         }
     };
-    Balloon.prototype._OnEffectArmatureComplete = function (e) {
-        // this.UpdateGesture(this._root.GestureData)
-        this._gestureData.length = 0;
-        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
-            if (GameConfig.gestureConfig[i].type == this._changeType) {
-                this._gestureData.push(GameConfig.gestureConfig[i]);
-            }
+    Balloon.prototype._onEffectArmatureComplete = function (e) {
+        // this.updateGesture(this._root.gestureData)
+        switch (this._effectResult) {
+            case ESkillResult.Kill:
+                this._effectResult = ESkillResult.Invalid;
+                this._root.ballExplosion(this);
+                this.balloonExplore();
+                break;
+            case ESkillResult.GestureChange:
+                this._gestureData.length = 0;
+                for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+                    if (GameConfig.gestureConfig[i].type == this._changeType) {
+                        this._gestureData.push(GameConfig.gestureConfig[i]);
+                    }
+                }
+                Common.log("_onEffectArmatureComplete");
+                this.updateGesture(this._gestureData);
+                break;
         }
-        this.UpdateGesture(this._gestureData);
     };
     return Balloon;
 }(egret.Sprite));

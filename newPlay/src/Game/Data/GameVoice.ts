@@ -22,6 +22,11 @@ module GameVoice {
     export var spideBall_mp3:string = "spideBall_mp3"
     export var summon_mp3:string = "summon_mp3"
     export var unlockItem_mp3:string = "unlockItem_mp3"
+    export var battleBefore_mp3:string = "battleBefore_mp3"
+    export var vectory_mp3:string = "vectory_mp3"
+    export var rewardBGM_mp3:string = "choujiang_mp3"
+    export var rewardVoice_mp3:string = "choujiangBg_mp3"
+    export var gesture_mp3:string = "gesture_mp3"
 
 
     export var beginBGMSound:egret.Sound = null
@@ -49,4 +54,9 @@ module GameVoice {
     export var spideBall:egret.Sound = null
     export var summon:egret.Sound = null
     export var unlockItem:egret.Sound = null
+    export var battleBefore:egret.Sound = null
+    export var vectory:egret.Sound = null
+    export var rewardBGM:egret.Sound = null
+    export var rewardVoice:egret.Sound = null
+    export var gestureVoice:egret.Sound = null
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="qiandaoIR" width="482" height="121" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="m_imgBg" source="qiandao3_png" x="0" y="0"/>
+	<e:Image id="m_imgGouBg" source="qiandao4_png" x="363" y="9.5" touchEnabled="false"/>
+	<e:Image id="m_imgReward" x="378.5" y="24.5" width="72" height="72" source="tangguo_png" touchEnabled="false"/>
+	<e:Label id="m_labDay" text="1" y="20.5" fontFamily="Microsoft YaHei" size="80" textAlign="center" horizontalCenter="-162.5" touchEnabled="false"/>
+	<e:Label id="m_labCount" text="X20" y="72.5" fontFamily="Microsoft YaHei" size="30" verticalAlign="middle" bold="true" textColor="0xefefef" right="26" touchEnabled="false"/>
+	<e:Image id="m_imgGou" source="qiandao5_png" x="363" y="9.5" touchEnabled="false"/>
+</e:Skin>

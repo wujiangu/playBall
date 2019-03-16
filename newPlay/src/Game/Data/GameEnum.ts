@@ -19,6 +19,14 @@ enum EGamePauseState
     Return,
 }
 
+// 面板切换状态
+enum EPanelState
+{
+    EnterLevelSelect = 1,
+    EnterBabyList,
+    EnterBattle,
+}
+
 // 游戏面板动画
 enum EPanelAnimation
 {
@@ -103,13 +111,14 @@ enum EMonsterState
 // 手势难度
 enum EGestureDifficult
 {
+    Easy = -1,          // 全部超简单
     Mix = 0,            // 混合随机
     Normal,             // 全部简单
+    Center,             // 全部等
     Hard,               // 全部难
     NAndH,              // 一个简单一个复杂
     NAndHH,             // 一个简单两个复杂
     NNAndH,             // 两个简单一个复杂
-
 }
 
 // 怪物的类型
@@ -156,4 +165,31 @@ enum ELevelType
     Elite,
     Boss,
     End,
+}
+
+/**签到奖励类型 */
+enum EReward
+{
+    Candy = 1,
+    AssignBaby,
+    GreenBaby,
+    BlueBaby,
+    PurpleBaby,
+}
+
+/**抽奖奖励类型 */
+enum ECapsule
+{
+    Candy = 1,
+    GreenBaby,
+    BlueBaby,
+    PurpleBaby,
+}
+
+/**宝宝品质 */
+enum EBabyQuality
+{
+    Green = 1,
+    Blue,
+    Purple,
 }

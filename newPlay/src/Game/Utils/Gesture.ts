@@ -8,7 +8,7 @@ class Gesture
     // private _gestureSound:egret.Sound
     // private _gestureColor:any
     //{"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
-    public Init() 
+    public init() 
     {
         // this._gestureColor = {}
         this._gestureData = []
@@ -40,23 +40,23 @@ class Gesture
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.mouseUp,this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this._mouseDown,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_END,this._mouseUp,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this._mouseUp,this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_MOVE,this._mouseMove,this);
     }
     public removeEvent()
     {
         this._layer.graphics.clear()
-        // PanelManager.gamePanel.SetParticle(false, 0, 0)
+        // PanelManager.gamePanel.setParticle(false, 0, 0)
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
-        // PanelManager.m_gameScenePanel.SetParticle(false, 0, 0)
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.mouseUp,this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
+        // PanelManager.gameScenePanel.setParticle(false, 0, 0)
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this._mouseDown,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_END,this._mouseUp,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this._mouseUp,this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this._mouseMove,this);
     }
 
     private _mouseDatas:egret.Point[];
@@ -64,7 +64,7 @@ class Gesture
     private _currentPoint:egret.Point;
     private _catmullRom:egret.Point[]
     private _catmullIndex:number
-    private mouseDown(evt:egret.TouchEvent)
+    private _mouseDown(evt:egret.TouchEvent)
     {
         if (this._isDown) return
         this._isDown = true
@@ -79,12 +79,12 @@ class Gesture
         this._currentPoint = p;
 
         // this._layer.graphics.moveTo(this._currentPoint.x,this._currentPoint.y);
-        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
-        // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
+        // PanelManager.gamePanel.setParticle(true, p.x, p.y)
         
         // Common.dispatchEvent(MainNotify.beginLocus)
     }
-    private mouseMove(evt:egret.TouchEvent)
+    private _mouseMove(evt:egret.TouchEvent)
     {
         if (!this._isDown) return
         // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
@@ -164,10 +164,10 @@ class Gesture
         this._layer.graphics.lineTo(p.x, p.y);
         this._layer.graphics.endFill();
         this._currentPoint = p
-        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
-        // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
+        // PanelManager.gamePanel.setParticle(true, p.x, p.y)
     }
-    private mouseUp(evt:egret.TouchEvent)
+    private _mouseUp(evt:egret.TouchEvent)
     {
         if (!this._isDown) return
         this._isDown = false
@@ -179,14 +179,14 @@ class Gesture
 
         // this._layer.graphics.lineStyle(8, 0xff0000, 0.8)
         // this._layer.graphics.endFill();
-        // PanelManager.gamePanel.SetParticle(false, p.x, p.y)
-        // PanelManager.m_gameScenePanel.SetParticle(false, p.x, p.y)
-        this.motion();
+        // PanelManager.gamePanel.setParticle(false, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(false, p.x, p.y)
+        this._motion();
 
         // this._gestureSound.play(0, 1)
     }
 
-    private motion()
+    private _motion()
     {
         var _arr:egret.Point[] = [];
         var currentIndex:number = 0;
@@ -223,21 +223,21 @@ class Gesture
                 var b:number = egret.Point.distance(p1,p2);
                 var rad:number = Math.asin( a/b );
                 var ang:number = Number((rad * 57.2957800).toFixed(1)); // rad * 180/Math.PI 直接求常量，优化
-                var quad:number = this.quadrant(p1,p2);
-                var dir:number = this.getDirByAngQuad(ang, quad);
+                var quad:number = this._quadrant(p1,p2);
+                var dir:number = this._getDirByAngQuad(ang, quad);
                 this._dirsArr.push(dir);
                 // console.log("quad: ",quad, "ang: ", ang);
             }
         }
         //console.log(this._dirsArr);
-        var dirstr:string = this.repDiff( this._dirsArr );
+        var dirstr:string = this._repDiff( this._dirsArr );
         // console.log( dirstr );
-        var rel:number = this.sweep( dirstr );
+        var rel:number = this._sweep( dirstr );
         // console.log("type------------->: ",rel);
-        this.disEvent(rel);
+        this._disEvent(rel);
     }
 
-    private disEvent(type:number)
+    private _disEvent(type:number)
     {
 		GameConfig.gestureType = type
         if(type != -1)
@@ -255,7 +255,7 @@ class Gesture
                             this._lineData.splice(i, 1)
                         }
                     }
-                    this._BezierInterpolation()
+                    this._bezierInterpolation()
                     // for (let j = 0; j < this._lineData.length; j+=4) {
                     //     let x0 = this._lineData[j].x
                     //     let y0 = this._lineData[j].y
@@ -309,7 +309,7 @@ class Gesture
     }
 
     // 贝塞尔插值算法
-    private _BezierInterpolation() {
+    private _bezierInterpolation() {
         let scale = 0.6;  
         let midpoints = []
         //生成中点   
@@ -399,14 +399,14 @@ class Gesture
     // 6 4
     // z 5
 
-    private sweep( str:string ):number
+    private _sweep( str:string ):number
     {
         var maxType:number = -1;
         var max:number = -1;
         var len:number = this._gestureData.length;
         for(var i:number=0; i<len; i++)
         {
-            var val:number = this.Levenshtein_Distance_Percent(this._gestureData[i].data, str);
+            var val:number = this._levenshteinDistancePercent(this._gestureData[i].data, str);
             if(val>max)
             {
                 max = val;
@@ -426,7 +426,7 @@ class Gesture
     /*
     对比去重
      */
-    private repDiff(data:number[]):string
+    private _repDiff(data:number[]):string
     {
         var str:string = "";
         var len:number = data.length;
@@ -445,7 +445,7 @@ class Gesture
     根据所在象限与角度计算出方向编号。
     方向编号，以第一象限0度为基础，按照顺时针方向，将圆等分为8份。
      */
-    private getDirByAngQuad(ang:number,quad:number):number
+    private _getDirByAngQuad(ang:number,quad:number):number
     {
         switch(quad)
         {
@@ -506,7 +506,7 @@ class Gesture
     计算两点关系所形成的象限
     以P1 作为坐标原点，P2为设定点，判断P2相对于P1时所在象限
      */
-    private quadrant(p1:egret.Point,p2:egret.Point):number
+    private _quadrant(p1:egret.Point,p2:egret.Point):number
     {
         if(p2.x>=p1.x)
         {
@@ -532,7 +532,7 @@ class Gesture
         }
     }
 
-    private Levenshtein_Distance(s,t)
+    private _levenshteinDistance(s,t)
     {
         var n=s.length;// length of s
         var m=t.length;// length of t
@@ -572,7 +572,7 @@ class Gesture
                 }
 
                 // Step 6
-                d[i][j] = this.Minimum (d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + cost);
+                d[i][j] = this._minimum(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + cost);
             }
         }
 
@@ -580,15 +580,15 @@ class Gesture
         return d[n][m];
     }
 
-    private Levenshtein_Distance_Percent(s,t):number{
+    private _levenshteinDistancePercent(s,t):number{
 
         var l=s.length>t.length?s.length:t.length;
-        var d=this.Levenshtein_Distance(s,t);
+        var d=this._levenshteinDistance(s,t);
         return (1-d/l);//.toFixed(4);
 
     }
 
-    private Minimum(a,b,c){
+    private _minimum(a,b,c){
         return a<b?(a<c?a:c):(b<c?b:c);
     }
 

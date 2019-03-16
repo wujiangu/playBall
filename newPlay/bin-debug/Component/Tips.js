@@ -1,39 +1,42 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Tips = (function (_super) {
     __extends(Tips, _super);
     function Tips() {
         var _this = _super.call(this) || this;
-        _this.m_imgBg = new egret.Bitmap();
-        _this.addChild(_this.m_imgBg);
-        _this.m_labDesc = new egret.TextField();
-        _this.addChild(_this.m_labDesc);
-        _this.m_data = new TipsData();
+        _this._imgBg = new egret.Bitmap();
+        _this.addChild(_this._imgBg);
+        _this._labDesc = new egret.TextField();
+        _this.addChild(_this._labDesc);
+        _this._data = new TipsData();
         return _this;
     }
-    Tips.prototype.Init = function () {
-        this.m_imgBg.visible = false;
-        if (this.m_data.tipsBg.length > 0) {
-            this.m_imgBg.texture = RES.getRes(this.m_data.tipsBg);
-            this.m_imgBg.visible = true;
+    Tips.prototype.init = function () {
+        this._imgBg.visible = false;
+        if (this._data.tipsBg.length > 0) {
+            this._imgBg.texture = RES.getRes(this._data.tipsBg);
+            this._imgBg.visible = true;
         }
-        this.m_labDesc.textColor = this.m_data.descColor;
-        this.m_labDesc.size = this.m_data.descSize;
-        this.m_labDesc.textAlign = "center";
-        this.m_labDesc.text = this.m_data.desc;
-        this.m_labDesc.bold = true;
+        this._labDesc.textColor = this._data.descColor;
+        this._labDesc.size = this._data.descSize;
+        this._labDesc.textAlign = "center";
+        this._labDesc.text = this._data.desc;
+        this._labDesc.bold = true;
     };
     Object.defineProperty(Tips.prototype, "data", {
         get: function () {
-            return this.m_data;
+            return this._data;
         },
         enumerable: true,
         configurable: true

@@ -2,23 +2,24 @@ class BaseActor extends egret.DisplayObjectContainer {
 	public constructor() {
 		super()
 
-		this.m_groupBalloon = new egret.DisplayObjectContainer()
-		this.addChild(this.m_groupBalloon)
+		this._groupBalloon = new egret.DisplayObjectContainer()
+		this.addChild(this._groupBalloon)
 
-		this.m_armatureContainer = new DragonBonesArmatureContainer()
-		this.addChild(this.m_armatureContainer)
+		this._armatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this._armatureContainer)
 
-		this.m_effectArmatureContainer = new DragonBonesArmatureContainer()
-		this.addChild(this.m_effectArmatureContainer)
+		this._effectArmatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this._effectArmatureContainer)
 
-		this.m_gestureData = new Array()
-		this.m_normalGesture = new Array()
-		this.m_hardGesture = new Array()
+		this._gestureData = new Array()
+		this._normalGesture = new Array()
+		this._centerGesture = new Array()
+		this._hardGesture = new Array()
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
-				this.m_normalGesture.push(GameConfig.gestureConfig[i])
+				this._normalGesture.push(GameConfig.gestureConfig[i])
 			}else{
-				this.m_hardGesture.push(GameConfig.gestureConfig[i])
+				this._hardGesture.push(GameConfig.gestureConfig[i])
 			}
 		}
 
@@ -37,235 +38,314 @@ class BaseActor extends egret.DisplayObjectContainer {
 		// this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,
     	// strength, quality, inner, knockout)
 
-		this.m_rect = new egret.Rectangle()
+		this._rect = new egret.Rectangle()
 
-		// this.m_shape = new egret.Shape()
-		// this.addChild(this.m_shape)
-		// this.m_shape.graphics.beginFill( 0xff0000, 0.5);
+		// this._shape = new egret.Shape()
+		// this.addChild(this._shape)
+		// this._shape.graphics.beginFill( 0xff0000, 0.5);
 	}
 
-	public ResetNormalGesture() {
-		this.m_normalGesture.length = 0
+	public resetNormalGesture() {
+		this._normalGesture.length = 0
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
-				this.m_normalGesture.push(GameConfig.gestureConfig[i])
+				this._normalGesture.push(GameConfig.gestureConfig[i])
 			}
 		}
 	}
 
-	public ResetHardGesture() {
-		this.m_hardGesture.length = 0
+	public resetCenterGesture() {
+		this._centerGesture.length = 0
+		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
+			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Center) {
+				this._normalGesture.push(GameConfig.gestureConfig[i])
+			}
+		}
+	}
+
+	public resetHardGesture() {
+		this._hardGesture.length = 0
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Hard) {
-				this.m_hardGesture.push(GameConfig.gestureConfig[i])
+				this._hardGesture.push(GameConfig.gestureConfig[i])
 			}
 		}
 	}
 
-	public GotoIdle() {
+	public initData() {
+		this._unusualDelay = 0
+	}
+
+	public gotoIdle() {
 
 	}
 
-	public GotoHurt() {
+	public gotoHurt() {
 
 	}
 
-	public GotoDead() {
+	public gotoDead() {
 
 	}
 
-	public GotoExplore() {}
+	public gotoExplore() {}
 
-	public GotoRun() {
+	public gotoRun() {
 
 	}
 
-	public GotoSlow() {}
+	public gotoSlow() {}
 
 	public get w() {
-		return this.m_width
+		return this._width
 	}
 
 	public get h() {
-		return this.m_height
+		return this._height
 	}
 
-	public get Balloons() {
-		return this.m_balloons
+	public get balloons() {
+		return this._balloons
 	}
 
-	public get GestureData() {
-		return this.m_gestureData
+	public get gestureData() {
+		return this._gestureData
 	}
 
-	public set GestureData(value) {
-		this.m_gestureData = value
+	public set gestureData(value) {
+		this._gestureData = value
 	}
 
-	public set SpeedVertical(value) {
-		this.m_speedY = value
+	public set speedVertical(value) {
+		this._speedY = value
 	}
 	
-	public set SpeedHorizon(value) {
-		this.m_speedX = value
+	public set speedHorizon(value) {
+		this._speedX = value
 	}
 
-	public get EPos() {
-		return this.m_ePos
+	public get ePos() {
+		return this._ePos
 	}
 
-	public set EPos(value:EMonsterPos) {
-		this.m_ePos = value
+	public set ePos(value:EMonsterPos) {
+		this._ePos = value
 	}
 
-	public get ActorTableData() {
-		return this.m_data
+	public get actorTableData() {
+		return this._data
 	}
 
-	public get Type() {
-		return this.m_type
+	public get type() {
+		return this._type
 	}
 
-	public Update(timeElapsed:number) {
-
+	public update(timeElapsed:number) {
+		if (this._state == EMonsterState.Ready && this._speedY == 0) {
+			this._unusualDelay += timeElapsed
+			if (this._unusualDelay >= PanelManager.gameScenePanel.baby.skillData.time) {
+                this._unusualDelay = 0
+				this._effectArmatureContainer.visible = false
+				this._speedY = this._data.Speed / 100 * GameConfig.gameSpeedPercent
+            }
+		}
 	}
 
-	public ResetGestureData() {
+	public resetGestureData() {
 		
 	}
 
-	public SetVertical(addNum:number) {
-		if (this.m_speedY <= 0) return
-		this.ResetVertical()
-		this.m_addNum += addNum
-		this.m_speedY += addNum
+	public setVertical(addNum:number) {
+		if (this._speedY <= 0) return
+		this.resetVertical()
+		this._addNum += addNum
+		this._speedY += addNum
 	}
 
-	public ResetVertical() {
-		this.m_speedY -= this.m_addNum
-		this.m_addNum = 0
+	public resetVertical() {
+		this._speedY -= this._addNum
+		this._addNum = 0
+		this._speedY = Math.max(this._speedY, 0)
 	}
 
 	/**
 	 * 更新怪物身上的特效动画
 	 */
-	public UpdateEffectArmature(data:any) {
-		this.m_effectArmatureContainer.clear()
+	public updateEffectArmature(data:any) {
+		this._effectArmatureContainer.clear()
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile)
-		if (this.m_effectArmature == null) {
-			this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+		if (this._effectArmature == null) {
+			this._effectArmature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_effectData = data
-		this.m_effectResult = data.result
-		this.m_effectArmature.ArmatureDisplay = armatureDisplay
-		this.m_effectArmatureContainer.register(this.m_effectArmature, [data.skill])
-		this.m_effectArmatureContainer.visible = false
-		this.m_effectArmatureContainer.scaleX = 1
-		this.m_effectArmatureContainer.scaleY = 1
-		this.m_effectArmatureContainer.x = data.skillPosX
-		this.m_effectArmatureContainer.y = data.skillPosY
-		this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this)
-		this.m_effectArmatureContainer.addFrameCallFunc(this.OnEffectArmatureFram, this)
-		this.m_effectArmatureContainer.visible = false
+		this._effectData = data
+		this._effectResult = data.result
+		this._effectArmature.ArmatureDisplay = armatureDisplay
+		this._effectArmatureContainer.register(this._effectArmature, [data.skill])
+		this._effectArmatureContainer.visible = false
+		this._effectArmatureContainer.scaleX = data.scale
+		this._effectArmatureContainer.scaleY = data.scale
+		this._effectArmatureContainer.x = data.skillPosX
+		this._effectArmatureContainer.y = data.skillPosY
+		this._effectArmatureContainer.addCompleteCallFunc(this.onEffectArmatureComplete, this)
+		this._effectArmatureContainer.addFrameCallFunc(this.onEffectArmatureFram, this)
+		this._effectArmatureContainer.visible = false
 	}
 
-	public get State() {
-		return this.m_state
+	public get state() {
+		return this._state
 	}
 
-	public PlayEffect(data:any) {}
+	public playEffect(data:any) {}
 
-	public BalloonExploreHandle() {}
+	public ballExplosion(balloon:Balloon) {}
 
-	public RemoveBalloon(balloon:Balloon) {}
+	public removeBalloon(balloon:Balloon) {}
 
-	public OnEffectArmatureComplete() {
-		if (this.m_state == EMonsterState.Stop) {
-			switch (this.m_effectResult) {
-				case ESkillResult.Kill:
-					this.m_effectResult = ESkillResult.Invalid
-					this.GotoDead()
-					this._DestroyBalloon()
-				break
-				case ESkillResult.StopSpeed:
-					this.m_speedY = 0
-					this.m_state = EMonsterState.Ready
-				break
-				case ESkillResult.ChangeLucky:
-				break
+	public onEffectArmatureComplete() {
+		switch (this._state) {
+			case EMonsterState.Dead:
+				this.destroyAndRemove()
+			break
+			case EMonsterState.Stop:
+				switch (this._effectResult) {
+					case ESkillResult.Kill:
+						this._effectResult = ESkillResult.Invalid
+						this.gotoDead()
+						this._destroyBalloon()
+					break
+					case ESkillResult.StopSpeed:
+						this._speedY = 0
+						this._state = EMonsterState.Ready
+					break
+					case ESkillResult.ChangeLucky:
+						PanelManager.gameScenePanel.createLuckyActor(this.x, this.y)
+						this.destroyAndRemove()
+					break
+				}
+			break
+			case EMonsterState.Drown:
+				this.destroyAndRemove()
+			break
+			default:
+			break
+		}
+	}
+
+	public destroy() {
+		// this._state = EMonsterState.Ready
+	}
+
+	public destroyAndRemove() {
+		this._effectArmatureContainer.visible = false
+	}
+
+	public onEffectArmatureFram(event:dragonBones.EgretEvent) {}
+
+	protected _destroyBalloon() {
+		this._sumBalloon = 0
+		while(this._balloons.length > 0) {
+			let balloon:Balloon = this._balloons.pop()
+			GameObjectPool.getInstance().destroyObject(balloon)
+			if (this._groupBalloon.contains(balloon)) {
+				this._groupBalloon.removeChild(balloon)
+			}else{
+				balloon.parent.removeChild(balloon)
+			}
+			
+		}
+	}
+
+	public balloonExploreHandle() {
+		if (this._balloons.length <= 0) {
+			this._sumBalloon = 0
+			// this.gotoDead()
+		}else{
+			if (this._sumBalloon == 2 && this._balloons.length > 0) {
+				let balloon:Balloon = this._balloons[0]
+				let posx = 0
+				egret.Tween.get(balloon).to({x:posx}, 200, egret.Ease.circOut)
+				egret.Tween.get(balloon.rop).to({rotation:0}, 200, egret.Ease.circOut)
+				this._sumBalloon = 1
+			}
+
+			if (this._sumBalloon == 3 && this._balloons.length > 0) {
+				this._sumBalloon = 2
+				if (this._exploreIndex == 2) {
+					this._balloons.reverse()
+				}
+				for (let i = 0; i < this._balloons.length; i++) {
+					let balloon:Balloon = this._balloons[i]
+					let posX = i * (balloon.width+5) - this._rect.width / 2
+					let posY = -this._rect.height * 1.2
+					balloon.calculateRop(posX, posY)
+					egret.Tween.get(balloon).to({x:posX, y:posY}, 200, egret.Ease.circOut)
+					egret.Tween.get(balloon.rop).to({rotation:balloon.ropRotation}, 200, egret.Ease.circOut)
+				}
 			}
 		}
 	}
 
-	public OnEffectArmatureFram(event:dragonBones.EgretEvent) {}
-
-	protected _DestroyBalloon() {
-		this.m_sumBalloon = 0
-		while(this.m_balloons.length > 0) {
-			let balloon:Balloon = this.m_balloons.pop()
-			GameObjectPool.getInstance().destroyObject(balloon)
-			this.m_groupBalloon.removeChild(balloon)
-		}
-	}
-
-	protected _SetBallonPosition(balloon:Balloon, count:number, value:number = 0) {
+	protected _setBallonPosition(balloon:Balloon, count:number, value:number = 0) {
 		if (count == 1) {
 			balloon.x = 0
-			balloon.y = -this.m_rect.height * 1.1
-			balloon.SetLine()
+			balloon.y = -this._rect.height * 1.1
 		}
 		else if (count == 2) {
-			balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2
-			balloon.y = -this.m_rect.height * 1.3
-			balloon.SetLine(count, value)
+			balloon.x = value * (balloon.width + 5) - this._rect.width / 2
+			balloon.y = -this._rect.height * 1.3
 		}
 		else if (count == 3) {
 			if (value == 0) {
 				balloon.x = 0
-				balloon.y = -this.m_rect.height * 1.5
+				balloon.y = -this._rect.height * 1.5
 			}else{
-				balloon.x = (value - 1) * (balloon.width + this.m_rect.width/2) - this.m_rect.width * 0.7
-				balloon.y = -this.m_rect.height * 1.2
+				balloon.x = (value - 1) * (balloon.width + this._rect.width/2) - this._rect.width * 0.7
+				balloon.y = -this._rect.height * 1.2
 			}
-			balloon.SetLine(count, value)
 		}
+		balloon.setLine()
 	}
 
-	protected m_sumBalloon:number
-	protected m_groupBalloon:egret.DisplayObjectContainer
-	protected m_armatureContainer:DragonBonesArmatureContainer
-	protected m_type:EMonsterDifficult
+	protected _exploreIndex:number
+	protected _sumBalloon:number
+	protected _groupBalloon:egret.DisplayObjectContainer
+	protected _armatureContainer:DragonBonesArmatureContainer
+	protected _type:EMonsterDifficult
 	// protected m_dropShadowFilter:egret.DropShadowFilter
-	protected m_armature:DragonBonesArmature
-	protected m_gestureData:Array<any>
-	protected m_normalGesture:Array<any>
-	protected m_hardGesture:Array<any>
-	protected m_rect:egret.Rectangle
-	protected m_shape:egret.Shape
+	protected _armature:DragonBonesArmature
+	protected _gestureData:Array<any>
+	protected _normalGesture:Array<any>
+	protected _centerGesture:Array<any>
+	protected _hardGesture:Array<any>
+	protected _rect:egret.Rectangle
+	protected _shape:egret.Shape
 
-	protected m_effectArmatureContainer:DragonBonesArmatureContainer
-	protected m_effectArmature:DragonBonesArmature
-	protected m_effectData:any
-	protected m_effectResult:ESkillResult
-	protected m_width:number
-	protected m_height:number
+	protected _effectArmatureContainer:DragonBonesArmatureContainer
+	protected _effectArmature:DragonBonesArmature
+	protected _effectData:any
+	protected _effectResult:ESkillResult
+	protected _width:number
+	protected _height:number
 
-	protected m_speedY:number
-	protected m_speedX:number
-	protected m_spFall:number
-	protected m_baseSpeedY:number
+	protected _speedY:number
+	protected _speedX:number
+	protected _spFall:number
+	protected _baseSpeedY:number
 
-	protected m_balloons:Array<Balloon>
+	protected _balloons:Array<Balloon>
 
-	protected m_data:any
+	protected _data:any
 
-	protected m_slowDelay:number
+	protected _slowDelay:number
 
-	protected m_gesturDiff:number
-	protected m_balloonMin:number
-	protected m_balloonMax:number
-	protected m_addNum:number
+	protected _gesturDiff:number
+	protected _balloonMin:number
+	protected _balloonMax:number
+	protected _addNum:number
 
-	protected m_ePos:EMonsterPos
-	protected m_state:EMonsterState
+	protected _ePos:EMonsterPos
+	protected _state:EMonsterState
+	protected _summonType:number
+	/**异常状态计时 */
+	protected _unusualDelay:number
 }

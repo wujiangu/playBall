@@ -4,22 +4,22 @@
 class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
     public constructor() {
         super();
-        this.armatures = new Array<DragonBonesArmature>();
-        this.actions = {};
-        this.bones = {};
+        this._armatures = new Array<DragonBonesArmature>();
+        this._actions = {};
+        this._bones = {};
     }
 
-    public getArmatures() {
-        return this.armatures;
+    public get_armatures() {
+        return this._armatures;
     }
 
     /**
      * 注册需要的DragonBonesArmature
      */
-    public register(dragonBonesArmature:DragonBonesArmature, actions:Array<string>):void {
-        this.armatures.push(dragonBonesArmature);
-        for (let i = 0; i < actions.length; i++) {
-            this.actions[actions[i]] = this.armatures.length - 1;
+    public register(dragonBonesArmature:DragonBonesArmature, _actions:Array<string>):void {
+        this._armatures.push(dragonBonesArmature);
+        for (let i = 0; i < _actions.length; i++) {
+            this._actions[_actions[i]] = this._armatures.length - 1;
         }
     }
 
@@ -27,20 +27,20 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 清除DragonBonesArmature
      */
     public clear() {
-        while(this.armatures.length > 0) {
-            let armature = this.armatures.pop()
+        while(this._armatures.length > 0) {
+            let armature = this._armatures.pop()
             armature.removeArmatureDisplay()
         }
-        this.actions = {}
-        this.bones = {}
+        this._actions = {}
+        this._bones = {}
     }
 
     /**
      * 增加动画完成的监听函数
      */
     public addCompleteCallFunc(func:Function, target:any) {
-        for (let i = 0; i < this.armatures.length; i++) {
-            let armature:DragonBonesArmature = this.armatures[i];
+        for (let i = 0; i < this._armatures.length; i++) {
+            let armature:DragonBonesArmature = this._armatures[i];
             armature.addCompleteCallFunc(func, target);
         }
     }
@@ -51,8 +51,8 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * @param target
      */
     public removeCompleteCallFunc(func:Function, target:any):void {
-        for (var i = 0; i < this.armatures.length; i++) {
-            var arm:DragonBonesArmature = this.armatures[i];
+        for (var i = 0; i < this._armatures.length; i++) {
+            var arm:DragonBonesArmature = this._armatures[i];
             arm.removeCompleteCallFunc(func, target);
         }
     }
@@ -61,8 +61,8 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 增加帧事件处理函数
      */
     public addFrameCallFunc(func:Function, target:any) {
-        for (let i = 0; i < this.armatures.length; i++) {
-            let armature:DragonBonesArmature = this.armatures[i];
+        for (let i = 0; i < this._armatures.length; i++) {
+            let armature:DragonBonesArmature = this._armatures[i];
             armature.addFrameCallFunc(func, target);
         }
     }
@@ -71,8 +71,8 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 移除帧事件处理函数
      */
     public removeFrameCallFunc(func:Function, target:any) {
-        for (let i = 0; i < this.armatures.length; i++) {
-            let armature:DragonBonesArmature = this.armatures[i];
+        for (let i = 0; i < this._armatures.length; i++) {
+            let armature:DragonBonesArmature = this._armatures[i];
             armature.removeFrameCallFunc(func, target);
         }
     }
@@ -82,32 +82,32 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      */
     public getBone(skeletonName:string, boneName:string, target:any):dragonBones.Bone {
         let name:string = skeletonName + boneName;
-        if (!this.bones[name]) {
-            for (let i = 0; i < this.armatures.length; i++) {
-                let armature:DragonBonesArmature = this.armatures[i];
+        if (!this._bones[name]) {
+            for (let i = 0; i < this._armatures.length; i++) {
+                let armature:DragonBonesArmature = this._armatures[i];
                 let bone:dragonBones.Bone = armature.getBone(boneName, target);
                 if (bone != null) {
-                    this.bones[name] = bone;
+                    this._bones[name] = bone;
                     break;
                 }
             }
         }
-        return this.bones[name];
+        return this._bones[name];
     }
 
     public getSlots() {
-        this.armatures[0].getSlots()
+        this._armatures[0].getSlots()
     }
 
     public getState(action:string):dragonBones.AnimationState {
-       if (this.actions[action] == null) {
+       if (this._actions[action] == null) {
             Common.log("不存在动作---->"+action+typeof(action));
             return;
         }
-        let newArmatureIndex:number = this.actions[action];
-        let newArmature:DragonBonesArmature = this.armatures[newArmatureIndex];
+        let newArmatureIndex:number = this._actions[action];
+        let newArmature:DragonBonesArmature = this._armatures[newArmatureIndex];
         if (newArmature) {
-            this.curArmatureIndex = newArmatureIndex;
+            this._curArmatureIndex = newArmatureIndex;
             return newArmature.getState(action);
         }
         return null;
@@ -117,19 +117,19 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 播放动作
      */
     public play(action:string, playTimes:number = undefined, type:number = 1, frame:number = null, timeScale:number = 1):void {
-        if (this.actions[action] == null) {
+        if (this._actions[action] == null) {
             Common.log("play不存在动作---->"+action);
             return;
         }
-        let newArmatureIndex:number = this.actions[action];
-        if (newArmatureIndex != this.curArmatureIndex) {
+        let newArmatureIndex:number = this._actions[action];
+        if (newArmatureIndex != this._curArmatureIndex) {
             this.remove()
         }
 
-        let newArmature:DragonBonesArmature = this.armatures[newArmatureIndex];
+        let newArmature:DragonBonesArmature = this._armatures[newArmatureIndex];
         if (newArmature) {
             this.addChild(newArmature);
-            this.curArmatureIndex = newArmatureIndex;
+            this._curArmatureIndex = newArmatureIndex;
             if (type == 1) {
                 newArmature.play(action, playTimes, timeScale);
             }else{
@@ -142,19 +142,19 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 设置动画的播放速度
      */
     public setTimeScale(action:string, value:number) {
-        if (this.actions[action] == null) {
+        if (this._actions[action] == null) {
             Common.log("不存在动作---->"+action+typeof(action));
             return;
         }
-        let newArmatureIndex:number = this.actions[action];
-        if (newArmatureIndex != this.curArmatureIndex) {
+        let newArmatureIndex:number = this._actions[action];
+        if (newArmatureIndex != this._curArmatureIndex) {
             this.remove()
         }
 
-        let newArmature:DragonBonesArmature = this.armatures[newArmatureIndex];
+        let newArmature:DragonBonesArmature = this._armatures[newArmatureIndex];
         if (newArmature) {
             this.addChild(newArmature);
-            this.curArmatureIndex = newArmatureIndex;
+            this._curArmatureIndex = newArmatureIndex;
             newArmature.setTimeScale(action, value);
         }
     }
@@ -164,18 +164,18 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
     }
 
     public fadeIn(action:string, fadeInTime:number, playTimes:number, layer:number, group:string) {
-         if (this.actions[action] == null) {
+         if (this._actions[action] == null) {
             return;
         }
-        let newArmatureIndex:number = this.actions[action];
-        if (newArmatureIndex != this.curArmatureIndex) {
+        let newArmatureIndex:number = this._actions[action];
+        if (newArmatureIndex != this._curArmatureIndex) {
             this.remove()
         }
 
-        let newArmature:DragonBonesArmature = this.armatures[newArmatureIndex];
+        let newArmature:DragonBonesArmature = this._armatures[newArmatureIndex];
         if (newArmature) {
             this.addChild(newArmature);
-            this.curArmatureIndex = newArmatureIndex;
+            this._curArmatureIndex = newArmatureIndex;
             newArmature.fadeIn(action, fadeInTime, playTimes, layer, group);
         }
     }
@@ -185,7 +185,7 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 暂停
      */
     public pause(action:string):void {
-        var currArm:DragonBonesArmature = this.armatures[this.curArmatureIndex];
+        var currArm:DragonBonesArmature = this._armatures[this._curArmatureIndex];
         if (currArm) {
             currArm.pause(action);
         }
@@ -195,7 +195,7 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 停止当前DragonBonesArmature
      */
     public stop():void {
-        var currArm:DragonBonesArmature = this.armatures[this.curArmatureIndex];
+        var currArm:DragonBonesArmature = this._armatures[this._curArmatureIndex];
         if (currArm) {
             currArm.stop();
         }
@@ -205,12 +205,12 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 停止当前动画到指定帧
      */
     public stopByFrame(action:string, frame:number):void {
-        var currArm:DragonBonesArmature = this.armatures[this.curArmatureIndex];
+        var currArm:DragonBonesArmature = this._armatures[this._curArmatureIndex];
         if (currArm) {
             currArm.stopByFrame(action, frame);
         }else{
-            let newArmatureIndex:number = this.actions[action]
-            currArm = this.armatures[newArmatureIndex]
+            let newArmatureIndex:number = this._actions[action]
+            currArm = this._armatures[newArmatureIndex]
             currArm.stopByFrame(action, frame)
         }
     }
@@ -219,20 +219,20 @@ class DragonBonesArmatureContainer extends egret.DisplayObjectContainer {
      * 移除上一个DragonArmature
      */
     public remove():void {
-        let oldArmature:DragonBonesArmature = this.armatures[this.curArmatureIndex];
+        let oldArmature:DragonBonesArmature = this._armatures[this._curArmatureIndex];
         if (oldArmature) {
             oldArmature.stop();
             oldArmature.parent.removeChild(oldArmature);
-            this.curArmatureIndex = null;
+            this._curArmatureIndex = null;
         }
     }
 
-    public set CurArmatureIndex(value:number) {
-        this.curArmatureIndex = value
+    public set curArmatureIndex(value:number) {
+        this._curArmatureIndex = value
     }
 
-    private armatures:Array<DragonBonesArmature>;
-    private actions:any;
-    private curArmatureIndex:number;
-    private bones:any;
+    private _armatures:Array<DragonBonesArmature>;
+    private _actions:any;
+    private _curArmatureIndex:number;
+    private _bones:any;
 }

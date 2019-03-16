@@ -1,13 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var RechargeUI = (function (_super) {
     __extends(RechargeUI, _super);
     function RechargeUI() {
@@ -21,6 +24,9 @@ var RechargeUI = (function (_super) {
     };
     // 初始化面板数据
     RechargeUI.prototype.initData = function () {
+        this.m_labCount.text = GameConfig.candy.toString();
+        this.m_labCount.x = 720 - this.m_labCount.width;
+        this.m_imgCandy.x = this.m_labCount.x - this.m_imgCandy.width - 10;
     };
     // 进入面板
     RechargeUI.prototype.onEnter = function () {
@@ -38,16 +44,17 @@ var RechargeUI = (function (_super) {
         this.touchEnabled = false;
         this.hide.play(0);
     };
-    RechargeUI.prototype._OnShow = function () {
+    RechargeUI.prototype._onShow = function () {
         this.touchChildren = true;
     };
-    RechargeUI.prototype._OnHide = function () {
+    RechargeUI.prototype._onHide = function () {
         Common.dispatchEvent(MainNotify.closeRechargePanel);
     };
     RechargeUI.prototype._onComplete = function () {
         this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this);
-        this.show.addEventListener('complete', this._OnShow, this);
-        this.hide.addEventListener('complete', this._OnHide, this);
+        this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this);
+        this.show.addEventListener('complete', this._onShow, this);
+        this.hide.addEventListener('complete', this._onHide, this);
     };
     return RechargeUI;
 }(BasePanel));

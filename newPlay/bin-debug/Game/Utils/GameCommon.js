@@ -15,22 +15,48 @@ var Common;
         target.addEventListener(egret.TouchEvent.TOUCH_BEGIN, onTouchBegin, Common);
     }
     Common.addTouchBegin = addTouchBegin;
+    function isTowDataSame(date) {
+        var isSame = false;
+        var curDate = new Date();
+        var lastDate = new Date(date);
+        if (curDate != null && lastDate != null) {
+            var curYear = curDate.getFullYear();
+            var lastYear = lastDate.getFullYear();
+            var curMonth = curDate.getMonth();
+            var lastMonth = lastDate.getMonth();
+            var curDay = curDate.getDate();
+            var lastDay = lastDate.getDate();
+            if (curYear == lastYear && curMonth == lastMonth && curDay == lastDay)
+                isSame = true;
+            var loginTime = getCurDateString(curDate);
+            Common.updatelastLoginTime(loginTime);
+        }
+        return isSame;
+    }
+    Common.isTowDataSame = isTowDataSame;
+    function getCurDateString(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return year + "/" + month + "/" + day;
+    }
+    Common.getCurDateString = getCurDateString;
     /**获取账号 */
-    function GetAccount() {
+    function getAccount() {
         egret.ExternalInterface.addCallback("sendToEgret", function (message) {
             GameConfig.account = message;
         });
         egret.ExternalInterface.call("read", GameConfig.game + "account");
     }
-    Common.GetAccount = GetAccount;
+    Common.getAccount = getAccount;
     /**更新账号到本机 */
-    function UpdateAccount(value) {
+    function updateAccount(value) {
         GameConfig.account = value;
         egret.ExternalInterface.call("write", GameConfig.game + "account:" + value);
     }
-    Common.UpdateAccount = UpdateAccount;
+    Common.updateAccount = updateAccount;
     /**获取历史最高分数 */
-    function GetMaxScore() {
+    function getMaxScore() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -52,11 +78,11 @@ var Common;
             }
         }
     }
-    Common.GetMaxScore = GetMaxScore;
+    Common.getMaxScore = getMaxScore;
     /**更新历史最高分
      * @param value 当前分数
      */
-    function UpdateMaxScore(value) {
+    function updateMaxScore(value) {
         if (value > GameConfig.maxScore) {
             GameConfig.maxScore = value;
             if (!GameConfig.isWebView) {
@@ -67,8 +93,8 @@ var Common;
             }
         }
     }
-    Common.UpdateMaxScore = UpdateMaxScore;
-    function GetGuide() {
+    Common.updateMaxScore = updateMaxScore;
+    function getGuide() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -90,8 +116,8 @@ var Common;
             }
         }
     }
-    Common.GetGuide = GetGuide;
-    function UpdateGuide(value) {
+    Common.getGuide = getGuide;
+    function updateGuide(value) {
         GameConfig.guideIndex = value;
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.call("write", GameConfig.game + "guideIndex:" + value);
@@ -100,9 +126,9 @@ var Common;
             NativeApi.setLocalData(GameConfig.game + "guideIndex", value.toString());
         }
     }
-    Common.UpdateGuide = UpdateGuide;
+    Common.updateGuide = updateGuide;
     /**获取历史最高分数 */
-    function GetMaxCombo() {
+    function getMaxCombo() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -124,11 +150,11 @@ var Common;
             }
         }
     }
-    Common.GetMaxCombo = GetMaxCombo;
+    Common.getMaxCombo = getMaxCombo;
     /**更新历史最高分
      * @param value 当前分数
      */
-    function UpdateMaxCombo(value) {
+    function updateMaxCombo(value) {
         if (value > GameConfig.maxCombo) {
             GameConfig.maxCombo = value;
             if (!GameConfig.isWebView) {
@@ -139,134 +165,9 @@ var Common;
             }
         }
     }
-    Common.UpdateMaxCombo = UpdateMaxCombo;
-    /**获取当前使用道具 */
-    function GetItem() {
-        if (!GameConfig.isWebView) {
-            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-                if (message != null && message.length > 0) {
-                    GameConfig.itemUse = parseInt(message);
-                }
-                else {
-                    GameConfig.itemUse = -1;
-                }
-            });
-            egret.ExternalInterface.call("read", GameConfig.game + "itemUse");
-        }
-        else {
-            var itemUse = NativeApi.getLocalData(GameConfig.game + "itemUse");
-            if (itemUse == null) {
-                GameConfig.itemUse = -1;
-            }
-            else {
-                // GameConfig.maxScore = parseInt(score)
-                GameConfig.itemUse = parseInt(itemUse);
-            }
-        }
-    }
-    Common.GetItem = GetItem;
-    /**更新当前使用道具 */
-    function UpdateItem(value) {
-        if (!GameConfig.isWebView) {
-            egret.ExternalInterface.call("write", GameConfig.game + "itemUse:" + value);
-        }
-        else {
-            NativeApi.setLocalData(GameConfig.game + "itemUse", value.toString());
-        }
-    }
-    Common.UpdateItem = UpdateItem;
-    /**
-     * 获取使用道具表
-     */
-    function GetUseItem() {
-        if (!GameConfig.isWebView) {
-            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-                if (message != null && message.length > 0) {
-                    GameConfig.itemUseTable = JSON.parse(message);
-                    // GameConfig.maxScore = parseInt(message)
-                }
-                else {
-                    GameConfig.itemUseTable = new Array();
-                    GameConfig.itemUseTable.push(1003);
-                    Common.UpdateUseItem();
-                }
-            });
-            egret.ExternalInterface.call("read", GameConfig.game + "itemUseTable");
-        }
-        else {
-            var itemUseTable = NativeApi.getLocalData(GameConfig.game + "itemUseTable");
-            if (itemUseTable == null) {
-                GameConfig.itemUseTable = new Array();
-                GameConfig.itemUseTable.push(1003);
-                Common.UpdateUseItem();
-            }
-            else {
-                // GameConfig.maxScore = parseInt(score)
-                GameConfig.itemUseTable = JSON.parse(itemUseTable);
-            }
-        }
-    }
-    Common.GetUseItem = GetUseItem;
-    /**更新道具列表 */
-    function UpdateUseItem() {
-        if (GameConfig.itemUseTable.length > 0) {
-            var str = JSON.stringify(GameConfig.itemUseTable);
-            if (!GameConfig.isWebView) {
-                egret.ExternalInterface.call("write", GameConfig.game + "itemUseTable:" + str);
-            }
-            else {
-                NativeApi.setLocalData(GameConfig.game + "itemUseTable", str);
-            }
-        }
-    }
-    Common.UpdateUseItem = UpdateUseItem;
-    /**
-     * 获取解锁道具表
-     */
-    function GetUnlockItem() {
-        if (!GameConfig.isWebView) {
-            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
-                if (message != null && message.length > 0) {
-                    GameConfig.itemUnlockList = JSON.parse(message);
-                    // GameConfig.maxScore = parseInt(message)
-                }
-                else {
-                    GameConfig.itemUnlockList = new Array();
-                    GameConfig.itemUnlockList.push(1003);
-                    Common.UpdateUnlockItem();
-                }
-            });
-            egret.ExternalInterface.call("read", GameConfig.game + "itemUnlockList");
-        }
-        else {
-            var itemUnlockList = NativeApi.getLocalData(GameConfig.game + "itemUnlockList");
-            if (itemUnlockList == null) {
-                GameConfig.itemUnlockList = new Array();
-                GameConfig.itemUnlockList.push(1003);
-                Common.UpdateUnlockItem();
-            }
-            else {
-                // GameConfig.maxScore = parseInt(score)
-                GameConfig.itemUnlockList = JSON.parse(itemUnlockList);
-            }
-        }
-    }
-    Common.GetUnlockItem = GetUnlockItem;
-    /**更新解锁道具列表 */
-    function UpdateUnlockItem() {
-        if (GameConfig.itemUnlockList.length > 0) {
-            var str = JSON.stringify(GameConfig.itemUnlockList);
-            if (!GameConfig.isWebView) {
-                egret.ExternalInterface.call("write", GameConfig.game + "itemUnlockList:" + str);
-            }
-            else {
-                NativeApi.setLocalData(GameConfig.game + "itemUnlockList", str);
-            }
-        }
-    }
-    Common.UpdateUnlockItem = UpdateUnlockItem;
+    Common.updateMaxCombo = updateMaxCombo;
     /**更新分数 */
-    function UpdateCurrentScore(value) {
+    function updateCurrentScore(value) {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.call("gameScore", value.toString());
         }
@@ -274,9 +175,9 @@ var Common;
             // NativeApi.setLocalData(GameConfig.game+"itemUseTable", str)
         }
     }
-    Common.UpdateCurrentScore = UpdateCurrentScore;
+    Common.updateCurrentScore = updateCurrentScore;
     /**获取解锁宝宝表 */
-    function GetUnlockBaby() {
+    function getUnlockBaby() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -285,7 +186,7 @@ var Common;
                 else {
                     GameConfig.babyUnlockList = new Array();
                     GameConfig.babyUnlockList.push(10010);
-                    Common.UpdateUnlockBaby();
+                    Common.updateUnlockBaby();
                 }
             });
             egret.ExternalInterface.call("read", GameConfig.game + "babyUnlockList");
@@ -295,16 +196,16 @@ var Common;
             if (babyUnlockList == null) {
                 GameConfig.babyUnlockList = new Array();
                 GameConfig.babyUnlockList.push(10010);
-                Common.UpdateUnlockBaby();
+                Common.updateUnlockBaby();
             }
             else {
                 GameConfig.babyUnlockList = JSON.parse(babyUnlockList);
             }
         }
     }
-    Common.GetUnlockBaby = GetUnlockBaby;
+    Common.getUnlockBaby = getUnlockBaby;
     /**更新解锁表 */
-    function UpdateUnlockBaby() {
+    function updateUnlockBaby() {
         if (GameConfig.babyUnlockList.length > 0) {
             var str = JSON.stringify(GameConfig.babyUnlockList);
             if (!GameConfig.isWebView) {
@@ -315,9 +216,9 @@ var Common;
             }
         }
     }
-    Common.UpdateUnlockBaby = UpdateUnlockBaby;
+    Common.updateUnlockBaby = updateUnlockBaby;
     /**获取当前的宝宝 */
-    function GetCurBaby() {
+    function getCurBaby() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -339,9 +240,9 @@ var Common;
             }
         }
     }
-    Common.GetCurBaby = GetCurBaby;
+    Common.getCurBaby = getCurBaby;
     /**更新当前的宝宝 */
-    function UpdateCurBaby(value) {
+    function updateCurBaby(value) {
         GameConfig.curBaby = value;
         GameConfig.curBabyData = GameConfig.actorTable[value.toString()];
         if (!GameConfig.isWebView) {
@@ -351,9 +252,9 @@ var Common;
             NativeApi.setLocalData(GameConfig.game + "curBaby", value.toString());
         }
     }
-    Common.UpdateCurBaby = UpdateCurBaby;
+    Common.updateCurBaby = updateCurBaby;
     /**获取当前的挑战章节进度 */
-    function GetCurChpter() {
+    function getCurChpter() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -375,9 +276,9 @@ var Common;
             }
         }
     }
-    Common.GetCurChpter = GetCurChpter;
+    Common.getCurChpter = getCurChpter;
     /**更新当前的挑战章节进度 */
-    function UpdateCurChpter(value) {
+    function updateCurChpter(value) {
         GameConfig.curChpter = value;
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.call("write", GameConfig.game + "curChpter:" + value);
@@ -386,9 +287,9 @@ var Common;
             NativeApi.setLocalData(GameConfig.game + "curChpter", value.toString());
         }
     }
-    Common.UpdateCurChpter = UpdateCurChpter;
+    Common.updateCurChpter = updateCurChpter;
     /**获取当前的挑战关卡进度 */
-    function GetCurLevel() {
+    function getCurLevel() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
@@ -410,9 +311,9 @@ var Common;
             }
         }
     }
-    Common.GetCurLevel = GetCurLevel;
+    Common.getCurLevel = getCurLevel;
     /**更新当前的挑战关卡进度 */
-    function UpdateCurLevel(value) {
+    function updateCurLevel(value) {
         GameConfig.curLevel = value;
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.call("write", GameConfig.game + "curLevel:" + value);
@@ -421,6 +322,184 @@ var Common;
             NativeApi.setLocalData(GameConfig.game + "curLevel", value.toString());
         }
     }
-    Common.UpdateCurLevel = UpdateCurLevel;
+    Common.updateCurLevel = updateCurLevel;
+    /**获取当前的糖果 */
+    function getCurCandy() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.candy = parseInt(message);
+                }
+                else {
+                    GameConfig.candy = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "candy");
+        }
+        else {
+            var candy = NativeApi.getLocalData(GameConfig.game + "candy");
+            if (candy == null) {
+                GameConfig.candy = 0;
+            }
+            else {
+                GameConfig.candy = parseInt(candy);
+            }
+        }
+    }
+    Common.getCurCandy = getCurCandy;
+    /**更新当前的糖果 */
+    function updateCurCandy(value) {
+        GameConfig.candy += value;
+        GameConfig.candy = Math.max(0, GameConfig.candy);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "candy:" + GameConfig.candy);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "candy", GameConfig.candy.toString());
+        }
+    }
+    Common.updateCurCandy = updateCurCandy;
+    /**获取上次的登录时间 */
+    function getlastLoginTime() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.lastLoginTime = message;
+                }
+                else {
+                    var date = new Date();
+                    GameConfig.lastLoginTime = getCurDateString(date);
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "lastLoginTime");
+        }
+        else {
+            var lastLoginTime = NativeApi.getLocalData(GameConfig.game + "lastLoginTime");
+            if (lastLoginTime == null) {
+                var date = new Date();
+                GameConfig.lastLoginTime = getCurDateString(date);
+            }
+            else {
+                GameConfig.lastLoginTime = lastLoginTime;
+            }
+        }
+    }
+    Common.getlastLoginTime = getlastLoginTime;
+    /**更新上次登录时间 */
+    function updatelastLoginTime(value) {
+        GameConfig.lastLoginTime = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "lastLoginTime:" + value);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "lastLoginTime", value);
+        }
+    }
+    Common.updatelastLoginTime = updatelastLoginTime;
+    /**获取签到标识 */
+    function getSign() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.sign = parseInt(message);
+                }
+                else {
+                    GameConfig.sign = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "sign");
+        }
+        else {
+            var sign = NativeApi.getLocalData(GameConfig.game + "sign");
+            if (sign == null) {
+                GameConfig.sign = 0;
+            }
+            else {
+                GameConfig.sign = parseInt(sign);
+            }
+        }
+    }
+    Common.getSign = getSign;
+    /**更新当前签到标识 */
+    function updateSign(value) {
+        GameConfig.sign = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "sign:" + GameConfig.sign);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "sign", GameConfig.sign.toString());
+        }
+    }
+    Common.updateSign = updateSign;
+    /**获取签到标识 */
+    function getBabylistIndex() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.babylistIndex = parseInt(message);
+                }
+                else {
+                    GameConfig.babylistIndex = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "babylistIndex");
+        }
+        else {
+            var babylistIndex = NativeApi.getLocalData(GameConfig.game + "babylistIndex");
+            if (babylistIndex == null) {
+                GameConfig.babylistIndex = 0;
+            }
+            else {
+                GameConfig.babylistIndex = parseInt(babylistIndex);
+            }
+        }
+    }
+    Common.getBabylistIndex = getBabylistIndex;
+    /**更新当前签到标识 */
+    function updateBabylistIndex(value) {
+        GameConfig.babylistIndex = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "babylistIndex:" + GameConfig.babylistIndex);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "babylistIndex", GameConfig.babylistIndex.toString());
+        }
+    }
+    Common.updateBabylistIndex = updateBabylistIndex;
+    /**获取签到天数 */
+    function getSignCount() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.signCount = parseInt(message);
+                }
+                else {
+                    GameConfig.signCount = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "signCount");
+        }
+        else {
+            var signCount = NativeApi.getLocalData(GameConfig.game + "signCount");
+            if (signCount == null) {
+                GameConfig.signCount = 0;
+            }
+            else {
+                GameConfig.signCount = parseInt(signCount);
+            }
+        }
+    }
+    Common.getSignCount = getSignCount;
+    /**更新当前签到天数 */
+    function updateSignCount(value) {
+        GameConfig.signCount = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "signCount:" + GameConfig.signCount);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "signCount", GameConfig.signCount.toString());
+        }
+    }
+    Common.updateSignCount = updateSignCount;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

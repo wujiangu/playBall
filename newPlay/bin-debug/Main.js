@@ -29,13 +29,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -45,7 +48,7 @@ var Main = (function (_super) {
         _this.isResourceLoadEnd = false;
         return _this;
     }
-    Main.prototype._OnResize = function (event) {
+    Main.prototype._onResize = function (event) {
         Config.stageWidth = this.stage.stageWidth;
         Config.stageHeight = this.stage.stageHeight;
         Config.stageHalfWidth = this.stage.stageWidth / 2;
@@ -60,15 +63,15 @@ var Main = (function (_super) {
         _super.prototype.createChildren.call(this);
         egret.lifecycle.addLifecycleListener(function (context) {
             context.onUpdate = function () {
-                GameManager.Instance.Update();
+                GameManager.Instance.update();
             };
         });
         egret.lifecycle.onPause = function () {
-            GameManager.Instance.StageToBack();
+            GameManager.Instance.stageToBack();
             egret.ticker.pause();
         };
         egret.lifecycle.onResume = function () {
-            GameManager.Instance.StageToFront();
+            GameManager.Instance.stageToFront();
             egret.ticker.resume();
         };
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT;
@@ -83,12 +86,12 @@ var Main = (function (_super) {
         //    egret.MainContext.instance.stage.scaleMode = egret.StageScaleMode.SHOW_ALL
         // }
         this.addChild(Common.gameScene());
-        this._OnResize(null);
+        this._onResize(null);
         // initialize the Resource loading library
         //初始化Resource资源加载库
         RES.loadConfig("resource/default.res.json", "resource/");
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
-        this.addEventListener(egret.Event.RESIZE, this._OnResize, this);
+        this.addEventListener(egret.Event.RESIZE, this._onResize, this);
     };
     /**
      * 配置文件加载完成,开始预加载皮肤主题资源和preload资源组。
@@ -127,17 +130,17 @@ var Main = (function (_super) {
             this.loadingView = new LoadingUI();
             this.stage.addChild(this.loadingView);
             RES.loadGroup("enter", 1);
-            this.m_rect = Common.createBitmap("black_png");
-            this.m_rect.width = Config.stageWidth;
-            this.m_rect.height = Config.stageHeight;
-            this.m_rect.visible = false;
-            this.stage.addChild(this.m_rect);
+            this._rect = Common.createBitmap("black_png");
+            this._rect.width = Config.stageWidth;
+            this._rect.height = Config.stageHeight;
+            this._rect.visible = false;
+            this.stage.addChild(this._rect);
         }
         else if (event.groupName == "enter") {
-            this.m_rect.visible = true;
-            Animations.fadeOut(this.m_rect);
+            this._rect.visible = true;
+            Animations.fadeOut(this._rect);
             Animations.fadeIn(this.loadingView, 500, function () {
-                _this.m_rect.visible = false;
+                _this._rect.visible = false;
                 _this.stage.removeChild(_this.loadingView);
                 RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, _this.onResourceLoadComplete, _this);
                 RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, _this.onResourceLoadError, _this);
@@ -153,13 +156,19 @@ var Main = (function (_super) {
             if (NativeApi.getLocalData("webView") == null) {
                 GameConfig.isWebView = false;
             }
-            Common.GetMaxScore();
-            Common.GetUseItem();
-            Common.GetUnlockItem();
-            Common.GetUnlockBaby();
-            Common.GetCurBaby();
-            Common.GetCurChpter();
-            Common.GetCurLevel();
+            Common.getMaxScore();
+            Common.getUnlockBaby();
+            Common.getCurBaby();
+            Common.getCurChpter();
+            Common.getCurLevel();
+            Common.getCurCandy();
+            Common.getlastLoginTime();
+            Common.getSign();
+            Common.getBabylistIndex();
+            if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
+                Common.updateSign(0);
+            }
+            Common.getSignCount();
             this.startCreateScene();
         }
     };
@@ -195,7 +204,7 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.startCreateScene = function () {
-        GameManager.Instance.Init();
+        GameManager.Instance.init();
         // this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
     };
     return Main;

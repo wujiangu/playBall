@@ -2,50 +2,50 @@ class Baby extends egret.DisplayObjectContainer{
 	public constructor() {
 		super()
 
-		this.m_actorArmatureContainer = new DragonBonesArmatureContainer()
-        this.m_actorArmatureContainer.scaleX = 0.5
-        this.m_actorArmatureContainer.scaleY = 0.5
-		this.addChild(this.m_actorArmatureContainer)
+		this._actorArmatureContainer = new DragonBonesArmatureContainer()
+        this._actorArmatureContainer.scaleX = 0.5
+        this._actorArmatureContainer.scaleY = 0.5
+		this.addChild(this._actorArmatureContainer)
 		
-		this.m_powerGroup = new egret.Sprite()
-		this.addChild(this.m_powerGroup)
+		this._powerGroup = new egret.Sprite()
+		this.addChild(this._powerGroup)
 
 		let bg = Common.createBitmap("gameProgressBg_png")
-		this.m_powerGroup.addChild(bg)
+		this._powerGroup.addChild(bg)
 
 		let img = Common.createBitmap("power_Pro_png")
-		this.m_powerGroup.addChild(img)
+		this._powerGroup.addChild(img)
 
-		this.m_progress = new egret.Shape()
-		img.mask = this.m_progress
-		this.m_powerGroup.addChild(this.m_progress)
+		this._progress = new egret.Shape()
+		img.mask = this._progress
+		this._powerGroup.addChild(this._progress)
 
-		this.m_powerGroup.scaleX = 0.5
-		this.m_powerGroup.scaleY = 0.5
+		this._powerGroup.scaleX = 0.5
+		this._powerGroup.scaleY = 0.5
 
-		this.m_influenceActors = new Array()
-		this.m_influenceBalls = new Array()
-		this.m_actorsIndex = new Array()
+		this._influenceActors = new Array()
+		this._influenceBalls = new Array()
+		this._actorsIndex = new Array()
 	}
 
 	public skillData:any
 
 	public initData() {
-        this.m_actorArmatureContainer.clear()
+        this._actorArmatureContainer.clear()
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(GameConfig.curBabyData.action, GameConfig.curBabyData.action)
-		if (this.m_actorArmature == null) {
-			this.m_actorArmature = new DragonBonesArmature(armatureDisplay)
+		if (this._actorArmature == null) {
+			this._actorArmature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_actorArmature.ArmatureDisplay = armatureDisplay
-		this.m_actorArmatureContainer.register(this.m_actorArmature,["fangdazhao", "idle", "zoulu"])
+		this._actorArmature.ArmatureDisplay = armatureDisplay
+		this._actorArmatureContainer.register(this._actorArmature, ["fangdazhao", "idle", "zoulu"])
 		this.gotoIdle()
-        this.m_actorSpeed = 0.5
-        this.m_actorArmatureContainer.scaleX = 0.5
+        this._actorSpeed = 0.5
+        this._actorArmatureContainer.scaleX = 0.5 * GameConfig.curBabyData.direction
         this.x = Config.stageHalfWidth
-		this.m_actorArmatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this)
-		this.m_powerGroup.x = -this.width / 2
-		this.m_powerGroup.y = -3.5 * this.height
-		// this.m_powerGroup.visible = true
+		this._actorArmatureContainer.addCompleteCallFunc(this._onArmatureComplete, this)
+		this._powerGroup.x = -this.width / 2
+		this._powerGroup.y = -1 * this.height
+		this._powerGroup.visible = false
 
 		let skillId:number = GameConfig.curBabyData.skillId
 		if (skillId != null && skillId > 0) {
@@ -58,37 +58,39 @@ class Baby extends egret.DisplayObjectContainer{
 	}
 
 	public gotoIdle() {
-		this.m_state = EBabyState.Idle
-		this.m_actorArmatureContainer.play("idle", 0)
+		this._state = EBabyState.Idle
+		this._actorArmatureContainer.play("idle", 0)
 	}
 
 	public gotoRun() {
-		this.m_state = EBabyState.Run
-		this.m_actorArmatureContainer.play("zoulu", 0)
+		this._state = EBabyState.Run
+		this._actorArmatureContainer.play("zoulu", 0)
 	}
 
 	public gotoAttack() {
-		this.m_state = EBabyState.Attack
-		this.m_actorArmatureContainer.play("fangdazhao", 1)
-		
+		this._state = EBabyState.Attack
+		this._actorArmatureContainer.play("fangdazhao", 1)
+		let voice:egret.Sound = RES.getRes(this.skillData.music)
+		let channel = voice.play(0, 1)
+		channel.volume = GameConfig.soundValue / 100
 	}
 
 	public gotoTired() {
-		this.m_state = EBabyState.Tired
-		this.m_actorArmatureContainer.play("idle", 0)
-		this.m_tiredTime = 0
+		this._state = EBabyState.Tired
+		this._actorArmatureContainer.play("idle", 0)
+		this._tiredTime = 0
 	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	public ReleaseSkill(a_power:number, a_method:ESkillReleaseType, a_monster:BaseActor = null) {
-		if (a_power >= 360 && this.skillData.method == a_method) {
+	public releaseSkill(a_power:number, a_method:ESkillReleaseType, a_monster:BaseActor = null) {
+		if (a_power >= 100 && this.skillData.method == a_method) {
 			switch (this.skillData.method) {
 				case ESkillReleaseType.Immediately:
-					this.ReleaseImmediately()
+					this.releaseImmediately()
 				break
 				case ESkillReleaseType.Range:
-					this.ReleaseRange(a_monster)
+					this.releaseRange(a_monster)
 				break
 				default:
 				break
@@ -96,98 +98,113 @@ class Baby extends egret.DisplayObjectContainer{
 		}
 	}
 
-	public ReleaseRange(a_monster:BaseActor) {
+	public releaseRange(a_monster:BaseActor) {
 		let range = this.skillData.range * Config.stageHeight
-		if (this.skillData.range > 0 && a_monster.State == EMonsterState.Ready && a_monster.y >= range) {
-			PanelManager.m_gameScenePanel.ReleaseSkill()
+		if (this.skillData.range > 0 && a_monster.state == EMonsterState.Ready && a_monster.y >= range && this.canRelease()) {
+			PanelManager.gameScenePanel.releaseSkill()
 			if (this.skillData.sceneEffect && this.skillData.sceneEffect != "") {
 				// 全屏动画
 			}
-			// a_monster.PlayEffect()
+			// a_monster.playEffect()
+			// this.ReleaseResult()
 		}
 	}
 
-	public ReleaseImmediately() {
-		PanelManager.m_gameScenePanel.ReleaseSkill()
-		this.ReleaseResult()
+	public releaseImmediately() {
+		if (this.canRelease()) {
+			PanelManager.gameScenePanel.releaseSkill()
+		}
+		// this.ReleaseResult()
 	}
 
-	public ReleaseResult() {
-		let actors:Array<BaseActor> = PanelManager.m_gameScenePanel.GetAllActors()
-		this.m_influenceActors.length = 0
-		this.m_influenceBalls.length = 0
-		this.m_actorsIndex.length = 0
+	public canRelease() {
+		let isRelease:boolean = false
+		let actors:Array<BaseActor> = PanelManager.gameScenePanel.getAllActors()
+		this._influenceActors.length = 0
+		this._influenceBalls.length = 0
+		this._actorsIndex.length = 0
 		// 筛选
 		switch (this.skillData.rangeType) {
 			case ESkillRange.All:
-				this.SelectRangeAll()
+				this.selectRangeAll()
+				isRelease = true
 			break
 			case ESkillRange.Random:
-				this.SelectRangeRandom(actors)
+				this.selectRangeRandom(actors)
 			break
 			case ESkillRange.FrontToBack:
-				this.SelectRangeFrontToBack(actors)
+				this.selectRangeFrontToBack(actors)
 			break
 			default:
 			break
 		}
-		// 影响的结果
-		for (let i = 0; i < this.m_influenceActors.length; i++) {
-			let actor:BaseActor = this.m_influenceActors[i]
-			actor.UpdateEffectArmature(this.skillData)
-			actor.PlayEffect(this.skillData)
-		}
 
-		for (let i = 0; i < this.m_influenceBalls.length; i++) {
-			let ball:Balloon = this.m_influenceBalls[i]
-			ball.UpdateEffectArmature(this.skillData)
-			ball.PlayEffect(this.skillData)
+		if (!isRelease && (this._influenceActors.length > 0 || this._influenceBalls.length > 0)) {
+			isRelease = true
 		}
-
+		return isRelease
 	}
 
-	public SelectRangeAll() {
+	public releaseResult() {
+		
+		// 影响的结果
+		for (let i = 0; i < this._influenceActors.length; i++) {
+			let actor:BaseActor = this._influenceActors[i]
+			actor.updateEffectArmature(this.skillData)
+			actor.playEffect(this.skillData)
+		}
+
+		for (let i = 0; i < this._influenceBalls.length; i++) {
+			let ball:Balloon = this._influenceBalls[i]
+			ball.updateEffectArmature(this.skillData)
+			ball.playEffect(this.skillData)
+		}
+	}
+
+	public selectRangeAll() {
 		switch (this.skillData.result) {
 			case ESkillResult.ContinuedKill:
 				// 全体范围内持续
+				PanelManager.gameScenePanel.setSkillDuration()
 			break
 			case ESkillResult.SlowSpeed:
 				// 全体减速
+				PanelManager.gameScenePanel.setSkillDuration()
 			break
 		}
 	}
 
-	public SelectRangeRandom(actors:Array<BaseActor>) {
+	public selectRangeRandom(actors:Array<BaseActor>) {
 		for (let i = 0; i < actors.length; i++) {
-			this.m_actorsIndex.push(i)
+			this._actorsIndex.push(i)
 		}
-		MathUtils.shuffle(this.m_actorsIndex)
+		MathUtils.shuffle(this._actorsIndex)
 		if (this.skillData.param && this.skillData.param.length > 0) {
 			let count = this.skillData.param[0]
 			if (this.skillData.param.lenght > 1) count = parseInt(this.skillData.param[0])
 			count = Math.min(count, actors.length)
 			if (this.skillData.skillHang == ESkillHand.Ballon) {
-				for (let i = 0; i < this.m_actorsIndex.length; i++) {
-					let random = this.m_actorsIndex[i]
+				for (let i = 0; i < this._actorsIndex.length; i++) {
+					let random = this._actorsIndex[i]
 					let actor:BaseActor = actors[random]
-					if (actor.Balloons.length > 0 && actor.State == EMonsterState.Ready) {
-						for (let j = 0; j < actor.Balloons.length; j++) {
-							if (this.m_influenceBalls.length >= count) break
-							this.m_influenceBalls.push(actor.Balloons[j])
+					if (actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 250) {
+						for (let j = 0; j < actor.balloons.length; j++) {
+							if (this._influenceBalls.length >= count) break
+							this._influenceBalls.push(actor.balloons[j])
 						}
 					}
 				}
 			}else{
 				for (let i = 0; i < count; i++) {
-					let random = this.m_actorsIndex[i]
+					let random = this._actorsIndex[i]
 					let actor:BaseActor = actors[random]
-					if (actor.State == EMonsterState.Ready && actor.y >= 100) this.m_influenceActors.push(actor)
+					if (actor.state == EMonsterState.Ready && actor.y >= 250) this._influenceActors.push(actor)
 				}
 			}
 		}
 	}
 
-	public SelectRangeFrontToBack(actors:Array<BaseActor>) {
+	public selectRangeFrontToBack(actors:Array<BaseActor>) {
 		// 对所有的敌人进行排序
 		actors.sort(function(a, b) {
 			return b.y - a.y
@@ -199,16 +216,16 @@ class Baby extends egret.DisplayObjectContainer{
 			let value = 0
 			for (let i = 0; i < actors.length; i++) {
 				let actor:BaseActor = actors[i]
-				if (actor.State == EMonsterState.Ready && actor.y >= 100) {
+				if (actor.state == EMonsterState.Ready && actor.y >= 250) {
 					if (this.skillData.skillHang == ESkillHand.Ballon) {
-						for (let j = 0; j < actor.Balloons.length; j++) {
+						for (let j = 0; j < actor.balloons.length; j++) {
 							if (value >= count) break
-							this.m_influenceBalls.push(actor.Balloons[j])
+							this._influenceBalls.push(actor.balloons[j])
 							value++
 						}
 					}else{
 						if (value >= count) break
-						this.m_influenceActors.push(actor)
+						this._influenceActors.push(actor)
 						value++
 					}
 				}
@@ -216,65 +233,66 @@ class Baby extends egret.DisplayObjectContainer{
 		}
 	}
 
-	public SkillResultKill() {
+	public skillResultKill() {
 
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	public update(timeElapsed:number) {
-		if (this.m_state == EBabyState.Run) {
-			this.x += this.m_actorSpeed
+		if (this._state == EBabyState.Run) {
+			this.x += this._actorSpeed
 			if (this.x >= 600) {
-				this.m_actorSpeed = -0.5
-				this.m_actorArmatureContainer.scaleX = -0.5
+				this._actorSpeed = -0.5
+				this._actorArmatureContainer.scaleX = -0.5 * GameConfig.curBabyData.direction
 				this.gotoTired()
 			}
 			if (this.x <= 130) {
-				this.m_actorSpeed = 0.5
-				this.m_actorArmatureContainer.scaleX = 0.5
+				this._actorSpeed = 0.5
+				this._actorArmatureContainer.scaleX = 0.5 * GameConfig.curBabyData.direction
 				this.gotoTired()
 			}
 		}
 
-		if (this.m_state == EBabyState.Tired) {
-			this.m_tiredTime += timeElapsed
-			if (this.m_tiredTime >= 2000) {
+		if (this._state == EBabyState.Tired) {
+			this._tiredTime += timeElapsed
+			if (this._tiredTime >= 2000) {
 				this.gotoRun()
-				this.m_tiredTime = 0
+				this._tiredTime = 0
 			}
 		}
 	}
 
+	// 弃用
 	public updateProgress(angle:number) {
-        let r = this.m_powerGroup.height
-        this.m_progress.graphics.clear();
-        this.m_progress.graphics.beginFill(0x00ffff);
-        this.m_progress.graphics.moveTo(r, r)
-        this.m_progress.graphics.lineTo(2 * r, r);
-        this.m_progress.graphics.drawArc(r, r, r, Math.PI, angle * Math.PI / 180, false);
-        this.m_progress.graphics.lineTo(r, r);
-        this.m_progress.graphics.endFill();
-        // this.m_progress.x = 0
-        this.m_progress.y = -5
+        let r = this._powerGroup.height
+        this._progress.graphics.clear();
+        this._progress.graphics.beginFill(0x00ffff);
+        this._progress.graphics.moveTo(r, r)
+        this._progress.graphics.lineTo(2 * r, r);
+        this._progress.graphics.drawArc(r, r, r, Math.PI, angle * Math.PI / 180, false);
+        this._progress.graphics.lineTo(r, r);
+        this._progress.graphics.endFill();
+        // this._progress.x = 0
+        this._progress.y = -5
 	}
 
-	private _OnArmatureComplete() {
-		if (this.m_state == EBabyState.Attack) {
+	private _onArmatureComplete() {
+		if (this._state == EBabyState.Attack) {
 			this.gotoRun()
 		}
 	}
 
-	private m_tiredTime:number = 0
+	private _tiredTime:number = 0
 
-	private m_actorArmatureContainer:DragonBonesArmatureContainer
-    private m_actorArmature:DragonBonesArmature
-    private m_actorSpeed:number
-	private m_state:EBabyState
-	private m_powerGroup:egret.Sprite
-	private m_progress:egret.Shape
+	private _actorArmatureContainer:DragonBonesArmatureContainer
+    private _actorArmature:DragonBonesArmature
+    private _actorSpeed:number
+	private _state:EBabyState
+	private _powerGroup:egret.Sprite
+	private _progress:egret.Shape
 
-	private m_influenceActors:Array<BaseActor>
-	private m_influenceBalls:Array<Balloon>
-	private m_actorsIndex:Array<number>
+	private _influenceActors:Array<BaseActor>
+	private _influenceBalls:Array<Balloon>
+	private _actorsIndex:Array<number>
 }

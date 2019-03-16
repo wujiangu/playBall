@@ -1,21 +1,22 @@
 class GameScenePanel extends BasePanel {
 	public constructor() {
 		super()
+        this._arrayProgress = new Array()
         this.addEventListener(eui.UIEvent.COMPLETE, this.onComplete, this)
         this.skinName = "resource/game_skins/gameScenePanel.exml"
         this.m_monsters = new Array()
-        this.m_bullets = new Array()
         this.m_luckyActors = new Array()
         this.m_summonActors = new Array()
         this.m_spiderActors = new Array()
-        this.m_data = new GameSceneData()
+        
+        this._data = new GameSceneData()
 	}
 
 	// 初始化面板
     public initPanel():void{
         this.m_gestureShape = new egret.Shape()
         this.m_gesture = new Gesture()
-		this.m_gesture.Init()
+		this.m_gesture.init()
         this.m_currentItemId = 0
         this._particleLayer = new egret.Sprite()
 		this.addChild(this._particleLayer)
@@ -28,8 +29,8 @@ class GameScenePanel extends BasePanel {
         // this._particleLayer.addChild(this._particle)
     }
 
-    public Init() {
-        this.ClearAllActor()
+    public init() {
+        this.clearAllActor()
         this.touchChildren = false
         this.readyAnimate.play(0)
         GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100
@@ -41,48 +42,73 @@ class GameScenePanel extends BasePanel {
         this.m_spiderWebArmatureContainer.visible = false
         this.m_imgBossWarning.visible = false
         this.itemUnlockGroup.visible = false
+        this._imgGuide.visible = false
+        this._imgGuideTip.visible = false
         this.m_normalCount = 0
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
         this.initData()
         if (GameVoice.battleBGMChannel != null) GameVoice.battleBGMChannel.stop()
-        GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
+        switch (GameConfig.gameMode) {
+            case EBattleMode.Level:
+                let chapterData = GameConfig.chapterTable[this._data.levelData.section.toString()]
+                let voice:egret.Sound = RES.getRes(chapterData.bgm)
+                GameVoice.battleBGMChannel = voice.play(0)
+                this.m_groupGrogress.visible = true
+                this._curLevel.visible = true
+            break
+            case EBattleMode.Endless:
+                GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
+                this.m_groupGrogress.visible = false
+                this._curLevel.visible = false
+            break
+            case EBattleMode.Timelimite:
+            break
+            default:
+            break
+        }
         GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100
     }
 
-    public ContinueLevel() {
-        let nextId:number = this.m_data.levelData.next
+    public continueLevel() {
+        let nextId:number = this._data.levelData.next
         let nextData = GameConfig.levelTable[nextId.toString()]
         if (nextId == null || nextId < 0 || nextData == null) {
-            this.ReturnSelectLevel()
+            this.returnSelectLevel()
             console.error("没有下一关卡数据")
             return
         }else{
-            if (nextData.section != this.m_data.levelData.section) {
-                this.ReturnSelectLevel()
-                this.UpdeLevelData(this.m_data.levelData.next, this.m_data.levelData.key)
+            if (nextData.section != this._data.levelData.section) {
+                this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                this.returnSelectLevel()
             }else{
                 this.touchChildren = true
                 this.m_baby.gotoRun()
-                this.UpdeLevelData(this.m_data.levelData.next, this.m_data.levelData.key)
+                this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
                 this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-                Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
-                GameManager.Instance.Start()
+                Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
+                this.score = 0
+                this.SetRealScore(0)
+                GameManager.Instance.start()
             }
         }
     }
 
-    public ReturnSelectLevel() {
-        GameManager.Instance.GameState = EGameState.Ready
+    public returnSelectLevel() {
+        GameManager.Instance.gameState = EGameState.Ready
+        GameConfig.isOpenNewChapter = false
+        if (PanelManager.gameSelectLevel.selectChater + 1 == GameConfig.curChpter) {
+            GameConfig.isOpenNewChapter = true
+        }
 		Common.dispatchEvent(MainNotify.closeGamePanel)
 		Common.dispatchEvent(MainNotify.openGameSelectLevel)
     }
 
-    public Exit() {
+    public exit() {
         this.m_imgEffectMask.visible = false
         this.touchChildren = false
         this.m_gesture.removeEvent()
-        Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        Common.removeEventListener(MainNotify.gestureAction, this._onGesture, this)
         this.m_baby.gotoIdle()
     }
 
@@ -91,48 +117,59 @@ class GameScenePanel extends BasePanel {
         GameConfig.gestureType = 0
         this.m_monsterAddDelay = 0
         this.m_luckyAddDelay = 0
-        this.m_angle = 180
-        this.Power = 89
-        this.m_slowDelay = -1
+        this.power = 0
+        this.m_skillDuration = -1
         this.m_comboDelay = -1
         this.m_comboCount = 0
         GameConfig.curCombo = 0
         this.m_isBoom = false
         this.m_baby.initData()
-        let level = this.m_data.level
-        this.Score = 0
-        this.UpdeLevelData(level, null)
+        this._data.addCandy = 0
+        this._data.extra = 0
+        let level = this._data.level
+        this.score = 0
+        this.SetRealScore(0)
+        this.updeLevelData(level, null)
     }
 
-    public UpdeLevelData(a_levelId:number, a_curId:number) {
+    public updeLevelData(a_levelId:number, a_curId:number) {
         this.m_monsterAddDelay = 0
         this.m_levelState = ELevelType.Normal
         this.m_isLuck = false
         this.m_rectWarning.fillColor = 0xff0000
+        this._data.levelData = GameConfig.levelTable[a_levelId.toString()]
         switch (GameConfig.gameMode) {
             case EBattleMode.Level:
-                this.m_data.levelData = GameConfig.levelTable[a_levelId.toString()]
-                let chapterId:number = this.m_data.levelData.section
+                let chapterId:number = this._data.levelData.section
                 let chapterData = GameConfig.chapterTable[chapterId.toString()]
-                // Common.log("UpdeLevelData", a_levelId, chapterId)
-                if (this.m_data.levelData.section >= GameConfig.curChpter) {
+                if (this._data.levelData.section >= GameConfig.curChpter) {
                     if (a_levelId > chapterData.begin) {
                         let lastLevel = a_curId
-                        if (a_curId == null) lastLevel = this.m_data.GetLastLevel(a_levelId)
+                        if (a_curId == null) lastLevel = this._data.getLastLevel(a_levelId)
                         let lastLevelData = GameConfig.levelTable[lastLevel.toString()]
-                        this.Score = lastLevelData.normalCount
+                        this._data.lastScore = lastLevelData.normalCount
+                        // this.score = lastLevelData.normalCount
                     }
-                    Common.UpdateCurLevel(a_levelId)
-                    Common.UpdateCurChpter(this.m_data.levelData.section)
+                    Common.updateCurLevel(a_levelId)
+                    Common.updateCurChpter(this._data.levelData.section)
                 }
-                GameManager.Instance.updateSceneBg(chapterData.bg)
+                if (a_levelId > chapterData.begin) {
+                    let lastLevel = a_curId
+                    if (a_curId == null) lastLevel = this._data.getLastLevel(a_levelId)
+                    let lastLevelData = GameConfig.levelTable[lastLevel.toString()]
+                    this._data.lastScore = lastLevelData.normalCount
+                }
+                this._curLevel.text = this._data.levelData.level.toString()
+                GameManager.Instance.updateSceneBg(chapterData.bg, chapterData.water)
+                GameManager.Instance.updateSceneCloud(chapterData.cloud1, chapterData.cloud2)
+                GameManager.Instance.updateSceneSun(chapterData.sun)
             break
             case EBattleMode.Endless:
-                GameManager.Instance.updateSceneBg("Bg1_png")
-                this.m_data.levelData = GameConfig.levelTable[a_levelId.toString()]
-                if (a_levelId == this.m_data.levelData.next) {
-                    this.m_data.needScore += this.m_normalCount * 200
-                    this.m_normalCount++
+                this.score = 0
+                // GameManager.Instance.updateSceneBg("Bg1_png")
+                if (a_levelId == this._data.levelData.next) {
+                    // this._data.needScore += this.m_normalCount * 200
+                    // this.m_normalCount++
                 }
             break
             case EBattleMode.Timelimite:
@@ -140,75 +177,110 @@ class GameScenePanel extends BasePanel {
             default:
             break
         }
-        GameConfig.gameSpeedPercent = this.m_data.levelData.speed
+        GameConfig.gameSpeedPercent = this._data.levelData.speed
 
         if (a_levelId == 1000) {
             GameConfig.isGuide = true
             this.m_rectWarning.fillColor = 0x000000
             this.m_isLuck = true
             this.m_gesture.removeEvent()
-            Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this)
+            Common.removeEventListener(MainNotify.gestureAction, this._onGesture, this)
         }
     }
 
-    public GuideStart() {
+    public guideStart() {
         this.m_rectWarning.visible = true
+        this.m_guideArmatureContainer.visible = true
+        this._imgGuideTip.visible = true
         if (GameConfig.guideIndex == 0) {
             this.m_guideArmatureContainer.play("xinshouyindao", 0)
-            for (let i = 0; i < this.m_monsters.length; i++) {
-                let monster:Monster = this.m_monsters[i]
-                for (let j = 0; j < monster.Balloons.length; j++) {
-                    let balloon:Balloon = monster.Balloons[j]
-                    balloon.GuideStart()
-                }
-            }
-            this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-            Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
-        }else{
-            
         }
+        else if (GameConfig.guideIndex == 1) {
+            this.m_guideArmatureContainer.play("xinshouyindao4", 0)
+        }
+        else{
+            this.m_guideArmatureContainer.play("xinshouyindao", 0)
+        }
+        for (let i = 0; i < this.m_monsters.length; i++) {
+            let monster:Monster = this.m_monsters[i]
+            for (let j = 0; j < monster.balloons.length; j++) {
+                let balloon:Balloon = monster.balloons[j]
+                balloon.guideStart()
+            }
+        }
+        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
+        Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
     }
 
-    public GuideEnd() {
+    public guideEnd() {
+        this._imgGuideTip.visible = false
         this.m_rectWarning.visible = false
-        // this.m_guideArmatureContainer.stop()
-        // this.m_guideArmatureContainer.visible = false
         GameConfig.isGuide = false
-        this.Power = 0
-        Common.UpdateGuide(2)
+        this.power = 0
+        Common.updateGuide(3)
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-        Common.addEventListener(MainNotify.gestureAction, this._OnGesture, this)
+        Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
     }
 
     // 进入面板
     public onEnter():void{
-        Common.curPanel = PanelManager.m_gameScenePanel
+        Common.curPanel = PanelManager.gameScenePanel
         Common.gameScene().uiLayer.addChild(this)
-        this.Init()
+        this.init()
     }
 
     // 退出面板
     public onExit():void{
-        this.ClearAllActor()
+        this.clearAllActor()
 		Common.gameScene().uiLayer.removeChild(this)
-        this.Exit()
+        this.exit()
         GameVoice.battleBGMChannel.stop()
     }
 
-    public Update(timeElapsed:number) {
+    public setSkillDuration() {
+        if (this.m_baby.skillData.time > 0) {
+            this.m_skillDuration = 0
+        }
+    }
+
+    public update(timeElapsed:number) {
         let actorElapsed = timeElapsed
-        if (this.m_slowDelay >= 0 && GameManager.Instance.GameState == EGameState.Start) {
-            this.m_slowDelay += timeElapsed
-            if (this.m_slowDelay >= this.m_baby.skillData.time) {
-                this.m_slowDelay = -1
+        if (this.m_skillDuration >= 0 && GameManager.Instance.gameState == EGameState.Start) {
+            this.m_skillDuration += timeElapsed
+            if (this.m_skillDuration >= this.m_baby.skillData.time) {
+                this.m_skillDuration = -1
             }
         }
 
-        if (GameManager.Instance.GameState == EGameState.Start) {
-            if (this.m_slowDelay >= 0) actorElapsed *= 0.2
+        if (GameManager.Instance.gameState == EGameState.Start) {
+            if (this.m_skillDuration >= 0) {
+                switch (this.m_baby.skillData.result) {
+                    case ESkillResult.ContinuedKill:
+                        let range = this.m_baby.skillData.range * Config.stageHeight
+                        // 全体范围内持续消除
+                        for (let i = 0; i < this.m_monsters.length; i++) {
+                            let monster:Monster = this.m_monsters[i]
+                            if (monster.state == EMonsterState.Ready && monster.y >= range) {
+                                monster.gotoDead()
+                            }
+                        }
+
+                        for (let i = 0; i < this.m_summonActors.length; i++) {
+                            let summon:SummonActor = this.m_summonActors[i]
+                            if (summon.state == EMonsterState.Ready && summon.y >= range) {
+                                summon.gotoDead()
+                            }
+                        }
+                    break
+                    case ESkillResult.SlowSpeed:
+                        // 全体减速
+                        actorElapsed *= 0.2
+                    break
+                }
+            }
 
             if (this.m_levelState == ELevelType.Normal) {
-                this.m_monsterAddDelay += timeElapsed
+                this.m_monsterAddDelay += actorElapsed
             }else{
                 this.m_monsterAddDelay = 0
             }
@@ -228,14 +300,14 @@ class GameScenePanel extends BasePanel {
                     
                     for (let i = 0; i < this.m_monsters.length; i++) {
                         let monster:Monster = this.m_monsters[i]
-                        if (monster.Type == EMonsterDifficult.Normal) {
-                            monster.ResetVertical()
+                        if (monster.type == EMonsterDifficult.Normal) {
+                            monster.resetVertical()
                         }
                     }
 
                     for (let i = 0; i < this.m_summonActors.length; i++) {
                         let summon:SummonActor = this.m_summonActors[i]
-                        summon.ResetVertical()
+                        summon.resetVertical()
                     }
                 }
             }
@@ -243,84 +315,98 @@ class GameScenePanel extends BasePanel {
 
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
-                if (monster.State == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this._Warning()
+                if (monster.state == EMonsterState.Ready && monster.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this._warning()
                 }
-                this.m_baby.ReleaseSkill(this.m_score, ESkillReleaseType.Range, monster)
+                this.m_baby.releaseSkill(this.m_power, ESkillReleaseType.Range, monster)
             }
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
-                if (summon.State == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
-                    this._Warning()
+                if (summon.state == EMonsterState.Ready && summon.y >= this.m_imgGroundWarning.y && !this.m_isWarning) {
+                    this._warning()
                 }
-                this.m_baby.ReleaseSkill(this.m_score, ESkillReleaseType.Range, summon)
+                this.m_baby.releaseSkill(this.m_power, ESkillReleaseType.Range, summon)
             }
 
             
 
-            if (this.m_score < this.m_data.needScore && this.m_monsterAddDelay >= this.m_data.levelData.addTime) {
+            if (this.m_score < this._data.needScore && this.m_monsterAddDelay >= this._data.levelData.addTime) {
                 this.m_monsterAddDelay = 0
-                this._CreateMonster()
+                this._createMonster()
                 if (GameConfig.isGuide) this.m_score++
             }
 
             if (this.m_luckyAddDelay >= GameConfig.luckyActorAddDelay && !GameConfig.isGuide) {
                 this.m_luckyAddDelay = 0
-                this._CreateLuckyActor()
+                this.createLuckyActor()
             }
         }
 
-        if (GameManager.Instance.GameState == EGameState.Start || GameManager.Instance.GameState == EGameState.End) {
+        if (GameManager.Instance.gameState == EGameState.Start || GameManager.Instance.gameState == EGameState.End) {
             for (let i = 0; i < this.m_monsters.length; i++) {
-                this.m_monsters[i].Update(actorElapsed)
+                this.m_monsters[i].update(actorElapsed)
             }
 
             for (let i = 0; i < this.m_spiderActors.length; i++) {
-                this.m_spiderActors[i].Update(actorElapsed)
+                this.m_spiderActors[i].update(actorElapsed)
             }
         }
 
-        if (GameManager.Instance.GameState == EGameState.Start) {
-            for (let i = 0; i < this.m_bullets.length; i++) {
-                this.m_bullets[i].Update(timeElapsed)
-            }
+        if (GameManager.Instance.gameState == EGameState.Start) {
 
             for (let i = 0; i < this.m_luckyActors.length; i++) {
-                this.m_luckyActors[i].Update(actorElapsed)
+                this.m_luckyActors[i].update(actorElapsed)
             }
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
-                this.m_summonActors[i].Update(actorElapsed)
+                this.m_summonActors[i].update(actorElapsed)
+                this._summonActorHit(this.m_summonActors[i])
             }
 
             this.m_baby.update(timeElapsed)
         }
     }
 
-    public RemoveMonster(a_monster:Monster) {
+    private _summonActorHit(summon:SummonActor) {
+        for (let j = 0; j < this.m_summonActors.length; j++) {
+            let summonActor:SummonActor = this.m_summonActors[j]
+            if (summonActor != summon) {
+                let distance:number = MathUtils.getDistance(summon.x, summon.y, summonActor.x, summonActor.y)
+                let offset:number = (summon.w + summonActor.w) / 2
+                if (distance <= offset) {
+                    if (summon.x < summonActor.x) {
+                        summon.x -= 1
+                    }else{
+                        summon.x += 1
+                    }
+                    if (summon.x >= Config.stageWidth - summon.w) summon.x = Config.stageWidth - summon.w
+
+                    if (summon.y < summonActor.y) {
+                        summon.y -= 1
+                    }
+                }
+            }
+        }
+    }
+
+    public removeMonster(a_monster:Monster) {
         for (let i = 0; i < this.m_monsters.length; i++) {
             if (this.m_monsters[i] == a_monster) {
                 this.m_groupGame.removeChild(this.m_monsters[i])
                 this.m_monsters.splice(i, 1)
-                // this._CreateMonster()
+                // this._createMonster()
                 break
             }
         }
-        this._ChangeLevel()
+        this._changeLevel()
     }
 
-    public RemoveBullet(a_bullet:Bullet) {
-        for (let i = 0; i < this.m_bullets.length; i++) {
-            if (this.m_bullets[i] == a_bullet) {
-                this.m_groupGameEffect.removeChild(this.m_bullets[i])
-                this.m_bullets.splice(i, 1)
-                break
-            }
-        }
+    public removeBullet(a_bullet:Bullet) {
+        
     }
 
-    public RemoveLuckyActor(a_lucky:LuckyActor) {
+    public removeLuckyActor(a_lucky:LuckyActor) {
         for (let i = 0; i < this.m_luckyActors.length; i++) {
             if (this.m_luckyActors[i] == a_lucky) {
                 this.m_groupGame.removeChild(this.m_luckyActors[i])
@@ -330,7 +416,7 @@ class GameScenePanel extends BasePanel {
         }
     }
 
-    public RemoveSummonActor(a_summon:SummonActor) {
+    public removeSummonActor(a_summon:SummonActor) {
         for (let i = 0; i < this.m_summonActors.length; i++) {
             if (this.m_summonActors[i] == a_summon) {
                 this.m_groupGame.removeChild(this.m_summonActors[i])
@@ -338,10 +424,10 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
-        this._ChangeLevel()
+        this._changeLevel()
     }
 
-    public RemoveSpiderActor(a_spider:SpiderActor) {
+    public removeSpiderActor(a_spider:SpiderActor) {
         for (let i = 0; i < this.m_spiderActors.length; i++) {
             if (this.m_spiderActors[i] == a_spider) {
                 this.m_groupGame.removeChild(this.m_spiderActors[i])
@@ -349,159 +435,221 @@ class GameScenePanel extends BasePanel {
                 break
             }
         }
-        this._ChangeLevel()
+        this._changeLevel()
     }
 
-    public ClearAllActor() {
+    public clearAllActor() {
         while(this.m_monsters.length > 0) {
 			let monster:Monster = this.m_monsters.pop()
-			monster.Destroy()
+			monster.destroy()
 			this.m_groupGame.removeChild(monster)
 		}
 
-        while(this.m_bullets.length > 0) {
-            let bullet:Bullet = this.m_bullets.pop()
-            bullet.Destroy()
-            this.m_groupGameEffect.removeChild(bullet)
-        }
-
         while(this.m_luckyActors.length > 0) {
             let lucky:LuckyActor = this.m_luckyActors.pop()
-            lucky.Destroy()
+            lucky.destroy()
             this.m_groupGame.removeChild(lucky)
         }
 
         while(this.m_summonActors.length > 0) {
             let summon:SummonActor  = this.m_summonActors.pop()
-            summon.Destroy()
+            summon.destroy()
             this.m_groupGame.removeChild(summon)
         }
 
         while(this.m_spiderActors.length > 0) {
             let spider:SpiderActor = this.m_spiderActors.pop()
-            spider.Destroy()
+            spider.destroy()
             this.m_groupGame.removeChild(spider)
         }
     }
 
-    public GetAllActors() {
-        this.m_data.allActors.length = 0
+    public getAllActors() {
+        this._data.allActors.length = 0
         for (let i = 0; i < this.m_monsters.length; i++) {
-            if (this.m_monsters[i].State == EMonsterState.Ready) {
-                this.m_data.allActors.push(this.m_monsters[i])
+            if (this.m_monsters[i].state == EMonsterState.Ready) {
+                this._data.allActors.push(this.m_monsters[i])
             }
         }
         for (let i = 0; i < this.m_summonActors.length; i++) {
-            if (this.m_summonActors[i].State == EMonsterState.Ready) {
-                this.m_data.allActors.push(this.m_summonActors[i])
+            if (this.m_summonActors[i].state == EMonsterState.Ready) {
+                this._data.allActors.push(this.m_summonActors[i])
             }
         }
-        return this.m_data.allActors
+        return this._data.allActors
     }
 
     /**是否没有生还的怪物或者召唤物 */
-    public IsNoneAlive() {
+    public isNoneAlive() {
         for (let i = 0; i < this.m_monsters.length; i++) {
-            if (this.m_monsters[i].State == EMonsterState.Ready) {
+            if (this.m_monsters[i].state == EMonsterState.Ready) {
                 return false
             }
         }
         for (let i = 0; i < this.m_summonActors.length; i++) {
-            if (this.m_summonActors[i].State == EMonsterState.Ready) {
+            if (this.m_summonActors[i].state == EMonsterState.Ready) {
                 return false
             }
         }
         return true
     }
 
-    public get Score() {
+    public SetRealScore(value:number) {
+        this._data.realScore = value
+        this.m_bitLabScore.text = this._data.realScore.toString()
+        
+    }
+
+    public get score() {
         return this.m_score
     }
 
-    public set Score(value:number) {
+    public set score(value:number) {
         this.m_score = value
-        this.m_bitLabScore.text = this.m_score.toString()
-        if (this.m_score >= this.m_data.needScore * 0.5 && !this.m_isLuck) {
-            //引导关没有
-            this.m_isLuck = true
-            GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1
-        }
+        
+        // 计算进度条的单位增量
+        // let step = 260 / (this._data.needScore - this._data.lastScore)
+        // this.m_imgProgress.width = (this.m_score - this._data.lastScore) * step
+        // this._setProgress()
+        // let score = Math.min(value, this._data.needScore - this._data.lastScore)
+        // if (this._data.needScore - this._data.lastScore <= 0) {
+        //     score = Math.min(value, this._data.needScore)
+        // }
+        // Common.log("分数:", value)
+        this._setProgress(value)
+
+        // if (this.m_score >= this._data.needScore * 0.5 && !this.m_isLuck) {
+        //     //引导关没有
+        //     this.m_isLuck = true
+        //     GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1
+        // }
     }
 
-    public get Power() {
+    private _setProgress(score:number) {
+        let width = this._imgProgressBg.width
+        // let everySlotValue = (this._data.needScore - this._data.lastScore) / 5
+        let everySlotValue = this._data.needScore / 5
+        if (this._data.needScore - this._data.lastScore <= 0) {
+            everySlotValue = this._data.needScore / 5
+        }
+        everySlotValue = Math.floor(everySlotValue)
+        let step = width / everySlotValue
+        let slotWidthPersent = score % everySlotValue
+        let slotCount = Math.floor(score / everySlotValue)
+        for (let i = 0; i < this._arrayProgress.length; i++) {
+            this._arrayProgress[i].visible = false
+            if (i < slotCount) {
+                this._arrayProgress[i].visible = true
+                this._arrayProgress[i].width = width
+            }
+            if (i == slotCount) {
+                this._arrayProgress[i].visible = true
+                this._arrayProgress[i].width = step * slotWidthPersent
+            }
+        }
+        this._imgBossIcon.source = "battleBg08_png"
+        if (this.m_score >= this._data.needScore) this._imgBossIcon.source = "battleBg07_png"
+    }
+
+    public updatePower(persent:number) {
+        let r = this._imgPower.height + 10
+        let height = 0.8 * r
+        persent = Math.min(1, persent)
+        this._progress.graphics.clear()
+        this._progress.graphics.beginFill(0x00ffff)
+        // this._progress.graphics.moveTo(this._imgPower.x, this._imgPower.y + r)
+        this._progress.graphics.drawRect(this._imgPower.x, this._imgPower.y + r, r, -persent * 110);
+        // this._progress.graphics.lineTo(this._imgPower.x, this._imgPower.y + r);
+        this._progress.graphics.endFill()
+        this._progress.y = -24
+    }
+
+    public get power() {
         return this.m_power
     }
 
-    public set Power(value:number) {
+    public set power(value:number) {
         if (this.m_baby == null) return
         this.m_power = value
-        this.m_angle = 180 + this.m_power * 2
-        this.m_angle = Math.min(this.m_angle, 360)
-        this.m_baby.updateProgress(this.m_angle)
-        this.m_baby.ReleaseSkill(this.m_angle, ESkillReleaseType.Immediately)
+        this.updatePower(this.m_power / 100)
+        this.m_baby.releaseSkill(this.m_power, ESkillReleaseType.Immediately)
+        
     }
 
-    public get GroundPos() {
+    public get groundPos() {
         return this.m_imgGroundLine.y
     }
 
-    public get GuidePos() {
+    public get guidePos() {
         return this.m_imgGuide.y
     }
 
-    public get WaterPos() {
+    public get waterPos() {
         return this.m_imgGroundWater.y
     }
 
-    public get WarningPos() {
+    public get warningPos() {
         return this.m_imgGroundWarning.y
     }
 
-    public get LevelStage() {
+    public get levelStage() {
         return this.m_levelState
     }
 
-    public ActorDeadHandle() {
-        if (this.m_levelState == ELevelType.Normal && this.m_score >= this.m_data.needScore && this.IsNoneAlive()) {
+    public actorDeadHandle() {
+        if (this.m_levelState == ELevelType.Normal && this.m_score >= this._data.needScore && this.isNoneAlive()) {
             this.m_levelState = ELevelType.EliteWarning
         }
-        // Common.log(this.m_levelState, this.m_score, this.m_currentLevel.normalCount, this.IsNoneAlive())
+        // Common.log(this.m_levelState, this.m_score, this.m_currentLevel.normalCount, this.isNoneAlive())
         if (this.m_levelState == ELevelType.EliteWarning) {
             if (GameConfig.isGuide) {
-                this.Score = 0
-                if (GameConfig.guideIndex == 0) {
-                    this.Power = 90
-                    GameConfig.guideIndex = 1
+                this.score = 0
+                this.SetRealScore(0)
+                this._imgGuide.visible = true
+                if (GameConfig.guideIndex <= 1) {
+                    // this.power = 90
+                    GameConfig.guideIndex++
+                    this._imgGuide.source = "imgGuide" + GameConfig.guideIndex+"_png"
+                    this.yindao.play(0)
                     this.m_rectWarning.visible = false
+                    // this.m_guideArmatureContainer.stop()
+                    this.m_guideArmatureContainer.visible = false
+                    this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                    // this.guideEnd()
+                    // this.updeLevelData(1000)
+                    this.m_rectWarning.fillColor = 0x000000
+                    this.m_gesture.removeEvent()
+                    Common.removeEventListener(MainNotify.gestureAction, this._onGesture, this)
+                }else{
                     this.m_guideArmatureContainer.stop()
                     this.m_guideArmatureContainer.visible = false
-                    this.UpdeLevelData(this.m_data.levelData.next, this.m_data.levelData.key)
-                    this.GuideEnd()
-                    // this.UpdeLevelData(1000)
-                    // this.m_gesture.removeEvent()
-                    // Common.removeEventListener(MainNotify.gestureAction, this._OnGesture, this)
-                }else{
-                    this.UpdeLevelData(this.m_data.levelData.next, this.m_data.levelData.key)
-                    this.GuideEnd()
+                    this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                    this._imgGuide.source = "imgGuide3_png"
+                    this.yindao.play(0)
+                    this.guideEnd()
                 }
             }else{
                 this.m_levelState = ELevelType.End
-                this._EnterWarning()
+                this._enterWarning()
             }
         }
     }
 
-    public get Boom() {
+    public get boom() {
         return this.m_isBoom
     }
 
-    public set Boom(value:boolean) {
+    public set boom(value:boolean) {
         this.m_isBoom = value
     }
 
     /**更新连击 */
-    public UpdateBatter() {
+    public updateBatter() {
+        let batterScore = 0
         if (this.m_isBoom) {
+            if (GameConfig.isGuide) {
+                GameVoice.gestureVoice.play(0, 1).volume = GameConfig.soundValue / 100
+            }
             this.m_comboDelay = 0
             this.m_comboCount += 1
             this.m_isBoom = false
@@ -542,46 +690,57 @@ class GameScenePanel extends BasePanel {
                 }
                 this.comboBegin.play(0)
 
-                if (this.m_comboCount <= 5) GameConfig.balloonScore += 2
-                else if (this.m_comboCount > 5 && this.m_comboCount <= 10) GameConfig.balloonScore += 3
-                else GameConfig.balloonScore += 4
+                // if (this.m_comboCount <= 5) batterScore = 2
+                // else if (this.m_comboCount > 5 && this.m_comboCount <= 10) batterScore = 3
+                // else batterScore = 4
+                batterScore = this.m_comboCount
+                GameConfig.balloonScore += batterScore
                 let addSpeed = Math.min(6, this.m_comboCount) * 0.02
                 for (let i = 0; i < this.m_monsters.length; i++) {
                     let monster:Monster = this.m_monsters[i]
-                    if (monster.Type == EMonsterDifficult.Normal) {
-                        monster.SetVertical(addSpeed)
+                    if (monster.type == EMonsterDifficult.Normal) {
+                        monster.setVertical(addSpeed)
                     }
                 }
 
                 for (let i = 0; i < this.m_summonActors.length; i++) {
                     let summon:SummonActor = this.m_summonActors[i]
-                    summon.SetVertical(addSpeed)
+                    summon.setVertical(addSpeed)
                 }
+
+                this._data.comboRewardCandy(this.m_comboCount)
             }
             if (this.m_comboCount <= 2) GameConfig.comboDelay = 1200
             else GameConfig.comboDelay = 1000
         }
-        if (this.m_levelState == ELevelType.Normal) this.Score += GameConfig.balloonScore
-        this.Score = Math.min(this.m_data.needScore, this.m_score)
-        this.ActorDeadHandle()
+        if (this.m_levelState == ELevelType.Normal) this.score += (GameConfig.balloonScore - batterScore)
+        this._data.realScore += GameConfig.balloonScore
+        this.SetRealScore(this._data.realScore)
+        this.actorDeadHandle()
     }
 
-    private _Warning() {
+    private _warning() {
         this.m_rectWarning.visible = true
         this.m_isWarning = true
         this.warning.play(0)
     }
 
+    private _beginSkill() {
+        GameManager.Instance.start()
+        this.m_baby.releaseResult()
+    }
+
     /**
      * 释放技能
      */
-    public ReleaseSkill() {
-        if (this.m_angle >= 360) {
-            // this.m_imgEffectMask.visible = true
-            // this.effectMask.play(0)
-            // this._UpdateItemArmature(true)
-            this.m_angle = 180
-            this.m_power = 0
+    public releaseSkill() {
+        if (this.m_power >= 100) {
+            this.m_imgEffectMask.visible = true
+            this.effectMask.play(0)
+            GameManager.Instance.pause(true)
+            let channel = GameVoice.skillBeginSound.play(0, 1)
+		    channel.volume = GameConfig.soundValue / 100
+            this.power = 0
             this.m_baby.gotoAttack()
         }
     }
@@ -589,16 +748,18 @@ class GameScenePanel extends BasePanel {
     /**
      * 进入下一关
      */
-    private _ChangeLevel() {
+    private _changeLevel() {
         if (this.m_monsters.length <= 0 
             && this.m_summonActors.length <= 0 
             && this.m_spiderActors.length <= 0
             && this.m_levelState == ELevelType.Elite) 
         {
             if (GameConfig.gameMode == EBattleMode.Level) {
-                GameManager.Instance.EndLevel()
+                this._data.updateCandy(this._data.levelData.candy + this._data.extra)
+                this._data.extra = 0
+                GameManager.Instance.endLevel()
             }else{
-                this.UpdeLevelData(this.m_data.levelData.next, this.m_data.levelData.key)
+                this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
             }
         }
     }
@@ -606,54 +767,64 @@ class GameScenePanel extends BasePanel {
     /**
      * 进入boss
      */
-    private _EnterWarning() {
+    private _enterWarning() {
         this.m_imgBossWarning.visible = true
         this.bossWarning.play(0)
         GameVoice.bossWarning.play(0, 1)
-        // egret.setTimeout(this._EnterBoss, this, 2000)
+        // egret.setTimeout(this._enterBoss, this, 2000)
     }
 
-    private _EnterBoss() {
+    private _enterBoss() {
         this.m_imgBossWarning.visible = false
         // 1.5s后BOSS创建
-        egret.setTimeout(this._BossArrive, this, 1500)
+        egret.setTimeout(this._bossArrive, this, 1500)
     }
 
-    private _BossArrive() {
+    private _bossArrive() {
         this.m_levelState = ELevelType.Elite
         let m_sumWeight = 0
-		for (let i = 0; i < this.m_data.levelData.elite.length; i++) {
-			m_sumWeight += this.m_data.levelData.elite[i].prob
-			this.m_data.levelData.elite[i].weight = m_sumWeight
+		for (let i = 0; i < this._data.levelData.elite.length; i++) {
+			m_sumWeight += this._data.levelData.elite[i].prob
+			this._data.levelData.elite[i].weight = m_sumWeight
 		}
 		let random = MathUtils.getRandom(1, m_sumWeight)
-		for (let i = 0; i < this.m_data.levelData.elite.length; i++) {
-			if (random <= this.m_data.levelData.elite[i].weight) {
-                this.m_bossData = this.m_data.levelData.elite[i]
+		for (let i = 0; i < this._data.levelData.elite.length; i++) {
+			if (random <= this._data.levelData.elite[i].weight) {
+                this.m_bossData = this._data.levelData.elite[i]
 				break
 			}
 		}
         if (this.m_bossData.id == 1006) {
-            this.PlaySpiderWebArmature("arrive1", 1)
+            this.playSpiderWebArmature("arrive1", 1)
         }
-        else this._CreateMonster()
+        else this._createMonster()
     }
 
-    public get Boss() {
+    public get boss() {
         return this.m_bossData
+    }
+
+    public get sceneData() {
+        return this._data
+    }
+
+    public get baby() {
+        return this.m_baby
     }
 
     private m_bossData:any
 
-    private _OnGesture() {
+    private _onGesture() {
         if (GameConfig.gestureType > 0) {
             GameConfig.balloonScore = 0
+            this._data.addPower = 0
             for (let i = 0; i < this.m_monsters.length; i++) {
                 let monster:Monster = this.m_monsters[i]
-                for (let j = 0; j < monster.Balloons.length; j++) {
-                    let balloon:Balloon = monster.Balloons[j]
+                for (let j = 0; j < monster.balloons.length; j++) {
+                    let balloon:Balloon = monster.balloons[j]
                     if (balloon.type == GameConfig.gestureType) {
-                        monster.BallExplosion(balloon)
+                        monster.ballExplosion(balloon)
+                        // this.boom = true
                     }
 				}
             }
@@ -661,85 +832,88 @@ class GameScenePanel extends BasePanel {
             for (let i = 0; i < this.m_luckyActors.length; i++) {
                 let lucky:LuckyActor = this.m_luckyActors[i]
                 if (lucky.ballon.type == GameConfig.gestureType) {
-                    lucky.UpdateGesture()
+                    lucky.updateGesture()
                 }
             }
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
-                if (summon.GestureType == GameConfig.gestureType) {
-                    summon.GotoDead()
+                if (summon.gestureType == GameConfig.gestureType) {
+                    summon.gotoDead()
+                    // this.boom = true
                 }
             }
 
             for (let i = 0 ; i < this.m_spiderActors.length; i++) {
                 let spider:SpiderActor = this.m_spiderActors[i]
-                for (let j = 0; j < spider.Balloons.length; j++) {
-                    let balloon:Balloon = spider.Balloons[j]
+                for (let j = 0; j < spider.balloons.length; j++) {
+                    let balloon:Balloon = spider.balloons[j]
                     if (balloon.type == GameConfig.gestureType) {
-                        spider.BallExplosion(balloon)
+                        spider.ballExplosion(balloon)
+                        // this.boom = true
                     }
 				}
             }
-            this.UpdateBatter()
+            this.power += this._data.addPower
+            this.updateBatter()
         }
     }
 
-    private _OnBtnPause() {
-        GameManager.Instance.Pause()
+    private _onBtnPause() {
+        GameManager.Instance.pause()
     }
 
-    private _OnReadyComplete() {
+    private _onReadyComplete() {
         this.touchChildren = true
         this.m_bitLabScore.visible = true
-        GameManager.Instance.Start()
+        GameManager.Instance.start()
         this.m_baby.gotoRun()
     }
 
-    private _OnWarningComplete() {
+    private _onWarningComplete() {
         this.m_isWarning = false
         this.m_rectWarning.visible = false
     }
 
-    private _OnComboBeginComplete() {
+    private _onComboBeginComplete() {
         this.comboMove.play(0)
     }
 
-    private _OnComboEndComplete() {
+    private _onComboEndComplete() {
         this.m_fntCombo.visible = false
         this.m_fntComboCount.visible = false
     }
 
-    private _OnComboMoveComplete() {
+    private _onComboMoveComplete() {
         this.comboMove.play(0)
     }
 
-    public PlaySpiderWebArmature(action:string, a_stage:number) {
+    public playSpiderWebArmature(action:string, a_stage:number) {
         this.m_spiderWebArmatureContainer.visible = true
         this.m_spiderWebArmatureContainer.play(action, 1)
         this.m_spiderStage = a_stage
     }
 
-    private _OnSpiderWebArmatureComplete() {
+    private _onSpiderWebArmatureComplete() {
         switch (this.m_spiderStage) {
             case 1:
-                this._CreateSpiderActor()
-                this.PlaySpiderWebArmature("arrive2", 2)
+                this._createSpiderActor()
+                this.playSpiderWebArmature("arrive2", 2)
             break
             case 2:
                 
             break
             case 5:
-                for (let i = 0; i < this.m_spiderActors.length; i++) this.m_spiderActors[i].GotoMove()
+                for (let i = 0; i < this.m_spiderActors.length; i++) this.m_spiderActors[i].gotoMove()
             break
         }
     }
 
-    private _OnSpiderWebArmatureFrame() {
+    private _onSpiderWebArmatureFrame() {
 
     }
 
-    private _ComboArmature() {
+    private _comboArmature() {
         this.m_comboArmatureContainer.visible = false
     }
 
@@ -751,7 +925,7 @@ class GameScenePanel extends BasePanel {
         comboArmature.ArmatureDisplay = armatureDisplay
         this.m_comboArmatureContainer.register(comboArmature, ["hong", "huang", "lan"])
         this.m_comboArmatureContainer.x = this.m_groupScore.width / 2
-        this.m_comboArmatureContainer.addCompleteCallFunc(this._ComboArmature, this)
+        this.m_comboArmatureContainer.addCompleteCallFunc(this._comboArmature, this)
         
         this.m_spiderWebArmatureContainer = new DragonBonesArmatureContainer()
         this.m_groupGame.addChild(this.m_spiderWebArmatureContainer)
@@ -761,8 +935,8 @@ class GameScenePanel extends BasePanel {
         this.m_spiderWebArmatureContainer.register(spiderArmature, ["arrive1","arrive2","attack","dead","idle"])
         this.m_spiderWebArmatureContainer.x = Config.stageHalfWidth
         this.m_spiderWebArmatureContainer.y = 420
-        this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._OnSpiderWebArmatureComplete, this)
-        this.m_spiderWebArmatureContainer.addFrameCallFunc(this._OnSpiderWebArmatureFrame, this)
+        this.m_spiderWebArmatureContainer.addCompleteCallFunc(this._onSpiderWebArmatureComplete, this)
+        this.m_spiderWebArmatureContainer.addFrameCallFunc(this._onSpiderWebArmatureFrame, this)
         this.m_spiderWebArmatureContainer.scaleX = 2.2
         this.m_spiderWebArmatureContainer.scaleY = 2.2
 
@@ -771,29 +945,41 @@ class GameScenePanel extends BasePanel {
         let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao")
         let guideArmature = new DragonBonesArmature(guideDisplay)
         guideArmature.ArmatureDisplay = guideDisplay
-        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao"])
+        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao", "xinshouyindao4"])
         this.m_guideArmatureContainer.x = 50
-        this.m_guideArmatureContainer.y = -500
+        this.m_guideArmatureContainer.y = -520
 
         this.m_baby = new Baby()
         this.m_groupGame.addChild(this.m_baby)
         this.m_baby.y = Config.stageHeight * 0.9
         
         this.addChild( this.m_gestureShape )
-        this.readyAnimate.addEventListener('complete', this._OnReadyComplete, this)
-        this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnPause, this)
-        this.warning.addEventListener('complete', this._OnWarningComplete, this)
+        this.readyAnimate.addEventListener('complete', this._onReadyComplete, this)
+        this.m_btnPause.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnPause, this)
+        this.warning.addEventListener('complete', this._onWarningComplete, this)
 
-        this.comboBegin.addEventListener('complete', this._OnComboBeginComplete, this)
-        this.comboEnd.addEventListener('complete', this._OnComboEndComplete, this)
-        this.comboMove.addEventListener('complete', this._OnComboMoveComplete, this)
-        this.bossWarning.addEventListener('complete', this._EnterBoss, this)
+        this.comboBegin.addEventListener('complete', this._onComboBeginComplete, this)
+        this.comboEnd.addEventListener('complete', this._onComboEndComplete, this)
+        this.comboMove.addEventListener('complete', this._onComboMoveComplete, this)
+        this.bossWarning.addEventListener('complete', this._enterBoss, this)
+        this.effectMask.addEventListener('complete', this._beginSkill, this)
         
         Common.addTouchBegin(this.m_btnPause)
-		this._OnResize()
+
+        this._progress = new egret.Shape()
+		this._imgPower.mask = this._progress
+		this._powerGroup.addChild(this._progress)
+
+        this._arrayProgress.push(this._imgProgress0)
+        this._arrayProgress.push(this._imgProgress1)
+        this._arrayProgress.push(this._imgProgress2)
+        this._arrayProgress.push(this._imgProgress3)
+        this._arrayProgress.push(this._imgProgress4)
+
+		this._onResize()
 	}
 
-    public SetParticle(a_visible:boolean, x:number, y:number) {
+    public setParticle(a_visible:boolean, x:number, y:number) {
 		// this._particle.visible = a_visible
 		// if (a_visible) {
 		// 	this._particle.start(1)
@@ -802,57 +988,50 @@ class GameScenePanel extends BasePanel {
 		// this._particle.emitterY = y
 	}
 
-    private _CreateMonster() {
+    private _createMonster() {
         let monster:Monster = GameObjectPool.getInstance().createObject(Monster, "Monster")
-        monster.Init(this.m_data.levelData, this.m_levelState)
-        monster.UpdateEffectArmature(this.m_baby.skillData)
+        monster.Init(this._data.levelData, this.m_levelState)
+        monster.updateEffectArmature(this.m_baby.skillData)
         this.m_monsters.push(monster)
         for (let i = this.m_monsters.length-1; i >= 0; i--) {
 			this.m_groupGame.addChild(this.m_monsters[i])
 		}
     }
 
-    private _CreateLuckyActor() {
+    public createLuckyActor(x:number = null, y:number = null) {
         let lucky:LuckyActor = GameObjectPool.getInstance().createObject(LuckyActor, "LuckyActor")
-        lucky.Init()
+        lucky.init(x, y)
         this.m_luckyActors.push(lucky)
         this.m_groupGame.addChild(lucky)
     }
 
-    private _CreateSpiderActor() {
+    private _createSpiderActor() {
         let spider:SpiderActor = GameObjectPool.getInstance().createObject(SpiderActor, "SpiderActor")
-        spider.Init(this.m_data.levelData)
+        spider.Init(this._data.levelData)
         this.m_spiderActors.push(spider)
         this.m_groupGame.addChild(spider)
     }
 
-    public CreateSummonActor(a_data:any, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
+    public createSummonActor(a_data:any, pos:EMonsterPos, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
         let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
-        
-        let posX = this.m_data.getSummonTargetX(EMonsterPos.Left, a_x, a_y, a_count, a_num, isBoss)
-
-        let flag = MathUtils.getRandom(1, 2)
-        let targetX = 0
-        if (flag == 1) targetX = a_x + MathUtils.getRandom(-250, -100)
-        else targetX = a_x + MathUtils.getRandom(100, 250)
-        let targetY = a_y + MathUtils.getRandom(-20, 20)
-
-        // summon.UpdateEffectArmature(effectData)
-
-        summon.Init(a_data, targetX, targetY, a_x, a_y, a_count, a_num, isBoss)
+        let summonData = GameConfig.summonTable[a_data.id.toString()]
+        let posX = this._data.getSummonTargetX(pos, a_x, a_count, a_num, summonData.Type, isBoss)
+        let posY = a_y + MathUtils.getRandom(-20, 20)
+        summon.init(a_data, posX, posY, a_x, a_y)
         this.m_summonActors.push(summon)
         for (let i = this.m_summonActors.length-1; i >= 0; i--) {
 			this.m_groupGame.addChild(this.m_summonActors[i])
 		}
     }
 
-    protected _OnResize(event:egret.Event = null)
+    protected _onResize(event:egret.Event = null)
     {
 		
     }
 
-    private m_data:GameSceneData
+    private _data:GameSceneData
     private _particleLayer:egret.Sprite
+    
     // private _particle:particle.GravityParticleSystem
     /**生成怪物时间 */ 
     private m_monsterAddDelay:number
@@ -863,7 +1042,6 @@ class GameScenePanel extends BasePanel {
     private m_isBoom:boolean
 
     private m_monsters:Array<Monster>
-    private m_bullets:Array<Bullet>
     private m_luckyActors:Array<LuckyActor>
     private m_summonActors:Array<SummonActor>
     private m_spiderActors:Array<SpiderActor>
@@ -871,7 +1049,7 @@ class GameScenePanel extends BasePanel {
 
     private m_score:number
     private m_power:number
-    private m_slowDelay:number
+    private m_skillDuration:number
     private m_currentItemId:number
 
     /**关卡配置数据 */
@@ -881,12 +1059,26 @@ class GameScenePanel extends BasePanel {
     private m_normalCount:number
     private m_isWarning:boolean
     private m_isLuck:boolean
+    private _imgGuide:eui.Image
     ///////////////////////////////////////////////////////////////////////////
-
+    private _powerGroup:eui.Group
+    private _progress:egret.Shape
+    private _imgPower:eui.Image
     private itemUnlockGroup:eui.Group
+    private m_groupGrogress:eui.Group
+    // private m_imgProgress:eui.Image
+    private _imgProgressBg:eui.Image
+    private _imgProgress0:eui.Image
+    private _imgProgress1:eui.Image
+    private _imgProgress2:eui.Image
+    private _imgProgress3:eui.Image
+    private _imgProgress4:eui.Image
+    private _imgBossIcon:eui.Image
+    private _arrayProgress:Array<eui.Image>
     private itemBg:eui.Image
     private itemIcon:eui.Image
     private itemUnlock:egret.tween.TweenGroup
+    private _curLevel:eui.Label
 
 	private m_bitLabScore:eui.BitmapLabel
     private m_imgEffectMask:eui.Image
@@ -896,6 +1088,7 @@ class GameScenePanel extends BasePanel {
     private m_imgGuide:eui.Image
     private m_rectWarning:eui.Rect
     private m_btnPause:eui.Button
+    private _imgGuideTip:eui.Image
 
     private m_fntCombo:eui.BitmapLabel
     private m_fntComboCount:eui.BitmapLabel
@@ -918,16 +1111,13 @@ class GameScenePanel extends BasePanel {
     private readyAnimate:egret.tween.TweenGroup
     private effectMask:egret.tween.TweenGroup
     private warning:egret.tween.TweenGroup
-
-	private m_angle:number
+    private yindao:egret.tween.TweenGroup
 
     private m_comboArmatureContainer:DragonBonesArmatureContainer
     private m_comboArmature:DragonBonesArmature
 
     private m_spiderWebArmatureContainer:DragonBonesArmatureContainer
     private m_spiderStage:number
-
     private m_guideArmatureContainer:DragonBonesArmatureContainer
-
     private m_baby:Baby
 }

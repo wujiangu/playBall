@@ -55,6 +55,9 @@ class ScrollView extends eui.Scroller {
         //滚动容器设置
         this.throwSpeed = 0;
         this.bounces = true;
+
+        this.horizontalScrollBar.visible = false
+		this.horizontalScrollBar.autoVisibility = false
         this.addEventListener(eui.UIEvent.CHANGE_START,this.onChangeStartHandler,this);
         this.addEventListener(eui.UIEvent.CHANGE_END,this.onChangeEndHandler,this);
     }

@@ -19,11 +19,9 @@ class GameOverPanel extends BasePanel {
     public onEnter():void{
 		this.touchChildren = false
 		this.m_isAgain = false
-		this.m_labScore.text = PanelManager.m_gameScenePanel.Score.toString()
+		this.m_labScore.text = PanelManager.gameScenePanel.sceneData.realScore.toString()
 		this.m_labLianji.text = "X" + GameConfig.curCombo.toString()
-
 		let comboScore:string = "C"
-
 		if (GameConfig.curCombo <= 3) comboScore = "C"
 		else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6) comboScore = "B"
 		else if (GameConfig.curCombo > 6 && GameConfig.curCombo <= 10) comboScore = "A"
@@ -31,9 +29,29 @@ class GameOverPanel extends BasePanel {
 		else comboScore = "S+"
 		
 		this.m_labPingfen.text = comboScore
-		Common.UpdateMaxScore(PanelManager.m_gameScenePanel.Score)
+
+		switch (GameConfig.gameMode) {
+			case EBattleMode.Level:
+				Common.updateMaxScore(PanelManager.gameScenePanel.sceneData.realScore)
+			break
+			case EBattleMode.Endless:
+				
+			break
+			case EBattleMode.Timelimite:
+			break
+			default:
+			break
+		}
 		this.Show.play(0)
-		GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+
+		if (GameManager.Instance.gameState == EGameState.EndLevel) {
+			GameVoice.vectory.play(0, 1).volume = GameConfig.soundValue / 100
+		}else{
+			GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
+		}
+
+		this._labCandy.text = PanelManager.gameScenePanel.sceneData.addCandy.toString()
+		PanelManager.gameScenePanel.sceneData.addCandy = 0
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -43,66 +61,50 @@ class GameOverPanel extends BasePanel {
 		this.Hide.play(0)
     }
 
-	public set Channel(value) {
-		this.channel = value 
-	}
-
-	public get Channel() {
-		return this.channel
-	}
-
-	public set IsClose(value) {
-		this.m_isClose = value
-	}
-
-	public get IsClose() {
-		return this.m_isClose
-	}
-
-	private _OnBtnReturn() {
+	private _onBtnReturn() {
 		this.touchChildren = false
 		Common.dispatchEvent(MainNotify.closeGameOverPanel)
 		
 	}
 
-	private _OnBtnAgain() {
+	private _onBtnAgain() {
 		this.touchChildren = false
 		this.m_isAgain = true
 		this.Hide.play(0)
 	}
 
-	private _OnShow() {
+	private _onShow() {
 		this.touchChildren = true
 	}
 
-	private _OnHide() {
+	private _onHide() {
 		Common.gameScene().uiLayer.removeChild(this)
 		if (this.m_isAgain) {
-			if (GameManager.Instance.GameState == EGameState.EndLevel) {
-				PanelManager.m_gameScenePanel.ContinueLevel()
+			if (GameManager.Instance.gameState == EGameState.EndLevel) {
+				PanelManager.gameScenePanel.continueLevel()
 			}else{
-				PanelManager.m_gameScenePanel.Init()
-				GameManager.Instance.Start()
+				PanelManager.gameScenePanel.init()
+				GameManager.Instance.start()
 			}
 		}else{
-			GameManager.Instance.GameState = EGameState.Ready
+			GameManager.Instance.gameState = EGameState.Ready
 			Common.dispatchEvent(MainNotify.closeGamePanel)
 			Common.dispatchEvent(MainNotify.openGameStartPanel)
 		}
 	}
 
 	private onComplete() {
-		this._OnResize()
-		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
-		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnAgain, this)
+		this._onResize()
+		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
+		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAgain, this)
 		Common.addTouchBegin(this.m_btnReturn)
 		Common.addTouchBegin(this.m_btnAgain)
 		
-		this.Show.addEventListener('complete', this._OnShow, this)
-		this.Hide.addEventListener('complete', this._OnHide, this)
+		this.Show.addEventListener('complete', this._onShow, this)
+		this.Hide.addEventListener('complete', this._onHide, this)
 	}
 
-    protected _OnResize(event:egret.Event = null)
+    protected _onResize(event:egret.Event = null)
     {
 		
     }
@@ -117,11 +119,10 @@ class GameOverPanel extends BasePanel {
 
 	private m_labPingfen:eui.BitmapLabel
 	private m_labLianji:eui.BitmapLabel
+	private _labCandy:eui.Label
 
 	private Show:egret.tween.TweenGroup
 	private Hide:egret.tween.TweenGroup
 
 	private channel:egret.SoundChannel
-
-	private m_isClose:boolean
 }

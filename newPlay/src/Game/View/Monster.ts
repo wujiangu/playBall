@@ -1,48 +1,49 @@
 class Monster extends BaseActor {
 	public constructor() {
 		super()
-		this.m_balloons = new Array()
+		this._balloons = new Array()
 	}
 
 	public Init(data:any, type:ELevelType) {
 		let monsterData = null
+		this._summonType = -1
 		switch (type) {
 			case ELevelType.Normal:
 				monsterData = data.normal
-				this.m_sumWeight = 0
+				this._sumWeight = 0
 				for (let i = 0; i < monsterData.length; i++) {
-					this.m_sumWeight += monsterData[i].prob
-					monsterData[i].weight = this.m_sumWeight
+					this._sumWeight += monsterData[i].prob
+					monsterData[i].weight = this._sumWeight
 				}
-				let random = MathUtils.getRandom(1, this.m_sumWeight)
+				let random = MathUtils.getRandom(1, this._sumWeight)
 				for (let i = 0; i < monsterData.length; i++) {
 					if (random <= monsterData[i].weight) {
-						this.m_gesturDiff = monsterData[i].diff
-						this.m_balloonMin = monsterData[i].min
-						this.m_balloonMax = monsterData[i].max
+						this._gesturDiff = monsterData[i].diff
+						this._balloonMin = monsterData[i].min
+						this._balloonMax = monsterData[i].max
 						let summonId = monsterData[i].summon
 						if (summonId > 0) {
-							this.m_summonData = GameConfig.summonSkillTable[summonId]
+							this._summonData = GameConfig.summonSkillTable[summonId]
+							this._summonType = this._summonData.type
 						}
-						this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()]
-						this.m_type = this.m_data.Difficult
+						this._data = GameConfig.monsterTable[monsterData[i].id.toString()]
+						this._type = this._data.Difficult
 						break
 					}
 				}
 			break
 			case ELevelType.Elite:
-				// monsterData = data.elite
-				this.m_gesturDiff = PanelManager.m_gameScenePanel.Boss.diff
-				this.m_balloonMin = PanelManager.m_gameScenePanel.Boss.min
-				this.m_balloonMax = PanelManager.m_gameScenePanel.Boss.max
-				let summonId = PanelManager.m_gameScenePanel.Boss.summon
+				this._gesturDiff = PanelManager.gameScenePanel.boss.diff
+				this._balloonMin = PanelManager.gameScenePanel.boss.min
+				this._balloonMax = PanelManager.gameScenePanel.boss.max
+				let summonId = PanelManager.gameScenePanel.boss.summon
 				if (summonId > 0) {
-					this.m_summonData = GameConfig.summonSkillTable[summonId]
+					this._summonData = GameConfig.summonSkillTable[summonId]
+					this._summonType = this._summonData.type
 				}
-				this.m_data = GameConfig.monsterTable[PanelManager.m_gameScenePanel.Boss.id.toString()]
-				this.m_type = this.m_data.Difficult
+				this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
+				this._type = this._data.Difficult
 				GameConfig.monsterPos = 3
-
 				let battleVolume = 0.8 * GameConfig.bgmValue / 100
 				egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
 					let channel = GameVoice.smallBossSound.play(0, 1)
@@ -51,45 +52,27 @@ class Monster extends BaseActor {
 						egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
 					})
 				})
-				// GameVoice.smallBossSound.play(0, 1)
 			break
 		}
-		// this.m_sumWeight = 0
-		// for (let i = 0; i < monsterData.length; i++) {
-		// 	this.m_sumWeight += monsterData[i].prob
-		// 	monsterData[i].weight = this.m_sumWeight
-		// }
-		// let random = MathUtils.getRandom(1, this.m_sumWeight)
-		// for (let i = 0; i < monsterData.length; i++) {
-		// 	if (random <= monsterData[i].weight) {
-		// 		this.m_gesturDiff = monsterData[i].diff
-		// 		this.m_balloonMin = monsterData[i].min
-		// 		this.m_balloonMax = monsterData[i].max
-		// 		this.m_summonData = monsterData[i].summon
-		// 		this.m_data = GameConfig.monsterTable[monsterData[i].id.toString()]
-		// 		this.m_type = this.m_data.Difficult
-		// 		break
-		// 	}
-		// }
-		// this.m_data = this._RandomMonsterData()
-		if (this.m_data) {
-			this.InitData()
-			this.InitGraph()
+		if (this._data) {
+			this.initData()
+			this.initGraph()
 		}else{
 			Error("no wolf data")
 		}
 	}
 
-	public InitData() {
-		let name = this.m_data.Animation
+	public initData() {
+		super.initData()
+		let name = this._data.Animation
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
-		if (this.m_armature == null) {
-			this.m_armature = new DragonBonesArmature(armatureDisplay)
+		if (this._armature == null) {
+			this._armature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_armature.ArmatureDisplay = armatureDisplay
-		this.m_armatureContainer.visible = true
-		this.m_effectArmatureContainer.visible = false
-		this.m_armatureContainer.register(this.m_armature,[
+		this._armature.ArmatureDisplay = armatureDisplay
+		this._armatureContainer.visible = true
+		this._effectArmatureContainer.visible = false
+		this._armatureContainer.register(this._armature,[
 			DragonBonesAnimations.Idle,
 			DragonBonesAnimations.Dead,
 			DragonBonesAnimations.Run,
@@ -97,395 +80,383 @@ class Monster extends BaseActor {
 			DragonBonesAnimations.Explore,
 		])
 		
-		this.m_state = EMonsterState.Ready
-		this.m_addNum = 0
-		this.m_speedY = this.m_data.Speed / 100 * GameConfig.gameSpeedPercent
-		this.m_baseSpeedY = this.m_speedX
-		this.m_spFall = 0.9
-		this.m_speedX = 0.2
+		this._state = EMonsterState.Ready
+		this._addNum = 0
+		this._speedY = this._data.Speed / 100 * GameConfig.gameSpeedPercent
+		this._baseSpeedY = this._speedX
+		this._spFall = 0.9
+		this._speedX = 0.2
 
-		this.m_armatureContainer.scaleX = this.m_data.Scale
-		this.m_armatureContainer.scaleY = this.m_data.Scale
+		this._armatureContainer.scaleX = this._data.Scale
+		this._armatureContainer.scaleY = this._data.Scale
 
-		this.m_armatureContainer.addFrameCallFunc(this._OnArmatureFrame, this)
+		this._armatureContainer.addFrameCallFunc(this._onArmatureFrame, this)
 
-		this.m_rect.width = this.m_data.Width
-		this.m_rect.height = this.m_data.Height
-		this.m_width = this.m_data.Width
-		this.m_height = this.m_data.Height
+		this._rect.width = this._data.Width
+		this._rect.height = this._data.Height
+		this._width = this._data.Width
+		this._height = this._data.Height
 
-		this.m_slowDelay = -1
+		this._slowDelay = -1
 
-		this.m_gestureData.length = 0
-		this.ResetHardGesture()
-		this.ResetNormalGesture()
-		switch (this.m_gesturDiff) {
+		this._gestureData.length = 0
+		this.resetHardGesture()
+		this.resetCenterGesture()
+		this.resetNormalGesture()
+		switch (this._gesturDiff) {
 			case EGestureDifficult.Mix:
-				for (let i = 0; i < GameConfig.gestureConfig.length; i++) this.m_gestureData.push(GameConfig.gestureConfig[i])
+				for (let i = 0; i < GameConfig.gestureConfig.length; i++) this._gestureData.push(GameConfig.gestureConfig[i])
 			break
+			case EGestureDifficult.Easy:
 			case EGestureDifficult.Normal:
+			case EGestureDifficult.Center:
 			case EGestureDifficult.Hard:
 				for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-					if (GameConfig.gestureConfig[i].difficult == this.m_gesturDiff) {
-						this.m_gestureData.push(GameConfig.gestureConfig[i])
+					if (GameConfig.gestureConfig[i].difficult == this._gesturDiff) {
+						this._gestureData.push(GameConfig.gestureConfig[i])
 					}
 				}
 			break
 			case EGestureDifficult.NAndH:
-				let random1 = MathUtils.getRandom(this.m_normalGesture.length - 1)
-				this.m_gestureData.push(this.m_normalGesture[random1])
-				random1 = MathUtils.getRandom(this.m_hardGesture.length - 1)
-				this.m_gestureData.push(this.m_hardGesture[random1])
+				let random1 = MathUtils.getRandom(this._normalGesture.length - 1)
+				this._gestureData.push(this._normalGesture[random1])
+				random1 = MathUtils.getRandom(this._hardGesture.length - 1)
+				this._gestureData.push(this._hardGesture[random1])
 			break
 			case EGestureDifficult.NAndHH:
-				let random2 = MathUtils.getRandom(this.m_normalGesture.length - 1)
-				this.m_gestureData.push(this.m_normalGesture[random2])
-				random2 = MathUtils.getRandom(this.m_hardGesture.length - 1)
-				this.m_gestureData.push(this.m_hardGesture[random2])
-				this.m_hardGesture.splice(random2, 1)
-				random2 = MathUtils.getRandom(this.m_hardGesture.length - 1)
-				this.m_gestureData.push(this.m_hardGesture[random2])
+				let random2 = MathUtils.getRandom(this._normalGesture.length - 1)
+				this._gestureData.push(this._normalGesture[random2])
+				random2 = MathUtils.getRandom(this._hardGesture.length - 1)
+				this._gestureData.push(this._hardGesture[random2])
+				this._hardGesture.splice(random2, 1)
+				random2 = MathUtils.getRandom(this._hardGesture.length - 1)
+				this._gestureData.push(this._hardGesture[random2])
 			break
 			case EGestureDifficult.NNAndH:
-				let random3 = MathUtils.getRandom(this.m_hardGesture.length - 1)
-				this.m_gestureData.push(this.m_hardGesture[random3])
-				random3 = MathUtils.getRandom(this.m_normalGesture.length - 1)
-				this.m_gestureData.push(this.m_normalGesture[random3])
-				this.m_normalGesture.splice(random3, 1)
-				random3 = MathUtils.getRandom(this.m_normalGesture.length - 1)
-				this.m_gestureData.push(this.m_normalGesture[random3])
+				let random3 = MathUtils.getRandom(this._hardGesture.length - 1)
+				this._gestureData.push(this._hardGesture[random3])
+				random3 = MathUtils.getRandom(this._normalGesture.length - 1)
+				this._gestureData.push(this._normalGesture[random3])
+				this._normalGesture.splice(random3, 1)
+				random3 = MathUtils.getRandom(this._normalGesture.length - 1)
+				this._gestureData.push(this._normalGesture[random3])
 			break
 		}
 		if (GameConfig.isGuide) {
-			this.m_gestureData.length = 0
-			this.m_gestureData.push(this.m_normalGesture[1])
+			this._gestureData.length = 0
+			if (GameConfig.guideIndex == 0) this._gestureData.push(GameConfig.gestureTable["1002"])
+			if (GameConfig.guideIndex == 1) this._gestureData.push(GameConfig.gestureTable["1001"])
+			if (GameConfig.guideIndex == 2) this._gestureData.push(GameConfig.gestureTable["1002"])
 		}
-		this.m_sumBalloon = 0
+		this._sumBalloon = 0
 	}
 
-	public InitGraph() {
+	public initGraph() {
 		this.y = 0
 
 		// this.filters = [this.m_dropShadowFilter]
 
-		this.GotoIdle()
-		this.UpdateSignSlot()
+		this.gotoIdle()
+		this.updateSignSlot()
 
 		switch (GameConfig.monsterPos) {
 			case 1:
-				this.x = MathUtils.getRandom(this.m_rect.width, Config.stageLeft - this.m_rect.width)
-				this.EPos = EMonsterPos.Left
+				this.x = MathUtils.getRandom(this._rect.width + 50, Config.stageLeft - this._rect.width)
+				this.ePos = EMonsterPos.Left
 				GameConfig.monsterPos = 2
 			break
 			case 2:
-				this.x = MathUtils.getRandom(Config.stageCenter + this.m_rect.width, Config.stageWidth - this.m_rect.width)
-				this.EPos = EMonsterPos.Middle
+				this.x = MathUtils.getRandom(Config.stageCenter + this._rect.width, Config.stageWidth - this._rect.width - 50)
+				this.ePos = EMonsterPos.Right
 				GameConfig.monsterPos = 3
 			break
 			case 3:
-				this.x = MathUtils.getRandom(Config.stageLeft + this.m_rect.width, Config.stageCenter - this.m_rect.width)
-				this.EPos = EMonsterPos.Right
+				this.x = MathUtils.getRandom(Config.stageLeft + this._rect.width, Config.stageCenter - this._rect.width)
+				this.ePos = EMonsterPos.Middle
 				GameConfig.monsterPos = 1
 			break
 		}
 		
 	}
 
-	public GotoIdle() {
-		if (this.m_data.ID == 1009) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
+	public gotoIdle() {
+		if (this._data.ID == 1009) {
+			this._armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
 		}
-		else if (this.m_data.ID == 1002) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
+		else if (this._data.ID == 1002) {
+			this._armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
 		}
-		else if (this.m_data.ID == 1011) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
+		else if (this._data.ID == 1011) {
+			this._armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.65)
 		}
-		else if (this.m_data.ID == 1012) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
+		else if (this._data.ID == 1012) {
+			this._armatureContainer.play(DragonBonesAnimations.Idle, 0, 1, 1, 0.9)
 		}
 		else{
-			this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+			this._armatureContainer.play(DragonBonesAnimations.Idle, 0)
 		}
 	}
 
-	public GotoHurt() {
-		this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 0)
+	public gotoHurt() {
+		this._armatureContainer.play(DragonBonesAnimations.Hurt, 0)
 	}
 
-	public GotoDead() {
-		this.m_armatureContainer.play(DragonBonesAnimations.Dead, 1)
-		this.m_state = EMonsterState.Dead
-		if (this.m_data.Type == EMonsterType.FallDown) this.m_state = EMonsterState.FallDown
-		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplet, this)
-		PanelManager.m_gameScenePanel.Power += this.m_data.Power
+	public gotoDead() {
+		this._armatureContainer.play(DragonBonesAnimations.Dead, 1)
+		this._state = EMonsterState.Dead
+		if (this._data.Type == EMonsterType.FallDown) this._state = EMonsterState.FallDown
+		this._armatureContainer.addCompleteCallFunc(this._onArmatureComplet, this)
+		PanelManager.gameScenePanel.sceneData.addPower += this._data.Power
 
+		GameConfig.balloonScore += this._data.Score
+		PanelManager.gameScenePanel.boom = true
 		// 精英怪死亡游戏速度变慢
-		if (PanelManager.m_gameScenePanel.LevelStage == ELevelType.Elite) {
-			GameManager.Instance.GameSlow()
+		if (PanelManager.gameScenePanel.levelStage == ELevelType.Elite) {
+			GameManager.Instance.gameSlow()
 		}
 	}
 
-	public GotoRun() {
-		this._DestroyBalloon()
-		this.m_armatureContainer.play(DragonBonesAnimations.Run, 0)
-		GameManager.Instance.Stop()
+	public gotoRun() {
+		this._destroyBalloon()
+		this._armatureContainer.play(DragonBonesAnimations.Run, 0)
+		GameManager.Instance.stop()
 	}
 
 	public GotoFallWater() {
-		this.m_effectArmatureContainer.clear()
+		this._effectArmatureContainer.clear()
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("shuihua", "shuihua")
-		if (this.m_effectArmature == null) {
-			this.m_effectArmature = new DragonBonesArmature(armatureDisplay)
+		if (this._effectArmature == null) {
+			this._effectArmature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_effectArmature.ArmatureDisplay = armatureDisplay
-		this.m_effectArmatureContainer.register(this.m_effectArmature,["shuihua"])
-		this.m_effectArmatureContainer.scaleX = 0.8
-		this.m_effectArmatureContainer.scaleY = 0.8
-		this.m_effectArmatureContainer.visible = true
-		this.m_effectArmatureContainer.play("shuihua", 1)
+		this._effectArmature.ArmatureDisplay = armatureDisplay
+		this._effectArmatureContainer.register(this._effectArmature,["shuihua"])
+		this._effectArmatureContainer.scaleX = 0.8
+		this._effectArmatureContainer.scaleY = 0.8
+
+		let curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()]
+		if (curChapterData.water == 1) {
+			this._effectArmatureContainer.visible = true
+		}else{
+			this._effectArmatureContainer.visible = false
+		}
+		this._effectArmatureContainer.play("shuihua", 1)
 		ShakeTool.getInstance().shakeObj(GameManager.Instance.imageScene, 2.3, 4, 8)
-		this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this)
+		this._effectArmatureContainer.addCompleteCallFunc(this.onEffectArmatureComplete, this)
 	}
 
-	public GotoSlow() {
+	public gotoSlow() {
 		
 	}
 
-	public ChangeToEasy() {
-		this.m_gestureData.length = 0
-		// for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-		// 	let data = GameConfig.gestureConfig[i]
-		// 	if (data.difficult == 1) {
-		// 		this.m_gestureData.push(data)
-		// 	}
-		// }
+	public changeToEasy() {
+		this._gestureData.length = 0
 		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
 			let data = GameConfig.gestureConfig[i]
 			if (data.type == 2) {
-				for (let j = 0; j < 3; j ++) this.m_gestureData.push(data)
+				for (let j = 0; j < 3; j ++) this._gestureData.push(data)
 			}
 		}
-		for (let i = 0; i < this.m_balloons.length; i++) {
-			this.m_balloons[i].ChangeToEasy()
+		for (let i = 0; i < this._balloons.length; i++) {
+			this._balloons[i].changeToEasy()
 		}
 	}
 
 	/**
 	 * 更新怪物身上的特效动画
 	 */
-	public UpdateEffectArmature(data:any) {
-		super.UpdateEffectArmature(data)
+	public updateEffectArmature(data:any) {
+		super.updateEffectArmature(data)
 	}
 
-	public PlayEffect(data:any) {
-		this.m_effectArmatureContainer.visible = true
-		this.m_effectArmatureContainer.play(data.skill, 1)
-		this.m_state = EMonsterState.Stop
-		// if (this.m_effectData.type == EEffectType.Fire) {
-		// 	this.m_state = EMonsterState.Stop
-		// 	GameConfig.balloonScore = 0
-		// 	PanelManager.m_gameScenePanel.Boom = true
-		// 	PanelManager.m_gameScenePanel.UpdateBatter()
-		// }
+	public playEffect(data:any) {
+		this._effectArmatureContainer.visible = true
+		this._effectArmatureContainer.play(data.skill, 1)
+		if (this._state == EMonsterState.Ready) this._state = EMonsterState.Stop
 	}
 
-	public BallExplosion(a_ball:Balloon) {
-		if ((this.y >= 100 && this.m_state == EMonsterState.Ready) || GameConfig.isGuide) {
-			this.m_exploreIndex = 0
-			for (let i = 0; i < this.m_balloons.length; i++) {
-				let balloon:Balloon = this.m_balloons[i]
+	public ballExplosion(a_ball:Balloon) {
+		if ((this.y >= 200 && this._state == EMonsterState.Ready) || GameConfig.isGuide) {
+			this._exploreIndex = 0
+			for (let i = 0; i < this._balloons.length; i++) {
+				let balloon:Balloon = this._balloons[i]
 				if (balloon == a_ball) {
-					this.m_balloons.splice(i, 1)
-					balloon.BalloonExplore()
-					this.m_exploreIndex = i
+					PanelManager.gameScenePanel.boom = true
+					this._balloons.splice(i, 1)
+					balloon.balloonExplore()
+					this._exploreIndex = i
 					break
 				}
 			}
 		}
 	}
 
-	public AllBalloonExplosion() {
-		while(this.m_balloons.length > 0) {
-			let balloon:Balloon = this.m_balloons.pop()
-			balloon.BalloonExplore()
+	public allBalloonExplosion() {
+		while(this._balloons.length > 0) {
+			let balloon:Balloon = this._balloons.pop()
+			balloon.balloonExplore()
 		}
 	}
 
-	public RemoveBalloon(a_ball:Balloon) {
-		this.m_groupBalloon.removeChild(a_ball)
-	}
-
-	public BalloonExploreHandle() {
-		if (this.m_balloons.length <= 0) {
-			this.m_sumBalloon = 0
-			// this.GotoDead()
+	public removeBalloon(a_ball:Balloon) {
+		if (this._groupBalloon.contains(a_ball)) {
+			this._groupBalloon.removeChild(a_ball)
 		}else{
-			if (this.m_sumBalloon == 2 && this.m_balloons.length > 0) {
-				let balloon:Balloon = this.m_balloons[0]
-				let posx = 0
-				egret.Tween.get(balloon).to({x:posx}, 200, egret.Ease.circOut)
-				egret.Tween.get(balloon.rop).to({scaleY:20, rotation:0}, 200, egret.Ease.circOut)
-				this.m_sumBalloon = 1
-			}
-
-			if (this.m_sumBalloon == 3 && this.m_balloons.length > 0) {
-				this.m_sumBalloon = 2
-				if (this.m_exploreIndex == 2) {
-					this.m_balloons.reverse()
-				}
-				for (let i = 0; i < this.m_balloons.length; i++) {
-					let balloon:Balloon = this.m_balloons[i]
-					let posX = i * (balloon.width+5) - this.m_rect.width / 2
-					let posY = -this.m_rect.height * 1.2
-					let rotation = 90 * i - 45
-					egret.Tween.get(balloon).to({x:posX, y:posY}, 200, egret.Ease.circOut)
-					egret.Tween.get(balloon.rop).to({scaleY:15, rotation:rotation}, 200, egret.Ease.circOut)
-				}
-			}
+			a_ball.parent.removeChild(a_ball)
 		}
 	}
 
-	public Update(timeElapsed:number) {
-		if (this.m_state == EMonsterState.Ready) {
-			this.y += timeElapsed * this.m_speedY
+	public update(timeElapsed:number) {
+		super.update(timeElapsed)
+		if (this._state == EMonsterState.Ready) {
+			this.y += timeElapsed * this._speedY
 			if (GameConfig.isGuide) {
-				if (this.y >= PanelManager.m_gameScenePanel.GuidePos) {
-					this.y = PanelManager.m_gameScenePanel.GuidePos
-					this.m_state = EMonsterState.Stop
-					PanelManager.m_gameScenePanel.GuideStart()
+				if (this.y >= PanelManager.gameScenePanel.guidePos) {
+					this.y = PanelManager.gameScenePanel.guidePos
+					this._state = EMonsterState.Stop
+					PanelManager.gameScenePanel.guideStart()
 				}
 			}else{
-				if (this.y >= PanelManager.m_gameScenePanel.GroundPos) {
-					this.y = PanelManager.m_gameScenePanel.GroundPos
-					this.m_state = EMonsterState.Run
-					this.GotoRun()
+				if (this.y >= PanelManager.gameScenePanel.groundPos) {
+					this.y = PanelManager.gameScenePanel.groundPos
+					this._state = EMonsterState.Run
+					this.gotoRun()
 				}
 			}
 		}
-		else if (this.m_state == EMonsterState.FallDown) {
-			this.y += timeElapsed * this.m_spFall
-			if (this.y >= PanelManager.m_gameScenePanel.WaterPos) {
-				this.y = PanelManager.m_gameScenePanel.WaterPos
-				this.m_state = EMonsterState.Drown
-				this.m_armatureContainer.visible = false
-				GameVoice.fallDownWaterSound.play(0, 1)
+		else if (this._state == EMonsterState.FallDown) {
+			this.y += timeElapsed * this._spFall
+			if (this.y >= PanelManager.gameScenePanel.waterPos) {
+				this.y = PanelManager.gameScenePanel.waterPos
+				this._state = EMonsterState.Drown
+				this._armatureContainer.visible = false
+
+				let curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()]
+				if (curChapterData.water == 1) {
+					GameVoice.fallDownWaterSound.play(0, 1)
+				}else{
+					let sound:egret.Sound = RES.getRes("fallDownGround_mp3")
+					let channel = sound.play(0, 1)
+				}
+				
 				this.GotoFallWater()
 			}
 		}
 	}
 
-	public Destroy() {
-		this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
-		this.m_effectArmatureContainer.removeCompleteCallFunc(this.OnEffectArmatureComplete, this)
-		this.m_effectArmatureContainer.removeFrameCallFunc(this.OnEffectArmatureFram, this)
-		this._DestroyBalloon()
-		this.m_armatureContainer.clear()
-		this.m_effectArmatureContainer.clear()
+	public destroy() {
+		super.destroy()
+		this._armatureContainer.removeCompleteCallFunc(this._onArmatureComplet, this)
+		this._effectArmatureContainer.removeCompleteCallFunc(this.onEffectArmatureComplete, this)
+		this._effectArmatureContainer.removeFrameCallFunc(this.onEffectArmatureFram, this)
+		this._destroyBalloon()
+		this._armatureContainer.clear()
+		this._effectArmatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
 	}
 
+	public destroyAndRemove() {
+		super.destroyAndRemove()
+		this.destroy()
+		PanelManager.gameScenePanel.removeMonster(this)
+	}
 
 	/**
 	 * 更新符号槽位
 	 */
-	public UpdateSignSlot() {
-		this._DestroyBalloon()
-		this.m_sumBalloon = MathUtils.getRandom(this.m_balloonMin, this.m_balloonMax)
+	public updateSignSlot() {
+		this._destroyBalloon()
+		this._sumBalloon = MathUtils.getRandom(this._balloonMin, this._balloonMax)
 
-		for (let i = 0; i < this.m_sumBalloon; i++) {
+		for (let i = 0; i < this._sumBalloon; i++) {
 			let balloon:Balloon = GameObjectPool.getInstance().createObject(Balloon, "Balloon")
-			balloon.Init(this.m_gestureData, this)
-			this._SetBallonPosition(balloon, this.m_sumBalloon, i)
-			this.m_groupBalloon.addChild(balloon)
-			this.m_score += balloon.Score
-			this.m_balloons.push(balloon)
+			balloon.init(this._gestureData, this)
+			this._setBallonPosition(balloon, this._sumBalloon, i)
+			this._groupBalloon.addChild(balloon)
+			this._score += balloon.score
+			this._balloons.push(balloon)
 		}
 	}
 
 	public get Score() {
-		return this.m_score
+		return this._score
 	}
 
 	public set Score(value:number) {
-		this.m_score = value
+		this._score = value
 	}
 
-	public get Type() {
-		return this.m_type
+	public get type() {
+		return this._type
 	}
 
-	public OnEffectArmatureComplete() {
-		super.OnEffectArmatureComplete()
-		if (this.m_state == EMonsterState.Drown) {
-			this.Destroy()
-			PanelManager.m_gameScenePanel.RemoveMonster(this)
-		}
+	public onEffectArmatureComplete() {
+		super.onEffectArmatureComplete()
 	}
 
-	public OnEffectArmatureFram(event:dragonBones.EgretEvent) {
-		super.OnEffectArmatureFram(event)
+	public onEffectArmatureFram(event:dragonBones.EgretEvent) {
+		super.onEffectArmatureFram(event)
 		let evt:string = event.frameLabel
 		switch (evt) {
 			case "xiaoshi":
-				PanelManager.m_gameScenePanel.Power += this.m_data.Power
-				this._DestroyBalloon()
-				this.m_armatureContainer.visible = false
+				this._destroyBalloon()
+				this._armatureContainer.visible = false
 			break
 		}
 	}
 
-	private _Spide(data, posX, posY) {
+	private _spide(data, posX, posY, count, i) {
 		let channel = GameVoice.spideBall.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
-        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY)
+        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i)
 	}
 
-	private _OnArmatureFrame(event:dragonBones.EgretEvent) {
+	private _onArmatureFrame(event:dragonBones.EgretEvent) {
 		let evt:string = event.frameLabel
 		switch (evt) {
 			case "vomit":
-				if (GameManager.Instance.GameState == EGameState.Start && this.m_summonData != undefined && this.m_summonData.type == 1) {
+				if (GameManager.Instance.gameState == EGameState.Start && this._summonData != undefined && this._summonType == 1) {
 					let count = 0
-					if (this.m_summonData.count > 0) count = this.m_summonData.count
-					else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
+					if (this._summonData.count > 0) count = this._summonData.count
+					else count = MathUtils.getRandom(this._summonData.min, this._summonData.max)
 					for (let i = 0; i < count; i++) {
-						egret.setTimeout(this._Spide, this, i*200, this.m_summonData, this.x, this.y)
+						egret.setTimeout(this._spide, this, i*200, this._summonData, this.x, this.y, count, i)
 					}
 				}
+				// this._summonType = -1
 			break
 		}
 	}
 
-	private _Summon(data, posX, posY, count, i) {
+	private _summon(data, posX, posY, count, i) {
 		let channel = GameVoice.summon.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
-        PanelManager.m_gameScenePanel.CreateSummonActor(data, posX, posY)
+        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i)
 	}
 
-	private _OnArmatureComplet() {
-		if (this.m_state == EMonsterState.Dead) {
-			if (this.m_summonData != null && this.m_summonData.type == 2) {
+	private _onArmatureComplet() {
+		if (this._state == EMonsterState.Dead) {
+			this._effectArmatureContainer.visible = false
+			if (this._summonData != null && this._summonType == 2) {
 				let count = 0
-				if (this.m_summonData.count > 0) count = this.m_summonData.count
-				else count = MathUtils.getRandom(this.m_summonData.min, this.m_summonData.max)
+				if (this._summonData.count > 0) count = this._summonData.count
+				else count = MathUtils.getRandom(this._summonData.min, this._summonData.max)
 				for (let i = 0; i < count; i++) {
-					egret.setTimeout(this._Summon, this, i*100, this.m_summonData, this.x, this.y, count, i)
+					this._summon(this._summonData, this.x, this.y, count, i)
+					// egret.setTimeout(this._summon, this, i*100, this._summonData, this.x, this.y, count, i)
 				}
-				// for (let i = 0; i < count; i++) {
-					
-				// }PanelManager.m_gameScenePanel.CreateSummonActor(this.m_summonData, this.x, this.y, count, i)
 			}
-			this.Destroy()
-			PanelManager.m_gameScenePanel.RemoveMonster(this)
+			
+			this.destroyAndRemove()
+			this._summonType = -1
+			this._state = EMonsterState.SummonFinish
 		}
-		else if (this.m_state == EMonsterState.FallDown) {
-			this.m_armatureContainer.play(DragonBonesAnimations.Dead, 0, 2, 6)
+		else if (this._state == EMonsterState.FallDown) {
+			this._armatureContainer.play(DragonBonesAnimations.Dead, 0, 2, 6)
 		}
 	}
 
-	private _RandomMonsterData():any {
-		let random = MathUtils.getRandom(1, this.m_sumWeight)
+	private _randomMonsterData():any {
+		let random = MathUtils.getRandom(1, this._sumWeight)
 		for (let i = 0; i < GameConfig.monsterConfig.length; i++)
 		{
 			if (random <= GameConfig.monsterConfig[i].weight)
@@ -496,12 +467,8 @@ class Monster extends BaseActor {
 		return null
 	}
 
-	private m_sumWeight:number
-	
+	private _sumWeight:number
 	//////////////////////////////////////////////////////////////////
-	
-	private m_score:number
-	private m_exploreIndex:number
-
-	private m_summonData:any
+	private _score:number
+	private _summonData:any
 }

@@ -28,47 +28,42 @@ class SettingPanel extends BasePanel {
 
     // 退出面板
     public onExit():void{
-		Animations.popupIn(this.m_groupSetting, 300, function(){
-			Common.gameScene().uiLayer.removeChild(this)
-		}.bind(this))
+		Common.gameScene().uiLayer.removeChild(this)
     }
 
-	private _OnSoundSlider(e:egret.Event) {
+	private _onSoundSlider(e:egret.Event) {
 		let slider = <eui.HSlider>e.target
 		GameConfig.soundValue = slider.pendingValue
 	}
 
-	private _OnBGMSlider(e:egret.Event) {
+	private _onBGMSlider(e:egret.Event) {
 		let slider = <eui.HSlider>e.target
 		GameConfig.bgmValue = slider.pendingValue
 		if (GameVoice.beginBGMChannel != null) GameVoice.beginBGMChannel.volume = GameConfig.bgmValue / 100
 	}
 
-	private _OnClose() {
+	private _onClose() {
 		this.hide.play(0)
-		
 	}
 
-	private _OnShow() {
+	private _onShow() {
 		this.m_imgMask.touchEnabled = true
 	}
 
-	private _OnHide() {
+	private _onHide() {
 		Common.dispatchEvent(MainNotify.closeSettingPanel)
 	}
 
 	private onComplete() {
-		
-		this._OnResize()
-		this.m_sliderSound.addEventListener(egret.Event.CHANGE, this._OnSoundSlider, this)
-		this.m_sliderBGM.addEventListener(egret.Event.CHANGE, this._OnBGMSlider, this)
-		this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnClose, this)
-
-		this.show.addEventListener('complete', this._OnShow, this)
-		this.hide.addEventListener('complete', this._OnHide, this)
+		this._onResize()
+		this.m_sliderSound.addEventListener(egret.Event.CHANGE, this._onSoundSlider, this)
+		this.m_sliderBGM.addEventListener(egret.Event.CHANGE, this._onBGMSlider, this)
+		this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onClose, this)
+		this.show.addEventListener('complete', this._onShow, this)
+		this.hide.addEventListener('complete', this._onHide, this)
 	}
 
-    protected _OnResize(event:egret.Event = null)
+    protected _onResize(event:egret.Event = null)
     {
 		
     }

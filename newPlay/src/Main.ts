@@ -29,7 +29,7 @@
 
 class Main extends eui.UILayer {
 
-    private _OnResize(event:egret.Event){
+    private _onResize(event:egret.Event){
         Config.stageWidth = this.stage.stageWidth;
         Config.stageHeight = this.stage.stageHeight;
         Config.stageHalfWidth = this.stage.stageWidth / 2;
@@ -51,17 +51,17 @@ class Main extends eui.UILayer {
         super.createChildren();
         egret.lifecycle.addLifecycleListener((context) => {
             context.onUpdate = () => {
-                GameManager.Instance.Update()
+                GameManager.Instance.update()
             }
         })
 
         egret.lifecycle.onPause = () => {
-            GameManager.Instance.StageToBack()
+            GameManager.Instance.stageToBack()
             egret.ticker.pause();
         }
 
         egret.lifecycle.onResume = () => {
-            GameManager.Instance.StageToFront()
+            GameManager.Instance.stageToFront()
             egret.ticker.resume();
         }
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT
@@ -79,12 +79,12 @@ class Main extends eui.UILayer {
         //    egret.MainContext.instance.stage.scaleMode = egret.StageScaleMode.SHOW_ALL
         // }
         this.addChild(Common.gameScene())
-        this._OnResize(null)
+        this._onResize(null)
         // initialize the Resource loading library
         //初始化Resource资源加载库
         RES.loadConfig("resource/default.res.json", "resource/");
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
-        this.addEventListener(egret.Event.RESIZE, this._OnResize, this)
+        this.addEventListener(egret.Event.RESIZE, this._onResize, this)
     }
     /**
      * 配置文件加载完成,开始预加载皮肤主题资源和preload资源组。
@@ -127,17 +127,17 @@ class Main extends eui.UILayer {
             this.stage.addChild(this.loadingView);
             RES.loadGroup("enter", 1)
 
-            this.m_rect = Common.createBitmap("black_png")
-            this.m_rect.width = Config.stageWidth
-            this.m_rect.height = Config.stageHeight
-            this.m_rect.visible = false
-            this.stage.addChild(this.m_rect)
+            this._rect = Common.createBitmap("black_png")
+            this._rect.width = Config.stageWidth
+            this._rect.height = Config.stageHeight
+            this._rect.visible = false
+            this.stage.addChild(this._rect)
         }
         else if (event.groupName == "enter") {
-            this.m_rect.visible = true
-            Animations.fadeOut(this.m_rect)
+            this._rect.visible = true
+            Animations.fadeOut(this._rect)
             Animations.fadeIn(this.loadingView, 500, ()=>{
-                this.m_rect.visible = false
+                this._rect.visible = false
                 this.stage.removeChild(this.loadingView);
                 RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
                 RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
@@ -155,14 +155,20 @@ class Main extends eui.UILayer {
 			    GameConfig.isWebView = false
 		    }
 
-            Common.GetMaxScore()
-            Common.GetUseItem()
-            Common.GetUnlockItem()
-            Common.GetUnlockBaby()
-            Common.GetCurBaby()
-            Common.GetCurChpter()
-            Common.GetCurLevel()
-            this.startCreateScene();
+            Common.getMaxScore()
+            Common.getUnlockBaby()
+            Common.getCurBaby()
+            Common.getCurChpter()
+            Common.getCurLevel()
+            Common.getCurCandy()
+            Common.getlastLoginTime()
+            Common.getSign()
+            Common.getBabylistIndex()
+            if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
+                Common.updateSign(0)
+            }
+            Common.getSignCount()
+            this.startCreateScene()
         }
     }
     /**
@@ -198,7 +204,7 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected startCreateScene(): void {
-        GameManager.Instance.Init()
+        GameManager.Instance.init()
         // this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onClick, this);
     }
 
@@ -208,5 +214,5 @@ class Main extends eui.UILayer {
     //     }
     // }
 
-    private m_rect:egret.Bitmap
+    private _rect:egret.Bitmap
 }

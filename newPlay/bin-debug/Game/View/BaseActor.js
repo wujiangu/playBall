@@ -1,32 +1,36 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var BaseActor = (function (_super) {
     __extends(BaseActor, _super);
     function BaseActor() {
         var _this = _super.call(this) || this;
-        _this.m_groupBalloon = new egret.DisplayObjectContainer();
-        _this.addChild(_this.m_groupBalloon);
-        _this.m_armatureContainer = new DragonBonesArmatureContainer();
-        _this.addChild(_this.m_armatureContainer);
-        _this.m_effectArmatureContainer = new DragonBonesArmatureContainer();
-        _this.addChild(_this.m_effectArmatureContainer);
-        _this.m_gestureData = new Array();
-        _this.m_normalGesture = new Array();
-        _this.m_hardGesture = new Array();
+        _this._groupBalloon = new egret.DisplayObjectContainer();
+        _this.addChild(_this._groupBalloon);
+        _this._armatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this._armatureContainer);
+        _this._effectArmatureContainer = new DragonBonesArmatureContainer();
+        _this.addChild(_this._effectArmatureContainer);
+        _this._gestureData = new Array();
+        _this._normalGesture = new Array();
+        _this._centerGesture = new Array();
+        _this._hardGesture = new Array();
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
-                _this.m_normalGesture.push(GameConfig.gestureConfig[i]);
+                _this._normalGesture.push(GameConfig.gestureConfig[i]);
             }
             else {
-                _this.m_hardGesture.push(GameConfig.gestureConfig[i]);
+                _this._hardGesture.push(GameConfig.gestureConfig[i]);
             }
         }
         // var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
@@ -41,203 +45,273 @@ var BaseActor = (function (_super) {
         // var knockout:boolean = false;            /// 指定对象是否具有挖空效果
         // this.m_dropShadowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,
         // strength, quality, inner, knockout)
-        _this.m_rect = new egret.Rectangle();
+        _this._rect = new egret.Rectangle();
         return _this;
-        // this.m_shape = new egret.Shape()
-        // this.addChild(this.m_shape)
-        // this.m_shape.graphics.beginFill( 0xff0000, 0.5);
+        // this._shape = new egret.Shape()
+        // this.addChild(this._shape)
+        // this._shape.graphics.beginFill( 0xff0000, 0.5);
     }
-    BaseActor.prototype.ResetNormalGesture = function () {
-        this.m_normalGesture.length = 0;
+    BaseActor.prototype.resetNormalGesture = function () {
+        this._normalGesture.length = 0;
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) {
-                this.m_normalGesture.push(GameConfig.gestureConfig[i]);
+                this._normalGesture.push(GameConfig.gestureConfig[i]);
             }
         }
     };
-    BaseActor.prototype.ResetHardGesture = function () {
-        this.m_hardGesture.length = 0;
+    BaseActor.prototype.resetCenterGesture = function () {
+        this._centerGesture.length = 0;
+        for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+            if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Center) {
+                this._normalGesture.push(GameConfig.gestureConfig[i]);
+            }
+        }
+    };
+    BaseActor.prototype.resetHardGesture = function () {
+        this._hardGesture.length = 0;
         for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
             if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Hard) {
-                this.m_hardGesture.push(GameConfig.gestureConfig[i]);
+                this._hardGesture.push(GameConfig.gestureConfig[i]);
             }
         }
     };
-    BaseActor.prototype.GotoIdle = function () {
+    BaseActor.prototype.initData = function () {
+        this._unusualDelay = 0;
     };
-    BaseActor.prototype.GotoHurt = function () {
+    BaseActor.prototype.gotoIdle = function () {
     };
-    BaseActor.prototype.GotoDead = function () {
+    BaseActor.prototype.gotoHurt = function () {
     };
-    BaseActor.prototype.GotoExplore = function () { };
-    BaseActor.prototype.GotoRun = function () {
+    BaseActor.prototype.gotoDead = function () {
     };
-    BaseActor.prototype.GotoSlow = function () { };
+    BaseActor.prototype.gotoExplore = function () { };
+    BaseActor.prototype.gotoRun = function () {
+    };
+    BaseActor.prototype.gotoSlow = function () { };
     Object.defineProperty(BaseActor.prototype, "w", {
         get: function () {
-            return this.m_width;
+            return this._width;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(BaseActor.prototype, "h", {
         get: function () {
-            return this.m_height;
+            return this._height;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "Balloons", {
+    Object.defineProperty(BaseActor.prototype, "balloons", {
         get: function () {
-            return this.m_balloons;
+            return this._balloons;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "GestureData", {
+    Object.defineProperty(BaseActor.prototype, "gestureData", {
         get: function () {
-            return this.m_gestureData;
+            return this._gestureData;
         },
         set: function (value) {
-            this.m_gestureData = value;
+            this._gestureData = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "SpeedVertical", {
+    Object.defineProperty(BaseActor.prototype, "speedVertical", {
         set: function (value) {
-            this.m_speedY = value;
+            this._speedY = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "SpeedHorizon", {
+    Object.defineProperty(BaseActor.prototype, "speedHorizon", {
         set: function (value) {
-            this.m_speedX = value;
+            this._speedX = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "EPos", {
+    Object.defineProperty(BaseActor.prototype, "ePos", {
         get: function () {
-            return this.m_ePos;
+            return this._ePos;
         },
         set: function (value) {
-            this.m_ePos = value;
+            this._ePos = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "ActorTableData", {
+    Object.defineProperty(BaseActor.prototype, "actorTableData", {
         get: function () {
-            return this.m_data;
+            return this._data;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BaseActor.prototype, "Type", {
+    Object.defineProperty(BaseActor.prototype, "type", {
         get: function () {
-            return this.m_type;
+            return this._type;
         },
         enumerable: true,
         configurable: true
     });
-    BaseActor.prototype.Update = function (timeElapsed) {
+    BaseActor.prototype.update = function (timeElapsed) {
+        if (this._state == EMonsterState.Ready && this._speedY == 0) {
+            this._unusualDelay += timeElapsed;
+            if (this._unusualDelay >= PanelManager.gameScenePanel.baby.skillData.time) {
+                this._unusualDelay = 0;
+                this._effectArmatureContainer.visible = false;
+                this._speedY = this._data.Speed / 100 * GameConfig.gameSpeedPercent;
+            }
+        }
     };
-    BaseActor.prototype.ResetGestureData = function () {
+    BaseActor.prototype.resetGestureData = function () {
     };
-    BaseActor.prototype.SetVertical = function (addNum) {
-        if (this.m_speedY <= 0)
+    BaseActor.prototype.setVertical = function (addNum) {
+        if (this._speedY <= 0)
             return;
-        this.ResetVertical();
-        this.m_addNum += addNum;
-        this.m_speedY += addNum;
+        this.resetVertical();
+        this._addNum += addNum;
+        this._speedY += addNum;
     };
-    BaseActor.prototype.ResetVertical = function () {
-        this.m_speedY -= this.m_addNum;
-        this.m_addNum = 0;
+    BaseActor.prototype.resetVertical = function () {
+        this._speedY -= this._addNum;
+        this._addNum = 0;
+        this._speedY = Math.max(this._speedY, 0);
     };
     /**
      * 更新怪物身上的特效动画
      */
-    BaseActor.prototype.UpdateEffectArmature = function (data) {
-        this.m_effectArmatureContainer.clear();
+    BaseActor.prototype.updateEffectArmature = function (data) {
+        this._effectArmatureContainer.clear();
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile);
-        if (this.m_effectArmature == null) {
-            this.m_effectArmature = new DragonBonesArmature(armatureDisplay);
+        if (this._effectArmature == null) {
+            this._effectArmature = new DragonBonesArmature(armatureDisplay);
         }
-        this.m_effectData = data;
-        this.m_effectResult = data.result;
-        this.m_effectArmature.ArmatureDisplay = armatureDisplay;
-        this.m_effectArmatureContainer.register(this.m_effectArmature, [data.skill]);
-        this.m_effectArmatureContainer.visible = false;
-        this.m_effectArmatureContainer.scaleX = 1;
-        this.m_effectArmatureContainer.scaleY = 1;
-        this.m_effectArmatureContainer.x = data.skillPosX;
-        this.m_effectArmatureContainer.y = data.skillPosY;
-        this.m_effectArmatureContainer.addCompleteCallFunc(this.OnEffectArmatureComplete, this);
-        this.m_effectArmatureContainer.addFrameCallFunc(this.OnEffectArmatureFram, this);
-        this.m_effectArmatureContainer.visible = false;
+        this._effectData = data;
+        this._effectResult = data.result;
+        this._effectArmature.ArmatureDisplay = armatureDisplay;
+        this._effectArmatureContainer.register(this._effectArmature, [data.skill]);
+        this._effectArmatureContainer.visible = false;
+        this._effectArmatureContainer.scaleX = data.scale;
+        this._effectArmatureContainer.scaleY = data.scale;
+        this._effectArmatureContainer.x = data.skillPosX;
+        this._effectArmatureContainer.y = data.skillPosY;
+        this._effectArmatureContainer.addCompleteCallFunc(this.onEffectArmatureComplete, this);
+        this._effectArmatureContainer.addFrameCallFunc(this.onEffectArmatureFram, this);
+        this._effectArmatureContainer.visible = false;
     };
-    Object.defineProperty(BaseActor.prototype, "State", {
+    Object.defineProperty(BaseActor.prototype, "state", {
         get: function () {
-            return this.m_state;
+            return this._state;
         },
         enumerable: true,
         configurable: true
     });
-    BaseActor.prototype.PlayEffect = function (data) { };
-    BaseActor.prototype.BalloonExploreHandle = function () { };
-    BaseActor.prototype.RemoveBalloon = function (balloon) { };
-    BaseActor.prototype.OnEffectArmatureComplete = function () {
-        if (this.m_state == EMonsterState.Stop) {
-            switch (this.m_effectResult) {
-                case ESkillResult.Kill:
-                    this.m_effectResult = ESkillResult.Invalid;
-                    this.GotoDead();
-                    this._DestroyBalloon();
-                    break;
-                case ESkillResult.StopSpeed:
-                    this.m_speedY = 0;
-                    this.m_state = EMonsterState.Ready;
-                    break;
-                case ESkillResult.ChangeLucky:
-                    break;
+    BaseActor.prototype.playEffect = function (data) { };
+    BaseActor.prototype.ballExplosion = function (balloon) { };
+    BaseActor.prototype.removeBalloon = function (balloon) { };
+    BaseActor.prototype.onEffectArmatureComplete = function () {
+        switch (this._state) {
+            case EMonsterState.Dead:
+                this.destroyAndRemove();
+                break;
+            case EMonsterState.Stop:
+                switch (this._effectResult) {
+                    case ESkillResult.Kill:
+                        this._effectResult = ESkillResult.Invalid;
+                        this.gotoDead();
+                        this._destroyBalloon();
+                        break;
+                    case ESkillResult.StopSpeed:
+                        this._speedY = 0;
+                        this._state = EMonsterState.Ready;
+                        break;
+                    case ESkillResult.ChangeLucky:
+                        PanelManager.gameScenePanel.createLuckyActor(this.x, this.y);
+                        this.destroyAndRemove();
+                        break;
+                }
+                break;
+            case EMonsterState.Drown:
+                this.destroyAndRemove();
+                break;
+            default:
+                break;
+        }
+    };
+    BaseActor.prototype.destroy = function () {
+        // this._state = EMonsterState.Ready
+    };
+    BaseActor.prototype.destroyAndRemove = function () {
+        this._effectArmatureContainer.visible = false;
+    };
+    BaseActor.prototype.onEffectArmatureFram = function (event) { };
+    BaseActor.prototype._destroyBalloon = function () {
+        this._sumBalloon = 0;
+        while (this._balloons.length > 0) {
+            var balloon = this._balloons.pop();
+            GameObjectPool.getInstance().destroyObject(balloon);
+            if (this._groupBalloon.contains(balloon)) {
+                this._groupBalloon.removeChild(balloon);
+            }
+            else {
+                balloon.parent.removeChild(balloon);
             }
         }
     };
-    BaseActor.prototype.OnEffectArmatureFram = function (event) { };
-    BaseActor.prototype._DestroyBalloon = function () {
-        this.m_sumBalloon = 0;
-        while (this.m_balloons.length > 0) {
-            var balloon = this.m_balloons.pop();
-            GameObjectPool.getInstance().destroyObject(balloon);
-            this.m_groupBalloon.removeChild(balloon);
+    BaseActor.prototype.balloonExploreHandle = function () {
+        if (this._balloons.length <= 0) {
+            this._sumBalloon = 0;
+            // this.gotoDead()
+        }
+        else {
+            if (this._sumBalloon == 2 && this._balloons.length > 0) {
+                var balloon = this._balloons[0];
+                var posx = 0;
+                egret.Tween.get(balloon).to({ x: posx }, 200, egret.Ease.circOut);
+                egret.Tween.get(balloon.rop).to({ rotation: 0 }, 200, egret.Ease.circOut);
+                this._sumBalloon = 1;
+            }
+            if (this._sumBalloon == 3 && this._balloons.length > 0) {
+                this._sumBalloon = 2;
+                if (this._exploreIndex == 2) {
+                    this._balloons.reverse();
+                }
+                for (var i = 0; i < this._balloons.length; i++) {
+                    var balloon = this._balloons[i];
+                    var posX = i * (balloon.width + 5) - this._rect.width / 2;
+                    var posY = -this._rect.height * 1.2;
+                    balloon.calculateRop(posX, posY);
+                    egret.Tween.get(balloon).to({ x: posX, y: posY }, 200, egret.Ease.circOut);
+                    egret.Tween.get(balloon.rop).to({ rotation: balloon.ropRotation }, 200, egret.Ease.circOut);
+                }
+            }
         }
     };
-    BaseActor.prototype._SetBallonPosition = function (balloon, count, value) {
+    BaseActor.prototype._setBallonPosition = function (balloon, count, value) {
         if (value === void 0) { value = 0; }
         if (count == 1) {
             balloon.x = 0;
-            balloon.y = -this.m_rect.height * 1.1;
-            balloon.SetLine();
+            balloon.y = -this._rect.height * 1.1;
         }
         else if (count == 2) {
-            balloon.x = value * (balloon.width + 5) - this.m_rect.width / 2;
-            balloon.y = -this.m_rect.height * 1.3;
-            balloon.SetLine(count, value);
+            balloon.x = value * (balloon.width + 5) - this._rect.width / 2;
+            balloon.y = -this._rect.height * 1.3;
         }
         else if (count == 3) {
             if (value == 0) {
                 balloon.x = 0;
-                balloon.y = -this.m_rect.height * 1.5;
+                balloon.y = -this._rect.height * 1.5;
             }
             else {
-                balloon.x = (value - 1) * (balloon.width + this.m_rect.width / 2) - this.m_rect.width * 0.7;
-                balloon.y = -this.m_rect.height * 1.2;
+                balloon.x = (value - 1) * (balloon.width + this._rect.width / 2) - this._rect.width * 0.7;
+                balloon.y = -this._rect.height * 1.2;
             }
-            balloon.SetLine(count, value);
         }
+        balloon.setLine();
     };
     return BaseActor;
 }(egret.DisplayObjectContainer));

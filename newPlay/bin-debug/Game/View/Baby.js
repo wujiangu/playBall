@@ -1,54 +1,57 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Baby = (function (_super) {
     __extends(Baby, _super);
     function Baby() {
         var _this = _super.call(this) || this;
-        _this.m_tiredTime = 0;
-        _this.m_actorArmatureContainer = new DragonBonesArmatureContainer();
-        _this.m_actorArmatureContainer.scaleX = 0.5;
-        _this.m_actorArmatureContainer.scaleY = 0.5;
-        _this.addChild(_this.m_actorArmatureContainer);
-        _this.m_powerGroup = new egret.Sprite();
-        _this.addChild(_this.m_powerGroup);
+        _this._tiredTime = 0;
+        _this._actorArmatureContainer = new DragonBonesArmatureContainer();
+        _this._actorArmatureContainer.scaleX = 0.5;
+        _this._actorArmatureContainer.scaleY = 0.5;
+        _this.addChild(_this._actorArmatureContainer);
+        _this._powerGroup = new egret.Sprite();
+        _this.addChild(_this._powerGroup);
         var bg = Common.createBitmap("gameProgressBg_png");
-        _this.m_powerGroup.addChild(bg);
+        _this._powerGroup.addChild(bg);
         var img = Common.createBitmap("power_Pro_png");
-        _this.m_powerGroup.addChild(img);
-        _this.m_progress = new egret.Shape();
-        img.mask = _this.m_progress;
-        _this.m_powerGroup.addChild(_this.m_progress);
-        _this.m_powerGroup.scaleX = 0.5;
-        _this.m_powerGroup.scaleY = 0.5;
-        _this.m_influenceActors = new Array();
-        _this.m_influenceBalls = new Array();
-        _this.m_actorsIndex = new Array();
+        _this._powerGroup.addChild(img);
+        _this._progress = new egret.Shape();
+        img.mask = _this._progress;
+        _this._powerGroup.addChild(_this._progress);
+        _this._powerGroup.scaleX = 0.5;
+        _this._powerGroup.scaleY = 0.5;
+        _this._influenceActors = new Array();
+        _this._influenceBalls = new Array();
+        _this._actorsIndex = new Array();
         return _this;
     }
     Baby.prototype.initData = function () {
-        this.m_actorArmatureContainer.clear();
+        this._actorArmatureContainer.clear();
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(GameConfig.curBabyData.action, GameConfig.curBabyData.action);
-        if (this.m_actorArmature == null) {
-            this.m_actorArmature = new DragonBonesArmature(armatureDisplay);
+        if (this._actorArmature == null) {
+            this._actorArmature = new DragonBonesArmature(armatureDisplay);
         }
-        this.m_actorArmature.ArmatureDisplay = armatureDisplay;
-        this.m_actorArmatureContainer.register(this.m_actorArmature, ["fangdazhao", "idle", "zoulu"]);
+        this._actorArmature.ArmatureDisplay = armatureDisplay;
+        this._actorArmatureContainer.register(this._actorArmature, ["fangdazhao", "idle", "zoulu"]);
         this.gotoIdle();
-        this.m_actorSpeed = 0.5;
-        this.m_actorArmatureContainer.scaleX = 0.5;
+        this._actorSpeed = 0.5;
+        this._actorArmatureContainer.scaleX = 0.5 * GameConfig.curBabyData.direction;
         this.x = Config.stageHalfWidth;
-        this.m_actorArmatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this);
-        this.m_powerGroup.x = -this.width / 2;
-        this.m_powerGroup.y = -3.5 * this.height;
-        // this.m_powerGroup.visible = true
+        this._actorArmatureContainer.addCompleteCallFunc(this._onArmatureComplete, this);
+        this._powerGroup.x = -this.width / 2;
+        this._powerGroup.y = -1 * this.height;
+        this._powerGroup.visible = false;
         var skillId = GameConfig.curBabyData.skillId;
         if (skillId != null && skillId > 0) {
             this.skillData = GameConfig.babySkillTable[skillId.toString()];
@@ -59,127 +62,143 @@ var Baby = (function (_super) {
         }
     };
     Baby.prototype.gotoIdle = function () {
-        this.m_state = EBabyState.Idle;
-        this.m_actorArmatureContainer.play("idle", 0);
+        this._state = EBabyState.Idle;
+        this._actorArmatureContainer.play("idle", 0);
     };
     Baby.prototype.gotoRun = function () {
-        this.m_state = EBabyState.Run;
-        this.m_actorArmatureContainer.play("zoulu", 0);
+        this._state = EBabyState.Run;
+        this._actorArmatureContainer.play("zoulu", 0);
     };
     Baby.prototype.gotoAttack = function () {
-        this.m_state = EBabyState.Attack;
-        this.m_actorArmatureContainer.play("fangdazhao", 1);
+        this._state = EBabyState.Attack;
+        this._actorArmatureContainer.play("fangdazhao", 1);
+        var voice = RES.getRes(this.skillData.music);
+        var channel = voice.play(0, 1);
+        channel.volume = GameConfig.soundValue / 100;
     };
     Baby.prototype.gotoTired = function () {
-        this.m_state = EBabyState.Tired;
-        this.m_actorArmatureContainer.play("idle", 0);
-        this.m_tiredTime = 0;
+        this._state = EBabyState.Tired;
+        this._actorArmatureContainer.play("idle", 0);
+        this._tiredTime = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////////////
-    Baby.prototype.ReleaseSkill = function (a_power, a_method, a_monster) {
+    Baby.prototype.releaseSkill = function (a_power, a_method, a_monster) {
         if (a_monster === void 0) { a_monster = null; }
-        if (a_power >= 360 && this.skillData.method == a_method) {
+        if (a_power >= 100 && this.skillData.method == a_method) {
             switch (this.skillData.method) {
                 case ESkillReleaseType.Immediately:
-                    this.ReleaseImmediately();
+                    this.releaseImmediately();
                     break;
                 case ESkillReleaseType.Range:
-                    this.ReleaseRange(a_monster);
+                    this.releaseRange(a_monster);
                     break;
                 default:
                     break;
             }
         }
     };
-    Baby.prototype.ReleaseRange = function (a_monster) {
+    Baby.prototype.releaseRange = function (a_monster) {
         var range = this.skillData.range * Config.stageHeight;
-        if (this.skillData.range > 0 && a_monster.State == EMonsterState.Ready && a_monster.y >= range) {
-            PanelManager.m_gameScenePanel.ReleaseSkill();
+        if (this.skillData.range > 0 && a_monster.state == EMonsterState.Ready && a_monster.y >= range && this.canRelease()) {
+            PanelManager.gameScenePanel.releaseSkill();
             if (this.skillData.sceneEffect && this.skillData.sceneEffect != "") {
                 // 全屏动画
             }
-            // a_monster.PlayEffect()
+            // a_monster.playEffect()
+            // this.ReleaseResult()
         }
     };
-    Baby.prototype.ReleaseImmediately = function () {
-        PanelManager.m_gameScenePanel.ReleaseSkill();
-        this.ReleaseResult();
+    Baby.prototype.releaseImmediately = function () {
+        if (this.canRelease()) {
+            PanelManager.gameScenePanel.releaseSkill();
+        }
+        // this.ReleaseResult()
     };
-    Baby.prototype.ReleaseResult = function () {
-        var actors = PanelManager.m_gameScenePanel.GetAllActors();
-        this.m_influenceActors.length = 0;
-        this.m_influenceBalls.length = 0;
-        this.m_actorsIndex.length = 0;
+    Baby.prototype.canRelease = function () {
+        var isRelease = false;
+        var actors = PanelManager.gameScenePanel.getAllActors();
+        this._influenceActors.length = 0;
+        this._influenceBalls.length = 0;
+        this._actorsIndex.length = 0;
         // 筛选
         switch (this.skillData.rangeType) {
             case ESkillRange.All:
-                this.SelectRangeAll();
+                this.selectRangeAll();
+                isRelease = true;
                 break;
             case ESkillRange.Random:
-                this.SelectRangeRandom(actors);
+                this.selectRangeRandom(actors);
                 break;
             case ESkillRange.FrontToBack:
-                this.SelectRangeFrontToBack(actors);
+                this.selectRangeFrontToBack(actors);
                 break;
             default:
                 break;
         }
-        // 影响的结果
-        for (var i = 0; i < this.m_influenceActors.length; i++) {
-            var actor = this.m_influenceActors[i];
-            actor.UpdateEffectArmature(this.skillData);
-            actor.PlayEffect(this.skillData);
+        if (!isRelease && (this._influenceActors.length > 0 || this._influenceBalls.length > 0)) {
+            isRelease = true;
         }
-        for (var i = 0; i < this.m_influenceBalls.length; i++) {
-            var ball = this.m_influenceBalls[i];
-            ball.UpdateEffectArmature(this.skillData);
-            ball.PlayEffect(this.skillData);
+        return isRelease;
+    };
+    Baby.prototype.releaseResult = function () {
+        // 影响的结果
+        for (var i = 0; i < this._influenceActors.length; i++) {
+            var actor = this._influenceActors[i];
+            actor.updateEffectArmature(this.skillData);
+            actor.playEffect(this.skillData);
+        }
+        for (var i = 0; i < this._influenceBalls.length; i++) {
+            var ball = this._influenceBalls[i];
+            ball.updateEffectArmature(this.skillData);
+            ball.playEffect(this.skillData);
         }
     };
-    Baby.prototype.SelectRangeAll = function () {
+    Baby.prototype.selectRangeAll = function () {
         switch (this.skillData.result) {
             case ESkillResult.ContinuedKill:
                 // 全体范围内持续
+                PanelManager.gameScenePanel.setSkillDuration();
                 break;
             case ESkillResult.SlowSpeed:
                 // 全体减速
+                PanelManager.gameScenePanel.setSkillDuration();
                 break;
         }
     };
-    Baby.prototype.SelectRangeRandom = function (actors) {
+    Baby.prototype.selectRangeRandom = function (actors) {
         for (var i = 0; i < actors.length; i++) {
-            this.m_actorsIndex.push(i);
+            this._actorsIndex.push(i);
         }
-        MathUtils.shuffle(this.m_actorsIndex);
+        MathUtils.shuffle(this._actorsIndex);
         if (this.skillData.param && this.skillData.param.length > 0) {
             var count = this.skillData.param[0];
             if (this.skillData.param.lenght > 1)
                 count = parseInt(this.skillData.param[0]);
             count = Math.min(count, actors.length);
             if (this.skillData.skillHang == ESkillHand.Ballon) {
-                for (var i = 0; i < this.m_actorsIndex.length; i++) {
-                    var random = this.m_actorsIndex[i];
+                for (var i = 0; i < this._actorsIndex.length; i++) {
+                    var random = this._actorsIndex[i];
                     var actor = actors[random];
-                    if (actor.Balloons.length > 0 && actor.State == EMonsterState.Ready) {
-                        for (var j = 0; j < actor.Balloons.length; j++) {
-                            if (this.m_influenceBalls.length >= count)
+                    if (actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 250) {
+                        for (var j = 0; j < actor.balloons.length; j++) {
+                            if (this._influenceBalls.length >= count)
                                 break;
-                            this.m_influenceBalls.push(actor.Balloons[j]);
+                            this._influenceBalls.push(actor.balloons[j]);
                         }
                     }
                 }
             }
             else {
                 for (var i = 0; i < count; i++) {
-                    var random = this.m_actorsIndex[i];
+                    var random = this._actorsIndex[i];
                     var actor = actors[random];
-                    if (actor.State == EMonsterState.Ready && actor.y >= 100)
-                        this.m_influenceActors.push(actor);
+                    if (actor.state == EMonsterState.Ready && actor.y >= 250)
+                        this._influenceActors.push(actor);
                 }
             }
         }
     };
-    Baby.prototype.SelectRangeFrontToBack = function (actors) {
+    Baby.prototype.selectRangeFrontToBack = function (actors) {
         // 对所有的敌人进行排序
         actors.sort(function (a, b) {
             return b.y - a.y;
@@ -192,64 +211,65 @@ var Baby = (function (_super) {
             var value = 0;
             for (var i = 0; i < actors.length; i++) {
                 var actor = actors[i];
-                if (actor.State == EMonsterState.Ready && actor.y >= 100) {
+                if (actor.state == EMonsterState.Ready && actor.y >= 250) {
                     if (this.skillData.skillHang == ESkillHand.Ballon) {
-                        for (var j = 0; j < actor.Balloons.length; j++) {
+                        for (var j = 0; j < actor.balloons.length; j++) {
                             if (value >= count)
                                 break;
-                            this.m_influenceBalls.push(actor.Balloons[j]);
+                            this._influenceBalls.push(actor.balloons[j]);
                             value++;
                         }
                     }
                     else {
                         if (value >= count)
                             break;
-                        this.m_influenceActors.push(actor);
+                        this._influenceActors.push(actor);
                         value++;
                     }
                 }
             }
         }
     };
-    Baby.prototype.SkillResultKill = function () {
+    Baby.prototype.skillResultKill = function () {
     };
     ////////////////////////////////////////////////////////////////////////////////////////
     Baby.prototype.update = function (timeElapsed) {
-        if (this.m_state == EBabyState.Run) {
-            this.x += this.m_actorSpeed;
+        if (this._state == EBabyState.Run) {
+            this.x += this._actorSpeed;
             if (this.x >= 600) {
-                this.m_actorSpeed = -0.5;
-                this.m_actorArmatureContainer.scaleX = -0.5;
+                this._actorSpeed = -0.5;
+                this._actorArmatureContainer.scaleX = -0.5 * GameConfig.curBabyData.direction;
                 this.gotoTired();
             }
             if (this.x <= 130) {
-                this.m_actorSpeed = 0.5;
-                this.m_actorArmatureContainer.scaleX = 0.5;
+                this._actorSpeed = 0.5;
+                this._actorArmatureContainer.scaleX = 0.5 * GameConfig.curBabyData.direction;
                 this.gotoTired();
             }
         }
-        if (this.m_state == EBabyState.Tired) {
-            this.m_tiredTime += timeElapsed;
-            if (this.m_tiredTime >= 2000) {
+        if (this._state == EBabyState.Tired) {
+            this._tiredTime += timeElapsed;
+            if (this._tiredTime >= 2000) {
                 this.gotoRun();
-                this.m_tiredTime = 0;
+                this._tiredTime = 0;
             }
         }
     };
+    // 弃用
     Baby.prototype.updateProgress = function (angle) {
-        var r = this.m_powerGroup.height;
-        this.m_progress.graphics.clear();
-        this.m_progress.graphics.beginFill(0x00ffff);
-        this.m_progress.graphics.moveTo(r, r);
-        this.m_progress.graphics.lineTo(2 * r, r);
-        this.m_progress.graphics.drawArc(r, r, r, Math.PI, angle * Math.PI / 180, false);
-        this.m_progress.graphics.lineTo(r, r);
-        this.m_progress.graphics.endFill();
-        // this.m_progress.x = 0
-        this.m_progress.y = -5;
+        var r = this._powerGroup.height;
+        this._progress.graphics.clear();
+        this._progress.graphics.beginFill(0x00ffff);
+        this._progress.graphics.moveTo(r, r);
+        this._progress.graphics.lineTo(2 * r, r);
+        this._progress.graphics.drawArc(r, r, r, Math.PI, angle * Math.PI / 180, false);
+        this._progress.graphics.lineTo(r, r);
+        this._progress.graphics.endFill();
+        // this._progress.x = 0
+        this._progress.y = -5;
     };
-    Baby.prototype._OnArmatureComplete = function () {
-        if (this.m_state == EBabyState.Attack) {
+    Baby.prototype._onArmatureComplete = function () {
+        if (this._state == EBabyState.Attack) {
             this.gotoRun();
         }
     };

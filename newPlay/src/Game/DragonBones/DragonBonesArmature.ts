@@ -18,16 +18,20 @@ class DragonBonesArmature extends egret.DisplayObjectContainer {
      * 增加动画监听
      */
     public addListeners():void {
-        this._armatureDisplay.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armatureDisplay.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        if (this._armatureDisplay != null) {
+            this._armatureDisplay.addEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+            this._armatureDisplay.addEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        }
     }
 
     /**
      * 移除动画监听
      */
     public removeLiteners():void {
-        this._armatureDisplay.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
-        this._armatureDisplay.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        if (this._armatureDisplay != null) {
+            this._armatureDisplay.removeEventListener(dragonBones.EventObject.LOOP_COMPLETE, this.onComplete, this);
+            this._armatureDisplay.removeEventListener(dragonBones.EventObject.FRAME_EVENT, this.onFrame, this);
+        }
     }
 
     /**

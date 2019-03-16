@@ -23,12 +23,8 @@ var MainNotify;
     MainNotify.beginLocus = "beginLocus";
     //结束画曲线轨迹
     MainNotify.endLocus = "endLocus";
-    //打开底部面板
-    MainNotify.openBottomBtnPanel = "openBottomBtnPanel";
-    MainNotify.closeBottomBtnPanel = "closeBottomBtnPanel";
-    //背包面板
-    MainNotify.openBackpackPanel = "openBackpackPanel";
-    MainNotify.closeBackpackPanel = "closeBackpackPanel";
+    //更新界面糖果数量
+    MainNotify.updateCandy = "updateCandy";
     //设置面板
     MainNotify.openSettingPanel = "openSettingPanel";
     MainNotify.closeSettingPanel = "closeSettingPanel";
@@ -41,5 +37,12 @@ var MainNotify;
     MainNotify.closeGameSelectLevel = "closeGameSelectLevel";
     MainNotify.openRechargePanel = "openRechargePanel";
     MainNotify.closeRechargePanel = "closeRechargePanel";
+    MainNotify.openSignPanel = "openSignPanel";
+    MainNotify.closeSignPanel = "closeSignPanel";
+    // 扭蛋界面
+    MainNotify.openCapsulePanel = "openCapsulePanel";
+    MainNotify.closeCapsulePanel = "closeCapsulePanel";
+    MainNotify.openGetRewardPanel = "openGetRewardPanel";
+    MainNotify.closeGetRewardPanel = "closeGetRewardPanel";
 })(MainNotify || (MainNotify = {}));
 //# sourceMappingURL=MainNotify.js.map

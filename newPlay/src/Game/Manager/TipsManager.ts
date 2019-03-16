@@ -6,13 +6,13 @@ enum ETipsType {
 namespace TipsManager {
     let _tips:Array<Tips> = []
 
-    export function Show(a_str:string, a_color:number = Common.TextColors.red, a_type:ETipsType = ETipsType.DownToUp, a_size:number = 40, a_bg:string = "", a_x:number = Config.stageHalfWidth, a_y:number = Config.stageHalfHeight) {
+    export function show(a_str:string, a_color:number = Common.TextColors.red, a_type:ETipsType = ETipsType.DownToUp, a_size:number = 40, a_bg:string = "", a_x:number = Config.stageHalfWidth, a_y:number = Config.stageHalfHeight) {
         let tips:Tips = GameObjectPool.getInstance().createObject(Tips, "Tips")
         tips.data.desc = a_str
         tips.data.descColor = a_color
         tips.data.descSize = a_size
         tips.data.tipsBg = a_bg
-        tips.Init()
+        tips.init()
 
         tips.anchorOffsetX = tips.width / 2
         tips.anchorOffsetY = tips.height / 2

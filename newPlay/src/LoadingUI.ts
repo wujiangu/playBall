@@ -44,7 +44,7 @@ class LoadingUI extends egret.Sprite {
         this.addChild(bg)
         
 
-        GameConfig.InitBattleDragonBones("huoyedoudong")
+        GameConfig.initBattleDragonBones("huoyedoudong")
         this.armatureContainer = new DragonBonesArmatureContainer()
         this.addChild(this.armatureContainer)
         let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("huoyedoudong", "huoyedoudong")
@@ -57,40 +57,40 @@ class LoadingUI extends egret.Sprite {
 
 
 
-        // var container:egret.Sprite=new egret.Sprite()
-        // this.addChild(container);
-        // var sw:number=Config.stageWidth
-        // var sh:number=Config.stageHeight
-        // var w:number=80;
-        // let loadbg = Common.createBitmap("loading_04_png")
-        // loadbg.x=(sw-loadbg.width)>>1;
-        // loadbg.y=(sh-loadbg.height)>>1;
-        // container.addChild(loadbg);
+        var container:egret.Sprite=new egret.Sprite()
+        this.addChild(container);
+        var sw:number=Config.stageWidth
+        var sh:number=Config.stageHeight
+        var w:number=80;
+        let loadbg = Common.createBitmap("loading_04_png")
+        loadbg.x=(sw-loadbg.width)>>1;
+        loadbg.y=(sh-loadbg.height)>>1;
+        container.addChild(loadbg);
 
-        // let progress = Common.createBitmap("loading_02_png")
-        // progress.x=(sw-progress.width)>>1;
-        // progress.y=(sh-progress.height)>>1;
-        // container.addChild(progress);
-        // this.proWidth=progress.width;
-        // this.progress=progress;
-        // var txtbg:Common.MoonDisplayObject=new Common.MoonDisplayObject();
-        // txtbg.type=Common.Const.SHAPE_CIRCLE
-        // txtbg.data={r:w/2,c:0XE18E0D};
-        // txtbg.setBackground(0XFFFFFF,5);
-        // this.addChild(txtbg);
-        // txtbg.x=loadbg.x+loadbg.width-w/2;
-        // txtbg.y=loadbg.y+w/2 -10;
-        // this.txtLoadPos=new egret.Point(txtbg.x, txtbg.y);
+        let progress = Common.createBitmap("loading_02_png")
+        progress.x=(sw-progress.width)>>1;
+        progress.y=(sh-progress.height)>>1;
+        container.addChild(progress);
+        this.proWidth=progress.width;
+        this.progress=progress;
+        var txtbg:Common.MoonDisplayObject=new Common.MoonDisplayObject();
+        txtbg.type=Common.Const.SHAPE_CIRCLE
+        txtbg.data={r:w/2,c:0XE18E0D};
+        txtbg.setBackground(0XFFFFFF,5);
+        this.addChild(txtbg);
+        txtbg.x=loadbg.x+loadbg.width-w/2;
+        txtbg.y=loadbg.y+w/2 -10;
+        this.txtLoadPos=new egret.Point(txtbg.x, txtbg.y);
         
-        // var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0xa56016);
-        // this.txtLoad=txtExp;
-        // this.addChild(txtExp)
-        // this.createAirFan();
-        // this.airFan.x=this.txtLoadPos.x
-        // this.airFan.y=this.txtLoadPos.y
+        var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0xa56016);
+        this.txtLoad=txtExp;
+        this.addChild(txtExp)
+        this.createAirFan();
+        this.airFan.x=this.txtLoadPos.x
+        this.airFan.y=this.txtLoadPos.y
 
-        // this.update(0);
-        // this.play()
+        this.update(0);
+        this.play()
     }
 
     public updateName(name:string):void
@@ -158,16 +158,16 @@ class LoadingUI extends egret.Sprite {
             this.stop();
             
         }
-        // this.progress.width = 500 * value
-        // var txtExp:egret.TextField=this.txtLoad;
-        // var pos:egret.Point=this.txtLoadPos;
-        // txtExp.text=Math.ceil(value*100)+"%";
-        // txtExp.x=(Config.stageWidth-txtExp.width)>>1;
-        // txtExp.y=pos.y-txtExp.height/2;
-        // var exp:egret.Sprite=Common.getCircle(5+Math.random()*5,this.color,pos.x,pos.y);
-        // exp.y=10-Math.random()*20;
-        // this.addChildAt(exp,2);
-        // egret.Tween.get(exp).to({x:-this.proWidth,alpha:0},1000);
+        this.progress.width = 500 * value
+        var txtExp:egret.TextField=this.txtLoad;
+        var pos:egret.Point=this.txtLoadPos;
+        txtExp.text=Math.ceil(value*100)+"%";
+        txtExp.x=(Config.stageWidth-txtExp.width)>>1;
+        txtExp.y=pos.y-txtExp.height/2;
+        var exp:egret.Sprite=Common.getCircle(5+Math.random()*5,this.color,pos.x,pos.y);
+        exp.y=10-Math.random()*20;
+        this.addChildAt(exp,2);
+        egret.Tween.get(exp).to({x:-this.proWidth,alpha:0},1000);
     }
 
     protected play():void
@@ -193,7 +193,7 @@ class LoadingUI extends egret.Sprite {
     }
 
     public onProgress(current: number, total: number): void {
-        // this.update(current/total)
+        this.update(current/total)
         // this.gameLoad.update(current/total);
     }
 

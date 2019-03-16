@@ -15,7 +15,7 @@ class BasePanel extends eui.Component{
         this.h = Config.stageHeight
         this.initPanel();
         // 当舞台尺寸发送变化
-		this.addEventListener(egret.Event.RESIZE, this._OnResize, this)
+		this.addEventListener(egret.Event.RESIZE, this._onResize, this)
     }
 
     // 初始化面板
@@ -24,12 +24,12 @@ class BasePanel extends eui.Component{
     }
 
     // 初始化面板数据
-    public initData():void{
+    public initData(data:any = null, type:any = null):void{
 
     }
 
     // 进入面板
-    public onEnter():void{
+    public onEnter(data:any = null, type:any = null):void{
         
     }
 
@@ -38,7 +38,7 @@ class BasePanel extends eui.Component{
         
     }
 
-    protected _OnResize(event:egret.Event = null)
+    protected _onResize(event:egret.Event = null)
     {
         if (Config.stageHeight / Config.stageWidth < 1366 / 750) {
             Common.log("比率小")

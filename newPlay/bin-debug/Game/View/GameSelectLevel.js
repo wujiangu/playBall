@@ -1,13 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var GameSelectLevel = (function (_super) {
     __extends(GameSelectLevel, _super);
     function GameSelectLevel() {
@@ -21,9 +24,21 @@ var GameSelectLevel = (function (_super) {
     };
     // 初始化面板数据
     GameSelectLevel.prototype.initData = function () {
-        this.m_curChapterIndex = GameConfig.curChpter % 1000;
-        this.m_curSelectChapter = GameConfig.curChpter;
+        this._curChapterIndex = GameConfig.curChpter % 1000;
+        this._curSelectChapter = GameConfig.curChpter;
         this._updateChapterInfo();
+        if (this._curSelectChapter == GameConfig.curChpter && GameConfig.isOpenNewChapter == true) {
+            this.m_imgIcon.visible = false;
+            var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
+            this.m_imgChapter.source = chapterData.unlockIcon;
+            this.m_imgIcon.source = "guankajiemian13_png";
+        }
+        this.m_imgEndlessBg.source = "guankajiemian12_png";
+        this.m_imgEndlessIcon.source = "guankajiemian15_png";
+        if (GameConfig.curChpter <= 1001) {
+            this.m_imgEndlessBg.source = "guankajiemian16_png";
+            this.m_imgEndlessIcon.source = "guankajiemian14_png";
+        }
     };
     // 进入面板
     GameSelectLevel.prototype.onEnter = function () {
@@ -39,17 +54,23 @@ var GameSelectLevel = (function (_super) {
     };
     Object.defineProperty(GameSelectLevel.prototype, "selectChater", {
         get: function () {
-            return this.m_curSelectChapter;
+            return this._curSelectChapter;
         },
         enumerable: true,
         configurable: true
     });
     GameSelectLevel.prototype._onShow = function () {
-        this.touchChildren = true;
+        if (GameConfig.isOpenNewChapter) {
+            this.m_groupLock.visible = true;
+            this.suo.play(0);
+        }
+        else {
+            this.touchChildren = true;
+        }
     };
     GameSelectLevel.prototype._OnHide = function () {
         Common.dispatchEvent(MainNotify.closeGameSelectLevel);
-        if (this.m_status == 1) {
+        if (this._status == 1) {
             // Common.dispatchEvent(MainNotify.closeGameStartPanel)
             Common.dispatchEvent(MainNotify.openGamePanel);
         }
@@ -57,10 +78,16 @@ var GameSelectLevel = (function (_super) {
             Common.dispatchEvent(MainNotify.openGameStartPanel);
         }
     };
+    GameSelectLevel.prototype._OnLock = function () {
+        this.touchChildren = true;
+        this.m_imgIcon.visible = true;
+        var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
+        this.m_imgChapter.source = chapterData.icon;
+    };
     GameSelectLevel.prototype._onMaskClick = function () {
-        this.touchEnabled = false;
+        this.touchChildren = false;
         this.hide.play(0);
-        this.m_status = 0;
+        this._status = 0;
     };
     GameSelectLevel.prototype._onChapterBegin = function () {
         this.m_imgChapter.alpha = 0.8;
@@ -81,27 +108,35 @@ var GameSelectLevel = (function (_super) {
         this.m_imgEndlessBg.alpha = 1;
     };
     GameSelectLevel.prototype._onEndlessClick = function () {
-        if (GameConfig.guideIndex >= 1) {
+        if (GameConfig.curChpter > 1001) {
             this._beforeEnterBattle();
             GameConfig.gameMode = EBattleMode.Endless;
         }
     };
     GameSelectLevel.prototype._beforeEnterBattle = function () {
-        this.touchEnabled = false;
+        this.touchChildren = false;
         this.hide.play(0);
-        this.m_status = 1;
+        this._status = 1;
+        GameVoice.beginBGMChannel.stop();
+        var voice = GameVoice.vectory.play(0, 1);
+        voice.volume = GameConfig.soundValue / 100;
     };
     GameSelectLevel.prototype._isLock = function () {
-        if (this.m_curSelectChapter > GameConfig.curChpter) {
+        if (this._curSelectChapter > GameConfig.curChpter) {
             return true;
         }
         return false;
     };
     GameSelectLevel.prototype._updateChapterInfo = function () {
-        var chapterData = GameConfig.chapterTable[this.m_curSelectChapter.toString()];
-        Common.log(this.m_curSelectChapter, this.m_curChapterIndex);
+        var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
+        this.m_imgIcon.visible = true;
+        this.m_groupLock.visible = false;
         this.m_imgChapter.source = chapterData.icon;
-        this.m_labChapter.text = this.m_curChapterIndex.toString();
+        this.m_labChapter.text = this._curChapterIndex.toString();
+        if (this._curSelectChapter == GameConfig.curChpter && GameConfig.curLevel > 0) {
+            var levelData = GameConfig.levelTable[GameConfig.curLevel.toString()];
+            this.m_labChapter.text = this._curChapterIndex.toString() + "-" + levelData.level.toString();
+        }
         this.m_imgIcon.source = "guankajiemian13_png";
         if (this._isLock()) {
             this.m_imgChapter.source = chapterData.unlockIcon;
@@ -109,16 +144,16 @@ var GameSelectLevel = (function (_super) {
         }
     };
     GameSelectLevel.prototype._onNextClick = function () {
-        if (this.m_curChapterIndex < 5) {
-            this.m_curSelectChapter++;
-            this.m_curChapterIndex++;
+        if (this._curChapterIndex < 18) {
+            this._curSelectChapter++;
+            this._curChapterIndex++;
             this._updateChapterInfo();
         }
     };
     GameSelectLevel.prototype._onLastClick = function () {
-        if (this.m_curChapterIndex > 1) {
-            this.m_curChapterIndex--;
-            this.m_curSelectChapter--;
+        if (this._curChapterIndex > 1) {
+            this._curChapterIndex--;
+            this._curSelectChapter--;
             this._updateChapterInfo();
         }
     };
@@ -134,8 +169,11 @@ var GameSelectLevel = (function (_super) {
         this.m_imgEndlessBg.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onEndlessClick, this);
         this.m_btnNext.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onNextClick, this);
         this.m_btnLast.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onLastClick, this);
+        Common.addTouchBegin(this.m_btnNext);
+        Common.addTouchBegin(this.m_btnLast);
         this.show.addEventListener('complete', this._onShow, this);
         this.hide.addEventListener('complete', this._OnHide, this);
+        this.suo.addEventListener('complete', this._OnLock, this);
     };
     return GameSelectLevel;
 }(BasePanel));

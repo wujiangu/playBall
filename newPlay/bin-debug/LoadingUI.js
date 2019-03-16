@@ -29,13 +29,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var LoadingUI = (function (_super) {
     __extends(LoadingUI, _super);
     function LoadingUI() {
@@ -52,7 +55,7 @@ var LoadingUI = (function (_super) {
         bg.width = Config.stageWidth;
         bg.height = Config.stageHeight;
         this.addChild(bg);
-        GameConfig.InitBattleDragonBones("huoyedoudong");
+        GameConfig.initBattleDragonBones("huoyedoudong");
         this.armatureContainer = new DragonBonesArmatureContainer();
         this.addChild(this.armatureContainer);
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("huoyedoudong", "huoyedoudong");
@@ -62,37 +65,37 @@ var LoadingUI = (function (_super) {
         this.armatureContainer.x = bg.width / 2 - 15;
         this.armatureContainer.y = Config.stageHalfHeight * 0.65;
         this.armatureContainer.play("huoyedoudong", 0);
-        // var container:egret.Sprite=new egret.Sprite()
-        // this.addChild(container);
-        // var sw:number=Config.stageWidth
-        // var sh:number=Config.stageHeight
-        // var w:number=80;
-        // let loadbg = Common.createBitmap("loading_04_png")
-        // loadbg.x=(sw-loadbg.width)>>1;
-        // loadbg.y=(sh-loadbg.height)>>1;
-        // container.addChild(loadbg);
-        // let progress = Common.createBitmap("loading_02_png")
-        // progress.x=(sw-progress.width)>>1;
-        // progress.y=(sh-progress.height)>>1;
-        // container.addChild(progress);
-        // this.proWidth=progress.width;
-        // this.progress=progress;
-        // var txtbg:Common.MoonDisplayObject=new Common.MoonDisplayObject();
-        // txtbg.type=Common.Const.SHAPE_CIRCLE
-        // txtbg.data={r:w/2,c:0XE18E0D};
-        // txtbg.setBackground(0XFFFFFF,5);
-        // this.addChild(txtbg);
-        // txtbg.x=loadbg.x+loadbg.width-w/2;
-        // txtbg.y=loadbg.y+w/2 -10;
-        // this.txtLoadPos=new egret.Point(txtbg.x, txtbg.y);
-        // var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0xa56016);
-        // this.txtLoad=txtExp;
-        // this.addChild(txtExp)
-        // this.createAirFan();
-        // this.airFan.x=this.txtLoadPos.x
-        // this.airFan.y=this.txtLoadPos.y
-        // this.update(0);
-        // this.play()
+        var container = new egret.Sprite();
+        this.addChild(container);
+        var sw = Config.stageWidth;
+        var sh = Config.stageHeight;
+        var w = 80;
+        var loadbg = Common.createBitmap("loading_04_png");
+        loadbg.x = (sw - loadbg.width) >> 1;
+        loadbg.y = (sh - loadbg.height) >> 1;
+        container.addChild(loadbg);
+        var progress = Common.createBitmap("loading_02_png");
+        progress.x = (sw - progress.width) >> 1;
+        progress.y = (sh - progress.height) >> 1;
+        container.addChild(progress);
+        this.proWidth = progress.width;
+        this.progress = progress;
+        var txtbg = new Common.MoonDisplayObject();
+        txtbg.type = Common.Const.SHAPE_CIRCLE;
+        txtbg.data = { r: w / 2, c: 0XE18E0D };
+        txtbg.setBackground(0XFFFFFF, 5);
+        this.addChild(txtbg);
+        txtbg.x = loadbg.x + loadbg.width - w / 2;
+        txtbg.y = loadbg.y + w / 2 - 10;
+        this.txtLoadPos = new egret.Point(txtbg.x, txtbg.y);
+        var txtExp = Common.createText("", 0, 0, 40, 0xa56016);
+        this.txtLoad = txtExp;
+        this.addChild(txtExp);
+        this.createAirFan();
+        this.airFan.x = this.txtLoadPos.x;
+        this.airFan.y = this.txtLoadPos.y;
+        this.update(0);
+        this.play();
     };
     LoadingUI.prototype.updateName = function (name) {
         // this.txtName.text=name;
@@ -146,16 +149,16 @@ var LoadingUI = (function (_super) {
         if (value > 0.99) {
             this.stop();
         }
-        // this.progress.width = 500 * value
-        // var txtExp:egret.TextField=this.txtLoad;
-        // var pos:egret.Point=this.txtLoadPos;
-        // txtExp.text=Math.ceil(value*100)+"%";
-        // txtExp.x=(Config.stageWidth-txtExp.width)>>1;
-        // txtExp.y=pos.y-txtExp.height/2;
-        // var exp:egret.Sprite=Common.getCircle(5+Math.random()*5,this.color,pos.x,pos.y);
-        // exp.y=10-Math.random()*20;
-        // this.addChildAt(exp,2);
-        // egret.Tween.get(exp).to({x:-this.proWidth,alpha:0},1000);
+        this.progress.width = 500 * value;
+        var txtExp = this.txtLoad;
+        var pos = this.txtLoadPos;
+        txtExp.text = Math.ceil(value * 100) + "%";
+        txtExp.x = (Config.stageWidth - txtExp.width) >> 1;
+        txtExp.y = pos.y - txtExp.height / 2;
+        var exp = Common.getCircle(5 + Math.random() * 5, this.color, pos.x, pos.y);
+        exp.y = 10 - Math.random() * 20;
+        this.addChildAt(exp, 2);
+        egret.Tween.get(exp).to({ x: -this.proWidth, alpha: 0 }, 1000);
     };
     LoadingUI.prototype.play = function () {
         this.stop();
@@ -172,7 +175,7 @@ var LoadingUI = (function (_super) {
         this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        // this.update(current/total)
+        this.update(current / total);
         // this.gameLoad.update(current/total);
     };
     /**创建渐变色背景 */

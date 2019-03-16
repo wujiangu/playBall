@@ -1,13 +1,16 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __extends = this && this.__extends || function __extends(t, e) { 
- function r() { 
- this.constructor = t;
-}
-for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-r.prototype = e.prototype, t.prototype = new r();
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var PermanentUI = (function (_super) {
     __extends(PermanentUI, _super);
     function PermanentUI() {
@@ -27,16 +30,27 @@ var PermanentUI = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    PermanentUI.prototype.updateScene = function (path) {
+    PermanentUI.prototype.updateScene = function (path, water) {
         this.m_imgBg.source = path;
+        if (water == 0) {
+            this.groupRiver.visible = false;
+        }
+        else {
+            this.groupRiver.visible = true;
+        }
     };
     PermanentUI.prototype.updateSun = function (path) {
-        this.m_imgSun.source = path;
+        if (path == null)
+            this.m_imgSun.visible = false;
+        else {
+            this.m_imgSun.visible = true;
+            this.m_imgSun.source = path;
+        }
     };
-    PermanentUI.prototype.updateCloud = function (a_bottom, a_middle, a_top) {
-        this.m_cloud1.source = a_bottom;
-        this.m_cloud2.source = a_middle;
-        this.m_cloud3.source = a_top;
+    PermanentUI.prototype.updateCloud = function (a_bottom, a_top) {
+        // this.m_cloud1.source = a_middle
+        this.m_cloud2.source = a_top;
+        this.m_cloud3.source = a_bottom;
     };
     PermanentUI.prototype.update = function () {
         if (this.m_cloud1.x >= -this.m_cloud1.width) {
@@ -64,13 +78,13 @@ var PermanentUI = (function (_super) {
             this.m_imgSun.x = -this.m_imgSun.width;
         }
     };
-    PermanentUI.prototype._OnWaterComplete = function () {
+    PermanentUI.prototype._onWaterComplete = function () {
         this.water.play(0);
     };
     PermanentUI.prototype._onComplete = function () {
         ShakeTool.getInstance().setInitPos(this.m_imgBg.x, this.m_imgBg.y);
         this.water.play(0);
-        this.water.addEventListener('complete', this._OnWaterComplete, this);
+        this.water.addEventListener('complete', this._onWaterComplete, this);
     };
     return PermanentUI;
 }(BasePanel));

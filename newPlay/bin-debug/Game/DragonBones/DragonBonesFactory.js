@@ -6,9 +6,9 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
  */
 var DragonBonesFactory = (function () {
     function DragonBonesFactory() {
-        this.factory = new dragonBones.EgretFactory();
-        this.clocks = new Array();
-        this.clockLen = 0;
+        this._factory = new dragonBones.EgretFactory();
+        this._clocks = new Array();
+        this._clockLen = 0;
     }
     DragonBonesFactory.getInstance = function () {
         if (!this._instance) {
@@ -21,22 +21,22 @@ var DragonBonesFactory = (function () {
      *
      */
     DragonBonesFactory.prototype.addTextureAtlas = function (texture, textureData) {
-        return this.factory.addTextureAtlas(new dragonBones.EgretTextureAtlas(texture, textureData));
+        return this._factory.addTextureAtlas(new dragonBones.EgretTextureAtlas(texture, textureData));
     };
     /**
      * 初始化一个动画文件
      */
     DragonBonesFactory.prototype.initDragonBonesArmatureFile = function (skeletonData, textureData, texture) {
-        this.factory.parseDragonBonesData(skeletonData);
-        this.factory.parseTextureAtlasData(textureData, texture);
-        // this.factory.addSkeletonData(dragonBones.DataParser.parseDragonBonesData(skeletonData));
+        this._factory.parseDragonBonesData(skeletonData);
+        this._factory.parseTextureAtlasData(textureData, texture);
+        // this._factory.addSkeletonData(dragonBones.DataParser.parseDragonBonesData(skeletonData));
         // this.addTextureAtlas(texture, textureData);
     };
     /**
      * 创建一个动画
      */
     // public makeArmature(name:string, dragonBonesName?:string, playSpeed:number = -1):DragonBonesArmature {
-    //     let armature:dragonBones.Armature = this.factory.buildArmature(name, dragonBonesName);
+    //     let armature:dragonBones.Armature = this._factory.buildArmature(name, dragonBonesName);
     //     if (!armature) {
     //         return null;
     //     }
@@ -45,30 +45,30 @@ var DragonBonesFactory = (function () {
     //     return result;
     // }
     DragonBonesFactory.prototype.buildArmature = function (name, dragonBonesName) {
-        return this.factory.buildArmature(name, dragonBonesName);
+        return this._factory.buildArmature(name, dragonBonesName);
     };
     DragonBonesFactory.prototype.buildArmatureDisplay = function (name, dragonBonesName) {
-        return this.factory.buildArmatureDisplay(name, dragonBonesName);
+        return this._factory.buildArmatureDisplay(name, dragonBonesName);
     };
     /**
      * 创建WorldClock
      */
     DragonBonesFactory.prototype.createWorldClock = function (playSpeed) {
-        for (var i = 0; i < this.clockLen; i++) {
-            if (this.clocks[i].timeScale == playSpeed) {
-                return this.clocks[i];
+        for (var i = 0; i < this._clockLen; i++) {
+            if (this._clocks[i].timeScale == playSpeed) {
+                return this._clocks[i];
             }
         }
         var clock = new dragonBones.WorldClock();
         clock.timeScale = playSpeed;
-        this.clocks.push(clock);
-        this.clockLen = this.clocks.length;
+        this._clocks.push(clock);
+        this._clockLen = this._clocks.length;
         return clock;
     };
     /**
      * 注册并启动一个定时器
      */
-    DragonBonesFactory.prototype.Update = function (timeElapsed) {
+    DragonBonesFactory.prototype.update = function (timeElapsed) {
         this.onStartTick(timeElapsed);
         // TimerManager.getInstance().doFrame(1, 0, this.onStartTick, this);
         // egret.startTick(this.onStartTick, this);
@@ -77,8 +77,8 @@ var DragonBonesFactory = (function () {
      * 计时器回调
      */
     DragonBonesFactory.prototype.onStartTick = function (timeStamp) {
-        for (var i = 0; i < this.clocks.length; i++) {
-            var clock = this.clocks[i];
+        for (var i = 0; i < this._clocks.length; i++) {
+            var clock = this._clocks[i];
             clock.advanceTime(0.001);
         }
         return false;

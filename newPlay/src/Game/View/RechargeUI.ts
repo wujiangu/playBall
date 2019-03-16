@@ -12,7 +12,9 @@ class RechargeUI extends BasePanel {
 
     // 初始化面板数据
     public initData():void{
-
+		this.m_labCount.text = GameConfig.candy.toString()
+		this.m_labCount.x = 720 - this.m_labCount.width
+		this.m_imgCandy.x = this.m_labCount.x - this.m_imgCandy.width - 10
     }
 
     // 进入面板
@@ -34,23 +36,25 @@ class RechargeUI extends BasePanel {
 		this.hide.play(0)
 	}
 
-    private _OnShow() {
+    private _onShow() {
 		this.touchChildren = true
 	}
 
-	private _OnHide() {
+	private _onHide() {
 		Common.dispatchEvent(MainNotify.closeRechargePanel)
 	}
 
 	private _onComplete() {
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
-        this.show.addEventListener('complete', this._OnShow, this)
-		this.hide.addEventListener('complete', this._OnHide, this)
+		this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
+        this.show.addEventListener('complete', this._onShow, this)
+		this.hide.addEventListener('complete', this._onHide, this)
 	}
 
     private m_btnReturn:eui.Button
     private m_imgCandy:eui.Image
     private m_labCount:eui.Label
+	private m_imgMask:eui.Image
 
     private show:egret.tween.TweenGroup
 	private hide:egret.tween.TweenGroup

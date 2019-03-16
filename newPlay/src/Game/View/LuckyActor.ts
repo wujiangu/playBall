@@ -2,35 +2,35 @@ class LuckyActor extends BaseActor{
 	public constructor() {
 		super()
 
-		this.m_balloon = new Balloon()
-		this.m_groupBalloon.addChild(this.m_balloon)
+		this._balloon = new Balloon()
+		this._groupBalloon.addChild(this._balloon)
 	}
 
-	public Init() {
-		this.m_sumWeight = 0
+	public init(x:number = null, y:number = null) {
+		this._sumWeight = 0
 		for (let i = 0; i < GameConfig.luckyConfig.length; i++) {
-			this.m_sumWeight += GameConfig.luckyConfig[i].Prob
-			GameConfig.luckyConfig[i].weight = this.m_sumWeight
+			this._sumWeight += GameConfig.luckyConfig[i].Prob
+			GameConfig.luckyConfig[i].weight = this._sumWeight
 		}
 
-		this.m_data = this._RandomLuckyActorData()
-		if (this.m_data) {
-			this.InitData()
-			this.InitGraph()
+		this._data = this._randomLuckyActorData()
+		if (this._data) {
+			this.initData()
+			this.initGraph(x, y)
 		}else{
 			Error("no wolf data")
 		}
 	}
 
-	public InitData() {
-		let name = this.m_data.Animation
+	public initData() {
+		let name = this._data.Animation
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
-		if (this.m_armature == null) {
-			this.m_armature = new DragonBonesArmature(armatureDisplay)
+		if (this._armature == null) {
+			this._armature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_armature.ArmatureDisplay = armatureDisplay
-		this.m_armatureContainer.visible = true
-		this.m_armatureContainer.register(this.m_armature,[
+		this._armature.ArmatureDisplay = armatureDisplay
+		this._armatureContainer.visible = true
+		this._armatureContainer.register(this._armature,[
 			DragonBonesAnimations.Idle,
 			DragonBonesAnimations.Dead,
 			DragonBonesAnimations.Run,
@@ -38,90 +38,101 @@ class LuckyActor extends BaseActor{
 			DragonBonesAnimations.Explore,
 		])
 		
-		this.m_state = EMonsterState.Ready
-		this.m_speedY = 0
-		this.m_speedX = 0.16
+		this._state = EMonsterState.Ready
+		this._speedY = 0
+		this._speedX = this._data.Speed / 10
 
-		this.m_armatureContainer.scaleX = this.m_data.Scale
-		this.m_armatureContainer.scaleY = this.m_data.Scale
-		this.m_armatureContainer.addCompleteCallFunc(this._OnArmatureComplete, this)
+		this._armatureContainer.scaleX = this._data.Scale
+		this._armatureContainer.scaleY = this._data.Scale
+		this._armatureContainer.addCompleteCallFunc(this._onArmatureComplete, this)
 
-		this.m_rect.width = this.m_data.Width
-		this.m_rect.height = this.m_data.Height
-		this.m_width = this.m_data.Width
-		this.m_height = this.m_data.Height
+		this._rect.width = this._data.Width
+		this._rect.height = this._data.Height
+		this._width = this._data.Width
+		this._height = this._data.Height
 
-		this.ResetGestureData()
+		this.resetGestureData()
 	}
 
-	public ResetGestureData() {
-		this.m_gestureData.length = 0
-		for (let i = 0; i < GameConfig.gestureConfig.length; i++) {
-			if (GameConfig.gestureConfig[i].difficult == EGestureDifficult.Normal) this.m_gestureData.push(GameConfig.gestureConfig[i])
+	public resetGestureData() {
+		this._gestureData.length = 0
+		for (let i = 0; i < this._data.balloon.length; i++) {
+			let id = this._data.balloon[i]
+			if (this._data.balloon.length == 1) id = id.toString()
+			this._gestureData.push(GameConfig.gestureTable[id])
 		}
 	}
 
-	public InitGraph() {
-		this.x = Config.stageWidth + this.m_width / 2
+	public initGraph(x:number, y:number) {
+		this.x = Config.stageWidth + this._width / 2
 		this.y = MathUtils.getRandom(Config.stageHalfHeight - 200, Config.stageHalfHeight + 200)
+		if (x != null && y != null) {
+			this.x = x
+			this.y = y
+		}
 
-		this.GotoIdle()
+		this.gotoIdle()
 		
-		this.m_balloon.Init(this.m_gestureData, this)
-		this._SetBallonPosition(this.m_balloon, 1, 0)
+		this._balloon.init(this._gestureData, this)
+		this._setBallonPosition(this._balloon, 1, 0)
 	}
 
-	public GotoIdle() {
-		this.m_state = EMonsterState.Ready
-		this.m_armatureContainer.play(DragonBonesAnimations.Idle, 0)
+	public gotoIdle() {
+		this._speedX = 0.16 * 1.3
+		this._state = EMonsterState.Ready
+		this._armatureContainer.play(DragonBonesAnimations.Idle, 0)
 	}
 
-	public GotoHurt() {
-		this.m_state = EMonsterState.Hurt
-		this.m_armatureContainer.play(DragonBonesAnimations.Hurt, 1)
+	public gotoHurt() {
+		// this._state = EMonsterState.Hurt
+		this._speedX = 0.05
+		this._armatureContainer.play(DragonBonesAnimations.Hurt, 1)
 	}
 
-	public Destroy() {
-		// this.m_armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
-		this.m_armatureContainer.clear()
-		this.m_effectArmatureContainer.clear()
+	public destroy() {
+		// this._armatureContainer.removeCompleteCallFunc(this._OnArmatureComplet, this)
+		this._armatureContainer.clear()
+		this._effectArmatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
 	}
 
-	public Update(timeElapsed:number) {
-		if (this.m_state == EMonsterState.Ready) {
-			this.x -= timeElapsed * this.m_speedX
-			if (this.x <= -this.m_width / 2) {
-				this.x = -this.m_width / 2
-				this.m_state = EMonsterState.Dead
-				this.Destroy()
-				PanelManager.m_gameScenePanel.RemoveLuckyActor(this)
-				// this.GotoRun()
+	public update(timeElapsed:number) {
+		if (this._state == EMonsterState.Ready) {
+			this.x -= timeElapsed * this._speedX
+			if (this.x <= -this._width / 2) {
+				this.x = -this._width / 2
+				this._state = EMonsterState.Dead
+				this.destroy()
+				PanelManager.gameScenePanel.removeLuckyActor(this)
+				// this.gotoRun()
 			}
 		}
 	}
 
-	public UpdateGesture() {
-		this.m_balloon.UpdateColorAndGesture()
-		let channel = GameVoice.ballonBoomSound.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
-		GameConfig.balloonScore += this.m_balloon.Score
-		PanelManager.m_gameScenePanel.Boom = true
-		this.GotoHurt()
+	public updateGesture() {
+		// if (this._state == EMonsterState.Ready) {
+			this._balloon.updateColorAndGesture()
+			let channel = GameVoice.ballonBoomSound.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+			GameConfig.balloonScore += this._balloon.score
+			PanelManager.gameScenePanel.boom = true
+			this.gotoHurt()
+		// }
+		
 	}
 
 	public get ballon() {
-		return this.m_balloon
+		return this._balloon
 	}
 
-	private _OnArmatureComplete() {
-		if (this.m_state == EMonsterState.Hurt) {
-			this.GotoIdle()
-		}
+	private _onArmatureComplete() {
+		// if (this._state == EMonsterState.Hurt) {
+			this.gotoIdle()
+		// }
 	}
 
-	private _RandomLuckyActorData():any {
-		let random = MathUtils.getRandom(1, this.m_sumWeight)
+	private _randomLuckyActorData():any {
+		let random = MathUtils.getRandom(1, this._sumWeight)
 		for (let i = 0; i < GameConfig.luckyConfig.length; i++)
 		{
 			if (random <= GameConfig.luckyConfig[i].weight)
@@ -132,8 +143,8 @@ class LuckyActor extends BaseActor{
 		return null
 	}
 
-	private m_sumWeight:number
+	private _sumWeight:number
 	//////////////////////////////////////////////////////////////////
-	private m_balloon:Balloon
-	private m_score:number
+	private _balloon:Balloon
+	private _score:number
 }

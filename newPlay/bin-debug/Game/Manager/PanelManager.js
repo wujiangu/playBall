@@ -4,137 +4,150 @@
  */
 var PanelManager;
 (function (PanelManager) {
-    function _OpenBottomBtnPanel() {
-        if (PanelManager.m_bottomBtnPanel == null) {
-            PanelManager.m_bottomBtnPanel = new BottomBtnPanel();
+    function _openGameStartPanel() {
+        if (PanelManager.gameStartPanel == null) {
+            PanelManager.gameStartPanel = new GameStartPanel();
         }
-        PanelManager.m_bottomBtnPanel.onEnter();
+        PanelManager.gameStartPanel.onEnter();
     }
-    function _CloseBottomBtnPanel() {
-        if (PanelManager.m_bottomBtnPanel != null) {
-            PanelManager.m_bottomBtnPanel.onExit();
-        }
-    }
-    function _OpenGameStartPanel() {
-        if (PanelManager.m_gameStartPanel == null) {
-            PanelManager.m_gameStartPanel = new GameStartPanel();
-        }
-        PanelManager.m_gameStartPanel.onEnter();
-    }
-    function _CloseGameStartPanel() {
-        if (PanelManager.m_gameStartPanel != null) {
-            PanelManager.m_gameStartPanel.onExit();
+    function _closeGameStartPanel() {
+        if (PanelManager.gameStartPanel != null) {
+            PanelManager.gameStartPanel.onExit();
         }
     }
-    function _OpenBackpackPanel() {
-        if (PanelManager.m_backpackPanel == null) {
-            PanelManager.m_backpackPanel = new BackpackPanel();
+    function _openGameScenePanel() {
+        if (PanelManager.gameScenePanel == null) {
+            PanelManager.gameScenePanel = new GameScenePanel();
         }
-        PanelManager.m_backpackPanel.onEnter();
+        PanelManager.gameScenePanel.onEnter();
     }
-    function _CloseBackpackPanel() {
-        if (PanelManager.m_backpackPanel != null) {
-            PanelManager.m_backpackPanel.onExit();
-        }
-    }
-    function _OpenGameScenePanel() {
-        if (PanelManager.m_gameScenePanel == null) {
-            PanelManager.m_gameScenePanel = new GameScenePanel();
-        }
-        PanelManager.m_gameScenePanel.onEnter();
-    }
-    function _CloseGameScenePanel() {
-        if (PanelManager.m_gameScenePanel != null) {
-            PanelManager.m_gameScenePanel.onExit();
+    function _closeGameScenePanel() {
+        if (PanelManager.gameScenePanel != null) {
+            PanelManager.gameScenePanel.onExit();
         }
     }
-    function _OpenSettingPanel() {
-        if (PanelManager.m_settingPanel == null) {
-            PanelManager.m_settingPanel = new SettingPanel();
+    function _openSettingPanel() {
+        if (PanelManager.settingPanel == null) {
+            PanelManager.settingPanel = new SettingPanel();
         }
-        PanelManager.m_settingPanel.onEnter();
+        PanelManager.settingPanel.onEnter();
     }
-    function _CloseSettingPanel() {
-        if (PanelManager.m_settingPanel != null) {
-            PanelManager.m_settingPanel.onExit();
-        }
-    }
-    function _OpenGameOverPanel() {
-        if (PanelManager.m_gameOverPanel == null) {
-            PanelManager.m_gameOverPanel = new GameOverPanel();
-        }
-        PanelManager.m_gameOverPanel.onEnter();
-    }
-    function _CloseGameOverPanel() {
-        if (PanelManager.m_gameOverPanel != null) {
-            PanelManager.m_gameOverPanel.onExit();
+    function _closeSettingPanel() {
+        if (PanelManager.settingPanel != null) {
+            PanelManager.settingPanel.onExit();
         }
     }
-    function _OpenGamePausePanel() {
-        if (PanelManager.m_gamePausetPanel == null) {
-            PanelManager.m_gamePausetPanel = new GamePausePanel();
+    function _openGameOverPanel() {
+        if (PanelManager.gameOverPanel == null) {
+            PanelManager.gameOverPanel = new GameOverPanel();
         }
-        PanelManager.m_gamePausetPanel.onEnter();
+        PanelManager.gameOverPanel.onEnter();
     }
-    function _CloseGamePausePanel() {
-        if (PanelManager.m_gamePausetPanel != null) {
-            PanelManager.m_gamePausetPanel.onExit();
-        }
-    }
-    function _OpenActorListPanel() {
-        if (PanelManager.m_actorListPanel == null) {
-            PanelManager.m_actorListPanel = new ActorListPanel();
-        }
-        PanelManager.m_actorListPanel.onEnter();
-    }
-    function _CloseActorListPanel() {
-        if (PanelManager.m_actorListPanel != null) {
-            PanelManager.m_actorListPanel.onExit();
+    function _closeGameOverPanel() {
+        if (PanelManager.gameOverPanel != null) {
+            PanelManager.gameOverPanel.onExit();
         }
     }
-    function _OpenGameSelectLevelPanel() {
-        if (PanelManager.m_gameSelectLevel == null) {
-            PanelManager.m_gameSelectLevel = new GameSelectLevel();
+    function _openGamePausePanel() {
+        if (PanelManager.gamePausetPanel == null) {
+            PanelManager.gamePausetPanel = new GamePausePanel();
         }
-        PanelManager.m_gameSelectLevel.onEnter();
+        PanelManager.gamePausetPanel.onEnter();
     }
-    function _CloseGameSelectLevelPanel() {
-        if (PanelManager.m_gameSelectLevel != null) {
-            PanelManager.m_gameSelectLevel.onExit();
+    function _closeGamePausePanel() {
+        if (PanelManager.gamePausetPanel != null) {
+            PanelManager.gamePausetPanel.onExit();
         }
     }
-    function _OpenRechargePanel() {
-        if (PanelManager.m_rechargePanel == null) {
-            PanelManager.m_rechargePanel = new RechargeUI();
+    function _openActorListPanel() {
+        if (PanelManager.actorListPanel == null) {
+            PanelManager.actorListPanel = new ActorListPanel();
         }
-        PanelManager.m_rechargePanel.onEnter();
+        PanelManager.actorListPanel.onEnter();
     }
-    function _CloseRechargePanel() {
-        if (PanelManager.m_rechargePanel != null) {
-            PanelManager.m_rechargePanel.onExit();
+    function _closeActorListPanel() {
+        if (PanelManager.actorListPanel != null) {
+            PanelManager.actorListPanel.onExit();
+        }
+    }
+    function _openGameSelectLevelPanel() {
+        if (PanelManager.gameSelectLevel == null) {
+            PanelManager.gameSelectLevel = new GameSelectLevel();
+        }
+        PanelManager.gameSelectLevel.onEnter();
+    }
+    function _closeGameSelectLevelPanel() {
+        if (PanelManager.gameSelectLevel != null) {
+            PanelManager.gameSelectLevel.onExit();
+        }
+    }
+    function _openRechargePanel() {
+        if (PanelManager.rechargePanel == null) {
+            PanelManager.rechargePanel = new RechargeUI();
+        }
+        PanelManager.rechargePanel.onEnter();
+    }
+    function _closeRechargePanel() {
+        if (PanelManager.rechargePanel != null) {
+            PanelManager.rechargePanel.onExit();
+        }
+    }
+    function _openSignPanel() {
+        if (PanelManager.signPanel == null) {
+            PanelManager.signPanel = new SignPanel();
+        }
+        PanelManager.signPanel.onEnter();
+    }
+    function _closeSignPanel() {
+        if (PanelManager.signPanel != null) {
+            PanelManager.signPanel.onExit();
+        }
+    }
+    function _openCapsulePanel() {
+        if (PanelManager.capsulePanel == null) {
+            PanelManager.capsulePanel = new CapsulePanel();
+        }
+        PanelManager.capsulePanel.onEnter();
+    }
+    function _closeCapsulePanel() {
+        if (PanelManager.capsulePanel != null) {
+            PanelManager.capsulePanel.onExit();
+        }
+    }
+    function _onGetRewardPanel() {
+        if (PanelManager.getRewardPanel == null) {
+            PanelManager.getRewardPanel = new GetRewardUI();
+        }
+        PanelManager.getRewardPanel.onEnter();
+    }
+    function _onCloseRewardPanel() {
+        if (PanelManager.getRewardPanel != null) {
+            PanelManager.getRewardPanel.onExit();
         }
     }
     function initPanel() {
-        Common.addEventListener(MainNotify.openGameStartPanel, _OpenGameStartPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeGameStartPanel, _CloseGameStartPanel, PanelManager);
-        Common.addEventListener(MainNotify.openBottomBtnPanel, _OpenBottomBtnPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeBottomBtnPanel, _CloseBottomBtnPanel, PanelManager);
-        Common.addEventListener(MainNotify.openBackpackPanel, _OpenBackpackPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeBackpackPanel, _CloseBackpackPanel, PanelManager);
-        Common.addEventListener(MainNotify.openGamePanel, _OpenGameScenePanel, PanelManager);
-        Common.addEventListener(MainNotify.closeGamePanel, _CloseGameScenePanel, PanelManager);
-        Common.addEventListener(MainNotify.openSettingPanel, _OpenSettingPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeSettingPanel, _CloseSettingPanel, PanelManager);
-        Common.addEventListener(MainNotify.openGameOverPanel, _OpenGameOverPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeGameOverPanel, _CloseGameOverPanel, PanelManager);
-        Common.addEventListener(MainNotify.openGamePausePanel, _OpenGamePausePanel, PanelManager);
-        Common.addEventListener(MainNotify.closeGamePausePanel, _CloseGamePausePanel, PanelManager);
-        Common.addEventListener(MainNotify.openActorListPanel, _OpenActorListPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeActorListPanel, _CloseActorListPanel, PanelManager);
-        Common.addEventListener(MainNotify.openGameSelectLevel, _OpenGameSelectLevelPanel, PanelManager);
-        Common.addEventListener(MainNotify.closeGameSelectLevel, _CloseGameSelectLevelPanel, PanelManager);
-        Common.addEventListener(MainNotify.openRechargePanel, _OpenRechargePanel, PanelManager);
-        Common.addEventListener(MainNotify.closeRechargePanel, _CloseRechargePanel, PanelManager);
+        Common.addEventListener(MainNotify.openGameStartPanel, _openGameStartPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGameStartPanel, _closeGameStartPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGamePanel, _openGameScenePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGamePanel, _closeGameScenePanel, PanelManager);
+        Common.addEventListener(MainNotify.openSettingPanel, _openSettingPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeSettingPanel, _closeSettingPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGameOverPanel, _openGameOverPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGameOverPanel, _closeGameOverPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGamePausePanel, _openGamePausePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGamePausePanel, _closeGamePausePanel, PanelManager);
+        Common.addEventListener(MainNotify.openActorListPanel, _openActorListPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeActorListPanel, _closeActorListPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGameSelectLevel, _openGameSelectLevelPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGameSelectLevel, _closeGameSelectLevelPanel, PanelManager);
+        Common.addEventListener(MainNotify.openRechargePanel, _openRechargePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeRechargePanel, _closeRechargePanel, PanelManager);
+        Common.addEventListener(MainNotify.openSignPanel, _openSignPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeSignPanel, _closeSignPanel, PanelManager);
+        Common.addEventListener(MainNotify.openCapsulePanel, _openCapsulePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeCapsulePanel, _closeCapsulePanel, PanelManager);
+        Common.addEventListener(MainNotify.openGetRewardPanel, _onGetRewardPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGetRewardPanel, _onCloseRewardPanel, PanelManager);
     }
     PanelManager.initPanel = initPanel;
 })(PanelManager || (PanelManager = {}));

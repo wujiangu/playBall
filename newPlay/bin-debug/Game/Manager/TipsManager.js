@@ -6,7 +6,7 @@ var ETipsType;
 var TipsManager;
 (function (TipsManager) {
     var _tips = [];
-    function Show(a_str, a_color, a_type, a_size, a_bg, a_x, a_y) {
+    function show(a_str, a_color, a_type, a_size, a_bg, a_x, a_y) {
         if (a_color === void 0) { a_color = Common.TextColors.red; }
         if (a_type === void 0) { a_type = ETipsType.DownToUp; }
         if (a_size === void 0) { a_size = 40; }
@@ -18,7 +18,7 @@ var TipsManager;
         tips.data.descColor = a_color;
         tips.data.descSize = a_size;
         tips.data.tipsBg = a_bg;
-        tips.Init();
+        tips.init();
         tips.anchorOffsetX = tips.width / 2;
         tips.anchorOffsetY = tips.height / 2;
         tips.x = a_x;
@@ -40,7 +40,7 @@ var TipsManager;
             }
         }
     }
-    TipsManager.Show = Show;
+    TipsManager.show = show;
     /**
     * 移除tips方法
     */

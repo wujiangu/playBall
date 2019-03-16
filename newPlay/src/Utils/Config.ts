@@ -6,7 +6,7 @@ class Config {
 	// public static groundHeight:number = 0
 	// public static test:number = 0
 	// // 手势的类型
-	// public static GestureType:number = -1
+	// public static gestureType:number = -1
 
 	// public static WolfConfig:Array<any>
 

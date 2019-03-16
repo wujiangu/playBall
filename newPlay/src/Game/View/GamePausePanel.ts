@@ -28,39 +28,39 @@ class GamePausePanel extends BasePanel {
 		this.hide.play(0)
     }
 
-	private _OnBtnReturn() {
-		this.m_state = EGamePauseState.Return
+	private _onBtnReturn() {
+		this._state = EGamePauseState.Return
 		Common.dispatchEvent(MainNotify.closeGamePausePanel)
 	}
 
-	private _OnBtnAgain() {
-		this.m_state = EGamePauseState.Again
+	private _onBtnAgain() {
+		this._state = EGamePauseState.Again
 		Common.dispatchEvent(MainNotify.closeGamePausePanel)
 	}
 
-	private _OnBtnContinue() {
-		this.m_state = EGamePauseState.Continue
+	private _onBtnContinue() {
+		this._state = EGamePauseState.Continue
 		Common.dispatchEvent(MainNotify.closeGamePausePanel)
 		// GameManager.Instance.Start()
 	}
 
-	private _OnShow() {
+	private _onShow() {
 		this.touchChildren = true
 	}
 
-	private _OnHide() {
+	private _onHide() {
 		Common.gameScene().uiLayer.removeChild(this)
 
-		switch (this.m_state) {
+		switch (this._state) {
 			case EGamePauseState.Continue:
-				GameManager.Instance.Start()
+				GameManager.Instance.start()
 			break
 			case EGamePauseState.Again:
-				GameManager.Instance.Start()
-				PanelManager.m_gameScenePanel.Init()
+				GameManager.Instance.start()
+				PanelManager.gameScenePanel.init()
 			break
 			case EGamePauseState.Return:
-				GameManager.Instance.GameState = EGameState.Ready
+				GameManager.Instance.gameState = EGameState.Ready
 				Common.dispatchEvent(MainNotify.closeGamePanel)
 				Common.dispatchEvent(MainNotify.openGameStartPanel)
 			break
@@ -69,24 +69,24 @@ class GamePausePanel extends BasePanel {
 
 	private onComplete() {
 		
-		this._OnResize()
+		this._onResize()
 
-		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnReturn, this)
-		this.m_btnContinue.addEventListener(egret.TouchEvent.TOUCH_TAP, this._OnBtnContinue, this)
+		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
+		this.m_btnContinue.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnContinue, this)
 
 
 
 		Common.addTouchBegin(this.m_btnReturn)
 		Common.addTouchBegin(this.m_btnContinue)
-		this.show.addEventListener('complete', this._OnShow, this)
-		this.hide.addEventListener('complete', this._OnHide, this)
+		this.show.addEventListener('complete', this._onShow, this)
+		this.hide.addEventListener('complete', this._onHide, this)
 	}
 
-    protected _OnResize(event:egret.Event = null)
+    protected _onResize(event:egret.Event = null)
     {
 		
     }
-	private m_state:EGamePauseState
+	private _state:EGamePauseState
 
 	private m_btnReturn:eui.Button
 	private m_btnContinue:eui.Button

@@ -17,6 +17,13 @@ var EGamePauseState;
     EGamePauseState[EGamePauseState["Again"] = 2] = "Again";
     EGamePauseState[EGamePauseState["Return"] = 3] = "Return";
 })(EGamePauseState || (EGamePauseState = {}));
+// 面板切换状态
+var EPanelState;
+(function (EPanelState) {
+    EPanelState[EPanelState["EnterLevelSelect"] = 1] = "EnterLevelSelect";
+    EPanelState[EPanelState["EnterBabyList"] = 2] = "EnterBabyList";
+    EPanelState[EPanelState["EnterBattle"] = 3] = "EnterBattle";
+})(EPanelState || (EPanelState = {}));
 // 游戏面板动画
 var EPanelAnimation;
 (function (EPanelAnimation) {
@@ -93,12 +100,14 @@ var EMonsterState;
 // 手势难度
 var EGestureDifficult;
 (function (EGestureDifficult) {
+    EGestureDifficult[EGestureDifficult["Easy"] = -1] = "Easy";
     EGestureDifficult[EGestureDifficult["Mix"] = 0] = "Mix";
     EGestureDifficult[EGestureDifficult["Normal"] = 1] = "Normal";
-    EGestureDifficult[EGestureDifficult["Hard"] = 2] = "Hard";
-    EGestureDifficult[EGestureDifficult["NAndH"] = 3] = "NAndH";
-    EGestureDifficult[EGestureDifficult["NAndHH"] = 4] = "NAndHH";
-    EGestureDifficult[EGestureDifficult["NNAndH"] = 5] = "NNAndH";
+    EGestureDifficult[EGestureDifficult["Center"] = 2] = "Center";
+    EGestureDifficult[EGestureDifficult["Hard"] = 3] = "Hard";
+    EGestureDifficult[EGestureDifficult["NAndH"] = 4] = "NAndH";
+    EGestureDifficult[EGestureDifficult["NAndHH"] = 5] = "NAndHH";
+    EGestureDifficult[EGestureDifficult["NNAndH"] = 6] = "NNAndH";
 })(EGestureDifficult || (EGestureDifficult = {}));
 // 怪物的类型
 var EMonsterType;
@@ -142,4 +151,28 @@ var ELevelType;
     ELevelType[ELevelType["Boss"] = 4] = "Boss";
     ELevelType[ELevelType["End"] = 5] = "End";
 })(ELevelType || (ELevelType = {}));
+/**签到奖励类型 */
+var EReward;
+(function (EReward) {
+    EReward[EReward["Candy"] = 1] = "Candy";
+    EReward[EReward["AssignBaby"] = 2] = "AssignBaby";
+    EReward[EReward["GreenBaby"] = 3] = "GreenBaby";
+    EReward[EReward["BlueBaby"] = 4] = "BlueBaby";
+    EReward[EReward["PurpleBaby"] = 5] = "PurpleBaby";
+})(EReward || (EReward = {}));
+/**抽奖奖励类型 */
+var ECapsule;
+(function (ECapsule) {
+    ECapsule[ECapsule["Candy"] = 1] = "Candy";
+    ECapsule[ECapsule["GreenBaby"] = 2] = "GreenBaby";
+    ECapsule[ECapsule["BlueBaby"] = 3] = "BlueBaby";
+    ECapsule[ECapsule["PurpleBaby"] = 4] = "PurpleBaby";
+})(ECapsule || (ECapsule = {}));
+/**宝宝品质 */
+var EBabyQuality;
+(function (EBabyQuality) {
+    EBabyQuality[EBabyQuality["Green"] = 1] = "Green";
+    EBabyQuality[EBabyQuality["Blue"] = 2] = "Blue";
+    EBabyQuality[EBabyQuality["Purple"] = 3] = "Purple";
+})(EBabyQuality || (EBabyQuality = {}));
 //# sourceMappingURL=GameEnum.js.map

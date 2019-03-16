@@ -9,7 +9,7 @@ var Gesture = (function () {
     // private _gestureSound:egret.Sound
     // private _gestureColor:any
     //{"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
-    Gesture.prototype.Init = function () {
+    Gesture.prototype.init = function () {
         // this._gestureColor = {}
         this._gestureData = [];
         this._gestureRes = RES.getRes("gesture_json");
@@ -39,24 +39,24 @@ var Gesture = (function () {
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         // egret.MainContext.instance.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.mouseDown, this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_END, this.mouseUp, this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.mouseUp, this);
-        this._group.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._mouseDown, this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_END, this._mouseUp, this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._mouseUp, this);
+        this._group.addEventListener(egret.TouchEvent.TOUCH_MOVE, this._mouseMove, this);
     };
     Gesture.prototype.removeEvent = function () {
         this._layer.graphics.clear();
-        // PanelManager.gamePanel.SetParticle(false, 0, 0)
+        // PanelManager.gamePanel.setParticle(false, 0, 0)
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.mouseDown,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.mouseUp,this);
         // egret.MainContext.instance.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.mouseMove,this);
-        // PanelManager.m_gameScenePanel.SetParticle(false, 0, 0)
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.mouseDown, this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_END, this.mouseUp, this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.mouseUp, this);
-        this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.mouseMove, this);
+        // PanelManager.gameScenePanel.setParticle(false, 0, 0)
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this._mouseDown, this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_END, this._mouseUp, this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._mouseUp, this);
+        this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this._mouseMove, this);
     };
-    Gesture.prototype.mouseDown = function (evt) {
+    Gesture.prototype._mouseDown = function (evt) {
         if (this._isDown)
             return;
         this._isDown = true;
@@ -70,11 +70,11 @@ var Gesture = (function () {
         this._lineData.push(p);
         this._currentPoint = p;
         // this._layer.graphics.moveTo(this._currentPoint.x,this._currentPoint.y);
-        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
-        // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
+        // PanelManager.gamePanel.setParticle(true, p.x, p.y)
         // Common.dispatchEvent(MainNotify.beginLocus)
     };
-    Gesture.prototype.mouseMove = function (evt) {
+    Gesture.prototype._mouseMove = function (evt) {
         if (!this._isDown)
             return;
         // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
@@ -147,10 +147,10 @@ var Gesture = (function () {
         this._layer.graphics.lineTo(p.x, p.y);
         this._layer.graphics.endFill();
         this._currentPoint = p;
-        // PanelManager.m_gameScenePanel.SetParticle(true, p.x, p.y)
-        // PanelManager.gamePanel.SetParticle(true, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
+        // PanelManager.gamePanel.setParticle(true, p.x, p.y)
     };
-    Gesture.prototype.mouseUp = function (evt) {
+    Gesture.prototype._mouseUp = function (evt) {
         if (!this._isDown)
             return;
         this._isDown = false;
@@ -161,12 +161,12 @@ var Gesture = (function () {
         this._layer.graphics.clear();
         // this._layer.graphics.lineStyle(8, 0xff0000, 0.8)
         // this._layer.graphics.endFill();
-        // PanelManager.gamePanel.SetParticle(false, p.x, p.y)
-        // PanelManager.m_gameScenePanel.SetParticle(false, p.x, p.y)
-        this.motion();
+        // PanelManager.gamePanel.setParticle(false, p.x, p.y)
+        // PanelManager.gameScenePanel.setParticle(false, p.x, p.y)
+        this._motion();
         // this._gestureSound.play(0, 1)
     };
-    Gesture.prototype.motion = function () {
+    Gesture.prototype._motion = function () {
         var _arr = [];
         var currentIndex = 0;
         var len = this._mouseDatas.length;
@@ -193,20 +193,20 @@ var Gesture = (function () {
                 var b = egret.Point.distance(p1, p2);
                 var rad = Math.asin(a / b);
                 var ang = Number((rad * 57.2957800).toFixed(1)); // rad * 180/Math.PI 直接求常量，优化
-                var quad = this.quadrant(p1, p2);
-                var dir = this.getDirByAngQuad(ang, quad);
+                var quad = this._quadrant(p1, p2);
+                var dir = this._getDirByAngQuad(ang, quad);
                 this._dirsArr.push(dir);
                 // console.log("quad: ",quad, "ang: ", ang);
             }
         }
         //console.log(this._dirsArr);
-        var dirstr = this.repDiff(this._dirsArr);
+        var dirstr = this._repDiff(this._dirsArr);
         // console.log( dirstr );
-        var rel = this.sweep(dirstr);
+        var rel = this._sweep(dirstr);
         // console.log("type------------->: ",rel);
-        this.disEvent(rel);
+        this._disEvent(rel);
     };
-    Gesture.prototype.disEvent = function (type) {
+    Gesture.prototype._disEvent = function (type) {
         GameConfig.gestureType = type;
         if (type != -1) {
             Common.dispatchEvent(MainNotify.gestureAction);
@@ -220,7 +220,7 @@ var Gesture = (function () {
                             this._lineData.splice(i_1, 1);
                         }
                     }
-                    this._BezierInterpolation();
+                    this._bezierInterpolation();
                     // for (let j = 0; j < this._lineData.length; j+=4) {
                     //     let x0 = this._lineData[j].x
                     //     let y0 = this._lineData[j].y
@@ -270,7 +270,7 @@ var Gesture = (function () {
         }
     };
     // 贝塞尔插值算法
-    Gesture.prototype._BezierInterpolation = function () {
+    Gesture.prototype._bezierInterpolation = function () {
         var scale = 0.6;
         var midpoints = [];
         //生成中点   
@@ -349,12 +349,12 @@ var Gesture = (function () {
     // ^ 3
     // 6 4
     // z 5
-    Gesture.prototype.sweep = function (str) {
+    Gesture.prototype._sweep = function (str) {
         var maxType = -1;
         var max = -1;
         var len = this._gestureData.length;
         for (var i = 0; i < len; i++) {
-            var val = this.Levenshtein_Distance_Percent(this._gestureData[i].data, str);
+            var val = this._levenshteinDistancePercent(this._gestureData[i].data, str);
             if (val > max) {
                 max = val;
                 maxType = this._gestureData[i].type;
@@ -368,7 +368,7 @@ var Gesture = (function () {
     /*
     对比去重
      */
-    Gesture.prototype.repDiff = function (data) {
+    Gesture.prototype._repDiff = function (data) {
         var str = "";
         var len = data.length;
         var currentType = 0;
@@ -384,7 +384,7 @@ var Gesture = (function () {
     根据所在象限与角度计算出方向编号。
     方向编号，以第一象限0度为基础，按照顺时针方向，将圆等分为8份。
      */
-    Gesture.prototype.getDirByAngQuad = function (ang, quad) {
+    Gesture.prototype._getDirByAngQuad = function (ang, quad) {
         switch (quad) {
             case 1:
                 if (ang <= 22.5 && ang >= 0) {
@@ -432,7 +432,7 @@ var Gesture = (function () {
     计算两点关系所形成的象限
     以P1 作为坐标原点，P2为设定点，判断P2相对于P1时所在象限
      */
-    Gesture.prototype.quadrant = function (p1, p2) {
+    Gesture.prototype._quadrant = function (p1, p2) {
         if (p2.x >= p1.x) {
             if (p2.y <= p1.y) {
                 return 1;
@@ -450,7 +450,7 @@ var Gesture = (function () {
             }
         }
     };
-    Gesture.prototype.Levenshtein_Distance = function (s, t) {
+    Gesture.prototype._levenshteinDistance = function (s, t) {
         var n = s.length; // length of s
         var m = t.length; // length of t
         var d = []; // matrix
@@ -486,18 +486,18 @@ var Gesture = (function () {
                     cost = 1;
                 }
                 // Step 6
-                d[i][j] = this.Minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+                d[i][j] = this._minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
             }
         }
         // Step 7
         return d[n][m];
     };
-    Gesture.prototype.Levenshtein_Distance_Percent = function (s, t) {
+    Gesture.prototype._levenshteinDistancePercent = function (s, t) {
         var l = s.length > t.length ? s.length : t.length;
-        var d = this.Levenshtein_Distance(s, t);
+        var d = this._levenshteinDistance(s, t);
         return (1 - d / l); //.toFixed(4);
     };
-    Gesture.prototype.Minimum = function (a, b, c) {
+    Gesture.prototype._minimum = function (a, b, c) {
         return a < b ? (a < c ? a : c) : (b < c ? b : c);
     };
     return Gesture;

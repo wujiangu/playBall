@@ -1,32 +1,32 @@
 class Bullet extends egret.DisplayObjectContainer {
 	public constructor() {
 		super()
-		this.m_armatureContainer = new DragonBonesArmatureContainer()
-		this.addChild(this.m_armatureContainer)
+		this._armatureContainer = new DragonBonesArmatureContainer()
+		this.addChild(this._armatureContainer)
 	}
 
 	public Init(target:BaseActor, name:string, type:EEffectType) {
 		this.m_target = target
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(name, name)
-		if (this.m_armature == null) {
-			this.m_armature = new DragonBonesArmature(armatureDisplay)
+		if (this._armature == null) {
+			this._armature = new DragonBonesArmature(armatureDisplay)
 		}
-		this.m_armature.ArmatureDisplay = armatureDisplay
-		this.m_armatureContainer.register(this.m_armature,[name])
-		this.m_armatureContainer.play(name, 0)
+		this._armature.ArmatureDisplay = armatureDisplay
+		this._armatureContainer.register(this._armature,[name])
+		this._armatureContainer.play(name, 0)
 
 		this.m_isDead = false
 
-		this.m_type = type
+		this._type = type
 	}
 
-	public Destroy() {
+	public destroy() {
 		this.m_isDead = true
-		this.m_armatureContainer.clear()
+		this._armatureContainer.clear()
 		GameObjectPool.getInstance().destroyObject(this)
 	}
 	
-	public Update(timeElapsed:number) {
+	public update(timeElapsed:number) {
 		if (this.m_isDead) return
 		let endY = this.m_target.y - this.m_target.h / 2
 		this.m_radian = MathUtils.getRadian2(this.x, this.y, this.m_target.x, endY)
@@ -34,10 +34,10 @@ class Bullet extends egret.DisplayObjectContainer {
 		let distance:number = MathUtils.getDistance(this.m_target.x, endY, this.x, this.y)
 		// Common.log(this.m_radian, this.rotation, distance)
 		if (distance <= 140) {
-			this.Destroy()
-			PanelManager.m_gameScenePanel.RemoveBullet(this)
-			if (this.m_type == EEffectType.Fire) {
-				// this.m_target.PlayEffect()
+			this.destroy()
+			PanelManager.gameScenePanel.removeBullet(this)
+			if (this._type == EEffectType.Fire) {
+				// this.m_target.playEffect()
 				let channel = GameVoice.burnSound.play(0, 1)
 				channel.volume = GameConfig.soundValue / 100
 			}
@@ -54,12 +54,12 @@ class Bullet extends egret.DisplayObjectContainer {
 
 
 	private m_target:BaseActor
-	private m_armatureContainer:DragonBonesArmatureContainer
-	private m_armature:DragonBonesArmature
+	private _armatureContainer:DragonBonesArmatureContainer
+	private _armature:DragonBonesArmature
 
 	private m_radian:number
 
 	private m_isDead:boolean
 
-	private m_type:EEffectType
+	private _type:EEffectType
 }

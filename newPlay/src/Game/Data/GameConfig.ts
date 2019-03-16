@@ -3,6 +3,7 @@ class GameConfig {
 	public static isWebView = true
 	public static monsterConfig:Array<any>
 	public static luckyConfig:Array<any>
+	public static luckyTable:any
 
 	public static summonConfig:any
 	public static summonTable:any
@@ -10,7 +11,7 @@ class GameConfig {
 	public static levelTable:any
 
 	public static gestureConfig:Array<any>
-	public static itemConfig:Array<any>
+	public static gestureTable:any
 	public static summonSkillConfig:Array<any>
 	public static summonSkillTable:any
 	public static actorConfig:Array<any>
@@ -18,23 +19,26 @@ class GameConfig {
 	public static chapterConfig:Array<any>
 	public static chapterTable:any
 	public static babySkillTable:any
-
-	public static itemTable:any
-	public static itemUseTable:Array<number>
-	public static itemUse:number
-	public static itemUnlockList:Array<number>
 	public static effectTable:any
 	public static monsterTable:any
+	public static signConfig:Array<any>
+	public static signTable:any
+	public static capsuleConfig:Array<any>
+	public static capsuleTable:any
 
 	public static gestureType:number
 	public static baseFallSpeed:number = 0.1
 
 	public static monsterAddDelay:number = 2000
-	public static luckyActorAddDelay:number = 18000
+	public static luckyActorAddDelay:number = 23000
 	public static slowDuration:number = 3000
 	public static comboDelay:number = 1000
 	public static spiderDelay:number = 4000
+	public static rewardData:any
+	public static rewardType:EReward
+	public static rewardCandy:number
 
+	public static isOpenNewChapter:boolean
 	public static account:string
 	public static curScore:number
 	public static maxScore:number
@@ -44,9 +48,10 @@ class GameConfig {
 	public static soundValue:number = 100
 	public static balloonScore:number
 	public static monsterPos:number = 1
-	public static testSelectLevel:number = 10001
 	public static gameSpeedPercent:number = 0
 	public static isGuide:boolean = false
+
+	public static babylistIndex:number
 	public static guideIndex:number
 	// 当前的宝宝
 	public static curBaby:number
@@ -61,11 +66,24 @@ class GameConfig {
 	public static curLevel:number
 	// 挑战进度(章节)
 	public static curChpter:number
+	// 糖果数量
+	public static candy:number
+	// 上次登录时间
+	public static lastLoginTime:string
+	// 签到标记(0:未签到 1:已签到)
+	public static sign:number = 0
+	// 签到次数
+	public static signCount:number = 0
+	// 当前挑战的章节
+	public static curBattleChapter = 0
+
+	// 临时配置，后续修改
+	public static sceneType:number = 0
 
 	/**
      * 初始化骨骼的动画数据
      */
-    public static InitBattleDragonBones(name:string):void {
+    public static initBattleDragonBones(name:string):void {
 		let skeletonData = RES.getRes(name+"_ske_json")
         let textureData = RES.getRes(name+"_tex_json")
         let texture = RES.getRes(name+"_tex_png")
@@ -73,7 +91,7 @@ class GameConfig {
     }
 
 
-	public static InitSound() {
+	public static initSound() {
 		GameVoice.beginBGMSound = RES.getRes(GameVoice.beginBGM_mp3)
 		GameVoice.battleBGMSound = RES.getRes(GameVoice.battleBGM_mp3)
 		GameVoice.btnSound = RES.getRes(GameVoice.btn_mp3)
@@ -97,50 +115,17 @@ class GameConfig {
 		GameVoice.spideBall = RES.getRes(GameVoice.spideBall_mp3)
 		GameVoice.summon = RES.getRes(GameVoice.summon_mp3)
 		GameVoice.unlockItem = RES.getRes(GameVoice.unlockItem_mp3)
+		GameVoice.battleBefore = RES.getRes(GameVoice.battleBefore_mp3)
+		GameVoice.vectory = RES.getRes(GameVoice.vectory_mp3)
+		GameVoice.rewardBGM = RES.getRes(GameVoice.rewardBGM_mp3)
+		GameVoice.rewardVoice = RES.getRes(GameVoice.rewardVoice_mp3)
+		GameVoice.gestureVoice = RES.getRes(GameVoice.gesture_mp3)
 	}
 
-	public static Init() {
+	public static init() {
 		this.summonConfig = RES.getRes("summonConfig_json")
 		this.levelConfig = RES.getRes("levelConfig_json")
-		this.itemConfig = RES.getRes("itemConfig_json")
 		this.summonSkillConfig = RES.getRes("summonSkillConfig_json")
-		this.itemTable = {}
-		// this.itemUseTable = new Array()
-		// this.itemUseTable.push(1003)
-		let itemList = {}
-		for (let i = 0; i < this.itemUseTable.length; i++) {
-			itemList[this.itemUseTable[i].toString()] = 1
-		}
-
-		let unlockList = {}
-		for (let i = 0; i < this.itemUnlockList.length; i++) {
-			unlockList[this.itemUnlockList[i].toString()] = 1
-		}
-
-		for (let i = 0; i < this.itemConfig.length; i++) {
-			let config = this.itemConfig[i]
-			let data = {}
-			data["ID"] = config.ID
-			data["Name"] = config.Name
-			data["Desc"] = config.Desc
-			data["LockDesc"] = config.LockDesc
-			data["Bg"] = config.Bg
-			data["Icon"] = config.Icon
-			data["LockIcon"] = config.LockIcon
-			data["ItemBg"] = config.ItemBg
-			data["Scene"] = config.Scene
-			data["Sun"] = config.Sun
-			data["cloud1"] = config.cloud1
-			data["cloud2"] = config.cloud2
-			data["cloud3"] = config.cloud3
-			data["Open"] = config.Open
-			data["Effect"] = config.Effect
-			data["IsUse"] = 0
-			if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0) data["IsUse"] = 1
-			if (unlockList[config.ID.toString()] != null && unlockList[config.ID.toString()] > 0) data["Open"] = true
-			this.itemTable[config.ID.toString()] = data
-		}
-
 		let effectConfig:Array<any> = RES.getRes("effectConfig_json")
 		this.effectTable = {}
 		for (let i = 0; i < effectConfig.length; i++) {
@@ -148,20 +133,51 @@ class GameConfig {
 			let data = {}
 			data["ID"] = config.ID
 			data["name"] = config.name
-			data["release"] = config.release
-			data["bullet"] = config.bullet
-			data["step1"] = config.step1
-			data["step2"] = config.step2
-			data["type"] = config.type
-			data["count"] = config.count
 			this.effectTable[config.ID.toString()] = data
-			this.InitBattleDragonBones(config.name)
+			this.initBattleDragonBones(config.name)
 		}
-
 
 		this.monsterConfig = RES.getRes("monsterConfig_json")
         this.gestureConfig = RES.getRes("gesture_json")
         this.luckyConfig = RES.getRes("luckyConfig_json")
+
+		this.luckyTable = {}
+		for (let i = 0; i < this.luckyConfig.length; i++) {
+            let config = this.luckyConfig[i]
+			let data = {}
+			data["ID"] = config.ID
+			data["Type"] = config.Type
+			data["Animation"] = config.Animation
+			data["Speed"] = config.Speed
+			data["Score"] = config.Score
+			data["Power"] = config.Power
+			data["Scale"] = config.Scale
+			data["Width"] = config.Width
+			data["Height"] = config.Height
+			data["Prob"] = config.Prob
+			data["balloon"] = config.balloon
+			this.luckyTable[config.ID.toString()] = data
+			if (config.Animation != null && config.Animation != "") {
+				this.initBattleDragonBones(config.Animation)
+			}
+        }
+
+
+		this.gestureTable = {}
+		for (let i = 0; i < this.gestureConfig.length; i++) {
+			let config = this.gestureConfig[i]
+			let data = {}
+			data["difficult"] = config.difficult
+			data["type"] = config.type
+			data["data"] = config.data
+			data["count"] = config.count
+			data["path"] = config.path
+			data["balloon"] = config.balloon
+			data["color"] = config.color
+			this.gestureTable[config.type.toString()] = data
+		}
+
+
 		this.monsterTable = {}
         for (let i = 0; i < this.monsterConfig.length; i++) {
             let config = this.monsterConfig[i]
@@ -182,21 +198,16 @@ class GameConfig {
 			data["BalloonY"] = config.BalloonY
 			this.monsterTable[config.ID.toString()] = data
 			if (config.Animation != null && config.Animation != "") {
-				this.InitBattleDragonBones(config.Animation)
+				this.initBattleDragonBones(config.Animation)
 			}
         }
 
-        for (let i = 0; i < this.luckyConfig.length; i++) {
-            let data = this.luckyConfig[i]
-            this.InitBattleDragonBones(data.Animation)
-        }
-
-		this.InitConfig()
-		this.InitSound()
-		Common.GetGuide()
+		this.initConfig()
+		this.initSound()
+		Common.getGuide()
 	}
 
-	public static InitConfig() {
+	public static initConfig() {
 		this.summonTable = {}
         for (let i = 0; i < this.summonConfig.length; i++) {
             let config = this.summonConfig[i]
@@ -224,11 +235,12 @@ class GameConfig {
 			data["addTime"] = config.addTime
 			data["speed"] = config.speed
 			data["normalCount"] = config.normalCount
-			data["eliteCount"] = config.eliteCount
+			data["candy"] = config.candy
 			data["unlockItem"] = config.unlockItem
 			data["normal"] = config.normal
 			data["elite"] = config.elite
 			data["section"] = config.section
+			data["level"] = config.level
 			if (config.key != null && config.key > 0) {
 				this.levelTable[config.key.toString()] = data
 			}
@@ -258,7 +270,11 @@ class GameConfig {
 			data["id"] = config.id
 			data["level"] = config.level
 			data["nextId"] = config.nextId
+			data["quality"] = config.quality
+			data["weight"] = config.weight
+			data["candy"] = config.candy
 			data["name"] = config.name
+			data["unlockDesc"] = config.unlockDesc
 			data["desc"] = config.desc
 			data["action"] = config.action
 			data["icon"] = config.icon
@@ -266,10 +282,11 @@ class GameConfig {
 			data["direction"] = config.direction
 			data["skillId"] = config.skillId
 			data["fusion"] = config.fusion
+			data["range"] = 0
 			if (config.level <= 1) this.babyOpenList.push(config.id)
 			this.actorTable[config.id.toString()] = data
 			if (config.action != null && config.action != "") {
-				this.InitBattleDragonBones(config.action)
+				this.initBattleDragonBones(config.action)
 			}
 		}
 		// 修改开放宝宝表数据
@@ -299,6 +316,10 @@ class GameConfig {
 			data["bg"] = config.bg
 			data["bgm"] = config.bgm
 			data["begin"] = config.begin
+			data["sun"] = config.sun
+			data["cloud1"] = config.cloud1
+			data["cloud2"] = config.cloud2
+			data["water"] = config.water
 			this.chapterTable[config.id.toString()] = data
 		}
 
@@ -322,7 +343,40 @@ class GameConfig {
 			data["sceneEffect"] = config.sceneEffect
 			data["skillPosY"] = config.skillPosY
 			data["rangeType"] = config.rangeType
+			data["music"] = config.music
+			data["scale"] = config.scale
 			this.babySkillTable[config.id.toString()] = data
+		}
+
+		this.signConfig = RES.getRes("signConfig_json")
+		this.signTable = {}
+		for (let i = 0; i < this.signConfig.length; i++) {
+			let config = this.signConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["name"] = config.name
+			data["desc"] = config.desc
+			data["boss"] = config.boss
+			data["rewardType"] = config.rewardType
+			data["reward"] = config.reward
+			data["icon"] = config.icon
+			data["isGet"] = false
+			if (i < this.signCount) data["isGet"] = true
+			if (i == this.signCount && this.sign == 1) data["isGet"] = true
+			this.signTable[config.id.toString()] = data
+		}
+
+		this.capsuleConfig = RES.getRes("capsuleConfig_json")
+		this.capsuleTable = {}
+		for (let i = 0; i < this.capsuleConfig.length; i++) {
+			let config = this.capsuleConfig[i]
+			let data = {}
+			data["id"] = config.id
+			data["type"] = config.type
+			data["value"] = config.value
+			data["weight"] = config.weight
+			data["range"] = 0
+			this.capsuleTable[config.id.toString()] = data
 		}
 	}
 }

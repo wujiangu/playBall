@@ -7,13 +7,13 @@ var GameConfig = (function () {
     /**
      * 初始化骨骼的动画数据
      */
-    GameConfig.InitBattleDragonBones = function (name) {
+    GameConfig.initBattleDragonBones = function (name) {
         var skeletonData = RES.getRes(name + "_ske_json");
         var textureData = RES.getRes(name + "_tex_json");
         var texture = RES.getRes(name + "_tex_png");
         DragonBonesFactory.getInstance().initDragonBonesArmatureFile(skeletonData, textureData, texture);
     };
-    GameConfig.InitSound = function () {
+    GameConfig.initSound = function () {
         GameVoice.beginBGMSound = RES.getRes(GameVoice.beginBGM_mp3);
         GameVoice.battleBGMSound = RES.getRes(GameVoice.battleBGM_mp3);
         GameVoice.btnSound = RES.getRes(GameVoice.btn_mp3);
@@ -37,48 +37,16 @@ var GameConfig = (function () {
         GameVoice.spideBall = RES.getRes(GameVoice.spideBall_mp3);
         GameVoice.summon = RES.getRes(GameVoice.summon_mp3);
         GameVoice.unlockItem = RES.getRes(GameVoice.unlockItem_mp3);
+        GameVoice.battleBefore = RES.getRes(GameVoice.battleBefore_mp3);
+        GameVoice.vectory = RES.getRes(GameVoice.vectory_mp3);
+        GameVoice.rewardBGM = RES.getRes(GameVoice.rewardBGM_mp3);
+        GameVoice.rewardVoice = RES.getRes(GameVoice.rewardVoice_mp3);
+        GameVoice.gestureVoice = RES.getRes(GameVoice.gesture_mp3);
     };
-    GameConfig.Init = function () {
+    GameConfig.init = function () {
         this.summonConfig = RES.getRes("summonConfig_json");
         this.levelConfig = RES.getRes("levelConfig_json");
-        this.itemConfig = RES.getRes("itemConfig_json");
         this.summonSkillConfig = RES.getRes("summonSkillConfig_json");
-        this.itemTable = {};
-        // this.itemUseTable = new Array()
-        // this.itemUseTable.push(1003)
-        var itemList = {};
-        for (var i = 0; i < this.itemUseTable.length; i++) {
-            itemList[this.itemUseTable[i].toString()] = 1;
-        }
-        var unlockList = {};
-        for (var i = 0; i < this.itemUnlockList.length; i++) {
-            unlockList[this.itemUnlockList[i].toString()] = 1;
-        }
-        for (var i = 0; i < this.itemConfig.length; i++) {
-            var config = this.itemConfig[i];
-            var data = {};
-            data["ID"] = config.ID;
-            data["Name"] = config.Name;
-            data["Desc"] = config.Desc;
-            data["LockDesc"] = config.LockDesc;
-            data["Bg"] = config.Bg;
-            data["Icon"] = config.Icon;
-            data["LockIcon"] = config.LockIcon;
-            data["ItemBg"] = config.ItemBg;
-            data["Scene"] = config.Scene;
-            data["Sun"] = config.Sun;
-            data["cloud1"] = config.cloud1;
-            data["cloud2"] = config.cloud2;
-            data["cloud3"] = config.cloud3;
-            data["Open"] = config.Open;
-            data["Effect"] = config.Effect;
-            data["IsUse"] = 0;
-            if (itemList[config.ID.toString()] != null && itemList[config.ID.toString()] > 0)
-                data["IsUse"] = 1;
-            if (unlockList[config.ID.toString()] != null && unlockList[config.ID.toString()] > 0)
-                data["Open"] = true;
-            this.itemTable[config.ID.toString()] = data;
-        }
         var effectConfig = RES.getRes("effectConfig_json");
         this.effectTable = {};
         for (var i = 0; i < effectConfig.length; i++) {
@@ -86,18 +54,45 @@ var GameConfig = (function () {
             var data = {};
             data["ID"] = config.ID;
             data["name"] = config.name;
-            data["release"] = config.release;
-            data["bullet"] = config.bullet;
-            data["step1"] = config.step1;
-            data["step2"] = config.step2;
-            data["type"] = config.type;
-            data["count"] = config.count;
             this.effectTable[config.ID.toString()] = data;
-            this.InitBattleDragonBones(config.name);
+            this.initBattleDragonBones(config.name);
         }
         this.monsterConfig = RES.getRes("monsterConfig_json");
         this.gestureConfig = RES.getRes("gesture_json");
         this.luckyConfig = RES.getRes("luckyConfig_json");
+        this.luckyTable = {};
+        for (var i = 0; i < this.luckyConfig.length; i++) {
+            var config = this.luckyConfig[i];
+            var data = {};
+            data["ID"] = config.ID;
+            data["Type"] = config.Type;
+            data["Animation"] = config.Animation;
+            data["Speed"] = config.Speed;
+            data["Score"] = config.Score;
+            data["Power"] = config.Power;
+            data["Scale"] = config.Scale;
+            data["Width"] = config.Width;
+            data["Height"] = config.Height;
+            data["Prob"] = config.Prob;
+            data["balloon"] = config.balloon;
+            this.luckyTable[config.ID.toString()] = data;
+            if (config.Animation != null && config.Animation != "") {
+                this.initBattleDragonBones(config.Animation);
+            }
+        }
+        this.gestureTable = {};
+        for (var i = 0; i < this.gestureConfig.length; i++) {
+            var config = this.gestureConfig[i];
+            var data = {};
+            data["difficult"] = config.difficult;
+            data["type"] = config.type;
+            data["data"] = config.data;
+            data["count"] = config.count;
+            data["path"] = config.path;
+            data["balloon"] = config.balloon;
+            data["color"] = config.color;
+            this.gestureTable[config.type.toString()] = data;
+        }
         this.monsterTable = {};
         for (var i = 0; i < this.monsterConfig.length; i++) {
             var config = this.monsterConfig[i];
@@ -118,18 +113,14 @@ var GameConfig = (function () {
             data["BalloonY"] = config.BalloonY;
             this.monsterTable[config.ID.toString()] = data;
             if (config.Animation != null && config.Animation != "") {
-                this.InitBattleDragonBones(config.Animation);
+                this.initBattleDragonBones(config.Animation);
             }
         }
-        for (var i = 0; i < this.luckyConfig.length; i++) {
-            var data = this.luckyConfig[i];
-            this.InitBattleDragonBones(data.Animation);
-        }
-        this.InitConfig();
-        this.InitSound();
-        Common.GetGuide();
+        this.initConfig();
+        this.initSound();
+        Common.getGuide();
     };
-    GameConfig.InitConfig = function () {
+    GameConfig.initConfig = function () {
         this.summonTable = {};
         for (var i = 0; i < this.summonConfig.length; i++) {
             var config = this.summonConfig[i];
@@ -155,11 +146,12 @@ var GameConfig = (function () {
             data["addTime"] = config.addTime;
             data["speed"] = config.speed;
             data["normalCount"] = config.normalCount;
-            data["eliteCount"] = config.eliteCount;
+            data["candy"] = config.candy;
             data["unlockItem"] = config.unlockItem;
             data["normal"] = config.normal;
             data["elite"] = config.elite;
             data["section"] = config.section;
+            data["level"] = config.level;
             if (config.key != null && config.key > 0) {
                 this.levelTable[config.key.toString()] = data;
             }
@@ -187,7 +179,11 @@ var GameConfig = (function () {
             data["id"] = config.id;
             data["level"] = config.level;
             data["nextId"] = config.nextId;
+            data["quality"] = config.quality;
+            data["weight"] = config.weight;
+            data["candy"] = config.candy;
             data["name"] = config.name;
+            data["unlockDesc"] = config.unlockDesc;
             data["desc"] = config.desc;
             data["action"] = config.action;
             data["icon"] = config.icon;
@@ -195,11 +191,12 @@ var GameConfig = (function () {
             data["direction"] = config.direction;
             data["skillId"] = config.skillId;
             data["fusion"] = config.fusion;
+            data["range"] = 0;
             if (config.level <= 1)
                 this.babyOpenList.push(config.id);
             this.actorTable[config.id.toString()] = data;
             if (config.action != null && config.action != "") {
-                this.InitBattleDragonBones(config.action);
+                this.initBattleDragonBones(config.action);
             }
         }
         // 修改开放宝宝表数据
@@ -228,6 +225,10 @@ var GameConfig = (function () {
             data["bg"] = config.bg;
             data["bgm"] = config.bgm;
             data["begin"] = config.begin;
+            data["sun"] = config.sun;
+            data["cloud1"] = config.cloud1;
+            data["cloud2"] = config.cloud2;
+            data["water"] = config.water;
             this.chapterTable[config.id.toString()] = data;
         }
         var babySkillConfig = RES.getRes("babySkillConfig_json");
@@ -250,27 +251,67 @@ var GameConfig = (function () {
             data["sceneEffect"] = config.sceneEffect;
             data["skillPosY"] = config.skillPosY;
             data["rangeType"] = config.rangeType;
+            data["music"] = config.music;
+            data["scale"] = config.scale;
             this.babySkillTable[config.id.toString()] = data;
+        }
+        this.signConfig = RES.getRes("signConfig_json");
+        this.signTable = {};
+        for (var i = 0; i < this.signConfig.length; i++) {
+            var config = this.signConfig[i];
+            var data = {};
+            data["id"] = config.id;
+            data["name"] = config.name;
+            data["desc"] = config.desc;
+            data["boss"] = config.boss;
+            data["rewardType"] = config.rewardType;
+            data["reward"] = config.reward;
+            data["icon"] = config.icon;
+            data["isGet"] = false;
+            if (i < this.signCount)
+                data["isGet"] = true;
+            if (i == this.signCount && this.sign == 1)
+                data["isGet"] = true;
+            this.signTable[config.id.toString()] = data;
+        }
+        this.capsuleConfig = RES.getRes("capsuleConfig_json");
+        this.capsuleTable = {};
+        for (var i = 0; i < this.capsuleConfig.length; i++) {
+            var config = this.capsuleConfig[i];
+            var data = {};
+            data["id"] = config.id;
+            data["type"] = config.type;
+            data["value"] = config.value;
+            data["weight"] = config.weight;
+            data["range"] = 0;
+            this.capsuleTable[config.id.toString()] = data;
         }
     };
     GameConfig.game = "HT";
     GameConfig.isWebView = true;
     GameConfig.baseFallSpeed = 0.1;
     GameConfig.monsterAddDelay = 2000;
-    GameConfig.luckyActorAddDelay = 18000;
+    GameConfig.luckyActorAddDelay = 23000;
     GameConfig.slowDuration = 3000;
     GameConfig.comboDelay = 1000;
     GameConfig.spiderDelay = 4000;
     GameConfig.bgmValue = 100;
     GameConfig.soundValue = 100;
     GameConfig.monsterPos = 1;
-    GameConfig.testSelectLevel = 10001;
     GameConfig.gameSpeedPercent = 0;
     GameConfig.isGuide = false;
     // 开放的宝宝ID
     GameConfig.babyOpenList = new Array();
     // 挑战模式
     GameConfig.gameMode = EBattleMode.Level;
+    // 签到标记(0:未签到 1:已签到)
+    GameConfig.sign = 0;
+    // 签到次数
+    GameConfig.signCount = 0;
+    // 当前挑战的章节
+    GameConfig.curBattleChapter = 0;
+    // 临时配置，后续修改
+    GameConfig.sceneType = 0;
     return GameConfig;
 }());
 __reflect(GameConfig.prototype, "GameConfig");

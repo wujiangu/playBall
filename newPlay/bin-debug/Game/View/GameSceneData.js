@@ -3,23 +3,118 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var GameSceneData = (function () {
     function GameSceneData() {
+        /**过关需要的分值 */
+        this.needScore = 0;
+        /**上一关的分值 */
+        this.lastScore = 0;
+        this.midOffset = 120;
+        this.leftRightOffset = 90;
+        /**增加的能量值 */
+        this.addPower = 0;
+        /**糖果的获得数量 */
+        this.addCandy = 0;
         this.allActors = new Array();
     }
     // 获取召唤物目标X值
-    GameSceneData.prototype.getSummonTargetX = function (e_pos, a_x, a_y, a_count, a_num, isBoss) {
+    GameSceneData.prototype.getSummonTargetX = function (e_pos, a_x, a_count, a_num, type, isBoss) {
         if (a_count === void 0) { a_count = 0; }
         if (a_num === void 0) { a_num = 0; }
+        if (type === void 0) { type = ESummonType.Balloon; }
         if (isBoss === void 0) { isBoss = false; }
+        var target = a_x;
         switch (e_pos) {
             case EMonsterPos.Left:
+                if (a_count == 1) {
+                    if (type == ESummonType.Balloon)
+                        target += this.leftRightOffset;
+                }
+                else if (a_count == 2) {
+                    target += 2 * this.leftRightOffset * a_num - this.leftRightOffset;
+                }
+                else if (a_count == 3) {
+                    if (type == ESummonType.Monster)
+                        target += 80 * a_num - 80;
+                    else {
+                        if (a_num <= 0)
+                            target -= this.leftRightOffset;
+                        else
+                            target += this.leftRightOffset * a_num;
+                    }
+                }
+                else {
+                    if (type == ESummonType.Monster)
+                        target += 80 * a_num - 120;
+                    else {
+                        if (a_num <= 0)
+                            target -= this.leftRightOffset;
+                        else
+                            target += this.leftRightOffset * a_num;
+                    }
+                }
                 break;
             case EMonsterPos.Middle:
+                if (a_count == 1) {
+                    if (type == ESummonType.Balloon)
+                        target += this.midOffset;
+                }
+                else if (a_count == 2) {
+                    target += 2 * this.midOffset * a_num - this.midOffset;
+                }
+                else if (a_count == 3) {
+                    if (type == ESummonType.Monster)
+                        target += this.leftRightOffset * a_num - this.leftRightOffset;
+                    else {
+                        if (a_num <= 0)
+                            target -= this.midOffset;
+                        else
+                            target += this.midOffset * a_num;
+                    }
+                }
+                else {
+                    if (type == ESummonType.Monster)
+                        target += 80 * a_num - 120;
+                    else {
+                        if (a_num <= 1)
+                            target += this.midOffset * a_num - 200;
+                        else
+                            target += this.midOffset * (a_num - 1);
+                    }
+                }
                 break;
             case EMonsterPos.Right:
+                if (a_count == 1) {
+                    if (type == ESummonType.Balloon)
+                        target -= this.leftRightOffset;
+                }
+                else if (a_count == 2) {
+                    target += 2 * this.leftRightOffset * a_num - this.leftRightOffset;
+                }
+                else if (a_count == 3) {
+                    if (type == ESummonType.Monster)
+                        target += this.leftRightOffset * a_num - this.leftRightOffset;
+                    else {
+                        if (a_num <= 0)
+                            target += this.leftRightOffset;
+                        else
+                            target -= this.leftRightOffset * a_num;
+                        // Common.log(target, a_num)
+                    }
+                }
+                else {
+                    if (type == ESummonType.Monster)
+                        target += 80 * a_num - 120;
+                    else {
+                        if (a_num <= 0)
+                            target += this.leftRightOffset;
+                        else
+                            target -= this.leftRightOffset * (a_num - 1);
+                    }
+                }
                 break;
             default:
                 break;
         }
+        return target;
     };
     // 获取召唤物目标Y值
     GameSceneData.prototype.getSummonTargetY = function () {
@@ -37,16 +132,17 @@ var GameSceneData = (function () {
             else {
                 switch (GameConfig.gameMode) {
                     case EBattleMode.Level:
-                        var selectChater = PanelManager.m_gameSelectLevel.selectChater;
+                        var selectChater = PanelManager.gameSelectLevel.selectChater;
                         var chapterData = GameConfig.chapterTable[selectChater.toString()];
                         if (selectChater >= GameConfig.curChpter) {
                             if (GameConfig.curLevel <= 0)
-                                Common.UpdateCurLevel(10101);
+                                Common.updateCurLevel(10101);
                             level = GameConfig.curLevel;
                         }
                         else {
                             level = chapterData.begin;
                         }
+                        GameConfig.curBattleChapter = selectChater;
                         break;
                     case EBattleMode.Endless:
                         level = 1001;
@@ -66,24 +162,40 @@ var GameSceneData = (function () {
     Object.defineProperty(GameSceneData.prototype, "levelData", {
         /**获取挑战的关卡数据 */
         get: function () {
-            return this.m_levelData;
+            return this._levelData;
         },
         /**设置挑战的关卡数据 */
         set: function (value) {
-            this.m_levelData = value;
-            this.needScore = this.m_levelData.normalCount;
+            this._levelData = value;
+            this.needScore = this._levelData.normalCount;
         },
         enumerable: true,
         configurable: true
     });
     /**获取当前关卡的上一关 */
-    GameSceneData.prototype.GetLastLevel = function (a_level) {
+    GameSceneData.prototype.getLastLevel = function (a_level) {
         for (var i = 0; i < GameConfig.levelConfig.length; i++) {
             var data = GameConfig.levelConfig[i];
             if (data.next == a_level)
                 return data.key;
         }
         return -1;
+    };
+    /**更新糖果 */
+    GameSceneData.prototype.updateCandy = function (value) {
+        this.addCandy += value;
+        Common.updateCurCandy(value);
+    };
+    /**根据连击数获取糖果奖励
+     * @param value 连击数
+     */
+    GameSceneData.prototype.comboRewardCandy = function (value) {
+        if (value > 0 && value % 15 == 0) {
+            var extra = Math.floor(value / 15);
+            this.extra += extra;
+            this.extra = Math.min(3, this.extra);
+            // this.updateCandy(extra)
+        }
     };
     return GameSceneData;
 }());

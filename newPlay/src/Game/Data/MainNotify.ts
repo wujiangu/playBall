@@ -26,14 +26,8 @@ module MainNotify {
 	export var beginLocus:string = "beginLocus"
 	//结束画曲线轨迹
 	export var endLocus:string = "endLocus"
-
-	//打开底部面板
-	export var openBottomBtnPanel:string = "openBottomBtnPanel"
-	export var closeBottomBtnPanel:string = "closeBottomBtnPanel"
-
-	//背包面板
-	export var openBackpackPanel:string = "openBackpackPanel"
-	export var closeBackpackPanel:string = "closeBackpackPanel"
+	//更新界面糖果数量
+	export var updateCandy:string = "updateCandy"
 
 	//设置面板
 	export var openSettingPanel:string = "openSettingPanel"
@@ -51,6 +45,16 @@ module MainNotify {
 
 	export var openRechargePanel:string = "openRechargePanel"
 	export var closeRechargePanel:string = "closeRechargePanel"
+
+	export var openSignPanel:string = "openSignPanel"
+	export var closeSignPanel:string = "closeSignPanel"
+
+	// 扭蛋界面
+	export var openCapsulePanel:string = "openCapsulePanel"
+	export var closeCapsulePanel:string = "closeCapsulePanel"
+
+	export var openGetRewardPanel:string = "openGetRewardPanel"
+	export var closeGetRewardPanel:string = "closeGetRewardPanel"
 }
 
 

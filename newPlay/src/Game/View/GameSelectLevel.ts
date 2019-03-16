@@ -12,9 +12,22 @@ class GameSelectLevel extends BasePanel {
 
     // 初始化面板数据
     public initData():void{
-		this.m_curChapterIndex = GameConfig.curChpter % 1000
-		this.m_curSelectChapter = GameConfig.curChpter
+		this._curChapterIndex = GameConfig.curChpter % 1000
+		this._curSelectChapter = GameConfig.curChpter
 		this._updateChapterInfo()
+		if (this._curSelectChapter == GameConfig.curChpter && GameConfig.isOpenNewChapter == true) {
+			this.m_imgIcon.visible = false
+			let chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()]
+			this.m_imgChapter.source = chapterData.unlockIcon
+			this.m_imgIcon.source = "guankajiemian13_png"
+		}
+
+		this.m_imgEndlessBg.source = "guankajiemian12_png"
+		this.m_imgEndlessIcon.source = "guankajiemian15_png"
+		if (GameConfig.curChpter <= 1001) {
+			this.m_imgEndlessBg.source = "guankajiemian16_png"
+			this.m_imgEndlessIcon.source = "guankajiemian14_png"
+		}
     }
 
     // 进入面板
@@ -32,16 +45,21 @@ class GameSelectLevel extends BasePanel {
     }
 
 	public get selectChater() {
-		return this.m_curSelectChapter
+		return this._curSelectChapter
 	}
 
 	private _onShow() {
-		this.touchChildren = true
+		if (GameConfig.isOpenNewChapter) {
+			this.m_groupLock.visible = true
+			this.suo.play(0)
+		}else{
+			this.touchChildren = true
+		}
 	}
 
 	private _OnHide() {
 		Common.dispatchEvent(MainNotify.closeGameSelectLevel)
-		if (this.m_status == 1) {
+		if (this._status == 1) {
 			// Common.dispatchEvent(MainNotify.closeGameStartPanel)
 			Common.dispatchEvent(MainNotify.openGamePanel)
 		}else{
@@ -49,10 +67,17 @@ class GameSelectLevel extends BasePanel {
 		}
 	}
 
+	private _OnLock() {
+		this.touchChildren = true
+		this.m_imgIcon.visible = true
+		let chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()]
+		this.m_imgChapter.source = chapterData.icon
+	}
+
 	private _onMaskClick() {
-		this.touchEnabled = false
+		this.touchChildren = false
 		this.hide.play(0)
-		this.m_status = 0
+		this._status = 0
 	}
 
 	private _onChapterBegin() {
@@ -79,49 +104,58 @@ class GameSelectLevel extends BasePanel {
 	}
 
 	private _onEndlessClick() {
-		if (GameConfig.guideIndex >= 1) {
+		if (GameConfig.curChpter > 1001) {
 			this._beforeEnterBattle()
 			GameConfig.gameMode = EBattleMode.Endless
 		}
 	}
 
 	private _beforeEnterBattle() {
-		this.touchEnabled = false
+		this.touchChildren = false
 		this.hide.play(0)
-		this.m_status = 1
+		this._status = 1
+		GameVoice.beginBGMChannel.stop()
+		let voice = GameVoice.vectory.play(0,1)
+		voice.volume = GameConfig.soundValue / 100
 	}
 
 	private _isLock() {
-		if (this.m_curSelectChapter > GameConfig.curChpter) {
+		if (this._curSelectChapter > GameConfig.curChpter) {
 			return true
 		}
 		return false
 	}
 
 	private _updateChapterInfo() {
-		let chapterData = GameConfig.chapterTable[this.m_curSelectChapter.toString()]
-		Common.log(this.m_curSelectChapter, this.m_curChapterIndex)
+		let chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()]
+		this.m_imgIcon.visible = true
+		this.m_groupLock.visible = false
 		this.m_imgChapter.source = chapterData.icon
-		this.m_labChapter.text = this.m_curChapterIndex.toString()
+		this.m_labChapter.text = this._curChapterIndex.toString()
+		if (this._curSelectChapter == GameConfig.curChpter && GameConfig.curLevel > 0) {
+			let levelData = GameConfig.levelTable[GameConfig.curLevel.toString()]
+			this.m_labChapter.text = this._curChapterIndex.toString() + "-" + levelData.level.toString()
+		}
 		this.m_imgIcon.source = "guankajiemian13_png"
 		if (this._isLock()) {
 			this.m_imgChapter.source = chapterData.unlockIcon
 			this.m_imgIcon.source = "guankajiemian14_png"
 		}
+		
 	}
 
 	private _onNextClick() {
-		if (this.m_curChapterIndex < 5) {
-			this.m_curSelectChapter++
-			this.m_curChapterIndex++
+		if (this._curChapterIndex < 18) {
+			this._curSelectChapter++
+			this._curChapterIndex++
 			this._updateChapterInfo()
 		} 
 	}
 
 	private _onLastClick() {
-		if (this.m_curChapterIndex > 1) {
-			this.m_curChapterIndex--
-			this.m_curSelectChapter--
+		if (this._curChapterIndex > 1) {
+			this._curChapterIndex--
+			this._curSelectChapter--
 			this._updateChapterInfo()
 		}
 	}
@@ -141,15 +175,19 @@ class GameSelectLevel extends BasePanel {
 		this.m_btnNext.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onNextClick, this)
 		this.m_btnLast.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onLastClick, this)
 
+		Common.addTouchBegin(this.m_btnNext)
+		Common.addTouchBegin(this.m_btnLast)
+
 		this.show.addEventListener('complete', this._onShow, this)
 		this.hide.addEventListener('complete', this._OnHide, this)
+		this.suo.addEventListener('complete', this._OnLock, this)
 	}
 
 	private m_imgMask:eui.Image
 	private m_imgChapter:eui.Image
 	private m_imgIcon:eui.Image
 	private m_imgEndlessBg:eui.Image
-	private m_imgEdlessIcon:eui.Image
+	private m_imgEndlessIcon:eui.Image
 
 	private m_labChapter:eui.Label
 
@@ -158,8 +196,10 @@ class GameSelectLevel extends BasePanel {
 
 	private show:egret.tween.TweenGroup
 	private hide:egret.tween.TweenGroup
+	private suo:egret.tween.TweenGroup
+	private m_groupLock:eui.Group
 
-	private m_status:number
-	private m_curChapterIndex:number
-	private m_curSelectChapter:number
+	private _status:number
+	private _curChapterIndex:number
+	private _curSelectChapter:number
 }

@@ -1,0 +1,72 @@
+[
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "20颗糖", 
+        "rewardType": 1, 
+        "reward": 20, 
+        "quality": -1, 
+        "id": 1001, 
+        "desc": "奖励20颗糖"
+    }, 
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "10颗糖", 
+        "rewardType": 1, 
+        "reward": 10, 
+        "quality": -1, 
+        "id": 1002, 
+        "desc": "奖励10颗糖"
+    }, 
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "10颗糖", 
+        "rewardType": 1, 
+        "reward": 10, 
+        "quality": -1, 
+        "id": 1003, 
+        "desc": "奖励10颗糖"
+    }, 
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "20颗糖", 
+        "rewardType": 1, 
+        "reward": 20, 
+        "quality": -1, 
+        "id": 1004, 
+        "desc": "奖励20颗糖"
+    }, 
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "10颗糖", 
+        "rewardType": 1, 
+        "reward": 10, 
+        "quality": -1, 
+        "id": 1005, 
+        "desc": "奖励10颗糖"
+    }, 
+    {
+        "name": "糖", 
+        "icon": "tangguo_png", 
+        "detail": "10颗糖", 
+        "rewardType": 1, 
+        "reward": 10, 
+        "quality": -1, 
+        "id": 1006, 
+        "desc": "奖励10颗糖"
+    }, 
+    {
+        "name": "宠物", 
+        "icon": "QactorList10100_png", 
+        "detail": "紫色宠物一个", 
+        "rewardType": 2, 
+        "reward": 10100, 
+        "quality": 0, 
+        "id": 1007, 
+        "desc": "奖励紫色宠物"
+    }
+]

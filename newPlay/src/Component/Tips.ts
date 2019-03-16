@@ -3,38 +3,38 @@ class Tips extends egret.DisplayObjectContainer {
 	public constructor() {
 		super()
 
-		this.m_imgBg = new egret.Bitmap()
-		this.addChild(this.m_imgBg)
+		this._imgBg = new egret.Bitmap()
+		this.addChild(this._imgBg)
 
-		this.m_labDesc = new egret.TextField()
-		this.addChild(this.m_labDesc)
+		this._labDesc = new egret.TextField()
+		this.addChild(this._labDesc)
 
-		this.m_data = new TipsData()
+		this._data = new TipsData()
 	}
 
-	public Init() {
-		this.m_imgBg.visible = false
-		if (this.m_data.tipsBg.length > 0) {
-			this.m_imgBg.texture = RES.getRes(this.m_data.tipsBg)
-			this.m_imgBg.visible = true
+	public init() {
+		this._imgBg.visible = false
+		if (this._data.tipsBg.length > 0) {
+			this._imgBg.texture = RES.getRes(this._data.tipsBg)
+			this._imgBg.visible = true
 		}
 
-        this.m_labDesc.textColor = this.m_data.descColor
-        this.m_labDesc.size = this.m_data.descSize
+        this._labDesc.textColor = this._data.descColor
+        this._labDesc.size = this._data.descSize
         
-        this.m_labDesc.textAlign = "center";
-        this.m_labDesc.text = this.m_data.desc
-        this.m_labDesc.bold = true
+        this._labDesc.textAlign = "center";
+        this._labDesc.text = this._data.desc
+        this._labDesc.bold = true
 	}
 
 	public get data():TipsData {
-		return this.m_data
+		return this._data
 	}
 
 
-	private m_data:TipsData
-	private m_imgBg:egret.Bitmap
-	private m_labDesc:egret.TextField
+	private _data:TipsData
+	private _imgBg:egret.Bitmap
+	private _labDesc:egret.TextField
 }
 
 class TipsData {
