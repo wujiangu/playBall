@@ -30,6 +30,9 @@ var GameManager = (function (_super) {
         configurable: true
     });
     GameManager.prototype.init = function () {
+        // RES.loadGroup("back")
+        // RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this)
+        // GameConfig.beforeInit()
         GameConfig.init();
         PanelManager.initPanel();
         this._permanentUI = new PermanentUI();
@@ -38,6 +41,12 @@ var GameManager = (function (_super) {
         Common.dispatchEvent(MainNotify.openGameStartPanel);
         // Common.dispatchEvent(MainNotify.openBottomBtnPanel)
     };
+    // private onResourceLoadComplete(event: RES.ResourceEvent): void {
+    //     if (event.groupName == "back") {
+    // 		GameConfig.init()
+    //         RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this)
+    //     }
+    // }
     GameManager.prototype.stop = function () {
         if (this._gameState == EGameState.Start) {
             this._gameState = EGameState.End;

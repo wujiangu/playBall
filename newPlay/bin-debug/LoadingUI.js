@@ -88,7 +88,7 @@ var LoadingUI = (function (_super) {
         txtbg.x = loadbg.x + loadbg.width - w / 2;
         txtbg.y = loadbg.y + w / 2 - 10;
         this.txtLoadPos = new egret.Point(txtbg.x, txtbg.y);
-        var txtExp = Common.createText("", 0, 0, 40, 0xa56016);
+        var txtExp = Common.createText("", 0, 0, 40, 0x000000);
         this.txtLoad = txtExp;
         this.addChild(txtExp);
         this.createAirFan();

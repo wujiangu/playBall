@@ -16,9 +16,11 @@ class GameManager extends egret.Sprite{
 
 	public init()
 	{
+		// RES.loadGroup("back")
+		// RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this)
+		// GameConfig.beforeInit()
 		GameConfig.init()
 		PanelManager.initPanel()
-
 		this._permanentUI = new PermanentUI()
 		Common.gameScene().uiLayer.addChild(this._permanentUI)
 
@@ -26,6 +28,14 @@ class GameManager extends egret.Sprite{
 		Common.dispatchEvent(MainNotify.openGameStartPanel)
 		// Common.dispatchEvent(MainNotify.openBottomBtnPanel)
 	}
+
+	// private onResourceLoadComplete(event: RES.ResourceEvent): void {
+    //     if (event.groupName == "back") {
+	// 		GameConfig.init()
+			
+    //         RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this)
+    //     }
+    // }
 
 	public stop():void
 	{

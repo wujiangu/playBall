@@ -124,7 +124,7 @@
 	<e:Group id="groupChater" width="515" height="285" horizontalCenter="-0.5" verticalCenter="-217.5">
 		<e:Image id="m_imgChapter" x="0" y="0" scaleX="1" scaleY="1" alpha="1" source="chapterIcon1001_png"/>
 		<e:Image source="guankajiemian4_png" x="7" y="216.5" scaleX="1" scaleY="1"/>
-		<e:Button id="m_btnNext" label="" x="428" y="206.5" scaleX="1" scaleY="1">
+		<e:Button id="m_btnNext" label="" x="561" y="77.5" scaleX="-0.2" scaleY="0.2">
 			<e:skinName>
 			<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="guankajiemian3_png"/>
@@ -133,7 +133,7 @@
 			</e:skinName>
 		</e:Button>
 		<e:Image source="guankajiemian5_png" x="131.5" y="228"/>
-		<e:Button id="m_btnLast" label="" x="82" y="204.5" scaleX="-1" scaleY="1">
+		<e:Button id="m_btnLast" label="" x="-46" y="77.5" scaleX="0.2" scaleY="0.2">
 			<e:skinName>
 			<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="guankajiemian3_png"/>

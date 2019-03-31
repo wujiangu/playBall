@@ -64,6 +64,7 @@ var ActorListPanel = (function (_super) {
         }
         this._actorArmature.ArmatureDisplay = armatureDisplay;
         this._actorArmatureContainer.register(this._actorArmature, ["fangdazhao", "idle", "zoulu"]);
+        this._actorShadow();
         this._actorArmatureContainer.play("idle", 0);
         this._actorState = EMonsterState.Ready;
         this._actorArmatureContainer.scaleX = 0.5;
@@ -135,6 +136,20 @@ var ActorListPanel = (function (_super) {
             this._actorArmatureContainer.play("idle", 0);
             this._actorState = EMonsterState.Ready;
         }
+    };
+    ActorListPanel.prototype._actorShadow = function () {
+        // var distance:number = 20;           /// 阴影的偏移距离，以像素为单位
+        // var angle:number = 45;              /// 阴影的角度，0 到 360 度
+        // var color:number = 0x000000;        /// 阴影的颜色，不包含透明度
+        // var alpha:number = 0.7;             /// 光晕的颜色透明度，是对 color 参数的透明度设定
+        // var blurX:number = 255;              /// 水平模糊量。有效值为 0 到 255.0（浮点）
+        // var blurY:number = 255;              /// 垂直模糊量。有效值为 0 到 255.0（浮点）
+        // var strength:number = 65;                /// 压印的强度，值越大，压印的颜色越深，而且阴影与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
+        // var quality:number = egret.BitmapFilterQuality.LOW;              /// 应用滤镜的次数，暂无实现
+        // var inner:boolean = false;            /// 指定发光是否为内侧发光
+        // var knockout:boolean = false;            /// 指定对象是否具有挖空效果
+        // let glowFilter = new egret.DropShadowFilter(distance, angle, color, alpha, blurX, blurY,strength, quality, inner, knockout)
+        // this._actorArmatureContainer.filters = [glowFilter]
     };
     ActorListPanel.prototype._onLoop = function () {
         this.xuanzhuan.play(0);

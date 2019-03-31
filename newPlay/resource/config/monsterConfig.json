@@ -13,12 +13,12 @@
         "Difficult": 1
     }, 
     {
-        "Scale": 1.0, 
+        "Scale": 1.3, 
         "Name": "SM龙猫", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 180, 
+        "Height": 230, 
         "Width": 95, 
         "Animation": "longmao", 
         "Speed": 12, 
@@ -104,12 +104,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 1.0, 
+        "Scale": 1.4, 
         "Name": "SM变异火星人1", 
         "Power": 5, 
         "Type": 2, 
         "Score": 1, 
-        "Height": 180, 
+        "Height": 240, 
         "Width": 95, 
         "Animation": "huoxingrenwang", 
         "Speed": 12, 
@@ -117,7 +117,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 1.0, 
         "Name": "SL变异蜘蛛1", 
         "Power": 5, 
         "Type": 2, 
@@ -130,7 +130,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 1.0, 
         "Name": "KFC薯条怪", 
         "Power": 5, 
         "Type": 1, 
@@ -143,7 +143,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 0.7, 
         "Name": "CL螃蟹怪", 
         "Power": 5, 
         "Type": 1, 
@@ -232,7 +232,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 0.7, 
         "Name": "XD雪怪", 
         "Power": 5, 
         "Type": 1, 
@@ -245,12 +245,12 @@
         "Difficult": 1
     }, 
     {
-        "Scale": 0.75, 
+        "Scale": 0.7, 
         "Name": "XD变异熊1", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 160, 
+        "Height": 180, 
         "Width": 95, 
         "Animation": "dabengxiongBY", 
         "Speed": 12, 
@@ -297,12 +297,12 @@
         "Difficult": 1
     }, 
     {
-        "Scale": 1.0, 
+        "Scale": 1.3, 
         "Name": "JX疯狂科学家", 
         "Power": 5, 
         "Type": 2, 
         "Score": 1, 
-        "Height": 200, 
+        "Height": 240, 
         "Width": 95, 
         "Animation": "kuangzhuren", 
         "Speed": 12, 
@@ -310,12 +310,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.75, 
+        "Scale": 1.1, 
         "Name": "CL独眼怪", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 200, 
+        "Height": 230, 
         "Width": 95, 
         "Animation": "duyandawang", 
         "Speed": 12, 
@@ -382,7 +382,7 @@
         "Difficult": 1
     }, 
     {
-        "Scale": 0.9, 
+        "Scale": 1.0, 
         "Name": "SL变异蜘蛛2", 
         "Power": 5, 
         "Type": 2, 
@@ -421,12 +421,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.9, 
+        "Scale": 1.2, 
         "Name": "XD雪暴龙", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 200, 
+        "Height": 240, 
         "Width": 95, 
         "Animation": "shihuakonglongguai", 
         "Speed": 12, 
@@ -434,7 +434,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.75, 
+        "Scale": 0.7, 
         "Name": "XD熊", 
         "Power": 5, 
         "Type": 1, 
@@ -447,7 +447,7 @@
         "Difficult": 1
     }, 
     {
-        "Scale": 0.9, 
+        "Scale": 0.8, 
         "Name": "SM剧毒术士", 
         "Power": 5, 
         "Type": 2, 
@@ -486,12 +486,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 1.1, 
         "Name": "XD变异雪怪1", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 170, 
+        "Height": 180, 
         "Width": 95, 
         "Animation": "meiyazaiby", 
         "Speed": 12, 
@@ -499,12 +499,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 0.7, 
         "Name": "XD小雪人", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 190, 
+        "Height": 170, 
         "Width": 95, 
         "Animation": "xuerenguai", 
         "Speed": 12, 
@@ -564,7 +564,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.9, 
+        "Scale": 1.2, 
         "Name": "SL变异鳄鱼1", 
         "Power": 5, 
         "Type": 1, 
@@ -629,12 +629,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.9, 
+        "Scale": 1.1, 
         "Name": "CL变异森林蝴蝶1", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 120, 
+        "Height": 140, 
         "Width": 95, 
         "Animation": "hudieguaiby", 
         "Speed": 12, 
@@ -642,7 +642,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.95, 
+        "Scale": 1.1, 
         "Name": "CL变异水晶怪1", 
         "Power": 5, 
         "Type": 1, 
@@ -655,12 +655,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.6, 
+        "Scale": 0.7, 
         "Name": "CL变异螃蟹怪1", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 150, 
+        "Height": 180, 
         "Width": 95, 
         "Animation": "shanpangxie", 
         "Speed": 12, 
@@ -668,12 +668,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.75, 
+        "Scale": 0.9, 
         "Name": "CL变异森林蝴蝶2", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 140, 
+        "Height": 160, 
         "Width": 95, 
         "Animation": "hudiewang", 
         "Speed": 12, 
@@ -681,12 +681,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 1.2, 
         "Name": "CL变异水晶怪2", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 200, 
+        "Height": 250, 
         "Width": 95, 
         "Animation": "zhuanshiwang", 
         "Speed": 12, 
@@ -694,12 +694,12 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.8, 
+        "Scale": 1.0, 
         "Name": "CL变异螃蟹怪2", 
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 200, 
+        "Height": 240, 
         "Width": 95, 
         "Animation": "shanpangxiewang", 
         "Speed": 12, 
@@ -707,7 +707,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.7, 
+        "Scale": 1.0, 
         "Name": "XD变异熊2", 
         "Power": 5, 
         "Type": 1, 
@@ -738,7 +738,7 @@
         "Power": 5, 
         "Type": 2, 
         "Score": 1, 
-        "Height": 210, 
+        "Height": 220, 
         "Width": 95, 
         "Animation": "shoubeiren", 
         "Speed": 12, 
@@ -746,7 +746,7 @@
         "Difficult": 2
     }, 
     {
-        "Scale": 0.95, 
+        "Scale": 1.1, 
         "Name": "SM变异火星人2", 
         "Power": 5, 
         "Type": 2, 
@@ -764,7 +764,7 @@
         "Power": 5, 
         "Type": 1, 
         "Score": 1, 
-        "Height": 240, 
+        "Height": 220, 
         "Width": 95, 
         "Animation": "dujiaoshe", 
         "Speed": 12, 

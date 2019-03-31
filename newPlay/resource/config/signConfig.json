@@ -1,7 +1,7 @@
 [
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao6", 
         "detail": "20颗糖", 
         "rewardType": 1, 
         "reward": 20, 
@@ -11,7 +11,7 @@
     }, 
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao7", 
         "detail": "10颗糖", 
         "rewardType": 1, 
         "reward": 10, 
@@ -21,7 +21,7 @@
     }, 
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao8", 
         "detail": "10颗糖", 
         "rewardType": 1, 
         "reward": 10, 
@@ -31,7 +31,7 @@
     }, 
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao9", 
         "detail": "20颗糖", 
         "rewardType": 1, 
         "reward": 20, 
@@ -41,7 +41,7 @@
     }, 
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao10", 
         "detail": "10颗糖", 
         "rewardType": 1, 
         "reward": 10, 
@@ -51,7 +51,7 @@
     }, 
     {
         "name": "糖", 
-        "icon": "tangguo_png", 
+        "icon": "qiandao_json.qiandao11", 
         "detail": "10颗糖", 
         "rewardType": 1, 
         "reward": 10, 
@@ -61,7 +61,7 @@
     }, 
     {
         "name": "宠物", 
-        "icon": "QactorList10100_png", 
+        "icon": "qiandao_json.qiandao12", 
         "detail": "紫色宠物一个", 
         "rewardType": 2, 
         "reward": 10100, 

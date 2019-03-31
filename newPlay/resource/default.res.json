@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,monsterConfig_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,READY_png,GO_png,effectConfig_json,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json,btnSheet1_json,gamBg1_png,gamBg2_png,gamBg3_png,gamBg4_png,btnContinue_png,btnContinueDown_png,jiupingwang_tex_png,bianyixuegao_ske_json,bianyixuegao_tex_json,bianyixuegao_tex_png,huoxingrenwang_ske_json,huoxingrenwang_tex_json,huoxingrenwang_tex_png,jiupingwang_ske_json,jiupingwang_tex_json,comboGreenFnt_fnt,comboGreenFnt_png,comboPurpleFnt_fnt,comboPurpleFnt_png,imgWarning_png,combo4_mp3,jiesuan_mp3,bianyizhizhu_tex_png,bianyizhizhu_ske_json,bianyizhizhu_tex_json,readyGo_mp3,pingfenFnt_fnt,pingfenFnt_png,lianjiFnt_fnt,lianjiFnt_png,pingjiFnt_fnt,pingjiFnt_png,xinshouyindao_tex_png,xinshouyindao_ske_json,xinshouyindao_tex_json,smallBoss_mp3,fallDownWater_mp3,bossWarning_mp3,Jiesuan3_png,SRTTING_png,PAUSED_png,guideReleaseSkill_png,fireParticle_png,fireParticle_json,putParticle_png,putParticle_json,pangxieguai_tex_json,pangxieguai_tex_png,shutiaoguai_ske_json,shutiaoguai_tex_json,shutiaoguai_tex_png,pangxieguai_ske_json,spiderKingDrug_mp3,spideBall_mp3,summon_mp3,itemLight_png,itemUNLOCK_png,unlockItem_mp3,btnRenwu_png,btnShengji_png,btnRonghe_png,btnSetting_png,actorList8_png,btnAd_png,btnAdd_png,btnLiwu_png,btnPause_png,btnReturn_png,btnReturnFirst_png,btnStartGame_png,summonSkillConfig_json,chongzhi4_png,btnReturnFirst1_png,chongzhi1_png,chongzhi2_png,chongzhi3_png,chongzhi5_png,chongzhi6_png,chongzhi7_png,gameOver4_png,btnReturn2_png,guankajiemian1_png,guankajiemian13_png,guankajiemian14_png,guankajiemian15_png,guankajiemian3_png,guankajiemian4_png,guankajiemian5_png,guankajiemian6_png,guankajiemian7_png,actorConfig_json,actorList4_png,actorList3_png,actorList2_png,actorList1_png,zhuanshiwang_tex_png,B-1_ske_json,B-1_tex_json,B-1_tex_png,B-2_ske_json,B-2_tex_json,B-2_tex_png,B-4_ske_json,B-4_tex_json,B-4_tex_png,B-4by_ske_json,B-4by_tex_json,B-4by_tex_png,B-5_ske_json,B-5_tex_json,B-5_tex_png,B-5by_ske_json,B-5by_tex_json,B-5by_tex_png,BDdabengxiong_ske_json,BDdabengxiong_tex_json,BDdabengxiong_tex_png,dabengxiong_ske_json,dabengxiong_tex_json,dabengxiong_tex_png,dandanshe_ske_json,dandanshe_tex_json,dandanshe_tex_png,dandansheby_ske_json,dandansheby_tex_json,dandansheby_tex_png,dujiaoshe_ske_json,dujiaoshe_tex_json,dujiaoshe_tex_png,duyandawang_ske_json,duyandawang_tex_json,duyandawang_tex_png,eyuguai_ske_json,eyuguai_tex_json,eyuguai_tex_png,eyuguaiBY_ske_json,eyuguaiBY_tex_json,eyuguaiBY_tex_png,eyulaoban_ske_json,eyulaoban_tex_json,eyulaoban_tex_png,hudieguai_ske_json,hudieguai_tex_json,hudieguai_tex_png,hudieguaiby_ske_json,hudieguaiby_tex_json,hudieguaiby_tex_png,hudiewang_ske_json,hudiewang_tex_json,hudiewang_tex_png,huoxingguaiBY_ske_json,huoxingguaiBY_tex_json,huoxingguaiBY_tex_png,jiupingxiaochou_ske_json,jiupingxiaochou_tex_json,jiupingxiaochou_tex_png,kuangzhuren_ske_json,kuangzhuren_tex_json,kuangzhuren_tex_png,meiyazai_ske_json,meiyazai_tex_json,meiyazai_tex_png,meiyazaiby_ske_json,meiyazaiby_tex_json,meiyazaiby_tex_png,menyazaiwang_ske_json,menyazaiwang_tex_json,menyazaiwang_tex_png,muwang_ske_json,muwang_tex_json,muwang_tex_png,sdxuerenwang_ske_json,sdxuerenwang_tex_json,sdxuerenwang_tex_png,shanpangxie_ske_json,shanpangxie_tex_json,shanpangxie_tex_png,shanpangxiewang_ske_json,shanpangxiewang_tex_json,shanpangxiewang_tex_png,shihuakonglongguai_ske_json,shihuakonglongguai_tex_json,shihuakonglongguai_tex_png,shoubeiren_ske_json,shoubeiren_tex_json,shoubeiren_tex_png,shoumuren_ske_json,shoumuren_tex_json,shoumuren_tex_png,wenxiangwa_ske_json,wenxiangwa_tex_json,wenxiangwa_tex_png,wenxiangwaby_ske_json,wenxiangwaby_tex_json,wenxiangwaby_tex_png,wenxiangwawang_ske_json,wenxiangwawang_tex_json,wenxiangwawang_tex_png,xuegaowang_ske_json,xuegaowang_tex_json,xuegaowang_tex_png,xuerenguaiby_ske_json,xuerenguaiby_tex_json,xuerenguaiby_tex_png,zhizhuxia_ske_json,zhizhuxia_tex_json,zhizhuxia_tex_png,zhuanshiguai_ske_json,zhuanshiguai_tex_json,zhuanshiguai_tex_png,zhuanshiguaiby_ske_json,zhuanshiguaiby_tex_json,zhuanshiguaiby_tex_png,zhuanshiwang_ske_json,zhuanshiwang_tex_json,dabengxiongBY_ske_json,dabengxiongBY_tex_json,dabengxiongBY_tex_png,guaiboshi_ske_json,guaiboshi_tex_json,guaiboshi_tex_png,xuerenguai_tex_png,xuerenguai_ske_json,xuerenguai_tex_json,fuhuo_png,btnStartGame1_png,btnStartGame2_png,tangguo_png,actorEffect_tex_png,actor10010_ske_json,actor10010_tex_json,actor10010_tex_png,actor10020_ske_json,actor10020_tex_json,actor10020_tex_png,actor10030_ske_json,actor10030_tex_json,actor10030_tex_png,actor10040_ske_json,actor10040_tex_json,actor10040_tex_png,actor10050_ske_json,actor10050_tex_json,actor10050_tex_png,actor10060_ske_json,actor10060_tex_json,actor10060_tex_png,actor10070_ske_json,actor10070_tex_json,actor10070_tex_png,actor10080_ske_json,actor10080_tex_json,actor10080_tex_png,actor10090_ske_json,actor10090_tex_json,actor10090_tex_png,actor10100_ske_json,actor10100_tex_json,actor10100_tex_png,actorEffect_ske_json,actorEffect_tex_json,actorList10020_png,actorList10030_png,actorList10040_png,actorList10050_png,actorList10060_png,actorList10070_png,actorList10080_png,actorList10090_png,actorList10100_png,actorList10010_png,chapterUnlockIcon1005_png,chapterBg1001_png,chapterBg1002_png,chapterBg1003_png,chapterBg1004_png,chapterBg1005_png,chapterBgm1001_mp3,chapterBgm1002_mp3,chapterBgm1003_mp3,chapterBgm1004_mp3,chapterBgm1005_mp3,chapterIcon1001_png,chapterIcon1002_png,chapterIcon1003_png,chapterIcon1004_png,chapterIcon1005_png,chapterUnlockIcon1001_png,chapterUnlockIcon1002_png,chapterUnlockIcon1003_png,chapterUnlockIcon1004_png,chapterConfig_json,guankajiemian12_png,faguang_png,babySkillConfig_json,QactorList10020_png,QactorList10030_png,QactorList10040_png,QactorList10050_png,QactorList10060_png,QactorList10080_png,QactorList10090_png,QactorList10100_png,chapterBg1006_png,chapterBg1007_png,chapterBg1008_png,chapterBg1009_png,chapterIcon1006_png,chapterIcon1007_png,chapterIcon1008_png,chapterIcon1009_png,chapterUnlockIcon1006_png,chapterUnlockIcon1007_png,chapterUnlockIcon1008_png,chapterUnlockIcon1009_png,skillMusic10100_mp3,skillMusic10010_mp3,skillMusic10020_mp3,skillMusic10030_mp3,skillMusic10040_mp3,skillMusic10050_mp3,skillMusic10060_mp3,skillMusic10070_mp3,skillMusic10080_mp3,skillMusic10090_mp3,powerBg_png,levelPro_png,levelProBg_png,vectory_mp3,battleBefore_mp3,gestureSheet1_json,QactorList10070_png,signConfig_json,choujiang_tex_png,choujiang_ske_json,choujiang_tex_json,choujiangBg4_png,choujiangBg1_png,choujiangBg2_png,choujiangBg3_png,actorEffect2_tex_png,actorEffect2_tex_json,actorEffect2_ske_json,zhua8_png,zhua6_png,zhua4_png,zhua2_png,yao3_png,yao1_png,choujiangBg_mp3,choujiagBg100_png,anjian1_png,anjian2_png,choujiang_mp3,choujiangBg5_png,yao2_png,zhua1_png,zhua3_png,zhua5_png,zhua7_png,battleBg08_png,battleBg07_png,battleBg06_png,battleBg05_png,battleBg04_png,battleBg03_png,battleBg02_png,battleBg01_png,gameOver3_png,gameOver2_png,gameOver1_png,tubiao_tex_png,tubiao_tex_json,tubiao_ske_json,lihe_tex_png,lihe_tex_json,lihe_ske_json,gameStart3_png,gameStart2_png,gameStart1_png,chapterCloudT1006_png,chapterCloudT1005_png,chapterCloudT1004_png,chapterCloudT1003_png,chapterCloudT1002_png,chapterCloudT1001_png,chapterCloudB1006_png,chapterCloudB1005_png,chapterCloudB1004_png,chapterCloudB1003_png,chapterCloudB1002_png,chapterCloudB1001_png,icon3_png,icon2_png,icon1_png,qiandao5_png,qiandao4_png,qiandao3_png,qiandao2_png,qiandao1_png,getCandy_mp3,fallDownGround_mp3,getBaby_mp3,imgGuide3_png,imgGuide1_png,imgGuide2_png,chapterSun1009_png,chapterSun1006_png,chapterSun1005_png,chapterSun1004_png,chapterSun1002_png,chapterSun1001_png,guankajiemian16_png,suo3_png,suo2_png,suo1_png,capsuleConfig_json,imgGuide4_png,actorList10_png,actorList9_png,gesture_mp3",
+			"keys": "button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,egret_icon_png,gestureSheet_json,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,description_json,gesture_json,monsterConfig_json,mask_png,imgRop_png,lajitong_ske_json,lajitong_tex_json,lajitong_tex_png,READY_png,GO_png,effectConfig_json,qiqiu_ske_json,qiqiu_tex_json,qiqiu_tex_png,shuihua_ske_json,shuihua_tex_json,shuihua_tex_png,xuegao_tex_png,huoxinren_ske_json,huoxinren_tex_json,huoxinren_tex_png,xinyunguai_ske_json,xinyunguai_tex_json,xinyunguai_tex_png,xuegao_ske_json,xuegao_tex_json,luckyConfig_json,bianhua_tex_png,bianhua_ske_json,bianhua_tex_json,dazhaotexiao_tex_json,dazhaotexiao_tex_png,mofabang_ske_json,mofabang_tex_json,mofabang_tex_png,dazhaotexiao_ske_json,jiansu_tex_png,jiansu_ske_json,jiansu_tex_json,staff_mp3,ballonBoom_mp3,battleBGM_mp3,beginBGM_mp3,btn_mp3,burn_mp3,fireBall_mp3,iceEffect_mp3,skillBegin_mp3,levelConfig_json,summonConfig_json,scoreFnt_png,scoreFnt_fnt,shuijing_tex_png,shuijing_ske_json,shuijing_tex_json,shui3_png,shui1_png,shui2_png,jiupingguai_tex_png,jiupingguai_ske_json,jiupingguai_tex_json,zhizhu_ske_json,zhizhu_tex_json,zhizhu_tex_png,Bg1_png,comboBlueFnt_fnt,comboBlueFnt_png,comboRedFnt_fnt,comboRedFnt_png,comboYellowFnt_fnt,comboYellowFnt_png,Detonationexplosion_tex_png,Detonationexplosion_ske_json,Detonationexplosion_tex_json,combo2_mp3,combo3_mp3,spiderKingArrive_mp3,combo1_mp3,zhizhuwang_tex_png,zhizhuwang_ske_json,zhizhuwang_tex_json,imgTitle_png,duye_tex_png,duye_ske_json,duye_tex_json,wang_tex_png,wang_ske_json,wang_tex_json,longmao_tex_png,longmao_ske_json,longmao_tex_json,btnSheet1_json,gamBg1_png,gamBg2_png,gamBg3_png,gamBg4_png,btnContinue_png,btnContinueDown_png,jiupingwang_tex_png,bianyixuegao_ske_json,bianyixuegao_tex_json,bianyixuegao_tex_png,huoxingrenwang_ske_json,huoxingrenwang_tex_json,huoxingrenwang_tex_png,jiupingwang_ske_json,jiupingwang_tex_json,comboGreenFnt_fnt,comboGreenFnt_png,comboPurpleFnt_fnt,comboPurpleFnt_png,imgWarning_png,combo4_mp3,jiesuan_mp3,bianyizhizhu_tex_png,bianyizhizhu_ske_json,bianyizhizhu_tex_json,readyGo_mp3,pingfenFnt_fnt,pingfenFnt_png,lianjiFnt_fnt,lianjiFnt_png,pingjiFnt_fnt,pingjiFnt_png,xinshouyindao_tex_png,xinshouyindao_ske_json,xinshouyindao_tex_json,smallBoss_mp3,fallDownWater_mp3,bossWarning_mp3,Jiesuan3_png,SRTTING_png,PAUSED_png,guideReleaseSkill_png,pangxieguai_tex_json,pangxieguai_tex_png,shutiaoguai_ske_json,shutiaoguai_tex_json,shutiaoguai_tex_png,pangxieguai_ske_json,spiderKingDrug_mp3,spideBall_mp3,summon_mp3,itemLight_png,itemUNLOCK_png,unlockItem_mp3,btnRenwu_png,btnShengji_png,btnRonghe_png,btnSetting_png,actorList8_png,btnAd_png,btnAdd_png,btnLiwu_png,btnPause_png,btnReturn_png,btnReturnFirst_png,btnStartGame_png,summonSkillConfig_json,chongzhi4_png,btnReturnFirst1_png,chongzhi1_png,chongzhi2_png,chongzhi3_png,chongzhi5_png,chongzhi6_png,chongzhi7_png,gameOver4_png,btnReturn2_png,guankajiemian1_png,guankajiemian13_png,guankajiemian14_png,guankajiemian15_png,guankajiemian3_png,guankajiemian4_png,guankajiemian5_png,guankajiemian6_png,guankajiemian7_png,actorConfig_json,actorList4_png,actorList3_png,actorList2_png,actorList1_png,zhuanshiwang_tex_png,B-1_ske_json,B-1_tex_json,B-1_tex_png,B-2_ske_json,B-2_tex_json,B-2_tex_png,B-4_ske_json,B-4_tex_json,B-4_tex_png,B-4by_ske_json,B-4by_tex_json,B-4by_tex_png,B-5_ske_json,B-5_tex_json,B-5_tex_png,B-5by_ske_json,B-5by_tex_json,B-5by_tex_png,BDdabengxiong_ske_json,BDdabengxiong_tex_json,BDdabengxiong_tex_png,dabengxiong_ske_json,dabengxiong_tex_json,dabengxiong_tex_png,dandanshe_ske_json,dandanshe_tex_json,dandanshe_tex_png,dandansheby_ske_json,dandansheby_tex_json,dandansheby_tex_png,dujiaoshe_ske_json,dujiaoshe_tex_json,dujiaoshe_tex_png,duyandawang_ske_json,duyandawang_tex_json,duyandawang_tex_png,eyuguai_ske_json,eyuguai_tex_json,eyuguai_tex_png,eyuguaiBY_ske_json,eyuguaiBY_tex_json,eyuguaiBY_tex_png,eyulaoban_ske_json,eyulaoban_tex_json,eyulaoban_tex_png,hudieguai_ske_json,hudieguai_tex_json,hudieguai_tex_png,hudieguaiby_ske_json,hudieguaiby_tex_json,hudieguaiby_tex_png,hudiewang_ske_json,hudiewang_tex_json,hudiewang_tex_png,huoxingguaiBY_ske_json,huoxingguaiBY_tex_json,huoxingguaiBY_tex_png,jiupingxiaochou_ske_json,jiupingxiaochou_tex_json,jiupingxiaochou_tex_png,kuangzhuren_ske_json,kuangzhuren_tex_json,kuangzhuren_tex_png,meiyazai_ske_json,meiyazai_tex_json,meiyazai_tex_png,meiyazaiby_ske_json,meiyazaiby_tex_json,meiyazaiby_tex_png,menyazaiwang_ske_json,menyazaiwang_tex_json,menyazaiwang_tex_png,muwang_ske_json,muwang_tex_json,muwang_tex_png,sdxuerenwang_ske_json,sdxuerenwang_tex_json,sdxuerenwang_tex_png,shanpangxie_ske_json,shanpangxie_tex_json,shanpangxie_tex_png,shanpangxiewang_ske_json,shanpangxiewang_tex_json,shanpangxiewang_tex_png,shihuakonglongguai_ske_json,shihuakonglongguai_tex_json,shihuakonglongguai_tex_png,shoubeiren_ske_json,shoubeiren_tex_json,shoubeiren_tex_png,shoumuren_ske_json,shoumuren_tex_json,shoumuren_tex_png,wenxiangwa_ske_json,wenxiangwa_tex_json,wenxiangwa_tex_png,wenxiangwaby_ske_json,wenxiangwaby_tex_json,wenxiangwaby_tex_png,wenxiangwawang_ske_json,wenxiangwawang_tex_json,wenxiangwawang_tex_png,xuegaowang_ske_json,xuegaowang_tex_json,xuegaowang_tex_png,xuerenguaiby_ske_json,xuerenguaiby_tex_json,xuerenguaiby_tex_png,zhizhuxia_ske_json,zhizhuxia_tex_json,zhizhuxia_tex_png,zhuanshiguai_ske_json,zhuanshiguai_tex_json,zhuanshiguai_tex_png,zhuanshiguaiby_ske_json,zhuanshiguaiby_tex_json,zhuanshiguaiby_tex_png,zhuanshiwang_ske_json,zhuanshiwang_tex_json,dabengxiongBY_ske_json,dabengxiongBY_tex_json,dabengxiongBY_tex_png,guaiboshi_ske_json,guaiboshi_tex_json,guaiboshi_tex_png,xuerenguai_tex_png,xuerenguai_ske_json,xuerenguai_tex_json,fuhuo_png,btnStartGame1_png,btnStartGame2_png,tangguo_png,actorEffect_tex_png,actor10010_ske_json,actor10010_tex_json,actor10010_tex_png,actor10020_ske_json,actor10020_tex_json,actor10020_tex_png,actor10030_ske_json,actor10030_tex_json,actor10030_tex_png,actor10040_ske_json,actor10040_tex_json,actor10040_tex_png,actor10050_ske_json,actor10050_tex_json,actor10050_tex_png,actor10060_ske_json,actor10060_tex_json,actor10060_tex_png,actor10070_ske_json,actor10070_tex_json,actor10070_tex_png,actor10080_ske_json,actor10080_tex_json,actor10080_tex_png,actor10090_ske_json,actor10090_tex_json,actor10090_tex_png,actor10100_ske_json,actor10100_tex_json,actor10100_tex_png,actorEffect_ske_json,actorEffect_tex_json,actorList10020_png,actorList10030_png,actorList10040_png,actorList10050_png,actorList10060_png,actorList10070_png,actorList10080_png,actorList10090_png,actorList10100_png,actorList10010_png,chapterUnlockIcon1005_png,chapterBg1001_png,chapterBg1002_png,chapterBg1003_png,chapterBg1004_png,chapterBg1005_png,chapterBgm1001_mp3,chapterBgm1002_mp3,chapterBgm1003_mp3,chapterBgm1004_mp3,chapterBgm1005_mp3,chapterIcon1001_png,chapterIcon1002_png,chapterIcon1003_png,chapterIcon1004_png,chapterIcon1005_png,chapterUnlockIcon1001_png,chapterUnlockIcon1002_png,chapterUnlockIcon1003_png,chapterUnlockIcon1004_png,chapterConfig_json,guankajiemian12_png,faguang_png,babySkillConfig_json,QactorList10020_png,QactorList10030_png,QactorList10040_png,QactorList10050_png,QactorList10060_png,QactorList10080_png,QactorList10090_png,QactorList10100_png,chapterBg1006_png,chapterBg1007_png,chapterBg1008_png,chapterBg1009_png,chapterIcon1006_png,chapterIcon1007_png,chapterIcon1008_png,chapterIcon1009_png,chapterUnlockIcon1006_png,chapterUnlockIcon1007_png,chapterUnlockIcon1008_png,chapterUnlockIcon1009_png,skillMusic10100_mp3,skillMusic10010_mp3,skillMusic10020_mp3,skillMusic10030_mp3,skillMusic10040_mp3,skillMusic10050_mp3,skillMusic10060_mp3,skillMusic10070_mp3,skillMusic10080_mp3,skillMusic10090_mp3,powerBg_png,vectory_mp3,battleBefore_mp3,gestureSheet1_json,QactorList10070_png,signConfig_json,choujiangBg4_png,choujiangBg1_png,choujiangBg2_png,choujiangBg3_png,actorEffect2_tex_png,actorEffect2_tex_json,actorEffect2_ske_json,zhua8_png,zhua6_png,zhua4_png,zhua2_png,yao3_png,yao1_png,choujiangBg_mp3,choujiagBg100_png,anjian1_png,anjian2_png,choujiang_mp3,choujiangBg5_png,yao2_png,zhua1_png,zhua3_png,zhua5_png,zhua7_png,battleBg08_png,battleBg07_png,battleBg06_png,battleBg05_png,battleBg04_png,battleBg03_png,gameOver3_png,gameOver2_png,gameOver1_png,tubiao_tex_png,tubiao_tex_json,tubiao_ske_json,lihe_tex_png,lihe_tex_json,lihe_ske_json,gameStart3_png,gameStart2_png,gameStart1_png,chapterCloudT1006_png,chapterCloudT1005_png,chapterCloudT1004_png,chapterCloudT1003_png,chapterCloudT1002_png,chapterCloudT1001_png,chapterCloudB1006_png,chapterCloudB1005_png,chapterCloudB1004_png,chapterCloudB1003_png,chapterCloudB1002_png,chapterCloudB1001_png,icon3_png,icon2_png,icon1_png,qiandao1_png,getCandy_mp3,fallDownGround_mp3,getBaby_mp3,imgGuide3_png,imgGuide1_png,imgGuide2_png,chapterSun1009_png,chapterSun1006_png,chapterSun1005_png,chapterSun1004_png,chapterSun1002_png,chapterSun1001_png,guankajiemian16_png,suo3_png,suo2_png,suo1_png,capsuleConfig_json,imgGuide4_png,actorList10_png,actorList9_png,gesture_mp3,actor10200_tex_png,actor10110_ske_json,actor10110_tex_json,actor10110_tex_png,actor10120_ske_json,actor10120_tex_json,actor10120_tex_png,actor10130_ske_json,actor10130_tex_json,actor10130_tex_png,actor10140_ske_json,actor10140_tex_json,actor10140_tex_png,actor10160_ske_json,actor10160_tex_json,actor10160_tex_png,actor10170_ske_json,actor10170_tex_json,actor10170_tex_png,actor10190_ske_json,actor10190_tex_json,actor10190_tex_png,actor10200_ske_json,actor10200_tex_json,qiandao15_png,qiandao_json,battleBg02_png,battleBg01_png",
 			"name": "enter"
 		},
 		{
@@ -839,26 +839,6 @@
 			"name": "PAUSED_png"
 		},
 		{
-			"url": "assets/Particle/fireParticle.png",
-			"type": "image",
-			"name": "fireParticle_png"
-		},
-		{
-			"url": "assets/Particle/fireParticle.json",
-			"type": "json",
-			"name": "fireParticle_json"
-		},
-		{
-			"url": "assets/Particle/putParticle.png",
-			"type": "image",
-			"name": "putParticle_png"
-		},
-		{
-			"url": "assets/Particle/putParticle.json",
-			"type": "json",
-			"name": "putParticle_json"
-		},
-		{
 			"url": "assets/game/guideReleaseSkill.png",
 			"type": "image",
 			"name": "guideReleaseSkill_png"
@@ -1004,29 +984,9 @@
 			"name": "btnShengji_png"
 		},
 		{
-			"url": "assets/qiandao/qiandao5.png",
-			"type": "image",
-			"name": "qiandao5_png"
-		},
-		{
 			"url": "assets/qiandao/qiandao1.png",
 			"type": "image",
 			"name": "qiandao1_png"
-		},
-		{
-			"url": "assets/qiandao/qiandao2.png",
-			"type": "image",
-			"name": "qiandao2_png"
-		},
-		{
-			"url": "assets/qiandao/qiandao3.png",
-			"type": "image",
-			"name": "qiandao3_png"
-		},
-		{
-			"url": "assets/qiandao/qiandao4.png",
-			"type": "image",
-			"name": "qiandao4_png"
 		},
 		{
 			"url": "assets/Icon/icon3.png",
@@ -2349,16 +2309,6 @@
 			"name": "powerBg_png"
 		},
 		{
-			"url": "assets/game/levelPro.png",
-			"type": "image",
-			"name": "levelPro_png"
-		},
-		{
-			"url": "assets/game/levelProBg.png",
-			"type": "image",
-			"name": "levelProBg_png"
-		},
-		{
 			"url": "assets/gesture/gestureSheet1.json",
 			"type": "sheet",
 			"name": "gestureSheet1_json",
@@ -2368,21 +2318,6 @@
 			"url": "assets/actorList/QactorList10070.png",
 			"type": "image",
 			"name": "QactorList10070_png"
-		},
-		{
-			"url": "assets/choujiang/choujiang_tex.png",
-			"type": "image",
-			"name": "choujiang_tex_png"
-		},
-		{
-			"url": "assets/choujiang/choujiang_ske.json",
-			"type": "json",
-			"name": "choujiang_ske_json"
-		},
-		{
-			"url": "assets/choujiang/choujiang_tex.json",
-			"type": "json",
-			"name": "choujiang_tex_json"
 		},
 		{
 			"url": "assets/choujiang/choujiangBg4.png",
@@ -2518,16 +2453,6 @@
 			"url": "assets/game/battleBg06.png",
 			"type": "image",
 			"name": "battleBg06_png"
-		},
-		{
-			"url": "assets/game/battleBg01.png",
-			"type": "image",
-			"name": "battleBg01_png"
-		},
-		{
-			"url": "assets/game/battleBg02.png",
-			"type": "image",
-			"name": "battleBg02_png"
 		},
 		{
 			"url": "assets/game/battleBg03.png",
@@ -2740,6 +2665,147 @@
 			"url": "assets/voice/gesture.mp3",
 			"type": "sound",
 			"name": "gesture_mp3"
+		},
+		{
+			"url": "assets/actorBones/actor10200_tex.png",
+			"type": "image",
+			"name": "actor10200_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10110_ske.json",
+			"type": "json",
+			"name": "actor10110_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10110_tex.json",
+			"type": "json",
+			"name": "actor10110_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10110_tex.png",
+			"type": "image",
+			"name": "actor10110_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10120_ske.json",
+			"type": "json",
+			"name": "actor10120_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10120_tex.json",
+			"type": "json",
+			"name": "actor10120_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10120_tex.png",
+			"type": "image",
+			"name": "actor10120_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10130_ske.json",
+			"type": "json",
+			"name": "actor10130_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10130_tex.json",
+			"type": "json",
+			"name": "actor10130_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10130_tex.png",
+			"type": "image",
+			"name": "actor10130_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10140_ske.json",
+			"type": "json",
+			"name": "actor10140_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10140_tex.json",
+			"type": "json",
+			"name": "actor10140_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10140_tex.png",
+			"type": "image",
+			"name": "actor10140_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10160_ske.json",
+			"type": "json",
+			"name": "actor10160_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10160_tex.json",
+			"type": "json",
+			"name": "actor10160_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10160_tex.png",
+			"type": "image",
+			"name": "actor10160_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10170_ske.json",
+			"type": "json",
+			"name": "actor10170_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10170_tex.json",
+			"type": "json",
+			"name": "actor10170_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10170_tex.png",
+			"type": "image",
+			"name": "actor10170_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10190_ske.json",
+			"type": "json",
+			"name": "actor10190_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10190_tex.json",
+			"type": "json",
+			"name": "actor10190_tex_json"
+		},
+		{
+			"url": "assets/actorBones/actor10190_tex.png",
+			"type": "image",
+			"name": "actor10190_tex_png"
+		},
+		{
+			"url": "assets/actorBones/actor10200_ske.json",
+			"type": "json",
+			"name": "actor10200_ske_json"
+		},
+		{
+			"url": "assets/actorBones/actor10200_tex.json",
+			"type": "json",
+			"name": "actor10200_tex_json"
+		},
+		{
+			"url": "assets/qiandao/qiandao15.png",
+			"type": "image",
+			"name": "qiandao15_png"
+		},
+		{
+			"url": "assets/qiandao/qiandao.json",
+			"type": "sheet",
+			"name": "qiandao_json",
+			"subkeys": "qiandao10,qiandao11,qiandao12,qiandao13,qiandao14,qiandao16,qiandao17,qiandao2,qiandao3,qiandao4,qiandao5,qiandao6,qiandao7,qiandao8,qiandao9"
+		},
+		{
+			"url": "assets/game/battleBg02.png",
+			"type": "image",
+			"name": "battleBg02_png"
+		},
+		{
+			"url": "assets/game/battleBg01.png",
+			"type": "image",
+			"name": "battleBg01_png"
 		}
 	]
 }

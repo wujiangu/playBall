@@ -15,6 +15,8 @@ class GameObjectPool {
     private _pool = {};
 
     private _list:Array<any> = [];
+    public count:number = 0
+    public balloon:number = 0
 
     public createObject(classFactory:any, name:string, ...args:any[]):any {
         var result;
@@ -41,9 +43,17 @@ class GameObjectPool {
                 result = new classFactory(args[0], args[1], args[2], args[3])
             }
             // console.log("创建：", key)
+            
             result.key = key;
         }
         this._list.push(result);
+        if (key == "Monster") {
+            this.count++
+        }
+
+        if (key == "Balloon") {
+            this.balloon++
+        }
         return result;
     }
 
@@ -53,6 +63,13 @@ class GameObjectPool {
             this._pool[key] = [];
         }
         // console.log("回收：", key)
+        if (key == "Monster") {
+            this.count--
+        }
+
+        if (key == "Balloon") {
+            this.balloon--
+        }
         this._pool[key].push(obj);
         var index = this._list.indexOf(obj);
         if (index != -1) {

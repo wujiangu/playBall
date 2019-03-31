@@ -132,9 +132,9 @@ class GameStartPanel extends BasePanel {
 	private _onDialog() {
 		this.groupDialog.visible = false
 		if (GameConfig.babylistIndex == 0) {
-			this._setTimeOut(5 * 1000)
+			this._setTimeOut(10 * 1000)
 		}else{
-			this._setTimeOut(60 * 5 * 100)
+			this._setTimeOut(120 * 1000)
 		}
 	}
 

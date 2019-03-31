@@ -13,6 +13,10 @@ var GameSceneData = (function () {
         this.addPower = 0;
         /**糖果的获得数量 */
         this.addCandy = 0;
+        /**无尽分数增加索引 */
+        this.soreIndex = 1;
+        /**无尽连击增加索引 */
+        this.comboIndex = 1;
         this.allActors = new Array();
     }
     // 获取召唤物目标X值
@@ -195,6 +199,67 @@ var GameSceneData = (function () {
             this.extra += extra;
             this.extra = Math.min(3, this.extra);
             // this.updateCandy(extra)
+        }
+    };
+    /**解锁宝宝 */
+    GameSceneData.prototype.unlockBaby = function (id) {
+        var index = GameConfig.babyUnlockList.indexOf(id);
+        if (index < 0) {
+            // 未解锁
+            GameConfig.babyUnlockList.push(id);
+            Common.updateUnlockBaby();
+            PanelManager.gameScenePanel.unlockEffect(id);
+        }
+    };
+    /**分数解锁 */
+    GameSceneData.prototype.scoreUnlock = function (value) {
+        switch (GameConfig.gameMode) {
+            case EBattleMode.Level:
+                break;
+            case EBattleMode.Endless:
+                this.extra = 0;
+                var extra = Math.floor(value / 500);
+                if (this.soreIndex == extra) {
+                    this.soreIndex++;
+                    this.extra += extra * 5;
+                    this.updateCandy(this.extra);
+                    PanelManager.gameScenePanel.updateExtarCandy(this.extra);
+                }
+                if (value >= 5000) {
+                    this.unlockBaby(10110);
+                }
+                if (value >= 10000) {
+                    this.unlockBaby(10120);
+                }
+                break;
+            case EBattleMode.Timelimite:
+                break;
+            default:
+                break;
+        }
+    };
+    /**连击解锁 */
+    GameSceneData.prototype.comboUnlock = function (value) {
+        switch (GameConfig.gameMode) {
+            case EBattleMode.Level:
+                break;
+            case EBattleMode.Endless:
+                this.extra = 0;
+                var extra = Math.floor(value / 10);
+                if (this.comboIndex == extra) {
+                    this.comboIndex++;
+                    this.extra += extra;
+                    this.updateCandy(this.extra);
+                    PanelManager.gameScenePanel.updateExtarCandy(this.extra);
+                }
+                if (value >= 50) {
+                    this.unlockBaby(10170);
+                }
+                break;
+            case EBattleMode.Timelimite:
+                break;
+            default:
+                break;
         }
     };
     return GameSceneData;

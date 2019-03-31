@@ -77,8 +77,8 @@ var Gesture = (function () {
     Gesture.prototype._mouseMove = function (evt) {
         if (!this._isDown)
             return;
-        // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
-        var p = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint");
+        var p = new egret.Point(evt.stageX, evt.stageY);
+        // var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
         p.x = evt.stageX;
         p.y = evt.stageY;
         this._mouseDatas.push(p);
@@ -263,11 +263,11 @@ var Gesture = (function () {
                     //     // }
                     // }
                     this._layer.graphics.endFill();
-                    egret.setTimeout(this._clearGraphics, this, 200);
                     break;
                 }
             }
         }
+        egret.setTimeout(this._clearGraphics, this, 200);
     };
     // 贝塞尔插值算法
     Gesture.prototype._bezierInterpolation = function () {
@@ -336,10 +336,10 @@ var Gesture = (function () {
         }
     };
     Gesture.prototype._clearGraphics = function () {
-        while (this._lineData.length > 0) {
-            var p = this._lineData.pop();
-            GameObjectPool.getInstance().destroyObject(p);
-        }
+        // while(this._lineData.length > 0) {
+        //     let p:egret.Point = this._lineData.pop()
+        //     // GameObjectPool.getInstance().destroyObject(p)
+        // }
         this._layer.graphics.clear();
         this._lineData.length = 0;
     };

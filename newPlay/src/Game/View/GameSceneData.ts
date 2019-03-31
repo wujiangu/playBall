@@ -20,6 +20,10 @@ class GameSceneData {
     public realScore:number
 	/** 额外糖果 */
 	public extra:number
+	/**无尽分数增加索引 */
+	public soreIndex:number = 1
+	/**无尽连击增加索引 */
+	public comboIndex:number = 1
 
 	// 获取召唤物目标X值
 	public getSummonTargetX(e_pos:EMonsterPos, a_x:number, a_count:number = 0, a_num:number = 0, type:ESummonType = ESummonType.Balloon, isBoss:boolean = false) {
@@ -167,6 +171,72 @@ class GameSceneData {
 			this.extra = Math.min(3, this.extra)
 			// this.updateCandy(extra)
 		}
+	}
+
+	/**解锁宝宝 */
+	public unlockBaby(id:number) {
+		let index = GameConfig.babyUnlockList.indexOf(id)
+		if (index < 0) {
+			// 未解锁
+			GameConfig.babyUnlockList.push(id)
+			Common.updateUnlockBaby()
+			PanelManager.gameScenePanel.unlockEffect(id)
+		}
+	}
+
+	/**分数解锁 */
+	public scoreUnlock(value:number) {
+		switch (GameConfig.gameMode) {
+            case EBattleMode.Level:
+                
+            break
+            case EBattleMode.Endless:
+                this.extra = 0
+                let extra = Math.floor(value / 500)
+                if (this.soreIndex == extra) {
+                    this.soreIndex++
+                    this.extra += extra * 5
+                    this.updateCandy(this.extra)
+					PanelManager.gameScenePanel.updateExtarCandy(this.extra)
+                }
+                if (value >= 5000) {
+                    this.unlockBaby(10110)
+                }
+                if (value >= 10000) {
+                    this.unlockBaby(10120)
+                }
+            break
+            case EBattleMode.Timelimite:
+            break
+            default:
+            break
+        }
+	}
+
+	/**连击解锁 */
+	public comboUnlock(value:number) {
+		switch (GameConfig.gameMode) {
+            case EBattleMode.Level:
+                
+            break
+            case EBattleMode.Endless:
+                this.extra = 0
+                let extra = Math.floor(value / 10)
+                if (this.comboIndex == extra) {
+                    this.comboIndex++
+                    this.extra += extra
+                    this.updateCandy(this.extra)
+					PanelManager.gameScenePanel.updateExtarCandy(this.extra)
+                }
+                if (value >= 50) {
+                    this.unlockBaby(10170)
+                }
+            break
+            case EBattleMode.Timelimite:
+            break
+            default:
+            break
+        }
 	}
 
 	private _levelData:any

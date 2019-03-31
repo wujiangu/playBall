@@ -43,10 +43,11 @@ var GameConfig = (function () {
         GameVoice.rewardVoice = RES.getRes(GameVoice.rewardVoice_mp3);
         GameVoice.gestureVoice = RES.getRes(GameVoice.gesture_mp3);
     };
-    GameConfig.init = function () {
-        this.summonConfig = RES.getRes("summonConfig_json");
-        this.levelConfig = RES.getRes("levelConfig_json");
-        this.summonSkillConfig = RES.getRes("summonSkillConfig_json");
+    GameConfig.beforInitSound = function () {
+        GameVoice.beginBGMSound = RES.getRes(GameVoice.beginBGM_mp3);
+        GameVoice.btnSound = RES.getRes(GameVoice.btn_mp3);
+    };
+    GameConfig.beforeInit = function () {
         var effectConfig = RES.getRes("effectConfig_json");
         this.effectTable = {};
         for (var i = 0; i < effectConfig.length; i++) {
@@ -57,9 +58,26 @@ var GameConfig = (function () {
             this.effectTable[config.ID.toString()] = data;
             this.initBattleDragonBones(config.name);
         }
+        this.initConfig();
+        this.beforInitSound();
+    };
+    GameConfig.init = function () {
+        this.summonConfig = RES.getRes("summonConfig_json");
+        this.levelConfig = RES.getRes("levelConfig_json");
+        this.summonSkillConfig = RES.getRes("summonSkillConfig_json");
         this.monsterConfig = RES.getRes("monsterConfig_json");
         this.gestureConfig = RES.getRes("gesture_json");
         this.luckyConfig = RES.getRes("luckyConfig_json");
+        var effectConfig = RES.getRes("effectConfig_json");
+        this.effectTable = {};
+        for (var i = 0; i < effectConfig.length; i++) {
+            var config = effectConfig[i];
+            var data = {};
+            data["ID"] = config.ID;
+            data["name"] = config.name;
+            this.effectTable[config.ID.toString()] = data;
+            this.initBattleDragonBones(config.name);
+        }
         this.luckyTable = {};
         for (var i = 0; i < this.luckyConfig.length; i++) {
             var config = this.luckyConfig[i];
@@ -117,10 +135,6 @@ var GameConfig = (function () {
             }
         }
         this.initConfig();
-        this.initSound();
-        Common.getGuide();
-    };
-    GameConfig.initConfig = function () {
         this.summonTable = {};
         for (var i = 0; i < this.summonConfig.length; i++) {
             var config = this.summonConfig[i];
@@ -170,6 +184,59 @@ var GameConfig = (function () {
             data["ids"] = config.ids;
             this.summonSkillTable[config.key.toString()] = data;
         }
+        this.initSound();
+        Common.getGuide();
+    };
+    GameConfig.initConfig = function () {
+        // this.summonTable = {}
+        // for (let i = 0; i < this.summonConfig.length; i++) {
+        //     let config = this.summonConfig[i]
+        // 	let data = {}
+        // 	data["ID"] = config.ID
+        // 	data["Type"] = config.Type
+        // 	data["Actions"] = config.Actions
+        // 	data["Animation"] = config.Animation
+        // 	data["Speed"] = config.Speed
+        // 	data["Score"] = config.Score
+        // 	data["Power"] = config.Power
+        // 	data["Scale"] = config.Scale
+        // 	data["Width"] = config.Width
+        // 	data["Height"] = config.Height
+        // 	this.summonTable[config.ID.toString()] = data
+        // }
+        // this.levelTable = {}
+        // for (let i = 0; i < this.levelConfig.length; i++) {
+        //     let config = this.levelConfig[i]
+        // 	let data = {}
+        // 	data["key"] = config.key
+        // 	data["next"] = config.next
+        // 	data["addTime"] = config.addTime
+        // 	data["speed"] = config.speed
+        // 	data["normalCount"] = config.normalCount
+        // 	data["candy"] = config.candy
+        // 	data["unlockItem"] = config.unlockItem
+        // 	data["normal"] = config.normal
+        // 	data["elite"] = config.elite
+        // 	data["section"] = config.section
+        // 	data["level"] = config.level
+        // 	if (config.key != null && config.key > 0) {
+        // 		this.levelTable[config.key.toString()] = data
+        // 	}
+        // }
+        // this.summonSkillTable = {}
+        // for (let i = 0; i < this.summonSkillConfig.length; i++) {
+        //     let config = this.summonSkillConfig[i]
+        // 	let data = {}
+        // 	data["id"] = config.id
+        // 	data["type"] = config.type
+        // 	data["diff"] = config.diff
+        // 	data["key"] = config.key
+        // 	data["max"] = config.max
+        // 	data["min"] = config.min
+        // 	data["count"] = config.count
+        // 	data["ids"] = config.ids
+        // 	this.summonSkillTable[config.key.toString()] = data
+        // }
         this.actorConfig = RES.getRes("actorConfig_json");
         this.actorTable = {};
         this.babyOpenList.length = 0;
@@ -270,8 +337,8 @@ var GameConfig = (function () {
             data["isGet"] = false;
             if (i < this.signCount)
                 data["isGet"] = true;
-            if (i == this.signCount && this.sign == 1)
-                data["isGet"] = true;
+            // if (i == this.signCount && this.sign == 1) data["isGet"] = true
+            Common.log("sign", i, this.signCount, this.sign);
             this.signTable[config.id.toString()] = data;
         }
         this.capsuleConfig = RES.getRes("capsuleConfig_json");

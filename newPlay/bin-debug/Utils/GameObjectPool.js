@@ -12,6 +12,8 @@ var GameObjectPool = (function () {
         // }
         this._pool = {};
         this._list = [];
+        this.count = 0;
+        this.balloon = 0;
         // egret.Ticker.getInstance().register(this.onEnterFrame, this);
     }
     GameObjectPool.prototype.createObject = function (classFactory, name) {
@@ -46,6 +48,12 @@ var GameObjectPool = (function () {
             result.key = key;
         }
         this._list.push(result);
+        if (key == "Monster") {
+            this.count++;
+        }
+        if (key == "Balloon") {
+            this.balloon++;
+        }
         return result;
     };
     GameObjectPool.prototype.destroyObject = function (obj) {
@@ -54,6 +62,12 @@ var GameObjectPool = (function () {
             this._pool[key] = [];
         }
         // console.log("回收：", key)
+        if (key == "Monster") {
+            this.count--;
+        }
+        if (key == "Balloon") {
+            this.balloon--;
+        }
         this._pool[key].push(obj);
         var index = this._list.indexOf(obj);
         if (index != -1) {

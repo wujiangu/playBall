@@ -319,6 +319,30 @@
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
+		<tween:TweenGroup id="candyAnimate">
+			<tween:TweenItem target="{_groupCandy}">
+				<tween:Set>
+					<tween:props>
+						<e:Object x="{236}" alpha="{0}" y="{183}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="500">
+					<tween:props>
+						<e:Object x="{236}" alpha="{1}" y="{143}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object x="{236}" alpha="{1}" y="{143}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="350">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Rect id="m_rectWarning" left="1" right="-1" top="0" bottom="0" fillAlpha="0.5" touchEnabled="false" fillColor="0xff0000"/>
 	<e:Image id="ready" source="READY_png" touchEnabled="false" horizontalCenter="0" verticalCenter="-200"/>
@@ -332,21 +356,7 @@
 		<e:Image id="m_imgGroundWarning" source="imgRop_png" height="2" left="0" right="0" y="965" visible="false"/>
 		<e:Image id="m_imgGuide" source="imgRop_png" height="2" left="0" right="0" y="359" visible="false"/>
 		<e:Image id="m_imgBossWarning" source="imgWarning_png" y="167" scaleX="1" scaleY="1" horizontalCenter="0"/>
-		<e:Group id="m_groupGrogress" width="361" height="87" horizontalCenter="0" verticalCenter="-622">
-			<e:Label id="_curLevel" text="10" scaleX="1" scaleY="1" fontFamily="Microsoft YaHei" size="36" verticalAlign="middle" textAlign="left" horizontalCenter="-148" verticalCenter="1.5"/>
-			<e:Image source="battleBg01_png" x="3" y="14"/>
-			<e:Image id="_imgProgressBg" source="battleBg04_png" scale9Grid="4,4,18,2" x="74.67" y="40" width="31.2"/>
-			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="119" y="40" width="31.2"/>
-			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="163" y="40" width="31.2"/>
-			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="206" y="40" width="31.2"/>
-			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="250.34" y="40" width="31.2"/>
-			<e:Image id="_imgProgress0" source="battleBg03_png" scale9Grid="4,4,18,2" x="74.67" y="40" height="10" width="31.2"/>
-			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="119" y="40" height="10" id="_imgProgress1" width="31.2"/>
-			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="163" y="40" height="10" id="_imgProgress2" width="31.2"/>
-			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="206" y="40" height="10" id="_imgProgress3" width="31.2"/>
-			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="250.34" y="40" height="10" id="_imgProgress4" width="31.2"/>
-			<e:Image id="_imgBossIcon" source="battleBg08_png" x="291.67" y="14"/>
-		</e:Group>
+
 	</e:Group>
 	<e:Group id="m_groupScore" width="491.09" height="245" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" verticalCenter="-197">
 		<e:BitmapLabel id="m_fntCombo" width="643.64" height="150" font="comboBlueFnt_fnt" text="COMBO" scaleX="0.62" scaleY="0.62" horizontalCenter="0" y="-122" anchorOffsetX="0" letterSpacing="-45"/>
@@ -366,6 +376,25 @@
 			<e:Image source="battleBg05_png" horizontalCenter="0" verticalCenter="0"/>
 		</e:Group>
 		<e:Image id="_imgGuideTip" source="imgGuide4_png" y="878" horizontalCenter="0"/>
+		<e:Group id="m_groupGrogress" width="361" height="87" horizontalCenter="0" verticalCenter="-622" x="185" y="31" scaleX="1" scaleY="1">
+			<e:Label id="_curLevel" text="10" scaleX="1" scaleY="1" fontFamily="Microsoft YaHei" size="36" verticalAlign="middle" textAlign="left" horizontalCenter="-148" verticalCenter="1.5"/>
+			<e:Image source="battleBg01_png" x="3" y="14"/>
+			<e:Image id="_imgProgressBg" source="battleBg04_png" scale9Grid="4,4,18,2" x="74.67" y="40" width="31.2"/>
+			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="119" y="40" width="31.2"/>
+			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="163" y="40" width="31.2"/>
+			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="206" y="40" width="31.2"/>
+			<e:Image source="battleBg04_png" scale9Grid="4,4,18,2" x="250.34" y="40" width="31.2"/>
+			<e:Image id="_imgProgress0" source="battleBg03_png" scale9Grid="4,4,18,2" x="74.67" y="40" height="10" width="31.2"/>
+			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="119" y="40" height="10" id="_imgProgress1" width="31.2"/>
+			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="163" y="40" height="10" id="_imgProgress2" width="31.2"/>
+			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="206" y="40" height="10" id="_imgProgress3" width="31.2"/>
+			<e:Image source="battleBg03_png" scale9Grid="4,4,18,2" x="250.34" y="40" height="10" id="_imgProgress4" width="31.2"/>
+			<e:Image id="_imgBossIcon" source="battleBg08_png" x="291.67" y="14"/>
+		</e:Group>
+		<e:Group id="_groupCandy" width="258" height="81" y="183" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0">
+			<e:Image source="tangguo_png" scaleX="2" scaleY="2" horizontalCenter="-72" verticalCenter="0"/>
+			<e:Label id="_labCandy" text="X50" fontFamily="Microsoft YaHei" size="80" verticalCenter="0" left="118" textColor="0xffffff"/>
+		</e:Group>
 	</e:Group>
 	<e:Group id="m_groupGesture" anchorOffsetY="0" left="0" right="0" top="0" bottom="1" touchThrough="false" touchEnabled="true" touchChildren="true">
 	</e:Group>

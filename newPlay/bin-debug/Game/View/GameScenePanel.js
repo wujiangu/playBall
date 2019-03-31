@@ -55,7 +55,10 @@ var GameScenePanel = (function (_super) {
         this.itemUnlockGroup.visible = false;
         this._imgGuide.visible = false;
         this._imgGuideTip.visible = false;
+        this._groupCandy.visible = false;
         this.m_normalCount = 0;
+        this._data.soreIndex = 1;
+        this._data.comboIndex = 1;
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
         this.initData();
@@ -241,6 +244,7 @@ var GameScenePanel = (function (_super) {
         Common.gameScene().uiLayer.removeChild(this);
         this.exit();
         GameVoice.battleBGMChannel.stop();
+        Common.log("怪物数量", GameObjectPool.getInstance().count, GameObjectPool.getInstance().balloon);
     };
     GameScenePanel.prototype.setSkillDuration = function () {
         if (this.m_baby.skillData.time > 0) {
@@ -470,6 +474,7 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype.SetRealScore = function (value) {
         this._data.realScore = value;
         this.m_bitLabScore.text = this._data.realScore.toString();
+        this._data.scoreUnlock(value);
     };
     Object.defineProperty(GameScenePanel.prototype, "score", {
         get: function () {
@@ -477,21 +482,7 @@ var GameScenePanel = (function (_super) {
         },
         set: function (value) {
             this.m_score = value;
-            // 计算进度条的单位增量
-            // let step = 260 / (this._data.needScore - this._data.lastScore)
-            // this.m_imgProgress.width = (this.m_score - this._data.lastScore) * step
-            // this._setProgress()
-            // let score = Math.min(value, this._data.needScore - this._data.lastScore)
-            // if (this._data.needScore - this._data.lastScore <= 0) {
-            //     score = Math.min(value, this._data.needScore)
-            // }
-            // Common.log("分数:", value)
             this._setProgress(value);
-            // if (this.m_score >= this._data.needScore * 0.5 && !this.m_isLuck) {
-            //     //引导关没有
-            //     this.m_isLuck = true
-            //     GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1
-            // }
         },
         enumerable: true,
         configurable: true
@@ -697,6 +688,7 @@ var GameScenePanel = (function (_super) {
                     summon.setVertical(addSpeed);
                 }
                 this._data.comboRewardCandy(this.m_comboCount);
+                this._data.comboUnlock(this.m_comboCount);
             }
             if (this.m_comboCount <= 2)
                 GameConfig.comboDelay = 1200;
@@ -708,6 +700,17 @@ var GameScenePanel = (function (_super) {
         this._data.realScore += GameConfig.balloonScore;
         this.SetRealScore(this._data.realScore);
         this.actorDeadHandle();
+    };
+    GameScenePanel.prototype.unlockEffect = function (id) {
+        var data = GameConfig.actorTable[id];
+        this.itemIcon.source = data.icon;
+        this.itemUnlockGroup.visible = true;
+        this.itemUnlock.play(0);
+    };
+    GameScenePanel.prototype.updateExtarCandy = function (value) {
+        this._labCandy.text = "X" + value;
+        this._groupCandy.visible = true;
+        this.candyAnimate.play(0);
     };
     GameScenePanel.prototype._warning = function () {
         this.m_rectWarning.visible = true;
@@ -732,6 +735,12 @@ var GameScenePanel = (function (_super) {
             this.m_baby.gotoAttack();
         }
     };
+    GameScenePanel.prototype._onItemUnlock = function () {
+        if (GameConfig.gameMode == EBattleMode.Level) {
+            this.itemUnlockGroup.visible = false;
+            GameManager.Instance.endLevel();
+        }
+    };
     /**
      * 进入下一关
      */
@@ -743,7 +752,24 @@ var GameScenePanel = (function (_super) {
             if (GameConfig.gameMode == EBattleMode.Level) {
                 this._data.updateCandy(this._data.levelData.candy + this._data.extra);
                 this._data.extra = 0;
-                GameManager.Instance.endLevel();
+                var id = this._data.levelData.unlockItem;
+                if (id > 0) {
+                    var index = GameConfig.babyUnlockList.indexOf(id);
+                    if (index >= 0) {
+                        // 已解锁
+                        GameManager.Instance.endLevel();
+                    }
+                    else {
+                        // 未解锁
+                        GameConfig.babyUnlockList.push(id);
+                        Common.updateUnlockBaby();
+                        this.unlockEffect(id);
+                    }
+                }
+                else {
+                    GameManager.Instance.endLevel();
+                }
+                // GameManager.Instance.endLevel()
             }
             else {
                 this.updeLevelData(this._data.levelData.next, this._data.levelData.key);
@@ -934,6 +960,7 @@ var GameScenePanel = (function (_super) {
         this.comboMove.addEventListener('complete', this._onComboMoveComplete, this);
         this.bossWarning.addEventListener('complete', this._enterBoss, this);
         this.effectMask.addEventListener('complete', this._beginSkill, this);
+        this.itemUnlock.addEventListener('complete', this._onItemUnlock, this);
         Common.addTouchBegin(this.m_btnPause);
         this._progress = new egret.Shape();
         this._imgPower.mask = this._progress;

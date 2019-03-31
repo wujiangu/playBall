@@ -82,7 +82,7 @@ class LoadingUI extends egret.Sprite {
         txtbg.y=loadbg.y+w/2 -10;
         this.txtLoadPos=new egret.Point(txtbg.x, txtbg.y);
         
-        var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0xa56016);
+        var txtExp:egret.TextField=Common.createText("", 0, 0, 40, 0x000000);
         this.txtLoad=txtExp;
         this.addChild(txtExp)
         this.createAirFan();

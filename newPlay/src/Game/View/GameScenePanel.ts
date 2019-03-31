@@ -44,7 +44,10 @@ class GameScenePanel extends BasePanel {
         this.itemUnlockGroup.visible = false
         this._imgGuide.visible = false
         this._imgGuideTip.visible = false
+        this._groupCandy.visible = false
         this.m_normalCount = 0
+        this._data.soreIndex = 1
+        this._data.comboIndex = 1
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
         this.initData()
@@ -235,6 +238,8 @@ class GameScenePanel extends BasePanel {
 		Common.gameScene().uiLayer.removeChild(this)
         this.exit()
         GameVoice.battleBGMChannel.stop()
+
+        Common.log("怪物数量", GameObjectPool.getInstance().count, GameObjectPool.getInstance().balloon)
     }
 
     public setSkillDuration() {
@@ -497,7 +502,7 @@ class GameScenePanel extends BasePanel {
     public SetRealScore(value:number) {
         this._data.realScore = value
         this.m_bitLabScore.text = this._data.realScore.toString()
-        
+        this._data.scoreUnlock(value)
     }
 
     public get score() {
@@ -506,23 +511,7 @@ class GameScenePanel extends BasePanel {
 
     public set score(value:number) {
         this.m_score = value
-        
-        // 计算进度条的单位增量
-        // let step = 260 / (this._data.needScore - this._data.lastScore)
-        // this.m_imgProgress.width = (this.m_score - this._data.lastScore) * step
-        // this._setProgress()
-        // let score = Math.min(value, this._data.needScore - this._data.lastScore)
-        // if (this._data.needScore - this._data.lastScore <= 0) {
-        //     score = Math.min(value, this._data.needScore)
-        // }
-        // Common.log("分数:", value)
         this._setProgress(value)
-
-        // if (this.m_score >= this._data.needScore * 0.5 && !this.m_isLuck) {
-        //     //引导关没有
-        //     this.m_isLuck = true
-        //     GameConfig.gameSpeedPercent = GameConfig.gameSpeedPercent * 1.1
-        // }
     }
 
     private _setProgress(score:number) {
@@ -709,6 +698,8 @@ class GameScenePanel extends BasePanel {
                 }
 
                 this._data.comboRewardCandy(this.m_comboCount)
+
+                this._data.comboUnlock(this.m_comboCount)
             }
             if (this.m_comboCount <= 2) GameConfig.comboDelay = 1200
             else GameConfig.comboDelay = 1000
@@ -718,6 +709,20 @@ class GameScenePanel extends BasePanel {
         this.SetRealScore(this._data.realScore)
         this.actorDeadHandle()
     }
+
+    public unlockEffect(id:number) {
+        let data = GameConfig.actorTable[id]
+        this.itemIcon.source = data.icon
+        this.itemUnlockGroup.visible = true
+        this.itemUnlock.play(0)
+    }
+
+    public updateExtarCandy(value:number) {
+        this._labCandy.text = "X"+value
+        this._groupCandy.visible = true
+        this.candyAnimate.play(0)
+    }
+
 
     private _warning() {
         this.m_rectWarning.visible = true
@@ -745,6 +750,13 @@ class GameScenePanel extends BasePanel {
         }
     }
 
+    private _onItemUnlock() {
+        if (GameConfig.gameMode == EBattleMode.Level) {
+            this.itemUnlockGroup.visible = false
+            GameManager.Instance.endLevel()
+        }
+    }
+
     /**
      * 进入下一关
      */
@@ -757,12 +769,31 @@ class GameScenePanel extends BasePanel {
             if (GameConfig.gameMode == EBattleMode.Level) {
                 this._data.updateCandy(this._data.levelData.candy + this._data.extra)
                 this._data.extra = 0
-                GameManager.Instance.endLevel()
+                let id = this._data.levelData.unlockItem
+                if (id > 0) {
+                    let index = GameConfig.babyUnlockList.indexOf(id)
+                    if (index >= 0) {
+                        // 已解锁
+                        GameManager.Instance.endLevel()
+                    }else{
+                        // 未解锁
+                        GameConfig.babyUnlockList.push(id)
+				        Common.updateUnlockBaby()
+                        this.unlockEffect(id)
+                    }
+                }
+                else{
+                    GameManager.Instance.endLevel()
+                }
+
+                // GameManager.Instance.endLevel()
             }else{
                 this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
             }
         }
     }
+
+
 
     /**
      * 进入boss
@@ -963,6 +994,7 @@ class GameScenePanel extends BasePanel {
         this.comboMove.addEventListener('complete', this._onComboMoveComplete, this)
         this.bossWarning.addEventListener('complete', this._enterBoss, this)
         this.effectMask.addEventListener('complete', this._beginSkill, this)
+        this.itemUnlock.addEventListener('complete', this._onItemUnlock,this)
         
         Common.addTouchBegin(this.m_btnPause)
 
@@ -1107,7 +1139,10 @@ class GameScenePanel extends BasePanel {
     private m_groupFull:eui.Group
     private m_gestureShape:egret.Shape
 	private m_gesture:Gesture
+    private _groupCandy:eui.Group
+    private _labCandy:eui.Label
 
+    private candyAnimate:egret.tween.TweenGroup
     private readyAnimate:egret.tween.TweenGroup
     private effectMask:egret.tween.TweenGroup
     private warning:egret.tween.TweenGroup

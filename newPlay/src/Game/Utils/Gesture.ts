@@ -87,8 +87,8 @@ class Gesture
     private _mouseMove(evt:egret.TouchEvent)
     {
         if (!this._isDown) return
-        // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
-        var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
+        var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
+        // var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
         p.x = evt.stageX
         p.y = evt.stageY
         this._mouseDatas.push(p)
@@ -301,11 +301,12 @@ class Gesture
                         
                     // }
                     this._layer.graphics.endFill()
-                    egret.setTimeout(this._clearGraphics, this, 200)
+                    
                     break
                 }
             } 
         }
+        egret.setTimeout(this._clearGraphics, this, 200)
     }
 
     // 贝塞尔插值算法
@@ -381,10 +382,10 @@ class Gesture
     }
 
     private _clearGraphics() {
-        while(this._lineData.length > 0) {
-            let p:egret.Point = this._lineData.pop()
-            GameObjectPool.getInstance().destroyObject(p)
-        }
+        // while(this._lineData.length > 0) {
+        //     let p:egret.Point = this._lineData.pop()
+        //     // GameObjectPool.getInstance().destroyObject(p)
+        // }
         this._layer.graphics.clear()
         this._lineData.length = 0
     }

@@ -122,10 +122,12 @@ class GameConfig {
 		GameVoice.gestureVoice = RES.getRes(GameVoice.gesture_mp3)
 	}
 
-	public static init() {
-		this.summonConfig = RES.getRes("summonConfig_json")
-		this.levelConfig = RES.getRes("levelConfig_json")
-		this.summonSkillConfig = RES.getRes("summonSkillConfig_json")
+	public static beforInitSound() {
+		GameVoice.beginBGMSound = RES.getRes(GameVoice.beginBGM_mp3)
+		GameVoice.btnSound = RES.getRes(GameVoice.btn_mp3)
+	}
+
+	public static beforeInit() {
 		let effectConfig:Array<any> = RES.getRes("effectConfig_json")
 		this.effectTable = {}
 		for (let i = 0; i < effectConfig.length; i++) {
@@ -136,10 +138,30 @@ class GameConfig {
 			this.effectTable[config.ID.toString()] = data
 			this.initBattleDragonBones(config.name)
 		}
+		this.initConfig()
+		this.beforInitSound()
+	}
+
+	public static init() {
+		this.summonConfig = RES.getRes("summonConfig_json")
+		this.levelConfig = RES.getRes("levelConfig_json")
+		this.summonSkillConfig = RES.getRes("summonSkillConfig_json")
+		
 
 		this.monsterConfig = RES.getRes("monsterConfig_json")
         this.gestureConfig = RES.getRes("gesture_json")
         this.luckyConfig = RES.getRes("luckyConfig_json")
+
+		let effectConfig:Array<any> = RES.getRes("effectConfig_json")
+		this.effectTable = {}
+		for (let i = 0; i < effectConfig.length; i++) {
+			let config = effectConfig[i]
+			let data = {}
+			data["ID"] = config.ID
+			data["name"] = config.name
+			this.effectTable[config.ID.toString()] = data
+			this.initBattleDragonBones(config.name)
+		}
 
 		this.luckyTable = {}
 		for (let i = 0; i < this.luckyConfig.length; i++) {
@@ -203,11 +225,8 @@ class GameConfig {
         }
 
 		this.initConfig()
-		this.initSound()
-		Common.getGuide()
-	}
 
-	public static initConfig() {
+
 		this.summonTable = {}
         for (let i = 0; i < this.summonConfig.length; i++) {
             let config = this.summonConfig[i]
@@ -260,6 +279,65 @@ class GameConfig {
 			data["ids"] = config.ids
 			this.summonSkillTable[config.key.toString()] = data
         }
+
+
+		this.initSound()
+		Common.getGuide()
+	}
+
+	public static initConfig() {
+		// this.summonTable = {}
+        // for (let i = 0; i < this.summonConfig.length; i++) {
+        //     let config = this.summonConfig[i]
+		// 	let data = {}
+		// 	data["ID"] = config.ID
+		// 	data["Type"] = config.Type
+		// 	data["Actions"] = config.Actions
+		// 	data["Animation"] = config.Animation
+		// 	data["Speed"] = config.Speed
+		// 	data["Score"] = config.Score
+		// 	data["Power"] = config.Power
+		// 	data["Scale"] = config.Scale
+		// 	data["Width"] = config.Width
+		// 	data["Height"] = config.Height
+		// 	this.summonTable[config.ID.toString()] = data
+        // }
+
+
+		// this.levelTable = {}
+        // for (let i = 0; i < this.levelConfig.length; i++) {
+        //     let config = this.levelConfig[i]
+		// 	let data = {}
+		// 	data["key"] = config.key
+		// 	data["next"] = config.next
+		// 	data["addTime"] = config.addTime
+		// 	data["speed"] = config.speed
+		// 	data["normalCount"] = config.normalCount
+		// 	data["candy"] = config.candy
+		// 	data["unlockItem"] = config.unlockItem
+		// 	data["normal"] = config.normal
+		// 	data["elite"] = config.elite
+		// 	data["section"] = config.section
+		// 	data["level"] = config.level
+		// 	if (config.key != null && config.key > 0) {
+		// 		this.levelTable[config.key.toString()] = data
+		// 	}
+        // }
+
+		// this.summonSkillTable = {}
+        // for (let i = 0; i < this.summonSkillConfig.length; i++) {
+        //     let config = this.summonSkillConfig[i]
+		// 	let data = {}
+		// 	data["id"] = config.id
+		// 	data["type"] = config.type
+		// 	data["diff"] = config.diff
+		// 	data["key"] = config.key
+		// 	data["max"] = config.max
+		// 	data["min"] = config.min
+		// 	data["count"] = config.count
+		// 	data["ids"] = config.ids
+		// 	this.summonSkillTable[config.key.toString()] = data
+        // }
 
 		this.actorConfig = RES.getRes("actorConfig_json")
 		this.actorTable = {}
@@ -362,7 +440,8 @@ class GameConfig {
 			data["icon"] = config.icon
 			data["isGet"] = false
 			if (i < this.signCount) data["isGet"] = true
-			if (i == this.signCount && this.sign == 1) data["isGet"] = true
+			// if (i == this.signCount && this.sign == 1) data["isGet"] = true
+			Common.log("sign", i, this.signCount, this.sign)
 			this.signTable[config.id.toString()] = data
 		}
 
