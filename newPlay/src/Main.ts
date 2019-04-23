@@ -67,6 +67,7 @@ class Main extends eui.UILayer {
         this.stage.scaleMode = egret.StageScaleMode.EXACT_FIT
         this.stage.setContentSize(730, 1392)
         this.stage.maxTouches = 1
+        this.stage.dirtyRegionPolicy = egret.DirtyRegionPolicy.OFF
         
         //inject the custom material parser
         //注入自定义的素材解析器

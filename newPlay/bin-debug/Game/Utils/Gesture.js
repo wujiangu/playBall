@@ -3,6 +3,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var Gesture = (function () {
     function Gesture() {
+        this._dirsArr = new Array();
         this._symbol = ["28", "46", "82", "64", "141", "585", "3", "7", "5", "1", "4321876", "2345678"];
         this._symbolG = [0, 0, 3, 3, 5, 5, 1, 1, 2, 2, 4, 4];
     }
@@ -11,6 +12,10 @@ var Gesture = (function () {
     //{"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
     Gesture.prototype.init = function () {
         // this._gestureColor = {}
+        this._mouseDatas = new Array();
+        this._lineData = new Array();
+        this._catmullRom = new Array();
+        this._arr = new Array();
         this._gestureData = [];
         this._gestureRes = RES.getRes("gesture_json");
         for (var i = 0; i < this._gestureRes.length; i++) {
@@ -61,14 +66,17 @@ var Gesture = (function () {
             return;
         this._isDown = true;
         this._layer.graphics.clear();
-        this._mouseDatas = [];
-        this._lineData = [];
-        this._catmullRom = [];
+        this._mouseDatas.length = 0;
+        this._lineData.length = 0;
+        this._catmullRom.length = 0;
         this._catmullIndex = 0;
-        var p = new egret.Point(evt.stageX, evt.stageY);
-        this._mouseDatas.push(p);
-        this._lineData.push(p);
-        this._currentPoint = p;
+        // var p:any = new egret.Point(evt.stageX,evt.stageY);
+        var p1 = egret.Point.create(evt.stageX, evt.stageY);
+        var p2 = egret.Point.create(evt.stageX, evt.stageY);
+        // var p:any = {x:evt.stageX, y:evt.stageY}
+        this._mouseDatas.push(p1);
+        this._lineData.push(p2);
+        // this._currentPoint = p;
         // this._layer.graphics.moveTo(this._currentPoint.x,this._currentPoint.y);
         // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
         // PanelManager.gamePanel.setParticle(true, p.x, p.y)
@@ -77,13 +85,16 @@ var Gesture = (function () {
     Gesture.prototype._mouseMove = function (evt) {
         if (!this._isDown)
             return;
-        var p = new egret.Point(evt.stageX, evt.stageY);
+        // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
+        var p1 = egret.Point.create(evt.stageX, evt.stageY);
+        var p2 = egret.Point.create(evt.stageX, evt.stageY);
+        // var p:any = {x:evt.stageX, y:evt.stageY}
         // var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
-        p.x = evt.stageX;
-        p.y = evt.stageY;
-        this._mouseDatas.push(p);
+        // p.x = evt.stageX
+        // p.y = evt.stageY
+        this._mouseDatas.push(p1);
         /////////////////////////////////
-        this._lineData.push(p);
+        this._lineData.push(p2);
         // if (this._lineData.length >= 3) {
         //     let i0 = 2 * this._catmullIndex + 1
         //     let i1 = 2 * (this._catmullIndex + 1)
@@ -144,9 +155,9 @@ var Gesture = (function () {
         //     }
         // }
         this._layer.graphics.lineStyle(16, 0xFFFFFF);
-        this._layer.graphics.lineTo(p.x, p.y);
+        this._layer.graphics.lineTo(p1.x, p1.y);
         this._layer.graphics.endFill();
-        this._currentPoint = p;
+        // this._currentPoint = p
         // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
         // PanelManager.gamePanel.setParticle(true, p.x, p.y)
     };
@@ -154,9 +165,12 @@ var Gesture = (function () {
         if (!this._isDown)
             return;
         this._isDown = false;
-        var p = new egret.Point(evt.stageX, evt.stageY);
-        this._mouseDatas.push(p);
-        this._lineData.push(p);
+        // var p:egret.Point = new egret.Point(evt.stageX,evt.stageY);
+        var p1 = egret.Point.create(evt.stageX, evt.stageY);
+        var p2 = egret.Point.create(evt.stageX, evt.stageY);
+        // var p:any = {x:evt.stageX, y:evt.stageY}
+        this._mouseDatas.push(p1);
+        this._lineData.push(p2);
         // for (let i = 0; i < this._mouseDatas.length; i++) Common.log(this._mouseDatas[i])
         this._layer.graphics.clear();
         // this._layer.graphics.lineStyle(8, 0xff0000, 0.8)
@@ -167,39 +181,54 @@ var Gesture = (function () {
         // this._gestureSound.play(0, 1)
     };
     Gesture.prototype._motion = function () {
-        var _arr = [];
+        this._arr.length = 0;
         var currentIndex = 0;
         var len = this._mouseDatas.length;
-        _arr.push(this._mouseDatas[currentIndex]);
+        var p = egret.Point.create(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y);
+        this._arr.push(p);
         for (var i = 0; i < len; i++) {
-            if (egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i]) > 40) {
+            // let distance = MathUtils.getDistance(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y, this._mouseDatas[i].x, this._mouseDatas[i].y)
+            if (egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i]) > 40) 
+            // if( distance > 40 )
+            {
                 currentIndex = i;
-                _arr.push(this._mouseDatas[currentIndex]);
+                var p0 = egret.Point.create(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y);
+                this._arr.push(p0);
+                // this._arr.push(this._mouseDatas[currentIndex]);
             }
         }
-        this._mouseDatas = _arr;
-        //console.log(this._mouseDatas);
-        //console.log("ll:",_arr);
+        // while(this._mouseDatas.length > 0) {
+        //     let p:egret.Point = this._mouseDatas.pop()
+        //     egret.Point.release(p)
+        // }
+        // while(this._arr.length > 0) {
+        //     let p:egret.Point = this._arr.pop()
+        //     this._mouseDatas.push(p)
+        // }
+        // this._mouseDatas = this._arr
         this.parseDirection();
     };
     Gesture.prototype.parseDirection = function () {
-        this._dirsArr = [];
-        var len = this._mouseDatas.length;
+        this._dirsArr.length = 0;
+        var len = this._arr.length;
         for (var i = 0; i < len; i++) {
-            if (this._mouseDatas[i + 1]) {
-                var p1 = this._mouseDatas[i];
-                var p2 = this._mouseDatas[i + 1];
-                var a = p1.y - p2.y;
-                var b = egret.Point.distance(p1, p2);
+            if (this._arr[i + 1]) {
+                // var p1:egret.Point = this._mouseDatas[i];
+                // var p2:egret.Point = this._mouseDatas[i+1];
+                // var p1:any = this._mouseDatas[i];
+                // var p2:any = this._mouseDatas[i+1];
+                var a = this._arr[i].y - this._arr[i + 1].y;
+                var b = egret.Point.distance(this._arr[i], this._arr[i + 1]);
+                // var b:number = MathUtils.getDistance(p1.x, p1.y, p2.x, p2.y)
                 var rad = Math.asin(a / b);
                 var ang = Number((rad * 57.2957800).toFixed(1)); // rad * 180/Math.PI 直接求常量，优化
-                var quad = this._quadrant(p1, p2);
+                var quad = this._quadrant(this._arr[i], this._arr[i + 1]);
                 var dir = this._getDirByAngQuad(ang, quad);
                 this._dirsArr.push(dir);
                 // console.log("quad: ",quad, "ang: ", ang);
             }
         }
-        //console.log(this._dirsArr);
+        // console.log(this._dirsArr);
         var dirstr = this._repDiff(this._dirsArr);
         // console.log( dirstr );
         var rel = this._sweep(dirstr);
@@ -217,6 +246,7 @@ var Gesture = (function () {
                     this._layer.graphics.lineStyle(16, this._gestureRes[i].color);
                     for (var i_1 = this._lineData.length; i_1 >= 0; i_1--) {
                         if (i_1 % 2 > 0) {
+                            egret.Point.release(this._lineData[i_1]);
                             this._lineData.splice(i_1, 1);
                         }
                     }
@@ -267,6 +297,18 @@ var Gesture = (function () {
                 }
             }
         }
+        while (this._lineData.length > 0) {
+            var p = this._lineData.pop();
+            egret.Point.release(p);
+        }
+        while (this._mouseDatas.length > 0) {
+            var p = this._mouseDatas.pop();
+            egret.Point.release(p);
+        }
+        while (this._arr.length > 0) {
+            var p = this._arr.pop();
+            egret.Point.release(p);
+        }
         egret.setTimeout(this._clearGraphics, this, 200);
     };
     // 贝塞尔插值算法
@@ -277,10 +319,12 @@ var Gesture = (function () {
         var originCount = this._lineData.length;
         for (var i = 0; i < this._lineData.length; i++) {
             var nexti = (i + 1) % originCount;
-            var p0 = this._lineData[i];
-            var p1 = this._lineData[nexti];
-            if (p1 != undefined) {
-                var midPoint = new egret.Point();
+            // let p0 = this._lineData[i]
+            // let p1 = this._lineData[nexti]
+            var p0 = { x: this._lineData[i].x, y: this._lineData[i].y };
+            if (this._lineData[nexti] != undefined) {
+                var p1 = { x: this._lineData[nexti].x, y: this._lineData[nexti].y };
+                var midPoint = { x: 0, y: 0 };
                 midPoint.x = 0.5 * (p0.x + p1.x);
                 midPoint.y = 0.5 * (p0.y + p1.y);
                 midpoints.push(midPoint);
@@ -291,13 +335,13 @@ var Gesture = (function () {
         for (var i = 0; i < originCount; i++) {
             var nexti = (i + 1) % originCount;
             var backi = (i + originCount - 1) % originCount;
-            var midinmid = new egret.Point();
+            var midinmid = { x: 0, y: 0 };
             midinmid.x = (midpoints[i].x + midpoints[backi].x) / 2.0;
             midinmid.y = (midpoints[i].y + midpoints[backi].y) / 2.0;
             var offsetx = this._lineData[i].x - midinmid.x;
             var offsety = this._lineData[i].y - midinmid.y;
             var extraindex = 2 * i;
-            extrapoints[extraindex] = new egret.Point();
+            extrapoints[extraindex] = { x: 0, y: 0 };
             extrapoints[extraindex].x = midpoints[backi].x + offsetx;
             extrapoints[extraindex].y = midpoints[backi].y + offsety;
             //朝 originPoint[i]方向收缩    
@@ -306,7 +350,7 @@ var Gesture = (function () {
             extrapoints[extraindex].x = this._lineData[i].x + addx;
             extrapoints[extraindex].y = this._lineData[i].y + addy;
             var extranexti = (extraindex + 1) % (2 * originCount);
-            extrapoints[extranexti] = new egret.Point();
+            extrapoints[extranexti] = { x: 0, y: 0 };
             extrapoints[extranexti].x = midpoints[i].x + offsetx;
             extrapoints[extranexti].y = midpoints[i].y + offsety;
             //  朝 originPoint[i]方向收缩    
@@ -322,14 +366,14 @@ var Gesture = (function () {
             this._layer.graphics.lineTo(this._lineData[1].x, this._lineData[1].y);
         }
         for (var i = 1; i < originCount; i++) {
-            controlPoint[0] = this._lineData[i];
+            controlPoint[0] = { x: this._lineData[i].x, y: this._lineData[i].y };
             var extraindex = 2 * i;
             controlPoint[1] = extrapoints[extraindex + 1];
             var extranexti = (extraindex + 2) % (2 * originCount);
             controlPoint[2] = extrapoints[extranexti];
             var nexti = (i + 1) % originCount;
             if (nexti > 0) {
-                controlPoint[3] = this._lineData[nexti];
+                controlPoint[3] = { x: this._lineData[nexti].x, y: this._lineData[nexti].y };
                 this._layer.graphics.moveTo(controlPoint[0].x, controlPoint[0].y);
                 this._layer.graphics.cubicCurveTo(controlPoint[1].x, controlPoint[1].y, controlPoint[2].x, controlPoint[2].y, controlPoint[3].x, controlPoint[3].y);
             }
@@ -341,7 +385,9 @@ var Gesture = (function () {
         //     // GameObjectPool.getInstance().destroyObject(p)
         // }
         this._layer.graphics.clear();
-        this._lineData.length = 0;
+        // this._mouseDatas.length = 0
+        // this._lineData.length = 0
+        // this._arr.length = 0
     };
     // v 0
     // | 1

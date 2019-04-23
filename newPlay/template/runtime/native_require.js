@@ -13,11 +13,12 @@ egret_native.requireFiles = function () {
 };
 
 egret_native.egretInit = function () {
+    var feature = {
+        cmdBatch : true
+    };
     if(egret_native.featureEnable) {
         //控制一些优化方案是否开启
-        var result = egret_native.featureEnable({
-            
-        });
+        var result = egret_native.featureEnable(feature);
     }
     egret_native.requireFiles();
     //egret.dom为空实现

@@ -33,6 +33,7 @@ class ActorListPanel extends BasePanel {
 		this.touchChildren = true
 		this.initData()
 		this.xuanzhuan.play(0)
+		this.shangdian.play(0)
 		Common.updateBabylistIndex(1)
         Common.gameScene().uiLayer.addChild(this)
     }
@@ -41,6 +42,8 @@ class ActorListPanel extends BasePanel {
     public onExit():void{
 		this.touchChildren = false
 		this.xuanzhuan.stop()
+		this.shangdian.stop()
+		this.jiany.stop()
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
@@ -51,21 +54,29 @@ class ActorListPanel extends BasePanel {
 		let index = GameConfig.babyUnlockList.indexOf(a_id)
 		if (index < 0) {
 			this._labDesc.text = data.unlockDesc
+			this.m_imgShadow.visible = true
+			this.m_imgShadow.source = data.shadow
+			this._actorArmatureContainer.visible = false
+			this.jiany.play(0)
+		}else{
+			this.m_imgShadow.visible = false
+			this._actorArmatureContainer.visible = true
+			this._actorArmatureContainer.clear()
+			let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action)
+			if (this._actorArmature == null) {
+				this._actorArmature = new DragonBonesArmature(armatureDisplay)
+			}
+			this._actorArmature.ArmatureDisplay = armatureDisplay
+			this._actorArmatureContainer.register(this._actorArmature,["fangdazhao", "idle", "zoulu"])
+			this._actorShadow()
+			this._actorArmatureContainer.play("idle", 0)
+			this._actorState = EMonsterState.Ready
+			this._actorArmatureContainer.scaleX = 0.5
+			this._actorArmatureContainer.scaleY = 0.5
+			this._actorArmatureContainer.addCompleteCallFunc(this._actorArmatureComplete, this)
 		}
 
-		this._actorArmatureContainer.clear()
-		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action)
-		if (this._actorArmature == null) {
-			this._actorArmature = new DragonBonesArmature(armatureDisplay)
-		}
-		this._actorArmature.ArmatureDisplay = armatureDisplay
-		this._actorArmatureContainer.register(this._actorArmature,["fangdazhao", "idle", "zoulu"])
-		this._actorShadow()
-		this._actorArmatureContainer.play("idle", 0)
-		this._actorState = EMonsterState.Ready
-		this._actorArmatureContainer.scaleX = 0.5
-		this._actorArmatureContainer.scaleY = 0.5
-		this._actorArmatureContainer.addCompleteCallFunc(this._actorArmatureComplete, this)
+		
 
 		for (let i = 0; i < GameConfig.babyOpenList.length; i++) {
 			let id = GameConfig.babyOpenList[i]
@@ -163,6 +174,14 @@ class ActorListPanel extends BasePanel {
 		this.xuanzhuan.play(0)
 	}
 
+	private _onLoopBabyShadow() {
+		this.jiany.play(0)
+	}
+
+	private _onShangdian() {
+		this.shangdian.play(0)
+	}
+
 	private _updateCandy() {
 		this._labCount.text = GameConfig.candy.toString()
 		this._labCount.x = 280 - this._labCount.width
@@ -211,6 +230,8 @@ class ActorListPanel extends BasePanel {
 		this._groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onGroupActor, this)
 
 		this.xuanzhuan.addEventListener('complete', this._onLoop, this)
+		this.jiany.addEventListener('complete', this._onLoopBabyShadow, this)
+		this.shangdian.addEventListener('complete', this._onShangdian, this)
 
 		Common.addTouchBegin(this._btnReturn)
 		Common.addTouchBegin(this._btnAddCandy)
@@ -253,6 +274,10 @@ class ActorListPanel extends BasePanel {
 	private _actorState:EMonsterState
 
 	private xuanzhuan:egret.tween.TweenGroup
+	private jiany:egret.tween.TweenGroup
+	private shangdian:egret.tween.TweenGroup
+
+	private m_imgShadow:eui.Image
 }
 
 class ActorIR extends eui.Component {

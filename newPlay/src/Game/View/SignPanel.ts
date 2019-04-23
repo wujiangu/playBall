@@ -23,11 +23,15 @@ class SignPanel extends BasePanel {
 		this.m_imgMask7.visible = false
 		this.m_imgCheck7.visible = false
 
+		
+
 		if (GameConfig.signCount >= 7) {
 			this.m_imgMask7.visible = true
 			this.m_imgCheck7.visible = true
 		}
 		Common.gameScene().uiLayer.addChild(this)
+
+		
 		
     }
 
@@ -37,11 +41,13 @@ class SignPanel extends BasePanel {
     }
 
 	private _onClose() {
+		this.m_imgMask.touchEnabled = false
 		this.hide.play(0)
 	}
 
 	private _onShow() {
 		this.m_imgMask.touchEnabled = true
+		this._sign(true)
 		// this.m_scroll.verticalScrollBar.visible = false
 		// this.m_scroll.verticalScrollBar.autoVisibility = false
 	}
@@ -50,7 +56,7 @@ class SignPanel extends BasePanel {
 		Common.dispatchEvent(MainNotify.closeSignPanel)
 	}
 
-	private _onBtnSignIn() {
+	private _sign(isInit:boolean) {
 		if (GameConfig.sign == 0 && GameConfig.signCount <= 6) {
 			if (GameConfig.signCount <= 5) {
 				this._signGroups[GameConfig.signCount].sign()
@@ -96,8 +102,12 @@ class SignPanel extends BasePanel {
 				}
 			}
 		}else{
-			TipsManager.show("today is signed!")
+			if (!isInit) TipsManager.show("today is signed!")
 		}
+	}
+
+	private _onBtnSignIn() {
+		this._sign(false)
 	}
 
 	private onComplete() {

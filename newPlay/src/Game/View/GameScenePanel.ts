@@ -703,11 +703,13 @@ class GameScenePanel extends BasePanel {
             }
             if (this.m_comboCount <= 2) GameConfig.comboDelay = 1200
             else GameConfig.comboDelay = 1000
+
+            if (this.m_levelState == ELevelType.Normal) this.score += (GameConfig.balloonScore - batterScore)
+            this._data.realScore += GameConfig.balloonScore
+            this.SetRealScore(this._data.realScore)
+            this.actorDeadHandle()
         }
-        if (this.m_levelState == ELevelType.Normal) this.score += (GameConfig.balloonScore - batterScore)
-        this._data.realScore += GameConfig.balloonScore
-        this.SetRealScore(this._data.realScore)
-        this.actorDeadHandle()
+        
     }
 
     public unlockEffect(id:number) {
@@ -761,6 +763,7 @@ class GameScenePanel extends BasePanel {
      * 进入下一关
      */
     private _changeLevel() {
+        Common.log("进入下一关_changeLevel", this.m_monsters.length, this.m_summonActors.length, this.m_spiderActors.length, this.m_levelState)
         if (this.m_monsters.length <= 0 
             && this.m_summonActors.length <= 0 
             && this.m_spiderActors.length <= 0

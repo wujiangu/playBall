@@ -5,12 +5,17 @@ class Gesture
     private _isDown:boolean
     private _gestureRes:Array<any>
     private _gestureData:Array<any>
+    private _arr:Array<egret.Point>
     // private _gestureSound:egret.Sound
     // private _gestureColor:any
     //{"difficult":2, "type":104,"path":"gestureSheet_json.gesture104","data":["2828", "4646"], "count":2, "balloon":"balloonPurple", "color":"0xaa69e9"},
     public init() 
     {
         // this._gestureColor = {}
+        this._mouseDatas = new Array()
+        this._lineData = new Array()
+        this._catmullRom = new Array()
+        this._arr = new Array()
         this._gestureData = []
 		this._gestureRes = RES.getRes("gesture_json")
 		for (let i = 0; i < this._gestureRes.length; i++) {
@@ -59,24 +64,27 @@ class Gesture
         this._group.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this._mouseMove,this);
     }
 
-    private _mouseDatas:egret.Point[];
-    private _lineData:egret.Point[]
-    private _currentPoint:egret.Point;
-    private _catmullRom:egret.Point[]
+    private _mouseDatas:Array<egret.Point>
+    private _lineData:Array<egret.Point>
+    private _currentPoint:any
+    private _catmullRom:Array<any>
     private _catmullIndex:number
     private _mouseDown(evt:egret.TouchEvent)
     {
         if (this._isDown) return
         this._isDown = true
         this._layer.graphics.clear();
-        this._mouseDatas = [];
-        this._lineData = []
-        this._catmullRom = []
+        this._mouseDatas.length = 0
+        this._lineData.length = 0
+        this._catmullRom.length = 0
         this._catmullIndex = 0
-        var p:egret.Point = new egret.Point(evt.stageX,evt.stageY);
-        this._mouseDatas.push(p);
-        this._lineData.push(p)
-        this._currentPoint = p;
+        // var p:any = new egret.Point(evt.stageX,evt.stageY);
+        var p1:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        var p2:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        // var p:any = {x:evt.stageX, y:evt.stageY}
+        this._mouseDatas.push(p1);
+        this._lineData.push(p2)
+        // this._currentPoint = p;
 
         // this._layer.graphics.moveTo(this._currentPoint.x,this._currentPoint.y);
         // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
@@ -87,13 +95,16 @@ class Gesture
     private _mouseMove(evt:egret.TouchEvent)
     {
         if (!this._isDown) return
-        var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
+        // var p:egret.Point = new egret.Point(evt.stageX, evt.stageY);
+        var p1:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        var p2:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        // var p:any = {x:evt.stageX, y:evt.stageY}
         // var p:egret.Point = GameObjectPool.getInstance().createObject(egret.Point, "egretPoint")
-        p.x = evt.stageX
-        p.y = evt.stageY
-        this._mouseDatas.push(p)
+        // p.x = evt.stageX
+        // p.y = evt.stageY
+        this._mouseDatas.push(p1)
         /////////////////////////////////
-        this._lineData.push(p)
+        this._lineData.push(p2)
         // if (this._lineData.length >= 3) {
         //     let i0 = 2 * this._catmullIndex + 1
         //     let i1 = 2 * (this._catmullIndex + 1)
@@ -161,9 +172,9 @@ class Gesture
         // }
         
         this._layer.graphics.lineStyle(16, 0xFFFFFF);
-        this._layer.graphics.lineTo(p.x, p.y);
+        this._layer.graphics.lineTo(p1.x, p1.y);
         this._layer.graphics.endFill();
-        this._currentPoint = p
+        // this._currentPoint = p
         // PanelManager.gameScenePanel.setParticle(true, p.x, p.y)
         // PanelManager.gamePanel.setParticle(true, p.x, p.y)
     }
@@ -171,12 +182,14 @@ class Gesture
     {
         if (!this._isDown) return
         this._isDown = false
-        var p:egret.Point = new egret.Point(evt.stageX,evt.stageY);
-        this._mouseDatas.push(p);
-        this._lineData.push(p)
+        // var p:egret.Point = new egret.Point(evt.stageX,evt.stageY);
+        var p1:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        var p2:egret.Point = egret.Point.create(evt.stageX, evt.stageY)
+        // var p:any = {x:evt.stageX, y:evt.stageY}
+        this._mouseDatas.push(p1);
+        this._lineData.push(p2)
         // for (let i = 0; i < this._mouseDatas.length; i++) Common.log(this._mouseDatas[i])
         this._layer.graphics.clear();
-
         // this._layer.graphics.lineStyle(8, 0xff0000, 0.8)
         // this._layer.graphics.endFill();
         // PanelManager.gamePanel.setParticle(false, p.x, p.y)
@@ -188,48 +201,61 @@ class Gesture
 
     private _motion()
     {
-        var _arr:egret.Point[] = [];
+        this._arr.length = 0
         var currentIndex:number = 0;
-        var len:number = this._mouseDatas.length;
-        _arr.push(this._mouseDatas[currentIndex]);
+        var len:number = this._mouseDatas.length
+        var p:egret.Point = egret.Point.create(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y)
+        this._arr.push(p)
         for(var i:number=0; i<len; i++)
         {
-            if( egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i])>40 )
+            // let distance = MathUtils.getDistance(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y, this._mouseDatas[i].x, this._mouseDatas[i].y)
+            if( egret.Point.distance(this._mouseDatas[currentIndex], this._mouseDatas[i]) > 40 )
+            // if( distance > 40 )
             {
                 currentIndex = i;
-                _arr.push(this._mouseDatas[currentIndex]);
+                var p0:egret.Point = egret.Point.create(this._mouseDatas[currentIndex].x, this._mouseDatas[currentIndex].y)
+                this._arr.push(p0)
+                // this._arr.push(this._mouseDatas[currentIndex]);
             }
         }
-
-        this._mouseDatas = _arr;
-        //console.log(this._mouseDatas);
-        //console.log("ll:",_arr);
+        // while(this._mouseDatas.length > 0) {
+        //     let p:egret.Point = this._mouseDatas.pop()
+        //     egret.Point.release(p)
+        // }
+        // while(this._arr.length > 0) {
+        //     let p:egret.Point = this._arr.pop()
+        //     this._mouseDatas.push(p)
+        // }
+        // this._mouseDatas = this._arr
         this.parseDirection();
     }
 
-    private _dirsArr:number[];
+    private _dirsArr:Array<number> = new Array()
     private parseDirection()
     {
 
-        this._dirsArr = [];
-        var len:number = this._mouseDatas.length;
+        this._dirsArr.length = 0
+        var len:number = this._arr.length;
         for(var i:number=0; i<len; i++)
         {
-            if( this._mouseDatas[i+1])
+            if( this._arr[i+1])
             {
-                var p1:egret.Point = this._mouseDatas[i];
-                var p2:egret.Point = this._mouseDatas[i+1];
-                var a:number = p1.y - p2.y;
-                var b:number = egret.Point.distance(p1,p2);
+                // var p1:egret.Point = this._mouseDatas[i];
+                // var p2:egret.Point = this._mouseDatas[i+1];
+                // var p1:any = this._mouseDatas[i];
+                // var p2:any = this._mouseDatas[i+1];
+                var a:number = this._arr[i].y - this._arr[i+1].y;
+                var b:number = egret.Point.distance(this._arr[i], this._arr[i+1]);
+                // var b:number = MathUtils.getDistance(p1.x, p1.y, p2.x, p2.y)
                 var rad:number = Math.asin( a/b );
                 var ang:number = Number((rad * 57.2957800).toFixed(1)); // rad * 180/Math.PI 直接求常量，优化
-                var quad:number = this._quadrant(p1,p2);
+                var quad:number = this._quadrant(this._arr[i], this._arr[i+1]);
                 var dir:number = this._getDirByAngQuad(ang, quad);
                 this._dirsArr.push(dir);
                 // console.log("quad: ",quad, "ang: ", ang);
             }
         }
-        //console.log(this._dirsArr);
+        // console.log(this._dirsArr);
         var dirstr:string = this._repDiff( this._dirsArr );
         // console.log( dirstr );
         var rel:number = this._sweep( dirstr );
@@ -252,6 +278,7 @@ class Gesture
 
                     for (let i = this._lineData.length; i >= 0; i--) {
                         if (i % 2 > 0) {
+                            egret.Point.release(this._lineData[i])
                             this._lineData.splice(i, 1)
                         }
                     }
@@ -306,6 +333,20 @@ class Gesture
                 }
             } 
         }
+
+        
+        while(this._lineData.length > 0) {
+            let p:egret.Point = this._lineData.pop()
+            egret.Point.release(p)
+        }
+        while(this._mouseDatas.length > 0) {
+            let p:egret.Point = this._mouseDatas.pop()
+            egret.Point.release(p)
+        }
+        while(this._arr.length > 0) {
+            let p:egret.Point = this._arr.pop()
+            egret.Point.release(p)
+        }
         egret.setTimeout(this._clearGraphics, this, 200)
     }
 
@@ -317,10 +358,12 @@ class Gesture
         let originCount = this._lineData.length   
         for(let i = 0 ;i < this._lineData.length; i++){
             let nexti = (i + 1) % originCount     
-            let p0 = this._lineData[i]
-            let p1 = this._lineData[nexti]
-            if (p1 != undefined) {
-                let midPoint = new egret.Point()
+            // let p0 = this._lineData[i]
+            // let p1 = this._lineData[nexti]
+            let p0 = {x:this._lineData[i].x, y:this._lineData[i].y}
+            if (this._lineData[nexti] != undefined) {
+                let p1 = {x:this._lineData[nexti].x, y:this._lineData[nexti].y}
+                let midPoint = {x:0, y:0}
                 midPoint.x = 0.5 * (p0.x + p1.x)
                 midPoint.y = 0.5 * (p0.y + p1.y)
                 midpoints.push(midPoint)
@@ -328,17 +371,17 @@ class Gesture
         }
         
         //平移中点
-        let extrapoints:Array<egret.Point> = new Array(2*originCount)
+        let extrapoints:Array<any> = new Array(2*originCount)
         for(let i = 0 ; i < originCount; i++){  
             let nexti = (i + 1) % originCount;  
             let backi = (i + originCount - 1) % originCount;  
-            let midinmid = new egret.Point()
+            let midinmid = {x:0, y:0}
             midinmid.x = (midpoints[i].x + midpoints[backi].x)/2.0;  
             midinmid.y = (midpoints[i].y + midpoints[backi].y)/2.0;  
             let offsetx = this._lineData[i].x - midinmid.x;  
             let offsety = this._lineData[i].y - midinmid.y;  
             let extraindex = 2 * i;
-            extrapoints[extraindex] = new egret.Point()
+            extrapoints[extraindex] = {x:0, y:0}
             extrapoints[extraindex].x = midpoints[backi].x + offsetx;  
             extrapoints[extraindex].y = midpoints[backi].y + offsety;  
             //朝 originPoint[i]方向收缩    
@@ -348,7 +391,7 @@ class Gesture
             extrapoints[extraindex].y = this._lineData[i].y + addy;  
             
             let extranexti = (extraindex + 1)%(2 * originCount); 
-            extrapoints[extranexti] = new egret.Point() 
+            extrapoints[extranexti] = {x:0, y:0}
             extrapoints[extranexti].x = midpoints[i].x + offsetx;  
             extrapoints[extranexti].y = midpoints[i].y + offsety;  
             //  朝 originPoint[i]方向收缩    
@@ -367,14 +410,14 @@ class Gesture
         
         
         for(let i = 1 ;i < originCount; i++){  
-            controlPoint[0] = this._lineData[i];  
+            controlPoint[0] = {x:this._lineData[i].x, y:this._lineData[i].y}
             let extraindex = 2 * i;  
             controlPoint[1] = extrapoints[extraindex + 1];  
             let extranexti = (extraindex + 2) % (2 * originCount);  
             controlPoint[2] = extrapoints[extranexti];  
             let nexti = (i + 1) % originCount;
             if (nexti > 0) {
-                controlPoint[3] = this._lineData[nexti];      
+                controlPoint[3] = {x:this._lineData[nexti].x, y:this._lineData[nexti].y}
                 this._layer.graphics.moveTo(controlPoint[0].x, controlPoint[0].y)
                 this._layer.graphics.cubicCurveTo(controlPoint[1].x, controlPoint[1].y, controlPoint[2].x, controlPoint[2].y, controlPoint[3].x, controlPoint[3].y)
             }
@@ -387,7 +430,9 @@ class Gesture
         //     // GameObjectPool.getInstance().destroyObject(p)
         // }
         this._layer.graphics.clear()
-        this._lineData.length = 0
+        // this._mouseDatas.length = 0
+        // this._lineData.length = 0
+        // this._arr.length = 0
     }
 
     private _symbol:string[] = ["28","46","82","64","141","585","3","7","5","1","4321876","2345678"];
@@ -507,7 +552,7 @@ class Gesture
     计算两点关系所形成的象限
     以P1 作为坐标原点，P2为设定点，判断P2相对于P1时所在象限
      */
-    private _quadrant(p1:egret.Point,p2:egret.Point):number
+    private _quadrant(p1:egret.Point, p2:egret.Point):number
     {
         if(p2.x>=p1.x)
         {

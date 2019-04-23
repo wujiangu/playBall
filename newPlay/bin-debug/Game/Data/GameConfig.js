@@ -150,6 +150,9 @@ var GameConfig = (function () {
             data["Width"] = config.Width;
             data["Height"] = config.Height;
             this.summonTable[config.ID.toString()] = data;
+            if (config.Animation != null && config.Animation != "") {
+                this.initBattleDragonBones(config.Animation);
+            }
         }
         this.levelTable = {};
         for (var i = 0; i < this.levelConfig.length; i++) {
@@ -258,6 +261,7 @@ var GameConfig = (function () {
             data["direction"] = config.direction;
             data["skillId"] = config.skillId;
             data["fusion"] = config.fusion;
+            data["shadow"] = config.shadow;
             data["range"] = 0;
             if (config.level <= 1)
                 this.babyOpenList.push(config.id);

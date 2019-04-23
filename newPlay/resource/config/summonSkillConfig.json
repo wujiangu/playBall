@@ -135,7 +135,7 @@
         "id": 1004
     }, 
     {
-        "count": 2, 
+        "count": 6, 
         "min": 0, 
         "max": 0, 
         "key": 1016, 
@@ -160,5 +160,122 @@
         "diff": 3, 
         "type": 2, 
         "id": 1002
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1019, 
+        "diff": -1, 
+        "type": 1, 
+        "id": 1001
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1020, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1005
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1021, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1006
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1022, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1005
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1023, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1006
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1024, 
+        "diff": -1, 
+        "type": 2, 
+        "id": 1005
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1025, 
+        "diff": -1, 
+        "type": 2, 
+        "id": 1006
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1026, 
+        "diff": 2, 
+        "type": 2, 
+        "id": 1005
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1027, 
+        "diff": 2, 
+        "type": 2, 
+        "id": 1006
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1028, 
+        "diff": -1, 
+        "type": 2, 
+        "id": 1001
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1029, 
+        "diff": -1, 
+        "type": 2, 
+        "id": 1001
+    }, 
+    {
+        "count": 2, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1030, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1004
+    }, 
+    {
+        "count": 1, 
+        "min": 0, 
+        "max": 0, 
+        "key": 1031, 
+        "diff": 1, 
+        "type": 2, 
+        "id": 1004
     }
 ]

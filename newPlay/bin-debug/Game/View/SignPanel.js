@@ -43,17 +43,19 @@ var SignPanel = (function (_super) {
         Common.gameScene().uiLayer.removeChild(this);
     };
     SignPanel.prototype._onClose = function () {
+        this.m_imgMask.touchEnabled = false;
         this.hide.play(0);
     };
     SignPanel.prototype._onShow = function () {
         this.m_imgMask.touchEnabled = true;
+        this._sign(true);
         // this.m_scroll.verticalScrollBar.visible = false
         // this.m_scroll.verticalScrollBar.autoVisibility = false
     };
     SignPanel.prototype._onHide = function () {
         Common.dispatchEvent(MainNotify.closeSignPanel);
     };
-    SignPanel.prototype._onBtnSignIn = function () {
+    SignPanel.prototype._sign = function (isInit) {
         if (GameConfig.sign == 0 && GameConfig.signCount <= 6) {
             if (GameConfig.signCount <= 5) {
                 this._signGroups[GameConfig.signCount].sign();
@@ -102,8 +104,12 @@ var SignPanel = (function (_super) {
             }
         }
         else {
-            TipsManager.show("today is signed!");
+            if (!isInit)
+                TipsManager.show("today is signed!");
         }
+    };
+    SignPanel.prototype._onBtnSignIn = function () {
+        this._sign(false);
     };
     SignPanel.prototype.onComplete = function () {
         this._onResize();

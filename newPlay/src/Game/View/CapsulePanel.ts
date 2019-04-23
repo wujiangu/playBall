@@ -29,13 +29,14 @@ class CapsulePanel extends BasePanel {
 
 		this._btnDelay = -1
 		this._isCapture = false
+		this._data.isEnough = true
 
 		this._hookMove.play(0)
 		this.anjian.play(0)
 
 		if (GameVoice.beginBGMChannel != null) GameVoice.beginBGMChannel.stop()
 		this._bgmChannel = GameVoice.rewardBGM.play(0)
-
+		this.touchChildren = true
 		Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -43,6 +44,10 @@ class CapsulePanel extends BasePanel {
     public onExit():void{
 		this._btnDelay = -1
 		this._bgmChannel.stop()
+		GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0)
+		if (this._data.isEnough == false) {
+			Common.dispatchEvent(MainNotify.openRechargePanel)
+		}
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
@@ -62,7 +67,10 @@ class CapsulePanel extends BasePanel {
 
 	private _onBtnCapsule() {
 		if (GameConfig.candy < this._data.consume) {
-			TipsManager.show("no enough candy!")
+			// TipsManager.show("no enough candy!", Common.TextColors.grayWhite)
+			this._data.isEnough = false
+			this.touchChildren = false
+			Common.dispatchEvent(MainNotify.closeCapsulePanel)
 			return
 		}
 		this.touchChildren = false

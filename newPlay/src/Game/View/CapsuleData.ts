@@ -3,9 +3,11 @@ class CapsuleData {
 	}
 
 	/** 抽奖消耗糖果数量 */
-	public consume:number = 20
+	public consume:number = 50
 	/** 抽奖的结果 */
 	public resultType:number = 0
+	/** 糖果不够 */
+	public isEnough:boolean = false
 
 	public get result() {
 		let capsuleRandom = MathUtils.getRandom(1, this._capsuleWeight)

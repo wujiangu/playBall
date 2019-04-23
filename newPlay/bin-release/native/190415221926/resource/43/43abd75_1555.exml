@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="settingPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+	<w:Declarations>
+		<tween:TweenGroup id="show">
+			<tween:TweenItem target="{m_groupSetting}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}" x="{80}" y="{82}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object alpha="{1}" x="{80}" y="{315}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}" y="{315}" x="{80}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+		<tween:TweenGroup id="hide">
+			<tween:TweenItem target="{m_groupSetting}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{1}" x="{80}" y="{315}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object x="{-603}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+		</tween:TweenGroup>
+	</w:Declarations>
+	<e:Image id="m_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Group id="m_groupSetting" x="80" y="315" width="576" height="599">
+		<e:Image anchorOffsetY="0" source="gamBg3_png" x="0" y="0"/>
+		<e:HSlider id="m_sliderSound" x="222" y="205.5" skinName="skins.gameSettingSlider"/>
+		<e:HSlider id="m_sliderBGM" x="222" y="391.5" skinName="skins.gameSettingSlider"/>
+
+
+
+	</e:Group>
+</e:Skin>

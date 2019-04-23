@@ -1,0 +1,111 @@
+[
+    {
+        "Scale": 1.0, 
+        "Name": "气球", 
+        "Power": 2, 
+        "Type": 1, 
+        "Score": 0, 
+        "Actions": [
+            "hong", 
+            "huang", 
+            "lan", 
+            "lv", 
+            "zi"
+        ], 
+        "Height": 60, 
+        "Width": 60, 
+        "Animation": "qiqiu", 
+        "Speed": 11, 
+        "ID": 1001
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "小蜘蛛", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "zhizhu", 
+        "Speed": 11, 
+        "ID": 1002
+    }, 
+    {
+        "Scale": 1.0, 
+        "Name": "毒液(大蜘蛛)", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "duye", 
+        "Speed": 27, 
+        "ID": 1003
+    }, 
+    {
+        "Scale": 1.0, 
+        "Name": "毒液", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "duye", 
+        "Speed": 15, 
+        "ID": 1004
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "B_0", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "summon1005", 
+        "Speed": 11, 
+        "ID": 1005
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "B_00", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "summon1006", 
+        "Speed": 11, 
+        "ID": 1006
+    }
+]

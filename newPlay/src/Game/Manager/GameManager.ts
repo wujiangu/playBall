@@ -49,6 +49,7 @@ class GameManager extends egret.Sprite{
 	// 关卡模式打完一关
 	public endLevel():void
 	{
+		Common.log("关卡结束", this._gameState)
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.EndLevel
 			PanelManager.gameScenePanel.exit()

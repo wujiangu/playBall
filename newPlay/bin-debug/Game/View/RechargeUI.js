@@ -41,13 +41,14 @@ var RechargeUI = (function (_super) {
         Common.gameScene().uiLayer.removeChild(this);
     };
     RechargeUI.prototype._onBtnReturn = function () {
-        this.touchEnabled = false;
+        this.touchChildren = false;
         this.hide.play(0);
     };
     RechargeUI.prototype._onShow = function () {
         this.touchChildren = true;
     };
     RechargeUI.prototype._onHide = function () {
+        this.touchChildren = false;
         Common.dispatchEvent(MainNotify.closeRechargePanel);
     };
     RechargeUI.prototype._onComplete = function () {

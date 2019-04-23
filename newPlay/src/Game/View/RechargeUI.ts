@@ -32,7 +32,7 @@ class RechargeUI extends BasePanel {
     }
 
 	private _onBtnReturn() {
-        this.touchEnabled = false
+        this.touchChildren = false
 		this.hide.play(0)
 	}
 
@@ -41,6 +41,7 @@ class RechargeUI extends BasePanel {
 	}
 
 	private _onHide() {
+		this.touchChildren = false
 		Common.dispatchEvent(MainNotify.closeRechargePanel)
 	}
 

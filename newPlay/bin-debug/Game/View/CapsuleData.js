@@ -4,9 +4,11 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var CapsuleData = (function () {
     function CapsuleData() {
         /** 抽奖消耗糖果数量 */
-        this.consume = 20;
+        this.consume = 50;
         /** 抽奖的结果 */
         this.resultType = 0;
+        /** 糖果不够 */
+        this.isEnough = false;
     }
     Object.defineProperty(CapsuleData.prototype, "result", {
         get: function () {

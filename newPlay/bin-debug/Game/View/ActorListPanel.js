@@ -40,6 +40,7 @@ var ActorListPanel = (function (_super) {
         this.touchChildren = true;
         this.initData();
         this.xuanzhuan.play(0);
+        this.shangdian.play(0);
         Common.updateBabylistIndex(1);
         Common.gameScene().uiLayer.addChild(this);
     };
@@ -47,6 +48,8 @@ var ActorListPanel = (function (_super) {
     ActorListPanel.prototype.onExit = function () {
         this.touchChildren = false;
         this.xuanzhuan.stop();
+        this.shangdian.stop();
+        this.jiany.stop();
         Common.gameScene().uiLayer.removeChild(this);
     };
     ActorListPanel.prototype.updateBabyInfo = function (a_id) {
@@ -56,20 +59,28 @@ var ActorListPanel = (function (_super) {
         var index = GameConfig.babyUnlockList.indexOf(a_id);
         if (index < 0) {
             this._labDesc.text = data.unlockDesc;
+            this.m_imgShadow.visible = true;
+            this.m_imgShadow.source = data.shadow;
+            this._actorArmatureContainer.visible = false;
+            this.jiany.play(0);
         }
-        this._actorArmatureContainer.clear();
-        var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action);
-        if (this._actorArmature == null) {
-            this._actorArmature = new DragonBonesArmature(armatureDisplay);
+        else {
+            this.m_imgShadow.visible = false;
+            this._actorArmatureContainer.visible = true;
+            this._actorArmatureContainer.clear();
+            var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.action, data.action);
+            if (this._actorArmature == null) {
+                this._actorArmature = new DragonBonesArmature(armatureDisplay);
+            }
+            this._actorArmature.ArmatureDisplay = armatureDisplay;
+            this._actorArmatureContainer.register(this._actorArmature, ["fangdazhao", "idle", "zoulu"]);
+            this._actorShadow();
+            this._actorArmatureContainer.play("idle", 0);
+            this._actorState = EMonsterState.Ready;
+            this._actorArmatureContainer.scaleX = 0.5;
+            this._actorArmatureContainer.scaleY = 0.5;
+            this._actorArmatureContainer.addCompleteCallFunc(this._actorArmatureComplete, this);
         }
-        this._actorArmature.ArmatureDisplay = armatureDisplay;
-        this._actorArmatureContainer.register(this._actorArmature, ["fangdazhao", "idle", "zoulu"]);
-        this._actorShadow();
-        this._actorArmatureContainer.play("idle", 0);
-        this._actorState = EMonsterState.Ready;
-        this._actorArmatureContainer.scaleX = 0.5;
-        this._actorArmatureContainer.scaleY = 0.5;
-        this._actorArmatureContainer.addCompleteCallFunc(this._actorArmatureComplete, this);
         for (var i = 0; i < GameConfig.babyOpenList.length; i++) {
             var id = GameConfig.babyOpenList[i];
             var data_1 = GameConfig.actorTable[id];
@@ -154,6 +165,12 @@ var ActorListPanel = (function (_super) {
     ActorListPanel.prototype._onLoop = function () {
         this.xuanzhuan.play(0);
     };
+    ActorListPanel.prototype._onLoopBabyShadow = function () {
+        this.jiany.play(0);
+    };
+    ActorListPanel.prototype._onShangdian = function () {
+        this.shangdian.play(0);
+    };
     ActorListPanel.prototype._updateCandy = function () {
         this._labCount.text = GameConfig.candy.toString();
         this._labCount.x = 280 - this._labCount.width;
@@ -194,6 +211,8 @@ var ActorListPanel = (function (_super) {
         this._btnFusion.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnFusion, this);
         this._groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onGroupActor, this);
         this.xuanzhuan.addEventListener('complete', this._onLoop, this);
+        this.jiany.addEventListener('complete', this._onLoopBabyShadow, this);
+        this.shangdian.addEventListener('complete', this._onShangdian, this);
         Common.addTouchBegin(this._btnReturn);
         Common.addTouchBegin(this._btnAddCandy);
         Common.addEventListener(MainNotify.updateCandy, this._updateCandy, this);
