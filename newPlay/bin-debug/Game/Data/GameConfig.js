@@ -173,6 +173,18 @@ var GameConfig = (function () {
                 this.levelTable[config.key.toString()] = data;
             }
         }
+        this.levelRewardConfig = RES.getRes("levelRewardConfig_json");
+        this.levelRewardTable = {};
+        for (var i = 0; i < this.levelRewardConfig.length; i++) {
+            var config = this.levelRewardConfig[i];
+            var data = {};
+            data["key"] = config.key;
+            data["condition"] = config.condition;
+            data["count"] = config.count;
+            data["reward"] = config.reward;
+            data["value"] = config.value;
+            this.levelRewardTable[config.key.toString()] = data;
+        }
         this.summonSkillTable = {};
         for (var i = 0; i < this.summonSkillConfig.length; i++) {
             var config = this.summonSkillConfig[i];
@@ -300,6 +312,7 @@ var GameConfig = (function () {
             data["cloud1"] = config.cloud1;
             data["cloud2"] = config.cloud2;
             data["water"] = config.water;
+            data["rewards"] = config.rewards;
             this.chapterTable[config.id.toString()] = data;
         }
         var babySkillConfig = RES.getRes("babySkillConfig_json");

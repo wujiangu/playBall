@@ -175,4 +175,13 @@ var EBabyQuality;
     EBabyQuality[EBabyQuality["Blue"] = 2] = "Blue";
     EBabyQuality[EBabyQuality["Purple"] = 3] = "Purple";
 })(EBabyQuality || (EBabyQuality = {}));
+/**关卡奖励条件 */
+var ELevelRewardCondition;
+(function (ELevelRewardCondition) {
+    ELevelRewardCondition[ELevelRewardCondition["Finish"] = 1] = "Finish";
+    ELevelRewardCondition[ELevelRewardCondition["EnoughScore"] = 2] = "EnoughScore";
+    ELevelRewardCondition[ELevelRewardCondition["EnoughCombo"] = 3] = "EnoughCombo";
+    ELevelRewardCondition[ELevelRewardCondition["OnesFinish"] = 4] = "OnesFinish";
+    ELevelRewardCondition[ELevelRewardCondition["RepeatFinish"] = 5] = "RepeatFinish";
+})(ELevelRewardCondition || (ELevelRewardCondition = {}));
 //# sourceMappingURL=GameEnum.js.map

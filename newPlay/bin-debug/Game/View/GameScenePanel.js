@@ -738,7 +738,7 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype._onItemUnlock = function () {
         if (GameConfig.gameMode == EBattleMode.Level) {
             this.itemUnlockGroup.visible = false;
-            GameManager.Instance.endLevel();
+            // GameManager.Instance.endLevel()
         }
     };
     /**
@@ -751,26 +751,39 @@ var GameScenePanel = (function (_super) {
             && this.m_spiderActors.length <= 0
             && this.m_levelState == ELevelType.Elite) {
             if (GameConfig.gameMode == EBattleMode.Level) {
-                this._data.updateCandy(this._data.levelData.candy + this._data.extra);
-                this._data.extra = 0;
-                var id = this._data.levelData.unlockItem;
-                if (id > 0) {
-                    var index = GameConfig.babyUnlockList.indexOf(id);
-                    if (index >= 0) {
-                        // 已解锁
-                        GameManager.Instance.endLevel();
-                    }
-                    else {
-                        // 未解锁
-                        GameConfig.babyUnlockList.push(id);
-                        Common.updateUnlockBaby();
-                        this.unlockEffect(id);
-                    }
-                }
-                else {
+                // this._data.updateCandy(this._data.levelData.candy + this._data.extra)
+                // this._data.extra = 0
+                // let id = this._data.levelData.unlockItem
+                // if (id > 0) {
+                //     let index = GameConfig.babyUnlockList.indexOf(id)
+                //     if (index >= 0) {
+                //         // 已解锁
+                //         GameManager.Instance.endLevel()
+                //     }else{
+                //         // 未解锁
+                //         GameConfig.babyUnlockList.push(id)
+                //         Common.updateUnlockBaby()
+                //         this.unlockEffect(id)
+                //     }
+                // }
+                // else{
+                //     GameManager.Instance.endLevel()
+                // }
+                if (this._data.isChapterFinal()) {
+                    this._data.getLevelReward(0, 0, true);
                     GameManager.Instance.endLevel();
                 }
-                // GameManager.Instance.endLevel()
+                else {
+                    this.touchChildren = true;
+                    this.m_baby.gotoRun();
+                    this.updeLevelData(this._data.levelData.next, this._data.levelData.key);
+                    this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
+                    Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
+                    this.score = 0;
+                    this.SetRealScore(0);
+                    GameManager.Instance.start();
+                    // this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                }
             }
             else {
                 this.updeLevelData(this._data.levelData.next, this._data.levelData.key);

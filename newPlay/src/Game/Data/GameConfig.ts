@@ -9,6 +9,8 @@ class GameConfig {
 	public static summonTable:any
 	public static levelConfig:Array<any>
 	public static levelTable:any
+	public static levelRewardConfig:Array<any>
+	public static levelRewardTable:any
 
 	public static gestureConfig:Array<any>
 	public static gestureTable:any
@@ -268,6 +270,19 @@ class GameConfig {
 			}
         }
 
+		this.levelRewardConfig = RES.getRes("levelRewardConfig_json")
+		this.levelRewardTable = {}
+		for (let i = 0; i < this.levelRewardConfig.length; i++) {
+            let config = this.levelRewardConfig[i]
+			let data = {}
+			data["key"] = config.key
+			data["condition"] = config.condition
+			data["count"] = config.count
+			data["reward"] = config.reward
+			data["value"] = config.value
+			this.levelRewardTable[config.key.toString()] = data
+        }
+
 		this.summonSkillTable = {}
         for (let i = 0; i < this.summonSkillConfig.length; i++) {
             let config = this.summonSkillConfig[i]
@@ -402,6 +417,7 @@ class GameConfig {
 			data["cloud1"] = config.cloud1
 			data["cloud2"] = config.cloud2
 			data["water"] = config.water
+			data["rewards"] = config.rewards
 			this.chapterTable[config.id.toString()] = data
 		}
 

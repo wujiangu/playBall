@@ -1,0 +1,51 @@
+[
+    {
+        "count": 0, 
+        "value": 1, 
+        "reward": 10070, 
+        "condition": 1, 
+        "key": 1001
+    }, 
+    {
+        "count": 0, 
+        "value": 100, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1002
+    }, 
+    {
+        "count": 0, 
+        "value": 100, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1003
+    }, 
+    {
+        "count": 2500, 
+        "value": 500, 
+        "reward": 1000, 
+        "condition": 2, 
+        "key": 1004
+    }, 
+    {
+        "count": 10, 
+        "value": 500, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1005
+    }, 
+    {
+        "count": 0, 
+        "value": 1, 
+        "reward": 10060, 
+        "condition": 4, 
+        "key": 1006
+    }, 
+    {
+        "count": 2, 
+        "value": 100, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1007
+    }
+]

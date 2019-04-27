@@ -89,6 +89,7 @@ var GameOverPanel = (function (_super) {
                 PanelManager.gameScenePanel.continueLevel();
             }
             else {
+                PanelManager.gameScenePanel.sceneData.continueCount += 1;
                 PanelManager.gameScenePanel.init();
                 GameManager.Instance.start();
             }

@@ -24,6 +24,14 @@ class GameSceneData {
 	public soreIndex:number = 1
 	/**无尽连击增加索引 */
 	public comboIndex:number = 1
+	/** */
+	public chapter:number = 0
+	/**继续次数 */
+	public continueCount:number = 0
+	/**分数奖励是否领取 */
+	public isScoreRewardGet = false
+	/**连击奖励是否领取 */
+	public isComboRewardGet = false
 
 	// 获取召唤物目标X值
 	public getSummonTargetX(e_pos:EMonsterPos, a_x:number, a_count:number = 0, a_num:number = 0, type:ESummonType = ESummonType.Balloon, isBoss:boolean = false) {
@@ -121,9 +129,11 @@ class GameSceneData {
                         level = chapterData.begin
                     }
 					GameConfig.curBattleChapter = selectChater
+					this.chapter = selectChater
                 break
                 case EBattleMode.Endless:
 					level = 1001
+					this.chapter = 1000
                 break
                 case EBattleMode.Timelimite:
                 break
@@ -161,6 +171,71 @@ class GameSceneData {
 		Common.updateCurCandy(value)
 	}
 
+	/**判断是否本章最后一关 */
+	public isChapterFinal() {
+		let nextLevel = this._levelData.next
+		if (nextLevel != null && nextLevel > 0) {
+			let levelData = GameConfig.levelTable[nextLevel.toString()]
+			if (levelData.section == this.chapter) {
+				return false
+			}
+		}
+		return true
+	}
+
+	/**获取关卡奖励 */
+	public getLevelReward(score:number, combo:number, isEnd:boolean = false) {
+		let chapterData = GameConfig.chapterTable[this.chapter.toString()]
+		if (chapterData.rewards && chapterData.rewards[0] > 0) {
+			for (let i = 0; i < chapterData.rewards.length; i++) {
+				let rewardId = chapterData.rewards[i]
+				let rewardData = GameConfig.levelRewardTable[rewardId]
+				switch (rewardData.condition) {
+					case ELevelRewardCondition.Finish:
+						if (isEnd == true && this.isChapterFinal() && this.chapter == GameConfig.curChpter) {
+							this._rewardHandle(rewardData.reward, rewardData.value)
+						}
+					break
+					case ELevelRewardCondition.EnoughScore:
+						if (!this.isScoreRewardGet && score >= rewardData.count) {
+							this.isScoreRewardGet = true
+							this._rewardHandle(rewardData.reward, rewardData.value)
+						}
+					break
+					case ELevelRewardCondition.EnoughCombo:
+						if (!this.isComboRewardGet && combo >= rewardData.count) {
+							this.isComboRewardGet = true
+							this._rewardHandle(rewardData.reward, rewardData.value)
+						}
+					break
+					case ELevelRewardCondition.OnesFinish:
+						if (isEnd == true && this.isChapterFinal() && this.continueCount <= 0 && this.chapter == GameConfig.curChpter) {
+							this._rewardHandle(rewardData.reward, rewardData.value)
+						}
+					break
+					case ELevelRewardCondition.RepeatFinish:
+						if (isEnd == true && this.isChapterFinal() && this.chapter < GameConfig.curChpter) {
+							this._rewardHandle(rewardData.reward, rewardData.value)
+						}
+					break
+				}
+			}
+		}
+	}
+
+	/**关卡奖励数据处理 */
+	private _rewardHandle(rewardId:number, value:number) {
+		if (rewardId == 1000) {
+			this.extra += value
+			this.updateCandy(value)
+			PanelManager.gameScenePanel.updateExtarCandy(value)
+		}else{
+			if (rewardId > 0) {
+				this.unlockBaby(rewardId)
+			}
+		}
+	}
+
 	/**根据连击数获取糖果奖励
 	 * @param value 连击数
 	 */
@@ -178,6 +253,7 @@ class GameSceneData {
 		let index = GameConfig.babyUnlockList.indexOf(id)
 		if (index < 0) {
 			// 未解锁
+			Common.log("宝宝", id)
 			GameConfig.babyUnlockList.push(id)
 			Common.updateUnlockBaby()
 			PanelManager.gameScenePanel.unlockEffect(id)
@@ -188,7 +264,7 @@ class GameSceneData {
 	public scoreUnlock(value:number) {
 		switch (GameConfig.gameMode) {
             case EBattleMode.Level:
-                
+                this.getLevelReward(value, 0)
             break
             case EBattleMode.Endless:
                 this.extra = 0
@@ -217,7 +293,7 @@ class GameSceneData {
 	public comboUnlock(value:number) {
 		switch (GameConfig.gameMode) {
             case EBattleMode.Level:
-                
+                this.getLevelReward(0, value)
             break
             case EBattleMode.Endless:
                 this.extra = 0

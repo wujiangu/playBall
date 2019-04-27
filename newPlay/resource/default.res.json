@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,levelRewardConfig_json",
 			"name": "preload"
 		}
 	],
@@ -2937,6 +2937,11 @@
 			"url": "assets/bones/summon1006_tex.json",
 			"type": "json",
 			"name": "summon1006_tex_json"
+		},
+		{
+			"name": "levelRewardConfig_json",
+			"type": "json",
+			"url": "config/levelRewardConfig.json"
 		}
 	]
 }

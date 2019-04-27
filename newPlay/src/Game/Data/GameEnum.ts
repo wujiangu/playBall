@@ -193,3 +193,13 @@ enum EBabyQuality
     Blue,
     Purple,
 }
+
+/**关卡奖励条件 */
+enum ELevelRewardCondition
+{
+    Finish = 1,
+    EnoughScore,
+    EnoughCombo,
+    OnesFinish,
+    RepeatFinish,
+}

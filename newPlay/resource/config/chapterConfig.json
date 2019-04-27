@@ -1,5 +1,21 @@
 [
     {
+        "begin": 0, 
+        "bg": "chapterBg1001_png", 
+        "name": "无尽关卡", 
+        "cloud1": "chapterCloudT1001_png", 
+        "sun": "chapterSun1001_png", 
+        "cloud2": "chapterCloudB1001_png", 
+        "bgm": "chapterBgm1001_mp3", 
+        "water": 1, 
+        "unlockIcon": "chapterUnlockIcon1001_png", 
+        "id": 1000, 
+        "icon": "chapterIcon1001_png",
+        "rewards": [
+            1001
+        ]
+    }, 
+    {
         "begin": 10101, 
         "bg": "chapterBg1001_png", 
         "name": "第一章", 
@@ -10,7 +26,10 @@
         "water": 1, 
         "unlockIcon": "chapterUnlockIcon1001_png", 
         "id": 1001, 
-        "icon": "chapterIcon1001_png"
+        "icon": "chapterIcon1001_png",
+        "rewards": [
+            1001
+        ]
     }, 
     {
         "begin": 10201, 
