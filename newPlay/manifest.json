@@ -11,8 +11,8 @@
 	],
 	"game": [
 		"bin-debug/Game/Data/GameEnum.js",
-		"bin-debug/Game/View/BasePanel.js",
 		"bin-debug/Game/View/BaseActor.js",
+		"bin-debug/Game/View/BasePanel.js",
 		"bin-debug/Game/View/BuyConfirmPanel.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/Component/RingScrollView.js",
@@ -41,7 +41,7 @@
 		"bin-debug/Game/View/Balloon.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
-		"bin-debug/Utils/ShakeTools.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/Game/View/CapsuleData.js",
 		"bin-debug/Game/View/CapsulePanel.js",
 		"bin-debug/Game/View/ChooseOperationPanel.js",
@@ -72,6 +72,6 @@
 		"bin-debug/Utils/MathUtils.js",
 		"bin-debug/Utils/md5.js",
 		"bin-debug/Utils/NativeApi.js",
-		"bin-debug/LoadingUI.js"
+		"bin-debug/Utils/ShakeTools.js"
 	]
 }
