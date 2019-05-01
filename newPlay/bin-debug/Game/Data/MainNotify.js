@@ -17,6 +17,18 @@ var MainNotify;
     MainNotify.openGameOverPanel = "openGameOverPanel";
     //关闭游戏结束面板
     MainNotify.closeGameOverPanel = "closeGameOverPanel";
+    //打开游戏失败面板
+    MainNotify.openGameLosePanel = "openGameLosePanel";
+    //关闭游戏失败面板
+    MainNotify.closeGameLosePanel = "closeGameLosePanel";
+    //打开选择重新开始或返回主界面面板
+    MainNotify.openChooseOperationPanel = "openChooseOperationPanel";
+    //关闭选择重新开始或返回主界面面板
+    MainNotify.closeChooseOperationPanel = "closeChooseOperationPanel";
+    //打开购买确认界面
+    MainNotify.openBuyConfirmPanel = "openBuyConfirmPanel";
+    //关闭购买确认界面
+    MainNotify.closeBuyConfirmPanel = "closeBuyConfirmPanel";
     //手势识别
     MainNotify.gestureAction = "gestureAction";
     //开始画曲线轨迹

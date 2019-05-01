@@ -19,6 +19,18 @@ module MainNotify {
 	export var openGameOverPanel:string = "openGameOverPanel"
 	//关闭游戏结束面板
 	export var closeGameOverPanel:string = "closeGameOverPanel"
+	//打开游戏失败面板
+	export var openGameLosePanel:string = "openGameLosePanel"
+	//关闭游戏失败面板
+	export var closeGameLosePanel:string = "closeGameLosePanel"
+	//打开选择重新开始或返回主界面面板
+	export var openChooseOperationPanel:string = "openChooseOperationPanel"
+	//关闭选择重新开始或返回主界面面板
+	export var closeChooseOperationPanel:string = "closeChooseOperationPanel"
+	//打开购买确认界面
+	export var openBuyConfirmPanel:string = "openBuyConfirmPanel"
+	//关闭购买确认界面
+	export var closeBuyConfirmPanel:string = "closeBuyConfirmPanel"
 
 	//手势识别
 	export var gestureAction:string = "gestureAction"

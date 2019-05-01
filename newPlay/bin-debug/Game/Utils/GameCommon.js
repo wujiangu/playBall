@@ -359,6 +359,18 @@ var Common;
         }
     }
     Common.updateCurCandy = updateCurCandy;
+    /**更新当前的糖果 */
+    function updateAfterBuyCurCandy(value) {
+        GameConfig.candy = value;
+        GameConfig.candy = Math.max(0, GameConfig.candy);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "candy:" + GameConfig.candy);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "candy", GameConfig.candy.toString());
+        }
+    }
+    Common.updateAfterBuyCurCandy = updateAfterBuyCurCandy;
     /**获取上次的登录时间 */
     function getlastLoginTime() {
         if (!GameConfig.isWebView) {
@@ -501,40 +513,40 @@ var Common;
         }
     }
     Common.updateSignCount = updateSignCount;
-    /**获取章节分数 */
-    function getChapterScore() {
+    /**是否刷新签到数据 */
+    function getIsSignData() {
         if (!GameConfig.isWebView) {
             egret.ExternalInterface.addCallback("sendToEgret", function (message) {
                 if (message != null && message.length > 0) {
-                    GameConfig.chapterMaxScore = parseInt(message);
+                    GameConfig.isSignData = parseInt(message);
                 }
                 else {
-                    GameConfig.chapterMaxScore = {};
+                    GameConfig.isSignData = 0;
                 }
             });
-            egret.ExternalInterface.call("read", GameConfig.game + "chapterMaxScore");
+            egret.ExternalInterface.call("read", GameConfig.game + "IsSignData");
         }
         else {
-            var chapterMaxScore = NativeApi.getLocalData(GameConfig.game + "chapterMaxScore");
-            if (chapterMaxScore == null) {
-                GameConfig.chapterMaxScore = {};
+            var isSignData = NativeApi.getLocalData(GameConfig.game + "IsSignData");
+            if (isSignData == null) {
+                GameConfig.isSignData = 0;
             }
             else {
-                GameConfig.chapterMaxScore = parseInt(chapterMaxScore);
+                GameConfig.isSignData = parseInt(isSignData);
             }
         }
     }
-    Common.getChapterScore = getChapterScore;
-    /**更新章节分数 */
-    function updateChapterScore(value) {
-        GameConfig.chapterMaxScore = value;
+    Common.getIsSignData = getIsSignData;
+    /**更新是否刷新签到数据 */
+    function updateIsSignData(value) {
+        GameConfig.isSignData = value;
         if (!GameConfig.isWebView) {
-            egret.ExternalInterface.call("write", GameConfig.game + "chapterMaxScore:" + GameConfig.chapterMaxScore);
+            egret.ExternalInterface.call("write", GameConfig.game + "IsSignData:" + GameConfig.isSignData);
         }
         else {
-            NativeApi.setLocalData(GameConfig.game + "chapterMaxScore", GameConfig.chapterMaxScore);
+            NativeApi.setLocalData(GameConfig.game + "IsSignData", GameConfig.isSignData.toString());
         }
     }
-    Common.updateChapterScore = updateChapterScore;
+    Common.updateIsSignData = updateIsSignData;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

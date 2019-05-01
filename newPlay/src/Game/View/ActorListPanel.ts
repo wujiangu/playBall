@@ -16,10 +16,12 @@ class ActorListPanel extends BasePanel {
 
     // 初始化面板数据
     public initData():void{
-
+		
+		this._BabyISCanBuy = false ;
+		this._currentChooseBaby = GameConfig.curBaby;
 		let pageCount = Math.ceil(GameConfig.babyOpenList.length / 9)
 
-		this._pageReset(pageCount)
+		this._pageReset(pageCount)	
 
 		this.updateBabyInfo(GameConfig.curBaby)
 		this._labCount.text = GameConfig.candy.toString()
@@ -47,11 +49,13 @@ class ActorListPanel extends BasePanel {
 		Common.gameScene().uiLayer.removeChild(this)
     }
 
-	public updateBabyInfo(a_id:number) {
-		let data = GameConfig.actorTable[a_id.toString()]
+	public updateBabyInfo(a_id:number) {		
+		let data = GameConfig.actorTable[a_id.toString()]		
+		this._currentBabyId = a_id;
 		this._labActorName.text = data.name
 		this._labDesc.text = data.desc
 		let index = GameConfig.babyUnlockList.indexOf(a_id)
+		this._updateBtnBuyShowState(a_id);
 		if (index < 0) {
 			this._labDesc.text = data.unlockDesc
 			this.m_imgShadow.visible = true
@@ -121,6 +125,44 @@ class ActorListPanel extends BasePanel {
 		
 	}
 
+	private _updateBtnBuyShowState(babyID:number)//更新购买按钮显示状态
+	{
+		// 判断是否在已解锁列表中
+		let index = GameConfig.babyUnlockList.indexOf(babyID)
+		let baby = GameConfig.actorTable[babyID.toString()]
+		//如果没有该宠物价格为0，那么并且没有该宠物那么购买按钮就显示未解锁状态
+		if(baby.petPrice == 0)
+		{
+			if (index < 0) {//未拥有,切换未解锁按钮资源
+				this._BabyISCanBuy = false;
+				this._btnBuy.source = "btnCannotBuyImg_png";
+				this._btnBuy.visible = true;
+				this._lblBabyPrice.visible = false;				
+			}
+			else//已拥有
+			{
+				this._btnBuy.visible = false;
+				this._lblBabyPrice.visible = false;
+			}
+		}
+		else//如果该宠物的价格不为0，判断自己是否拥有该宠物，如果有不显示购买按钮，否则显示
+		{
+			if (index < 0) {//未拥有
+				this._BabyISCanBuy = true;
+				this._btnBuy.source = "btnBuyImg_png";
+				this._btnBuy.visible = true;
+				this._lblBabyPrice.visible = true;		
+				this._lblBabyPrice.text = baby.petPrice;
+				this._needBabyPrice = baby.petPrice;
+			}
+			else//已拥有
+			{
+				this._btnBuy.visible = false;
+				this._lblBabyPrice.visible = false;
+			}
+		}
+	}
+
 	private _initActorIcon() {
 		for (let i = 0; i < this._actors.length; i++) {
 			this._actors[i].visible = false
@@ -139,6 +181,27 @@ class ActorListPanel extends BasePanel {
 	private _onBtnFusion() {
 		GameConfig.sceneType = 1
 		Common.dispatchEvent(MainNotify.openCapsulePanel)
+	}
+
+	private _onBtnBuyClick()//购买
+	{
+		if(this._BabyISCanBuy)//如果能够购买
+		{
+			//判断自己的糖果数目是否能够购买
+			if(GameConfig.candy >= this._needBabyPrice)
+			{
+				Common.dispatchEvent(MainNotify.openBuyConfirmPanel)								
+			}
+			else
+			{
+				TipsManager.show(`Insufficient candy!`);
+			}
+		}
+		else
+		{
+			TipsManager.show(`Not yet open!`);
+		}	
+		
 	}
 
 	private _onGroupActor() {
@@ -228,6 +291,7 @@ class ActorListPanel extends BasePanel {
 		this._btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAddCandy, this)
 		this._btnFusion.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnFusion, this)
 		this._groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onGroupActor, this)
+		this._btnBuy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnBuyClick, this);
 
 		this.xuanzhuan.addEventListener('complete', this._onLoop, this)
 		this.jiany.addEventListener('complete', this._onLoopBabyShadow, this)
@@ -268,6 +332,11 @@ class ActorListPanel extends BasePanel {
 	private _btnAddCandy:eui.Button
 	private _btnFusion:eui.Button
 	private _imgCandy:eui.Image
+	private _btnBuy:eui.Image
+	private _lblBabyPrice:eui.Label
+	private _needBabyPrice:number
+	private _currentBabyId:number
+	private _BabyISCanBuy:boolean
 
 	private _actorArmatureContainer:DragonBonesArmatureContainer
     private _actorArmature:DragonBonesArmature
@@ -278,6 +347,7 @@ class ActorListPanel extends BasePanel {
 	private shangdian:egret.tween.TweenGroup
 
 	private m_imgShadow:eui.Image
+	public _currentChooseBaby:number
 }
 
 class ActorIR extends eui.Component {
@@ -311,10 +381,11 @@ class ActorIR extends eui.Component {
 
 	private _onActorClick() {
 		PanelManager.actorListPanel.updateBabyInfo(this._id)
+		PanelManager.actorListPanel._currentChooseBaby = this._id;
 		// 判断是否在已解锁列表中
 		let index = GameConfig.babyUnlockList.indexOf(this._id)
 		if (index >= 0) {
-			Common.updateCurBaby(this._id)
+			Common.updateCurBaby(this._id)			
 		}
 	}
 

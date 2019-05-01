@@ -17,14 +17,6 @@ var GameSceneData = (function () {
         this.soreIndex = 1;
         /**无尽连击增加索引 */
         this.comboIndex = 1;
-        /** */
-        this.chapter = 0;
-        /**继续次数 */
-        this.continueCount = 0;
-        /**分数奖励是否领取 */
-        this.isScoreRewardGet = false;
-        /**连击奖励是否领取 */
-        this.isComboRewardGet = false;
         this.allActors = new Array();
     }
     // 获取召唤物目标X值
@@ -155,11 +147,9 @@ var GameSceneData = (function () {
                             level = chapterData.begin;
                         }
                         GameConfig.curBattleChapter = selectChater;
-                        this.chapter = selectChater;
                         break;
                     case EBattleMode.Endless:
                         level = 1001;
-                        this.chapter = 1000;
                         break;
                     case EBattleMode.Timelimite:
                         break;
@@ -200,70 +190,6 @@ var GameSceneData = (function () {
         this.addCandy += value;
         Common.updateCurCandy(value);
     };
-    /**判断是否本章最后一关 */
-    GameSceneData.prototype.isChapterFinal = function () {
-        var nextLevel = this._levelData.next;
-        if (nextLevel != null && nextLevel > 0) {
-            var levelData = GameConfig.levelTable[nextLevel.toString()];
-            if (levelData.section == this.chapter) {
-                return false;
-            }
-        }
-        return true;
-    };
-    /**获取关卡奖励 */
-    GameSceneData.prototype.getLevelReward = function (score, combo, isEnd) {
-        if (isEnd === void 0) { isEnd = false; }
-        var chapterData = GameConfig.chapterTable[this.chapter.toString()];
-        if (chapterData.rewards && chapterData.rewards[0] > 0) {
-            for (var i = 0; i < chapterData.rewards.length; i++) {
-                var rewardId = chapterData.rewards[i];
-                var rewardData = GameConfig.levelRewardTable[rewardId];
-                switch (rewardData.condition) {
-                    case ELevelRewardCondition.Finish:
-                        if (isEnd == true && this.isChapterFinal() && this.chapter == GameConfig.curChpter) {
-                            this._rewardHandle(rewardData.reward, rewardData.value);
-                        }
-                        break;
-                    case ELevelRewardCondition.EnoughScore:
-                        if (!this.isScoreRewardGet && score >= rewardData.count) {
-                            this.isScoreRewardGet = true;
-                            this._rewardHandle(rewardData.reward, rewardData.value);
-                        }
-                        break;
-                    case ELevelRewardCondition.EnoughCombo:
-                        if (!this.isComboRewardGet && combo >= rewardData.count) {
-                            this.isComboRewardGet = true;
-                            this._rewardHandle(rewardData.reward, rewardData.value);
-                        }
-                        break;
-                    case ELevelRewardCondition.OnesFinish:
-                        if (isEnd == true && this.isChapterFinal() && this.continueCount <= 0 && this.chapter == GameConfig.curChpter) {
-                            this._rewardHandle(rewardData.reward, rewardData.value);
-                        }
-                        break;
-                    case ELevelRewardCondition.RepeatFinish:
-                        if (isEnd == true && this.isChapterFinal() && this.chapter < GameConfig.curChpter) {
-                            this._rewardHandle(rewardData.reward, rewardData.value);
-                        }
-                        break;
-                }
-            }
-        }
-    };
-    /**关卡奖励数据处理 */
-    GameSceneData.prototype._rewardHandle = function (rewardId, value) {
-        if (rewardId == 1000) {
-            this.extra += value;
-            this.updateCandy(value);
-            PanelManager.gameScenePanel.updateExtarCandy(value);
-        }
-        else {
-            if (rewardId > 0) {
-                this.unlockBaby(rewardId);
-            }
-        }
-    };
     /**根据连击数获取糖果奖励
      * @param value 连击数
      */
@@ -280,7 +206,6 @@ var GameSceneData = (function () {
         var index = GameConfig.babyUnlockList.indexOf(id);
         if (index < 0) {
             // 未解锁
-            Common.log("宝宝", id);
             GameConfig.babyUnlockList.push(id);
             Common.updateUnlockBaby();
             PanelManager.gameScenePanel.unlockEffect(id);
@@ -290,7 +215,6 @@ var GameSceneData = (function () {
     GameSceneData.prototype.scoreUnlock = function (value) {
         switch (GameConfig.gameMode) {
             case EBattleMode.Level:
-                this.getLevelReward(value, 0);
                 break;
             case EBattleMode.Endless:
                 this.extra = 0;
@@ -318,7 +242,6 @@ var GameSceneData = (function () {
     GameSceneData.prototype.comboUnlock = function (value) {
         switch (GameConfig.gameMode) {
             case EBattleMode.Level:
-                this.getLevelReward(0, value);
                 break;
             case EBattleMode.Endless:
                 this.extra = 0;

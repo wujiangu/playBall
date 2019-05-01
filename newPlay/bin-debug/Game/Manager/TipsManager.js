@@ -7,7 +7,7 @@ var TipsManager;
 (function (TipsManager) {
     var _tips = [];
     function show(a_str, a_color, a_type, a_size, a_bg, a_x, a_y) {
-        if (a_color === void 0) { a_color = Common.TextColors.red; }
+        if (a_color === void 0) { a_color = Common.TextColors.pink; }
         if (a_type === void 0) { a_type = ETipsType.DownToUp; }
         if (a_size === void 0) { a_size = 40; }
         if (a_bg === void 0) { a_bg = ""; }

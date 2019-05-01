@@ -28,6 +28,8 @@ var ActorListPanel = (function (_super) {
     };
     // 初始化面板数据
     ActorListPanel.prototype.initData = function () {
+        this._BabyISCanBuy = false;
+        this._currentChooseBaby = GameConfig.curBaby;
         var pageCount = Math.ceil(GameConfig.babyOpenList.length / 9);
         this._pageReset(pageCount);
         this.updateBabyInfo(GameConfig.curBaby);
@@ -54,9 +56,11 @@ var ActorListPanel = (function (_super) {
     };
     ActorListPanel.prototype.updateBabyInfo = function (a_id) {
         var data = GameConfig.actorTable[a_id.toString()];
+        this._currentBabyId = a_id;
         this._labActorName.text = data.name;
         this._labDesc.text = data.desc;
         var index = GameConfig.babyUnlockList.indexOf(a_id);
+        this._updateBtnBuyShowState(a_id);
         if (index < 0) {
             this._labDesc.text = data.unlockDesc;
             this.m_imgShadow.visible = true;
@@ -121,6 +125,38 @@ var ActorListPanel = (function (_super) {
         this._srollView.reset(this._imgPages);
         this._srollView.spacing = 20;
     };
+    ActorListPanel.prototype._updateBtnBuyShowState = function (babyID) {
+        // 判断是否在已解锁列表中
+        var index = GameConfig.babyUnlockList.indexOf(babyID);
+        var baby = GameConfig.actorTable[babyID.toString()];
+        //如果没有该宠物价格为0，那么并且没有该宠物那么购买按钮就显示未解锁状态
+        if (baby.petPrice == 0) {
+            if (index < 0) {
+                this._BabyISCanBuy = false;
+                this._btnBuy.source = "btnCannotBuyImg_png";
+                this._btnBuy.visible = true;
+                this._lblBabyPrice.visible = false;
+            }
+            else {
+                this._btnBuy.visible = false;
+                this._lblBabyPrice.visible = false;
+            }
+        }
+        else {
+            if (index < 0) {
+                this._BabyISCanBuy = true;
+                this._btnBuy.source = "btnBuyImg_png";
+                this._btnBuy.visible = true;
+                this._lblBabyPrice.visible = true;
+                this._lblBabyPrice.text = baby.petPrice;
+                this._needBabyPrice = baby.petPrice;
+            }
+            else {
+                this._btnBuy.visible = false;
+                this._lblBabyPrice.visible = false;
+            }
+        }
+    };
     ActorListPanel.prototype._initActorIcon = function () {
         for (var i = 0; i < this._actors.length; i++) {
             this._actors[i].visible = false;
@@ -136,6 +172,20 @@ var ActorListPanel = (function (_super) {
     ActorListPanel.prototype._onBtnFusion = function () {
         GameConfig.sceneType = 1;
         Common.dispatchEvent(MainNotify.openCapsulePanel);
+    };
+    ActorListPanel.prototype._onBtnBuyClick = function () {
+        if (this._BabyISCanBuy) {
+            //判断自己的糖果数目是否能够购买
+            if (GameConfig.candy >= this._needBabyPrice) {
+                Common.dispatchEvent(MainNotify.openBuyConfirmPanel);
+            }
+            else {
+                TipsManager.show("Insufficient candy!");
+            }
+        }
+        else {
+            TipsManager.show("Not yet open!");
+        }
     };
     ActorListPanel.prototype._onGroupActor = function () {
         this._actorArmatureContainer.play("fangdazhao", 1);
@@ -210,6 +260,7 @@ var ActorListPanel = (function (_super) {
         this._btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAddCandy, this);
         this._btnFusion.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnFusion, this);
         this._groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onGroupActor, this);
+        this._btnBuy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnBuyClick, this);
         this.xuanzhuan.addEventListener('complete', this._onLoop, this);
         this.jiany.addEventListener('complete', this._onLoopBabyShadow, this);
         this.shangdian.addEventListener('complete', this._onShangdian, this);
@@ -252,6 +303,7 @@ var ActorIR = (function (_super) {
     };
     ActorIR.prototype._onActorClick = function () {
         PanelManager.actorListPanel.updateBabyInfo(this._id);
+        PanelManager.actorListPanel._currentChooseBaby = this._id;
         // 判断是否在已解锁列表中
         var index = GameConfig.babyUnlockList.indexOf(this._id);
         if (index >= 0) {

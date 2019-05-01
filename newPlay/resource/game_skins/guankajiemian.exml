@@ -2,67 +2,61 @@
 <e:Skin class="guankajiemian" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
 	<w:Declarations>
 		<tween:TweenGroup id="show">
-			<tween:TweenItem target="{image}">
-				<tween:Set>
-					<tween:props>
-						<e:Object x="{68}" alpha="{0}" scaleX="{1}" scaleY="{1}" width="{589}" height="{808}" y="{-458}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="200">
-					<tween:props>
-						<e:Object x="{68}" y="{204}" alpha="{1}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
+
 			<tween:TweenItem target="{groupChater}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{103}" alpha="{0}" scaleX="{1}" scaleY="{1}"/>
+						<e:Object alpha="{0}" scaleX="{1}" scaleY="{1}" x="{133}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="550">
+				<tween:To duration="350">
 					<tween:props>
-						<e:Object alpha="{0}" y="{320}" x="{78}" scaleX="{1.5}" scaleY="{1.5}"/>
+						<e:Object alpha="{0}" x="{78}" scaleX="{1.5}" scaleY="{1.5}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="100">
+				<tween:To duration="150">
 					<tween:props>
-						<e:Object x="{104}" y="{342.5}" alpha="{1}" scaleX="{0.9}" scaleY="{0.9}"/>
+						<e:Object alpha="{1}" x="{133}" scaleX="{0.9}" scaleY="{0.9}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{groupEndless}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{103}" alpha="{0}" scaleX="{1}" scaleY="{1}"/>
+						<e:Object alpha="{0}" scaleX="{1}" scaleY="{1}" x="{133}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="750">
+				<tween:To duration="400">
 					<tween:props>
-						<e:Object alpha="{0}" scaleX="{1.1}" scaleY="{1.1}" y="{664}" x="{79}"/>
+						<e:Object alpha="{0}" x="{133}" scaleX="{1.4}" scaleY="{1.4}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="100">
+				<tween:To duration="150">
 					<tween:props>
-						<e:Object x="{103}" y="{682}" alpha="{1}" scaleX="{0.9}" scaleY="{0.9}"/>
+						<e:Object alpha="{1}" scaleX="{0.9}" scaleY="{0.9}" x="{133}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{bg}">
+				<tween:Set>
+					<tween:props>
+						<e:Object y="{-1128}" alpha="{0}" scaleX="{1}" scaleY="{1}" x="{35.3}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="350">
+					<tween:props>
+						<e:Object y="{130}" alpha="{1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="hide">
-			<tween:TweenItem target="{image}">
-				<tween:Set/>
-				<tween:To duration="250">
-					<tween:props>
-						<e:Object width="{684}" height="{947.86}" scaleX="{1.2}" scaleY="{1.2}" x="{-54}" y="{110.57}" alpha="{0}"/>
-					</tween:props>
-				</tween:To>
-			</tween:TweenItem>
+
 			<tween:TweenItem target="{groupChater}">
 				<tween:Set/>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{299.85}" scaleX="{1.4}" scaleY="{1.4}" x="{3.25}" alpha="{0}"/>
+						<e:Object scaleX="{1.4}" scaleY="{1.4}" x="{3.25}" alpha="{0}" y="{536}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -70,7 +64,15 @@
 				<tween:Set/>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object scaleX="{1.4}" scaleY="{1.4}" y="{769.25}" x="{1}" alpha="{0}"/>
+						<e:Object scaleX="{1.4}" scaleY="{1.4}" x="{1}" alpha="{0}" y="{1072}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{bg}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{1.4}" scaleY="{1.4}" x="{-96}" y="{-98}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -120,28 +122,32 @@
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image id="m_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0" alpha="0"/>
-	<e:Image id="image" source="guankajiemian1_png" y="202" x="71"/>
-	<e:Group id="groupChater" width="515" height="285" horizontalCenter="-0.5" verticalCenter="-217.5" scaleX="0.9" scaleY="0.9">
-		<e:Image id="m_imgChapter" x="0" y="0" scaleX="1" scaleY="1" alpha="1" source="chapterIcon1001_png"/>
-		<e:Image source="guankajiemian4_png" x="7" y="216.5" scaleX="1" scaleY="1"/>
 
-		<e:Image source="guankajiemian5_png" x="123.1" y="231.36"/>
-		<e:Button id="m_btnLast" label="" x="-84" y="82" scaleX="0.25" scaleY="0.25">
-			<e:skinName>
-			<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="guankajiemian3_png"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-			</e:skinName>
-		</e:Button>
-		<e:Image id="m_imgIcon" source="guankajiemian13_png" x="200.4" y="69.92" touchEnabled="false"/>
-		<e:Label id="m_labChapter" text="100" x="337" y="223.5" bold="true" size="45" fontFamily="Microsoft YaHei" textAlign="left"/>
-		<e:Group id="m_groupLock" width="117" height="117" x="200.4" y="69.92" touchEnabled="false">
-			<e:Image id="image0" source="suo1_png" x="31.5" y="29" scaleX="1" scaleY="1" touchEnabled="false"/>
-			<e:Image id="image1" source="suo2_png" x="28" y="47.5" scaleX="1" scaleY="1" touchEnabled="false"/>
-			<e:Image id="image2" source="suo3_png" x="1.5" y="6.04" scaleX="1" scaleY="1" touchEnabled="false"/>
+	<e:Group id="bg" x="35.3" y="131.5">
+		<e:Image id="image" source="guankajiemian1_png" y="0" x="0" width="653"/>
+		<e:Image id="m_imgfighting" width="84" height="80" x="284.5" anchorOffsetX="0" anchorOffsetY="0" y="28.5" source="fighting_png"/>
+		<e:Image id="m_titleLine1" width="646" height="56" x="0" y="124.5" source="titleline1_png"/>
+		<e:Image id="m_titleLine2" width="646" height="56" x="3.5" y="752" source="titleline1_png"/>
+		<e:Image id="m_desLine" width="628" height="107" x="15.45" y="629.87" source="desLine_png"/>
+
+
+
+
+		<e:Group x="118" y="634.58">
+			<e:Label id="higestscoretitle" text="HIGHEST SCORE:" x="0" y="0" anchorOffsetX="0" width="324" anchorOffsetY="0" height="57.27" verticalAlign="middle" textAlign="center" bold="true" fontFamily="Arial" size="30"/>
+			<e:Label id="bombatitle" text="BOMBA:" x="54.02" y="52.72" anchorOffsetX="0" width="219.45" anchorOffsetY="0" height="39.09" verticalAlign="middle" textAlign="center" bold="true"/>
+			<e:Label id="_lblhighestscore" text="1500" x="304.94" y="4.55" anchorOffsetX="0" width="230.06" anchorOffsetY="0" height="48.18" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16"/>
+			<e:Label id="_lblbomba" text="28" x="268.7" y="48.17" anchorOffsetX="0" width="208.85" anchorOffsetY="0" height="43.64" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16"/>
 		</e:Group>
-		<e:Button id="m_btnNext" label="" x="598.422222" y="82" scaleX="-0.25" scaleY="0.25">
+		<e:Label id="chaptermodetitle" text="CHAPTER" x="153.5" y="133.11" anchorOffsetX="0" width="328" anchorOffsetY="0" height="43.32" textAlign="center" bold="true" textColor="0x000000" size="30" verticalAlign="middle"/>
+		<e:Label id="endlessmodetitle" text="ENDLESS MODE" x="135" y="759" anchorOffsetX="0" width="396" anchorOffsetY="0" height="42" verticalAlign="middle" textAlign="center" size="30" bold="true" textColor="0x000000"/>
+	</e:Group>
+	<e:Group id="groupChater" width="532" height="451" horizontalCenter="-0.5" scaleX="0.9" scaleY="0.9" y="536" anchorOffsetX="271.11" anchorOffsetY="220">
+		<e:Image id="m_imgChapter" x="-27.67" y="-25.05" scaleX="1.1111111111111112" scaleY="1.1111111111111112" alpha="1" source="chapterIcon1001_png" width="532" height="451"/>
+		<e:Image x="-8.22" y="329.89" scaleX="1.1111111111111112" scaleY="1.1111111111111112" source="chapterdesBg_png"/>
+		<e:Image id="m_imgIcon" source="guankajiemian13_png" x="208" y="126" touchEnabled="false" scaleX="1" scaleY="1"/>
+		<e:Label id="m_labChapter" text="100" x="200.48" y="263.84" bold="true" size="45" fontFamily="Microsoft YaHei" verticalAlign="middle" textAlign="center" anchorOffsetX="0" width="121.34" scaleX="1.1111111111111112" scaleY="1.1111111111111112"/>
+		<e:Button id="m_btnLast" label="" x="-125.78" y="162" scaleX="1.1111111111111112" scaleY="1.1111111111111112">
 			<e:skinName>
 			<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="guankajiemian3_png"/>
@@ -149,11 +155,43 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:Button id="m_btnNext" label="" x="655.89" y="162" scaleX="-1.1111111111111112" scaleY="1.1111111111111112">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="guankajiemian3_png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+		<e:Label text="HIGHEST" x="19.19" y="348.78" anchorOffsetX="0" width="274" anchorOffsetY="0" height="83.33" verticalAlign="middle" textAlign="center" bold="true" size="50" fontFamily="Arial"/>
+		<e:Image id="m_btnRecordIconBg0" width="102" height="102" x="302.22" y="339.45" source="signinrecordbg_png" touchEnabled="true"/>
+		<e:Image id="m_recordIcon0" width="102" height="102" x="302.22" y="339.45" source="actorIcon10100_png" touchEnabled="false"/>
+		<e:Image id="m_btnRecordIconBg1" width="102" height="102" x="421.89" y="339.45" source="signinrecordbg_png" touchEnabled="true"/>
+		<e:Image id="m_recordIcon1" width="102" height="102" x="421.89" y="339.45" source="actorIcon10080_png" touchEnabled="false"/>
+
+
+
+
+
+
+
+
+
 	</e:Group>
-	<e:Group id="groupEndless" width="515" height="285" horizontalCenter="-0.5" verticalCenter="117.5" scaleX="0.9" scaleY="0.9">
-		<e:Image id="m_imgEndlessBg" x="0.5" y="0" scaleX="1" scaleY="1" source="guankajiemian12_png"/>
-		<e:Image source="guankajiemian4_png" x="9" y="216" anchorOffsetX="0" width="498" scaleX="1" scaleY="1"/>
+	<e:Group id="groupEndless" width="515" height="285" scaleX="0.9" scaleY="0.9" horizontalCenter="0" y="1072" anchorOffsetX="255.56" anchorOffsetY="135.56">
+		<e:Image id="m_imgEndlessBg" scaleX="1" scaleY="1" source="guankajiemian12_png" horizontalCenter="1" verticalCenter="0"/>
+		<e:Image x="10.3" y="200.46" scaleX="1.1111111111111112" scaleY="1.1111111111111112" source="chapterdesBg_png" anchorOffsetX="0" width="447.67" anchorOffsetY="0" height="58"/>
+
 		<e:Image id="m_imgEndlessIcon" source="guankajiemian15_png" x="199.5" y="51" touchEnabled="false"/>
-		<e:Image source="guankajiemian6_png" x="135.22" y="229.68" scaleX="1" scaleY="1"/>
+		<e:Image source="guankajiemian6_png" x="135.22" y="217.47" scaleX="1" scaleY="1"/>
+	</e:Group>
+	<e:Group id="m_groupLock" width="117" height="117" x="305" y="439" touchEnabled="false">
+		<e:Image id="image0" source="suo1_png" x="31.5" y="29" scaleX="1" scaleY="1" touchEnabled="false"/>
+		<e:Image id="image1" source="suo2_png" x="28" y="47.5" scaleX="1" scaleY="1" touchEnabled="false"/>
+		<e:Image id="image2" source="suo3_png" x="1.5" y="6.04" scaleX="1" scaleY="1" touchEnabled="false"/>
+	</e:Group>
+	<e:Group id="groupTip" width="486.97" height="286.37" x="123.06" y="341.97" anchorOffsetX="0" anchorOffsetY="0" alpha="1">
+		<e:Image id="m_tipBg" width="476" height="166.91" x="2.65" y="67.78" source="desbg_png" scale9Grid="88,23,532,145" anchorOffsetY="0" anchorOffsetX="0"/>
+		<e:Label id="_lblBabyDescribe" text="  Get 100 combos in this chapter   to get this b  " x="17.69" y="81.69" anchorOffsetX="0" width="446.74" anchorOffsetY="0" height="139.09" verticalAlign="middle" textAlign="center"/>
 	</e:Group>
 </e:Skin>

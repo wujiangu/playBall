@@ -6,7 +6,7 @@ enum ETipsType {
 namespace TipsManager {
     let _tips:Array<Tips> = []
 
-    export function show(a_str:string, a_color:number = Common.TextColors.red, a_type:ETipsType = ETipsType.DownToUp, a_size:number = 40, a_bg:string = "", a_x:number = Config.stageHalfWidth, a_y:number = Config.stageHalfHeight) {
+    export function show(a_str:string, a_color:number = Common.TextColors.pink, a_type:ETipsType = ETipsType.DownToUp, a_size:number = 40, a_bg:string = "", a_x:number = Config.stageHalfWidth, a_y:number = Config.stageHalfHeight) {
         let tips:Tips = GameObjectPool.getInstance().createObject(Tips, "Tips")
         tips.data.desc = a_str
         tips.data.descColor = a_color
@@ -36,12 +36,12 @@ namespace TipsManager {
                 egret.Tween.get(tips).to({alpha:1,y:tips.y - tips.height},500,egret.Ease.backOut).call(this.removeTips, this); 	                
                 break;
             }
-            // case 2: {
-            // 	tip.alpha = 0;
-            // 	tip.x -= tip.width;
-            //     egret.Tween.get(tip).to({alpha:1,x:tip.x + tip.width},500,egret.Ease.backOut).call(this.removeTips, this); 
+            //  case 2: {
+            //  	tips.alpha = 0;
+            //  	tips.x -= tips.width;
+            //     egret.Tween.get(tips).to({alpha:1,x:tips.x + tips.width},500,egret.Ease.backOut).call(this.removeTips, this); 
             //     break;
-            // }
+            //  }
             // case 3: {
             // 	tip.alpha = 0;
             // 	tip.x += tip.width;

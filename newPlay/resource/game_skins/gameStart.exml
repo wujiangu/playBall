@@ -226,23 +226,25 @@
 		</e:Button>
 	</e:Group>
 	<e:Group id="groupTopRight" width="356" height="88" x="372" y="2" anchorOffsetX="0" anchorOffsetY="0">
-		<e:Button id="m_btnGift" label="" x="158" y="11" alpha="0">
+		<e:Button id="m_btnBaby" label="" x="41.5" y="9.5" alpha="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnLiwu_png"/>
+				<e:Image width="100%" height="100%" source="btnBaby_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
-		<e:Button id="m_btnSetting" label="" width="72" height="72" x="279" y="10" scaleX="1" scaleY="1">
+		<e:Button id="m_btnSound" label="" width="72" height="72" x="262" y="7.5" scaleX="1" scaleY="1" visible="false">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnSetting_png"/>
+				<e:Image width="100%" height="100%" source="btnSound0_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
-		<e:Button id="m_btnSign" label="" x="37" y="10">
+		<e:Button id="m_btnSign" label="" x="154" y="8.5">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnRenwu_png"/>
@@ -250,18 +252,20 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
+		<e:Image id="_btnSound" width="72" height="72" x="262" y="10" source="btnSound0_png"/>
 	</e:Group>
 	<e:Group id="groupTitle" width="588" height="500" y="196" x="76">
 		<e:Image id="m_imgTitle" y="33" scaleX="1" scaleY="1" source="imgTitle_png" x="0"/>
 	</e:Group>
 	<e:Group id="groupBtnAd" width="200" height="136" y="614" anchorOffsetY="0" x="0">
-		<e:Button id="m_btnAd" label="" x="-22" y="4" scaleX="1" scaleY="1" alpha="0">
+		<e:Button id="m_btnAd" label="" x="0" y="3.67" scaleX="1" scaleY="1" alpha="0" anchorOffsetX="0" width="198" anchorOffsetY="0" height="130">
 			<e:skinName>
-			<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnAd_png"/>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="btnAd_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
+				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
 	</e:Group>
 	<e:Group id="groupChapter" width="539" height="96" x="95" y="522" anchorOffsetY="0" anchorOffsetX="0">

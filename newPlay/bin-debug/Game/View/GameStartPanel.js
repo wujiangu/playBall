@@ -52,9 +52,11 @@ var GameStartPanel = (function (_super) {
         this.show.play(0);
         this.initData();
         this._onDialog();
-        if (GameVoice.beginBGMChannel != null)
-            GameVoice.beginBGMChannel.stop();
-        GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0);
+        if (GameConfig.isPlaySound) {
+            if (GameVoice.beginBGMChannel != null)
+                GameVoice.beginBGMChannel.stop();
+            GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0);
+        }
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -74,18 +76,32 @@ var GameStartPanel = (function (_super) {
         this._sceneType = 1;
         this.m_maskRect.visible = false;
         this.hide.play(0);
-        // Common.dispatchEvent(MainNotify.openGameSelectLevel)
+        //Common.dispatchEvent(MainNotify.openGameSelectLevel)
     };
-    GameStartPanel.prototype._onBtnSetting = function () {
-        Common.dispatchEvent(MainNotify.openSettingPanel);
+    //声音
+    GameStartPanel.prototype._onBtnSound = function () {
+        // Common.dispatchEvent(MainNotify.openSettingPanel);
+        if (GameConfig.soundValue == 100 && GameConfig.bgmValue == 100) {
+            //关闭声音
+            GameConfig.isPlaySound = false;
+            GameConfig.soundValue = 0;
+            GameConfig.bgmValue = 0;
+            GameVoice.beginBGMChannel.volume = GameConfig.bgmValue / 100;
+            //切换按钮图片
+            this._btnSound.source = "btnSound1_png";
+        }
+        else {
+            //关闭声音
+            GameConfig.isPlaySound = true;
+            GameConfig.soundValue = 100;
+            GameConfig.bgmValue = 100;
+            GameVoice.beginBGMChannel.volume = GameConfig.bgmValue / 100;
+            //切换按钮图片
+            this._btnSound.source = "btnSound0_png";
+        }
     };
     GameStartPanel.prototype._onBtnAddCandy = function () {
         Common.dispatchEvent(MainNotify.openRechargePanel);
-    };
-    GameStartPanel.prototype._onBtnGift = function () {
-        GameConfig.sceneType = 0;
-        Common.dispatchEvent(MainNotify.openCapsulePanel);
-        // Common.dispatchEvent(MainNotify.openSignPanel)
     };
     GameStartPanel.prototype._onBtnAd = function () {
         // Common.dispatchEvent(MainNotify.openSignPanel)
@@ -144,31 +160,32 @@ var GameStartPanel = (function (_super) {
     GameStartPanel.prototype.onComplete = function () {
         this._onResize();
         this.m_btnGameStart.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onStartGame, this);
-        this.m_btnSetting.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSetting, this);
+        this._btnSound.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSound, this);
         this.m_btnAddCandy.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAddCandy, this);
-        this.m_btnGift.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnGift, this);
+        this.m_btnBaby.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onActorClick, this);
         this.m_btnAd.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAd, this);
         this.m_btnSign.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSign, this);
         Common.addTouchBegin(this.m_btnGameStart);
-        Common.addTouchBegin(this.m_btnSetting);
+        // Common.addTouchBegin(this._btnSound)
         Common.addTouchBegin(this.m_btnAd);
         Common.addTouchBegin(this.m_btnAddCandy);
-        Common.addTouchBegin(this.m_btnGift);
+        Common.addTouchBegin(this.m_btnBaby);
         Common.addTouchBegin(this.m_btnSign);
         this._actorArmatureContainer = new DragonBonesArmatureContainer();
         this._actorArmatureContainer.x = this.groupActor.width / 2;
         this._actorArmatureContainer.y = this.groupActor.height;
         this.groupActor.addChild(this._actorArmatureContainer);
         this.groupActor.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onActorClick, this);
-        this._liheArmatureContainer = new DragonBonesArmatureContainer();
-        this._liheArmatureContainer.x = 200;
-        this._liheArmatureContainer.y = 80;
-        this.groupTopRight.addChild(this._liheArmatureContainer);
-        var liheArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("lihe", "lihe");
-        var liheArmature = new DragonBonesArmature(liheArmatureDisplay);
-        liheArmature.ArmatureDisplay = liheArmatureDisplay;
-        this._liheArmatureContainer.register(liheArmature, ["newAnimation"]);
-        this._liheArmatureContainer.play("newAnimation");
+        //抽奖
+        // this._liheArmatureContainer = new DragonBonesArmatureContainer()
+        // this._liheArmatureContainer.x = 41
+        // this._liheArmatureContainer.y = 9
+        // this.groupTopRight.addChild(this._liheArmatureContainer)
+        // let liheArmatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("lihe", "lihe")
+        // let liheArmature = new DragonBonesArmature(liheArmatureDisplay)
+        // liheArmature.ArmatureDisplay = liheArmatureDisplay
+        // this._liheArmatureContainer.register(liheArmature, ["newAnimation"])
+        // this._liheArmatureContainer.play("newAnimation")
         this._adArmatureContainer = new DragonBonesArmatureContainer();
         this._adArmatureContainer.x = 84;
         this._adArmatureContainer.y = 146;

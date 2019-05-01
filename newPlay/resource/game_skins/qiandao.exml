@@ -5,17 +5,17 @@
 			<tween:TweenItem target="{group}">
 				<tween:Set>
 					<tween:props>
-						<e:Object alpha="{-0.3}" scaleX="{0.8}" scaleY="{0.8}" x="{144}" y="{23}"/>
+						<e:Object alpha="{-0.3}" scaleX="{0.8}" scaleY="{0.8}" x="{364}" y="{0}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="250">
+				<tween:To duration="200">
 					<tween:props>
-						<e:Object scaleX="{0.92}" scaleY="{0.92}" x="{103.2}" alpha="{1}" y="{141}"/>
+						<e:Object scaleX="{0.92}" scaleY="{0.92}" alpha="{1}" x="{364}" y="{341}"/>
 					</tween:props>
 				</tween:To>
 				<tween:To duration="150">
 					<tween:props>
-						<e:Object scaleX="{1}" scaleY="{1}" alpha="{1}" y="{200}" x="{83}"/>
+						<e:Object scaleX="{1}" scaleY="{1}" alpha="{1}" x="{364}" y="{682}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -29,29 +29,31 @@
 				</tween:Set>
 				<tween:To duration="400">
 					<tween:props>
-						<e:Object alpha="{0}"/>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Image id="m_imgMask" left="0" right="0" top="0" bottom="0" source="mask_png" alpha="0"/>
-	<e:Group id="group" width="564" height="751" x="83" y="182">
-		<e:Image source="qiandao1_png" y="0" scaleX="1" scaleY="1" horizontalCenter="0"/>
-		<e:Image source="qiandao15_png" x="249.5" y="20.7" scaleX="0.1" scaleY="0.1"/>
+	<e:Image id="m_imgMask" left="0" right="0" top="0" bottom="0" source="mask_png" alpha="0.3"/>
+	<e:Group id="group" width="618" height="1099" x="364" y="682" anchorOffsetY="548" anchorOffsetX="312">
+		<e:Image id="signinbg" y="-13" scaleX="1" scaleY="1" horizontalCenter="1.5" source="guankajiemian1_png" anchorOffsetX="0" width="577.25"/>
+		<e:Image id="signinicon" x="284" y="21" scaleX="1" scaleY="1" source="signinicon_png" width="69" height="70"/>
 
 
 
 
-		<e:Group width="306" height="195" x="291" y="345" anchorOffsetX="0">
-			<e:Image source="qiandao_json.qiandao5" y="0" horizontalCenter="0"/>
-			<e:Image source="qiandao_json.qiandao12" y="18.5" horizontalCenter="0"/>
-			<e:Image source="qiandao_json.qiandao4" y="66" horizontalCenter="0"/>
-			<e:Image source="qiandao_json.qiandao17" y="156" horizontalCenter="0"/>
-			<e:Image id="m_imgMask7" source="qiandao_json.qiandao3" x="1.5" y="0" anchorOffsetX="0" width="306" anchorOffsetY="0" height="197"/>
-			<e:Image id="m_imgCheck7" source="qiandao_json.qiandao14" x="23.91" y="101.35" rotation="-20"/>
+		<e:Group width="448" height="133" x="89" y="950" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" visible="false">
+			<e:Image id="itembg7" y="0" horizontalCenter="0" source="signinitembg_png" width="482" height="121"/>
+			<e:Image id="m_Recordiconbg7" y="20" source="unsigninrecordbg_png" scaleX="0.8" scaleY="0.8" x="3.01"/>
+			<e:Image id="m_Recordicon7" y="19.7" x="1.67" anchorOffsetX="0" width="102" anchorOffsetY="0" height="102" source="actorIcon10100_png" scaleX="0.8" scaleY="0.8"/>
+			<e:Label id="_lblRecordName7" text="Lucky cat" x="289.67" y="75.97" anchorOffsetX="0" width="151" anchorOffsetY="0" height="41" bold="true" verticalAlign="middle" textAlign="center" textColor="0x94c401"/>
+			<e:Label id="_lblTimeNum7" text="7DAY" x="94.58" y="25.13" anchorOffsetX="0" width="138" anchorOffsetY="0" height="71.34" bold="true" verticalAlign="middle" textAlign="left" size="45" textColor="0xc8c07d"/>
+			<e:Image id="m_imgMask7" x="-16.51" y="-0.33" anchorOffsetX="0" width="482" anchorOffsetY="0" height="121" source="shadeimg_png" visible="false"/>
+			<e:Image id="m_imgCheck7" source="qiandao_json.qiandao14" x="203.83" y="86.46" rotation="-20" visible="false"/>
+			<e:Label id="_lblRecordNum7" text="+1" x="284.2" y="6.5" bold="true" size="60" anchorOffsetX="0" width="158.07" anchorOffsetY="0" height="75.87" verticalAlign="middle" textAlign="center" fontFamily="Microsoft YaHei" textColor="0x94c401"/>
 		</e:Group>
-		<e:Button id="m_btnSignIn" label="" horizontalCenter="0" verticalCenter="272">
+		<e:Button id="m_btnSignIn" label="" horizontalCenter="0" verticalCenter="272" visible="false">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="qiandao_json.qiandao13"/>
