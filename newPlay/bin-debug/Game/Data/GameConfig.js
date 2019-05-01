@@ -314,6 +314,10 @@ var GameConfig = (function () {
             data["water"] = config.water;
             data["rewards"] = config.rewards;
             this.chapterTable[config.id.toString()] = data;
+            var score = this.chapterMaxScore[config.id.toString()];
+            if (score == null) {
+                this.chapterMaxScore[config.id.toString()] = 0;
+            }
         }
         var babySkillConfig = RES.getRes("babySkillConfig_json");
         this.babySkillTable = {};

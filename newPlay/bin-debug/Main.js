@@ -166,6 +166,7 @@ var Main = (function (_super) {
             Common.getlastLoginTime();
             Common.getSign();
             Common.getBabylistIndex();
+            Common.getChapterScore();
             if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
                 Common.updateSign(0);
             }

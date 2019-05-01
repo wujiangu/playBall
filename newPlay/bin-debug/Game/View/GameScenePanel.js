@@ -296,9 +296,9 @@ var GameScenePanel = (function (_super) {
                 this.m_comboDelay += actorElapsed;
                 if (this.m_comboDelay >= GameConfig.comboDelay) {
                     this.m_comboDelay = -1;
-                    GameConfig.curCombo = Math.max(this.m_comboCount, GameConfig.curCombo);
-                    this.m_comboCount = 0;
-                    this.m_isBoom = false;
+                    // GameConfig.curCombo = Math.max(this.m_comboCount, GameConfig.curCombo)
+                    // this.m_comboCount = 0
+                    // this.m_isBoom = false
                     this.comboMove.stop();
                     this.comboEnd.play(0);
                     for (var i = 0; i < this.m_monsters.length; i++) {
@@ -475,6 +475,10 @@ var GameScenePanel = (function (_super) {
         this._data.realScore = value;
         this.m_bitLabScore.text = this._data.realScore.toString();
         this._data.scoreUnlock(value);
+        if (value > GameConfig.chapterMaxScore[this._data.chapter.toString()]) {
+            GameConfig.chapterMaxScore[this._data.chapter.toString()] = value;
+            Common.updateChapterScore(GameConfig.chapterMaxScore);
+        }
     };
     Object.defineProperty(GameScenePanel.prototype, "score", {
         get: function () {
@@ -670,6 +674,8 @@ var GameScenePanel = (function (_super) {
                     this.m_comboArmatureContainer.play("hong", 1);
                     GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100;
                 }
+                this.comboMove.stop();
+                this.comboEnd.stop();
                 this.comboBegin.play(0);
                 // if (this.m_comboCount <= 5) batterScore = 2
                 // else if (this.m_comboCount > 5 && this.m_comboCount <= 10) batterScore = 3
@@ -699,6 +705,14 @@ var GameScenePanel = (function (_super) {
             this._data.realScore += GameConfig.balloonScore;
             this.SetRealScore(this._data.realScore);
             this.actorDeadHandle();
+            GameConfig.curCombo = Math.max(this.m_comboCount, GameConfig.curCombo);
+        }
+        else {
+            this.m_comboCount = 0;
+            this.m_isBoom = false;
+            // this.comboEnd.stop()
+            // this.comboMove.play(0)
+            // this.comboEnd.play(0)
         }
     };
     GameScenePanel.prototype.unlockEffect = function (id) {
@@ -780,7 +794,8 @@ var GameScenePanel = (function (_super) {
                     this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
                     Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
                     this.score = 0;
-                    this.SetRealScore(0);
+                    this._data.updateCandy(this._data.levelData.candy);
+                    // this.SetRealScore(0)
                     GameManager.Instance.start();
                     // this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
                 }

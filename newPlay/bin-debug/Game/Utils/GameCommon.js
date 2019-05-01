@@ -501,5 +501,40 @@ var Common;
         }
     }
     Common.updateSignCount = updateSignCount;
+    /**获取章节分数 */
+    function getChapterScore() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.chapterMaxScore = parseInt(message);
+                }
+                else {
+                    GameConfig.chapterMaxScore = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "chapterMaxScore");
+        }
+        else {
+            var chapterMaxScore = NativeApi.getLocalData(GameConfig.game + "chapterMaxScore");
+            if (chapterMaxScore == null) {
+                GameConfig.chapterMaxScore = {};
+            }
+            else {
+                GameConfig.chapterMaxScore = parseInt(chapterMaxScore);
+            }
+        }
+    }
+    Common.getChapterScore = getChapterScore;
+    /**更新章节分数 */
+    function updateChapterScore(value) {
+        GameConfig.chapterMaxScore = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "chapterMaxScore:" + GameConfig.chapterMaxScore);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "chapterMaxScore", GameConfig.chapterMaxScore);
+        }
+    }
+    Common.updateChapterScore = updateChapterScore;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

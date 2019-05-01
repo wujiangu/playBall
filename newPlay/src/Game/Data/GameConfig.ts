@@ -78,6 +78,8 @@ class GameConfig {
 	public static signCount:number = 0
 	// 当前挑战的章节
 	public static curBattleChapter = 0
+	// 章节最高分数
+	public static chapterMaxScore:any
 
 	// 临时配置，后续修改
 	public static sceneType:number = 0
@@ -419,6 +421,10 @@ class GameConfig {
 			data["water"] = config.water
 			data["rewards"] = config.rewards
 			this.chapterTable[config.id.toString()] = data
+			let score = this.chapterMaxScore[config.id.toString()]
+			if (score == null) {
+				this.chapterMaxScore[config.id.toString()] = 0
+			}
 		}
 
 		let babySkillConfig:Array<any> = RES.getRes("babySkillConfig_json")
