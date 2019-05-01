@@ -30,15 +30,16 @@ var GameManager = (function (_super) {
         configurable: true
     });
     GameManager.prototype.init = function () {
+        // egret.localStorage.clear();
         // RES.loadGroup("back")
         // RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this)
         // GameConfig.beforeInit()
-        GameConfig.init();
+        GameConfig.init(); //初始化
         PanelManager.initPanel();
         this._permanentUI = new PermanentUI();
-        Common.gameScene().uiLayer.addChild(this._permanentUI);
-        this._gameState = EGameState.Ready;
-        Common.dispatchEvent(MainNotify.openGameStartPanel);
+        Common.gameScene().uiLayer.addChild(this._permanentUI); //创建场景
+        this._gameState = EGameState.Ready; //设置游戏初始状态
+        Common.dispatchEvent(MainNotify.openGameStartPanel); //初始化开始界面？
         // Common.dispatchEvent(MainNotify.openBottomBtnPanel)
     };
     // private onResourceLoadComplete(event: RES.ResourceEvent): void {
@@ -134,6 +135,9 @@ var GameManager = (function (_super) {
             PanelManager.gameScenePanel.update(timeElapsed);
         }
         DragonBonesFactory.getInstance().update(timeElapsed);
+        if (PanelManager.gameLosePanel != null) {
+            PanelManager.gameLosePanel.update(timeElapsed);
+        }
         this._lastTime = this._startTime;
     };
     Object.defineProperty(GameManager.prototype, "gameState", {
@@ -148,7 +152,18 @@ var GameManager = (function (_super) {
     });
     GameManager.prototype._onshake = function () {
         if (this._gameState == EGameState.End) {
-            Common.dispatchEvent(MainNotify.openGameOverPanel);
+            switch (GameConfig.gameMode) {
+                case EBattleMode.Level:
+                    Common.dispatchEvent(MainNotify.openGameLosePanel);
+                    break;
+                case EBattleMode.Endless:
+                    Common.dispatchEvent(MainNotify.openGameOverPanel);
+                    break;
+                case EBattleMode.Timelimite:
+                    break;
+                default:
+                    break;
+            }
         }
     };
     return GameManager;

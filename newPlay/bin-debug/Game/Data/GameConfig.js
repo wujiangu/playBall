@@ -173,18 +173,6 @@ var GameConfig = (function () {
                 this.levelTable[config.key.toString()] = data;
             }
         }
-        this.levelRewardConfig = RES.getRes("levelRewardConfig_json");
-        this.levelRewardTable = {};
-        for (var i = 0; i < this.levelRewardConfig.length; i++) {
-            var config = this.levelRewardConfig[i];
-            var data = {};
-            data["key"] = config.key;
-            data["condition"] = config.condition;
-            data["count"] = config.count;
-            data["reward"] = config.reward;
-            data["value"] = config.value;
-            this.levelRewardTable[config.key.toString()] = data;
-        }
         this.summonSkillTable = {};
         for (var i = 0; i < this.summonSkillConfig.length; i++) {
             var config = this.summonSkillConfig[i];
@@ -264,6 +252,7 @@ var GameConfig = (function () {
             data["quality"] = config.quality;
             data["weight"] = config.weight;
             data["candy"] = config.candy;
+            data["petPrice"] = config.petPrice;
             data["name"] = config.name;
             data["unlockDesc"] = config.unlockDesc;
             data["desc"] = config.desc;
@@ -312,7 +301,6 @@ var GameConfig = (function () {
             data["cloud1"] = config.cloud1;
             data["cloud2"] = config.cloud2;
             data["water"] = config.water;
-            data["rewards"] = config.rewards;
             this.chapterTable[config.id.toString()] = data;
         }
         var babySkillConfig = RES.getRes("babySkillConfig_json");
@@ -352,10 +340,10 @@ var GameConfig = (function () {
             data["reward"] = config.reward;
             data["icon"] = config.icon;
             data["isGet"] = false;
-            if (i < this.signCount)
+            if (i < this.signCount || (i >= 7 && ((i - 7) < this.signCount)))
                 data["isGet"] = true;
             // if (i == this.signCount && this.sign == 1) data["isGet"] = true
-            Common.log("sign", i, this.signCount, this.sign);
+            Common.log("sign", i, this.signCount, this.sign, config.rewardType);
             this.signTable[config.id.toString()] = data;
         }
         this.capsuleConfig = RES.getRes("capsuleConfig_json");
@@ -381,6 +369,7 @@ var GameConfig = (function () {
     GameConfig.spiderDelay = 4000;
     GameConfig.bgmValue = 100;
     GameConfig.soundValue = 100;
+    GameConfig.isPlaySound = true;
     GameConfig.monsterPos = 1;
     GameConfig.gameSpeedPercent = 0;
     GameConfig.isGuide = false;
@@ -392,6 +381,8 @@ var GameConfig = (function () {
     GameConfig.sign = 0;
     // 签到次数
     GameConfig.signCount = 0;
+    //是否刷新签到数据 (0:不刷新 1 刷新)
+    GameConfig.isSignData = 0;
     // 当前挑战的章节
     GameConfig.curBattleChapter = 0;
     // 临时配置，后续修改

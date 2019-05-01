@@ -83,7 +83,6 @@ class GameOverPanel extends BasePanel {
 			if (GameManager.Instance.gameState == EGameState.EndLevel) {
 				PanelManager.gameScenePanel.continueLevel()
 			}else{
-				PanelManager.gameScenePanel.sceneData.continueCount += 1
 				PanelManager.gameScenePanel.init()
 				GameManager.Instance.start()
 			}

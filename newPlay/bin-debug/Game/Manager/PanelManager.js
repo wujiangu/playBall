@@ -48,6 +48,39 @@ var PanelManager;
             PanelManager.gameOverPanel.onExit();
         }
     }
+    function _openGameLosePanel() {
+        if (PanelManager.gameLosePanel == null) {
+            PanelManager.gameLosePanel = new GameLosePanel();
+        }
+        PanelManager.gameLosePanel.onEnter();
+    }
+    function _closeGameLosePanel() {
+        if (PanelManager.gameLosePanel != null) {
+            PanelManager.gameLosePanel.onExit();
+        }
+    }
+    function _openChooseOperationPanel() {
+        if (PanelManager.chooseOperationPanel == null) {
+            PanelManager.chooseOperationPanel = new ChooseOperationPanel();
+        }
+        PanelManager.chooseOperationPanel.onEnter();
+    }
+    function _closeChooseOperationPanel() {
+        if (PanelManager.chooseOperationPanel != null) {
+            PanelManager.chooseOperationPanel.onExit();
+        }
+    }
+    function _openBuyConfirmPanel() {
+        if (PanelManager.closeBuyConfirmPanel == null) {
+            PanelManager.closeBuyConfirmPanel = new BuyConfirmPanel();
+        }
+        PanelManager.closeBuyConfirmPanel.onEnter();
+    }
+    function _closeBuyConfirmPanel() {
+        if (PanelManager.closeBuyConfirmPanel != null) {
+            PanelManager.closeBuyConfirmPanel.onExit();
+        }
+    }
     function _openGamePausePanel() {
         if (PanelManager.gamePausetPanel == null) {
             PanelManager.gamePausetPanel = new GamePausePanel();
@@ -134,6 +167,12 @@ var PanelManager;
         Common.addEventListener(MainNotify.closeSettingPanel, _closeSettingPanel, PanelManager);
         Common.addEventListener(MainNotify.openGameOverPanel, _openGameOverPanel, PanelManager);
         Common.addEventListener(MainNotify.closeGameOverPanel, _closeGameOverPanel, PanelManager);
+        Common.addEventListener(MainNotify.openGameLosePanel, _openGameLosePanel, PanelManager);
+        Common.addEventListener(MainNotify.closeGameLosePanel, _closeGameLosePanel, PanelManager);
+        Common.addEventListener(MainNotify.openChooseOperationPanel, _openChooseOperationPanel, PanelManager);
+        Common.addEventListener(MainNotify.closeChooseOperationPanel, _closeChooseOperationPanel, PanelManager);
+        Common.addEventListener(MainNotify.openBuyConfirmPanel, _openBuyConfirmPanel, this);
+        Common.addEventListener(MainNotify.closeBuyConfirmPanel, _closeBuyConfirmPanel, this);
         Common.addEventListener(MainNotify.openGamePausePanel, _openGamePausePanel, PanelManager);
         Common.addEventListener(MainNotify.closeGamePausePanel, _closeGamePausePanel, PanelManager);
         Common.addEventListener(MainNotify.openActorListPanel, _openActorListPanel, PanelManager);

@@ -359,6 +359,18 @@ var Common;
         }
     }
     Common.updateCurCandy = updateCurCandy;
+    /**更新当前的糖果 */
+    function updateAfterBuyCurCandy(value) {
+        GameConfig.candy = value;
+        GameConfig.candy = Math.max(0, GameConfig.candy);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "candy:" + GameConfig.candy);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "candy", GameConfig.candy.toString());
+        }
+    }
+    Common.updateAfterBuyCurCandy = updateAfterBuyCurCandy;
     /**获取上次的登录时间 */
     function getlastLoginTime() {
         if (!GameConfig.isWebView) {
@@ -501,5 +513,40 @@ var Common;
         }
     }
     Common.updateSignCount = updateSignCount;
+    /**是否刷新签到数据 */
+    function getIsSignData() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.isSignData = parseInt(message);
+                }
+                else {
+                    GameConfig.isSignData = 0;
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "IsSignData");
+        }
+        else {
+            var isSignData = NativeApi.getLocalData(GameConfig.game + "IsSignData");
+            if (isSignData == null) {
+                GameConfig.isSignData = 0;
+            }
+            else {
+                GameConfig.isSignData = parseInt(isSignData);
+            }
+        }
+    }
+    Common.getIsSignData = getIsSignData;
+    /**更新是否刷新签到数据 */
+    function updateIsSignData(value) {
+        GameConfig.isSignData = value;
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "IsSignData:" + GameConfig.isSignData);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "IsSignData", GameConfig.isSignData.toString());
+        }
+    }
+    Common.updateIsSignData = updateIsSignData;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

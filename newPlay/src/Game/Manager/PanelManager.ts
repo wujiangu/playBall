@@ -7,6 +7,9 @@ namespace PanelManager {
 	export var gameScenePanel:GameScenePanel
 	export var settingPanel:SettingPanel
 	export var gameOverPanel:GameOverPanel
+	export var gameLosePanel:GameLosePanel
+	export var chooseOperationPanel:ChooseOperationPanel
+	export var closeBuyConfirmPanel:BuyConfirmPanel
 	export var gamePausetPanel:GamePausePanel
 	export var actorListPanel:ActorListPanel
 	export var gameSelectLevel:GameSelectLevel
@@ -64,6 +67,47 @@ namespace PanelManager {
 	function _closeGameOverPanel() {
 		if (gameOverPanel != null){
 			gameOverPanel.onExit()
+		}
+	}
+
+	function _openGameLosePanel() {
+		if (gameLosePanel == null) {
+			gameLosePanel = new GameLosePanel()
+		}
+		gameLosePanel.onEnter()
+	}
+
+	function _closeGameLosePanel() {
+		if (gameLosePanel != null){
+			gameLosePanel.onExit()
+		}
+	}
+	
+	function _openChooseOperationPanel() {
+		if (chooseOperationPanel == null) {
+			chooseOperationPanel = new ChooseOperationPanel()
+		}
+		chooseOperationPanel.onEnter()
+	}
+
+	function _closeChooseOperationPanel() {
+		if (chooseOperationPanel != null){
+			chooseOperationPanel.onExit()
+		}
+	}
+
+	function _openBuyConfirmPanel()
+	{
+		if (closeBuyConfirmPanel == null) {
+			closeBuyConfirmPanel = new BuyConfirmPanel()
+		}
+		closeBuyConfirmPanel.onEnter()
+	}
+
+	function _closeBuyConfirmPanel()
+	{
+		if (closeBuyConfirmPanel != null){
+			closeBuyConfirmPanel.onExit()
 		}
 	}
 
@@ -171,6 +215,15 @@ namespace PanelManager {
 
 		Common.addEventListener(MainNotify.openGameOverPanel, _openGameOverPanel, PanelManager)
 		Common.addEventListener(MainNotify.closeGameOverPanel, _closeGameOverPanel, PanelManager)
+
+		Common.addEventListener(MainNotify.openGameLosePanel, _openGameLosePanel, PanelManager)
+		Common.addEventListener(MainNotify.closeGameLosePanel, _closeGameLosePanel, PanelManager)
+
+		Common.addEventListener(MainNotify.openChooseOperationPanel, _openChooseOperationPanel, PanelManager)
+		Common.addEventListener(MainNotify.closeChooseOperationPanel, _closeChooseOperationPanel, PanelManager)	
+
+		Common.addEventListener(MainNotify.openBuyConfirmPanel,_openBuyConfirmPanel,this)
+		Common.addEventListener(MainNotify.closeBuyConfirmPanel,_closeBuyConfirmPanel,this)	
 
 		Common.addEventListener(MainNotify.openGamePausePanel, _openGamePausePanel, PanelManager)
 		Common.addEventListener(MainNotify.closeGamePausePanel, _closeGamePausePanel, PanelManager)

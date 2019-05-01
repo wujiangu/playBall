@@ -1,72 +1,16 @@
 [
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao6", 
-        "detail": "20颗糖", 
-        "rewardType": 1, 
-        "reward": 20, 
-        "quality": -1, 
-        "id": 1001, 
-        "desc": "奖励20颗糖"
-    }, 
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao7", 
-        "detail": "10颗糖", 
-        "rewardType": 1, 
-        "reward": 10, 
-        "quality": -1, 
-        "id": 1002, 
-        "desc": "奖励10颗糖"
-    }, 
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao8", 
-        "detail": "10颗糖", 
-        "rewardType": 1, 
-        "reward": 10, 
-        "quality": -1, 
-        "id": 1003, 
-        "desc": "奖励10颗糖"
-    }, 
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao9", 
-        "detail": "20颗糖", 
-        "rewardType": 1, 
-        "reward": 20, 
-        "quality": -1, 
-        "id": 1004, 
-        "desc": "奖励20颗糖"
-    }, 
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao10", 
-        "detail": "10颗糖", 
-        "rewardType": 1, 
-        "reward": 10, 
-        "quality": -1, 
-        "id": 1005, 
-        "desc": "奖励10颗糖"
-    }, 
-    {
-        "name": "糖", 
-        "icon": "qiandao_json.qiandao11", 
-        "detail": "10颗糖", 
-        "rewardType": 1, 
-        "reward": 10, 
-        "quality": -1, 
-        "id": 1006, 
-        "desc": "奖励10颗糖"
-    }, 
-    {
-        "name": "宠物", 
-        "icon": "qiandao_json.qiandao12", 
-        "detail": "紫色宠物一个", 
-        "rewardType": 2, 
-        "reward": 10100, 
-        "quality": 0, 
-        "id": 1007, 
-        "desc": "奖励紫色宠物"
-    }
+    {"name":"糖","icon":"qiandao_json.qiandao6","detail":"50颗糖","rewardType":1,"reward":50,"quality":-1,"id":1001,"desc":"奖励50颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao7","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1002,"desc":"奖励80颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao8","detail":"50颗糖","rewardType":1,"reward":50,"quality":-1,"id":1003,"desc":"奖励50颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao9","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1004,"desc":"奖励80颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao10","detail":"50颗糖","rewardType":1,"reward":50,"quality":-1,"id":1005,"desc":"奖励50颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao11","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1006,"desc":"奖励80颗糖"},
+    {"name":"宠物","icon":"qiandao_json.qiandao12","detail":"紫色宠物一个","rewardType":2,"reward":10100,"quality":0,"id":1007,"desc":"奖励紫色宠物"},
+    {"name":"糖","icon":"qiandao_json.qiandao13","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1008,"desc":"奖励80颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao14","detail":"100颗糖","rewardType":1,"reward":100,"quality":-1,"id":1009,"desc":"奖励100颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao15","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1010,"desc":"奖励80颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao16","detail":"100颗糖","rewardType":1,"reward":100,"quality":-1,"id":1011,"desc":"奖励100颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao17","detail":"80颗糖","rewardType":1,"reward":80,"quality":-1,"id":1012,"desc":"奖励80颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao18","detail":"100颗糖","rewardType":1,"reward":100,"quality":-1,"id":1013,"desc":"奖励100颗糖"},
+    {"name":"糖","icon":"qiandao_json.qiandao19","detail":"200颗糖","rewardType":1,"reward":200,"quality":-1,"id":1014,"desc":"奖励200颗糖"}
 ]

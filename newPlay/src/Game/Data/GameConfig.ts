@@ -9,8 +9,6 @@ class GameConfig {
 	public static summonTable:any
 	public static levelConfig:Array<any>
 	public static levelTable:any
-	public static levelRewardConfig:Array<any>
-	public static levelRewardTable:any
 
 	public static gestureConfig:Array<any>
 	public static gestureTable:any
@@ -48,6 +46,7 @@ class GameConfig {
 	public static maxCombo:number
 	public static bgmValue:number = 100
 	public static soundValue:number = 100
+	public static isPlaySound:boolean = true
 	public static balloonScore:number
 	public static monsterPos:number = 1
 	public static gameSpeedPercent:number = 0
@@ -76,6 +75,8 @@ class GameConfig {
 	public static sign:number = 0
 	// 签到次数
 	public static signCount:number = 0
+	//是否刷新签到数据 (0:不刷新 1 刷新)
+	public static isSignData:number = 0;
 	// 当前挑战的章节
 	public static curBattleChapter = 0
 
@@ -270,19 +271,6 @@ class GameConfig {
 			}
         }
 
-		this.levelRewardConfig = RES.getRes("levelRewardConfig_json")
-		this.levelRewardTable = {}
-		for (let i = 0; i < this.levelRewardConfig.length; i++) {
-            let config = this.levelRewardConfig[i]
-			let data = {}
-			data["key"] = config.key
-			data["condition"] = config.condition
-			data["count"] = config.count
-			data["reward"] = config.reward
-			data["value"] = config.value
-			this.levelRewardTable[config.key.toString()] = data
-        }
-
 		this.summonSkillTable = {}
         for (let i = 0; i < this.summonSkillConfig.length; i++) {
             let config = this.summonSkillConfig[i]
@@ -369,6 +357,7 @@ class GameConfig {
 			data["quality"] = config.quality
 			data["weight"] = config.weight
 			data["candy"] = config.candy
+			data["petPrice"] = config.petPrice
 			data["name"] = config.name
 			data["unlockDesc"] = config.unlockDesc
 			data["desc"] = config.desc
@@ -417,7 +406,6 @@ class GameConfig {
 			data["cloud1"] = config.cloud1
 			data["cloud2"] = config.cloud2
 			data["water"] = config.water
-			data["rewards"] = config.rewards
 			this.chapterTable[config.id.toString()] = data
 		}
 
@@ -459,9 +447,9 @@ class GameConfig {
 			data["reward"] = config.reward
 			data["icon"] = config.icon
 			data["isGet"] = false
-			if (i < this.signCount) data["isGet"] = true
+			if (i < this.signCount ||(i >= 7 && ((i-7) < this.signCount))) data["isGet"] = true
 			// if (i == this.signCount && this.sign == 1) data["isGet"] = true
-			Common.log("sign", i, this.signCount, this.sign)
+			Common.log("sign", i, this.signCount, this.sign, config.rewardType)
 			this.signTable[config.id.toString()] = data
 		}
 

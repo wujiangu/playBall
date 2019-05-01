@@ -181,7 +181,7 @@ class GameScenePanel extends BasePanel {
             break
         }
         GameConfig.gameSpeedPercent = this._data.levelData.speed
-
+        //新手引导
         if (a_levelId == 1000) {
             GameConfig.isGuide = true
             this.m_rectWarning.fillColor = 0x000000
@@ -191,15 +191,19 @@ class GameScenePanel extends BasePanel {
         }
     }
 
+    //开始引导
     public guideStart() {
         this.m_rectWarning.visible = true
-        this.m_guideArmatureContainer.visible = true
+        this.m_guideArmatureContainer.visible = true //手指引导
         this._imgGuideTip.visible = true
         if (GameConfig.guideIndex == 0) {
             this.m_guideArmatureContainer.play("xinshouyindao", 0)
         }
         else if (GameConfig.guideIndex == 1) {
             this.m_guideArmatureContainer.play("xinshouyindao4", 0)
+        }
+        else if(GameConfig.guideIndex == 3){
+            this.m_guideArmatureContainer.play("xinshouyindao3", 0)
         }
         else{
             this.m_guideArmatureContainer.play("xinshouyindao", 0)
@@ -560,7 +564,11 @@ class GameScenePanel extends BasePanel {
     public set power(value:number) {
         if (this.m_baby == null) return
         this.m_power = value
-        this.updatePower(this.m_power / 100)
+        if(GameConfig.isGuide){
+            this.updatePower(this.m_power / 15)
+        }else{
+            this.updatePower(this.m_power / 100)
+        }        
         this.m_baby.releaseSkill(this.m_power, ESkillReleaseType.Immediately)
         
     }
@@ -585,6 +593,7 @@ class GameScenePanel extends BasePanel {
         return this.m_levelState
     }
 
+    //怪死亡调用
     public actorDeadHandle() {
         if (this.m_levelState == ELevelType.Normal && this.m_score >= this._data.needScore && this.isNoneAlive()) {
             this.m_levelState = ELevelType.EliteWarning
@@ -595,7 +604,7 @@ class GameScenePanel extends BasePanel {
                 this.score = 0
                 this.SetRealScore(0)
                 this._imgGuide.visible = true
-                if (GameConfig.guideIndex <= 1) {
+                if (GameConfig.guideIndex <= 1) {//玩法引导
                     // this.power = 90
                     GameConfig.guideIndex++
                     this._imgGuide.source = "imgGuide" + GameConfig.guideIndex+"_png"
@@ -610,13 +619,22 @@ class GameScenePanel extends BasePanel {
                     this.m_gesture.removeEvent()
                     Common.removeEventListener(MainNotify.gestureAction, this._onGesture, this)
                 }else{
-                    this.m_guideArmatureContainer.stop()
+                    this.m_guideArmatureContainer.stop() //手指骨骼引导动画
                     this.m_guideArmatureContainer.visible = false
                     this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
                     this._imgGuide.source = "imgGuide3_png"
-                    this.yindao.play(0)
-                    this.guideEnd()
+                    this.yindao.play(0)  
+                    this.guideEnd();//引导结束                                      
                 }
+                // else{
+                //     //第三个引导怪物死掉之后，开始引导玩家点击技能按钮  
+                //     GameConfig.guideIndex = 3;
+                //     this.m_guideArmatureContainer.x = 350;
+                //     this.m_guideArmatureContainer.y = -110;
+                //     this.m_guideArmatureContainer.touchEnabled = false;
+                // }
+
+
             }else{
                 this.m_levelState = ELevelType.End
                 this._enterWarning()
@@ -755,7 +773,7 @@ class GameScenePanel extends BasePanel {
     private _onItemUnlock() {
         if (GameConfig.gameMode == EBattleMode.Level) {
             this.itemUnlockGroup.visible = false
-            // GameManager.Instance.endLevel()
+            GameManager.Instance.endLevel()
         }
     }
 
@@ -770,39 +788,26 @@ class GameScenePanel extends BasePanel {
             && this.m_levelState == ELevelType.Elite) 
         {
             if (GameConfig.gameMode == EBattleMode.Level) {
-                // this._data.updateCandy(this._data.levelData.candy + this._data.extra)
-                // this._data.extra = 0
-                // let id = this._data.levelData.unlockItem
-                // if (id > 0) {
-                //     let index = GameConfig.babyUnlockList.indexOf(id)
-                //     if (index >= 0) {
-                //         // 已解锁
-                //         GameManager.Instance.endLevel()
-                //     }else{
-                //         // 未解锁
-                //         GameConfig.babyUnlockList.push(id)
-				//         Common.updateUnlockBaby()
-                //         this.unlockEffect(id)
-                //     }
-                // }
-                // else{
-                //     GameManager.Instance.endLevel()
-                // }
-                if (this._data.isChapterFinal()) {
-                    this._data.getLevelReward(0, 0, true)
-                    GameManager.Instance.endLevel()
-                }else{
-                    this.touchChildren = true
-                    this.m_baby.gotoRun()
-                    this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
-                    this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
-                    Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
-                    this.score = 0
-                    this.SetRealScore(0)
-                    GameManager.Instance.start()
-                    // this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                this._data.updateCandy(this._data.levelData.candy + this._data.extra)
+                this._data.extra = 0
+                let id = this._data.levelData.unlockItem
+                if (id > 0) {
+                    let index = GameConfig.babyUnlockList.indexOf(id)
+                    if (index >= 0) {
+                        // 已解锁
+                        GameManager.Instance.endLevel()
+                    }else{
+                        // 未解锁
+                        GameConfig.babyUnlockList.push(id)
+				        Common.updateUnlockBaby()
+                        this.unlockEffect(id)
+                    }
                 }
-                
+                else{
+                    GameManager.Instance.endLevel()
+                }
+
+                // GameManager.Instance.endLevel()
             }else{
                 this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
             }
@@ -910,6 +915,17 @@ class GameScenePanel extends BasePanel {
         GameManager.Instance.pause()
     }
 
+    private _onPowerClick()
+    {
+        Common.log("点击技能按钮  GameConfig.isGuide : " + GameConfig.isGuide);
+        if(this.power >= 100 || GameConfig.isGuide)
+        {
+            let actors:Array<BaseActor> = this.getAllActors()
+            this.m_baby.selectRangeFrontToBack(actors)
+            this.releaseSkill()             
+        }     
+    }
+
     private _onReadyComplete() {
         this.touchChildren = true
         this.m_bitLabScore.visible = true
@@ -992,7 +1008,7 @@ class GameScenePanel extends BasePanel {
         let guideDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay("xinshouyindao", "xinshouyindao")
         let guideArmature = new DragonBonesArmature(guideDisplay)
         guideArmature.ArmatureDisplay = guideDisplay
-        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao", "xinshouyindao4"])
+        this.m_guideArmatureContainer.register(guideArmature, ["xinshouyindao", "xinshouyindao4", "xinshouyindao2", "xinshouyindao3"])
         this.m_guideArmatureContainer.x = 50
         this.m_guideArmatureContainer.y = -520
 
@@ -1011,6 +1027,7 @@ class GameScenePanel extends BasePanel {
         this.bossWarning.addEventListener('complete', this._enterBoss, this)
         this.effectMask.addEventListener('complete', this._beginSkill, this)
         this.itemUnlock.addEventListener('complete', this._onItemUnlock,this)
+        this.m_btnPower.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onPowerClick, this)
         
         Common.addTouchBegin(this.m_btnPause)
 
@@ -1108,7 +1125,8 @@ class GameScenePanel extends BasePanel {
     private m_isWarning:boolean
     private m_isLuck:boolean
     private _imgGuide:eui.Image
-    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////    
+    private m_btnPower:eui.Button
     private _powerGroup:eui.Group
     private _progress:egret.Shape
     private _imgPower:eui.Image

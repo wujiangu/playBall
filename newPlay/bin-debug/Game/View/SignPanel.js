@@ -15,6 +15,10 @@ var SignPanel = (function (_super) {
     __extends(SignPanel, _super);
     function SignPanel() {
         var _this = _super.call(this) || this;
+        _this.signInBeforeColor_lblTime = 0xc8c07d; //签到之前天数的颜色
+        _this.signInLaterColor_lblTime = 0xb4a686; //签到之后天数的颜色
+        _this.signInBeforeColor_lblRecordNum = 0x94c401; //签到之前奖励数目的颜色
+        _this.signInLaterColor_lblRecordNum = 0x8e8060; //签到之后奖励数目的颜色
         _this.addEventListener(eui.UIEvent.COMPLETE, _this.onComplete, _this);
         _this.skinName = "resource/game_skins/qiandao.exml";
         return _this;
@@ -22,6 +26,7 @@ var SignPanel = (function (_super) {
     // 初始化面板
     SignPanel.prototype.initPanel = function () {
         this._signGroups = new Array();
+        this._loopSignGroups = new Array();
     };
     // 初始化面板数据
     SignPanel.prototype.initData = function () {
@@ -34,7 +39,7 @@ var SignPanel = (function (_super) {
         this.m_imgCheck7.visible = false;
         if (GameConfig.signCount >= 7) {
             this.m_imgMask7.visible = true;
-            this.m_imgCheck7.visible = true;
+            // this.m_imgCheck7.visible = true
         }
         Common.gameScene().uiLayer.addChild(this);
     };
@@ -57,12 +62,17 @@ var SignPanel = (function (_super) {
     };
     SignPanel.prototype._sign = function (isInit) {
         if (GameConfig.sign == 0 && GameConfig.signCount <= 6) {
-            if (GameConfig.signCount <= 5) {
+            if (GameConfig.signCount <= 6) {
                 this._signGroups[GameConfig.signCount].sign();
             }
             else {
                 this.m_imgMask7.visible = true;
-                this.m_imgCheck7.visible = true;
+                this.m_Recordiconbg7.source = "signinrecordbg_png";
+                this.m_Recordicon7.source = "actorIcon10100SignIn_png";
+                this._lblTimeNum7.textColor = this.signInLaterColor_lblTime;
+                this._lblRecordNum7.textColor = this.signInLaterColor_lblRecordNum;
+                this._lblRecordName7.textColor = this.signInLaterColor_lblRecordNum;
+                // this.m_imgCheck7.visible = true
                 var config = GameConfig.signConfig[GameConfig.signCount];
                 var data = GameConfig.signTable[config.id.toString()];
                 data.isGet = true;
@@ -117,17 +127,35 @@ var SignPanel = (function (_super) {
         this.show.addEventListener('complete', this._onShow, this);
         this.hide.addEventListener('complete', this._onHide, this);
         this._signGroups.length = 0;
-        for (var i = 0; i < GameConfig.signConfig.length - 1; i++) {
-            var config = GameConfig.signConfig[i];
-            var data = GameConfig.signTable[config.id.toString()];
-            var signIR = new SignIR();
-            var row = Math.floor(i / 4);
-            var col = i % 4;
-            signIR.init(data, i);
-            signIR.x = 165 * col - 40;
-            signIR.y = 234 * row + 111;
-            this.group.addChild(signIR);
-            this._signGroups.push(signIR);
+        this._loopSignGroups.length = 0;
+        if (GameConfig.isSignData == 0) {
+            for (var i = 0; i < GameConfig.signConfig.length - 7; i++) {
+                var config = GameConfig.signConfig[i];
+                var data = GameConfig.signTable[config.id.toString()];
+                var signIR = new SignIR();
+                // let row = Math.floor(i/4)
+                // let col = i % 4
+                // signIR.init(data, i)
+                // signIR.x = 165 * col - 40 
+                // signIR.y = 234 * row + 111
+                signIR.init(data, i);
+                signIR.x = 74;
+                signIR.y = 140 * i + 110;
+                this.group.addChild(signIR);
+                this._signGroups.push(signIR);
+            }
+        }
+        else {
+            for (var i = 7; i < GameConfig.signConfig.length; i++) {
+                var config = GameConfig.signConfig[i];
+                var data = GameConfig.signTable[config.id.toString()];
+                var signIR = new SignIR();
+                signIR.init(data, i - 7);
+                signIR.x = 74;
+                signIR.y = 140 * (i - 7) + 110;
+                this.group.addChild(signIR);
+                this._signGroups.push(signIR);
+            }
         }
         this.m_btnSignIn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSignIn, this);
     };
@@ -141,6 +169,13 @@ var SignIR = (function (_super) {
     __extends(SignIR, _super);
     function SignIR() {
         var _this = _super.call(this) || this;
+        _this.signInLaterColor_R = 112;
+        _this.signInLaterColor_G = 98;
+        _this.signInLaterColor_B = 66;
+        _this.signInBeforeColor_lblTime = 0xc8c07d; //签到之前天数的颜色
+        _this.signInLaterColor_lblTime = 0xb4a686; //签到之后天数的颜色
+        _this.signInBeforeColor_lblRecordNum = 0x94c401; //签到之前奖励数目的颜色
+        _this.signInLaterColor_lblRecordNum = 0x8e8060; //签到之后奖励数目的颜色
         _this.addEventListener(eui.UIEvent.COMPLETE, _this._onComplete, _this);
         _this.skinName = "resource/game_skins/qiandaoIR.exml";
         return _this;
@@ -148,13 +183,23 @@ var SignIR = (function (_super) {
     SignIR.prototype.init = function (data, day) {
         var signIndex = day + 1;
         this.m_imgTime.source = data.icon;
-        this.m_labCount.text = "X" + 1;
+        this.m_labCount.text = "+" + 1;
+        this.m_timenum.text = signIndex + "DAY";
         if (data.rewardType == EReward.Candy) {
-            this.m_labCount.text = "X" + data.reward;
+            this.m_labCount.text = "+" + data.reward;
+            this.m_imgReward.source = "signinrecord1_png";
+            this._lblRecordName.text = "Candy";
+        }
+        else {
+            this.m_imgReward.source = "signinrecord4_png";
+            this._lblRecordName.text = "Lucky Cat";
         }
         // this.m_imgReward.source = data.icon
         // this.m_imgBg.source = "qiandao2_png"
         // this.m_imgGou.visible = false
+        this.id = data.id;
+        this.index = day;
+        this.data = data;
         this._hideMask();
         if (data.isGet) {
             // this.m_imgBg.source = "qiandao3_png"
@@ -174,9 +219,6 @@ var SignIR = (function (_super) {
         // 	}
         // 	Common.log(signIndex, GameConfig.signCount, GameConfig.sign)
         // }
-        this.id = data.id;
-        this.index = day;
-        this.data = data;
     };
     SignIR.prototype.sign = function () {
         var data = GameConfig.signTable[this.id.toString()];
@@ -186,7 +228,7 @@ var SignIR = (function (_super) {
             Common.updateSignCount(GameConfig.signCount);
             data.isGet = true;
             this._showMask();
-            // this.m_imgGou.visible = true
+            // this.m_imgGou.visible = true	
             switch (this.data.rewardType) {
                 case EReward.Candy:
                     Common.updateCurCandy(this.data.reward);
@@ -198,19 +240,36 @@ var SignIR = (function (_super) {
                     break;
                 case EReward.AssignBaby:
                     // 判断是否在已解锁列表中
-                    var index = GameConfig.babyUnlockList.indexOf(this.data.reward);
+                    var index = GameConfig.babyUnlockList.indexOf(data.reward);
+                    var baby = GameConfig.actorTable[data.reward.toString()];
                     if (index < 0) {
                         // 加入到解锁列表
-                        GameConfig.babyUnlockList.push(this.data.reward);
+                        GameConfig.babyUnlockList.push(data.reward);
                         Common.updateUnlockBaby();
+                        GameConfig.rewardData = Common.cloneObj(baby);
+                        GameConfig.rewardType = EReward.AssignBaby;
                     }
                     else {
                         // 转换成糖果
+                        GameConfig.rewardCandy = baby.candy;
+                        GameConfig.rewardType = EReward.Candy;
+                        Common.updateCurCandy(baby.candy);
+                        Common.dispatchEvent(MainNotify.updateCandy);
                     }
-                    var baby = GameConfig.actorTable[this.data.reward.toString()];
-                    GameConfig.rewardData = Common.cloneObj(baby);
-                    GameConfig.rewardType = EReward.AssignBaby;
                     Common.dispatchEvent(MainNotify.openGetRewardPanel);
+                    // // 判断是否在已解锁列表中
+                    // let index = GameConfig.babyUnlockList.indexOf(this.data.reward)
+                    // if (index < 0) {
+                    // 	// 加入到解锁列表
+                    // 	GameConfig.babyUnlockList.push(this.data.reward)
+                    // 	Common.updateUnlockBaby()
+                    // }else{
+                    // 	// 转换成糖果
+                    // }					
+                    // let baby = GameConfig.actorTable[this.data.reward.toString()]
+                    // GameConfig.rewardData = Common.cloneObj(baby)
+                    // GameConfig.rewardType = EReward.AssignBaby
+                    // Common.dispatchEvent(MainNotify.openGetRewardPanel)
                     break;
                 default:
                     break;
@@ -223,7 +282,17 @@ var SignIR = (function (_super) {
     };
     SignIR.prototype._showMask = function () {
         this.m_imgMask.visible = true;
-        this.m_imgCheckIn.visible = true;
+        // this.m_imgCheckIn.visible = true
+        if (this.data.rewardType == EReward.Candy) {
+            this.m_imgReward.source = "candySignIn_png";
+        }
+        else {
+            this.m_imgReward.source = "babySignIn_png";
+        }
+        this.m_recordiconbg.source = "signinrecordbg_png";
+        this.m_timenum.textColor = this.signInLaterColor_lblTime;
+        this.m_labCount.textColor = this.signInLaterColor_lblRecordNum;
+        this._lblRecordName.textColor = this.signInLaterColor_lblRecordNum;
     };
     SignIR.prototype._onBtnSign = function () {
         var data = GameConfig.signTable[this.id.toString()];

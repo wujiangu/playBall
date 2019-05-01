@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="qiandaoIR" width="152" height="193" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="m_imgBg" x="0" y="0" source="qiandao_json.qiandao2"/>
-	<e:Image id="m_imgTime" x="15" y="16.5" touchEnabled="false" source="qiandao_json.qiandao6"/>
-	<e:Image id="m_imgReward" x="34" y="68.5" touchEnabled="false" source="tangguo_png"/>
-	<e:Label id="m_labDay" text="candy" y="134.5" fontFamily="Microsoft YaHei" size="40" textAlign="center" horizontalCenter="0" touchEnabled="false" bold="true" textColor="0x047547"/>
-	<e:Label id="m_labCount" text="X20" y="114.5" fontFamily="Microsoft YaHei" size="26" verticalAlign="middle" bold="true" right="25" touchEnabled="false" textColor="0x37f900"/>
-	<e:Image id="m_imgMask" x="0" y="0" touchEnabled="false" source="qiandao_json.qiandao3"/>
-	<e:Image id="m_imgCheckIn" source="qiandao_json.qiandao14" x="-2.85" y="109.39" rotation="-20" scaleX="0.6" scaleY="0.6"/>
+<e:Skin class="qiandaoIR" width="482" height="121" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="m_imgBg" x="-0.85" y="0" source="signinitembg_png" alpha="1"/>
+	<e:Image id="m_recordiconbg" width="102" height="102" x="21.74" y="20.4" source="unsigninrecordbg_png" scaleX="0.8" scaleY="0.8"/>
+	<e:Image id="m_imgTime" x="107" y="32.5" touchEnabled="false" source="qiandao_json.qiandao6" anchorOffsetY="0" height="56" anchorOffsetX="0" width="148" visible="false"/>
+	<e:Label id="m_timenum" text="1Day" x="111" y="30" anchorOffsetX="0" width="136" anchorOffsetY="0" height="63" verticalAlign="middle" bold="true" textAlign="left" size="45" textColor="0xc8c07d"/>
+	<e:Image id="m_imgReward" x="21.87" y="20.52" touchEnabled="false" width="102" height="102" source="signinrecord1_png" scaleX="0.8" scaleY="0.8"/>
+	<e:Label id="m_labDay" text="candy" y="73.12" fontFamily="Microsoft YaHei" size="40" textAlign="center" horizontalCenter="171" touchEnabled="false" bold="true" textColor="0x047547" visible="false"/>
+	<e:Label id="m_labCount" text="+20" y="10" fontFamily="Microsoft YaHei" size="60" verticalAlign="middle" bold="true" right="6" touchEnabled="false" anchorOffsetY="0" height="71" anchorOffsetX="0" width="186" textAlign="center" textColor="0x94c401"/>
+	<e:Image id="m_imgMask" x="-0.29" y="0.34" touchEnabled="false" anchorOffsetX="0" width="482" anchorOffsetY="0" height="121" source="shadeimg_png" visible="false"/>
+	<e:Image id="m_imgCheckIn" source="qiandao_json.qiandao14" x="317" y="78.01" rotation="-20" scaleX="0.6" scaleY="0.6" visible="false"/>
+	<e:Label id="_lblRecordName" text="Candy" x="317" y="74" anchorOffsetX="0" width="157.67" anchorOffsetY="0" height="38.67" verticalAlign="middle" textAlign="center" bold="true" textColor="0x94c401"/>
 </e:Skin>

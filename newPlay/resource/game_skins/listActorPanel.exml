@@ -100,13 +100,14 @@
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image id="_imgMask" source="mask_png" left="0" right="0" top="0" bottom="0" alpha="0"/>
-	<e:Button id="_btnReturn" label="" x="14" y="13">
+	<e:Button id="_btnReturn" label="" x="14" y="13" scaleX="0.8" scaleY="0.8">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnReturn_png"/>
+			<e:Image width="100%" height="100%" source="btnReturnIcon_png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 			</e:Skin>
 		</e:skinName>
+
 	</e:Button>
 	<e:Group id="_groupTopRight" width="373" height="113" x="357" y="0" anchorOffsetY="0" anchorOffsetX="0">
 		<e:Image id="_imgCandy" source="icon3_png" x="125.2" y="19.5" anchorOffsetX="0" anchorOffsetY="0" scaleX="0.5" scaleY="0.5"/>
@@ -124,9 +125,9 @@
 		<e:Image id="_imgLight" source="actorList8_png" scaleX="0.9" scaleY="0.9" horizontalCenter="-3" verticalCenter="-57"/>
 		<e:Group id="_groupActor" width="200" height="200" x="150" y="-43" scaleX="1.2" scaleY="1.2">
 		</e:Group>
-		<e:Image x="-56.5" y="216" source="actorList1_png"/>
-		<e:Label id="_labActorName" text="怪物名字" y="233" fontFamily="Microsoft YaHei" size="40" textAlign="center" bold="true" anchorOffsetX="0" width="194" horizontalCenter="-9"/>
-		<e:Label id="_labDesc" text="怪物描述" y="292" fontFamily="Microsoft YaHei" size="30" textAlign="left" bold="true" anchorOffsetX="0" width="627" horizontalCenter="0.5" verticalAlign="top" anchorOffsetY="0" height="98"/>
+		<e:Image x="-59.5" y="226" source="desbg_png" anchorOffsetY="0" height="185" anchorOffsetX="0" width="668"/>
+		<e:Label id="_labActorName" text="怪物名字" y="243" fontFamily="Microsoft YaHei" size="40" textAlign="center" bold="true" anchorOffsetX="0" width="194" horizontalCenter="-9"/>
+		<e:Label id="_labDesc" text="怪物描述" y="298" fontFamily="Microsoft YaHei" size="30" textAlign="left" bold="true" anchorOffsetX="0" width="627" horizontalCenter="0.5" verticalAlign="top" anchorOffsetY="0" height="98"/>
 		<e:Button id="_btnGradeUp" label="" x="-3" y="152" visible="false">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -137,9 +138,11 @@
 		</e:Button>
 
 		<e:Image id="m_imgShadow" bottom="209" horizontalCenter="-8.5" source="babyShadow_json.babyShadow13" verticalCenter="-129.5"/>
+		<e:Image id="_btnBuy" width="147" height="86" x="481.48" y="144.04" source="btnBuyImg_png" scaleX="0.9" scaleY="0.9"/>
+		<e:Label id="_lblBabyPrice" text="600" x="503.65" y="151.6" verticalAlign="middle" textAlign="center" bold="true" anchorOffsetX="0" width="87" anchorOffsetY="0" height="52" size="39" touchEnabled="false" textColor="0x000000"/>
 	</e:Group>
 	<e:Group id="groupList" width="669" height="789" horizontalCenter="0.5" bottom="37">
-		<e:Image source="actorList2_png" x="0" y="0"/>
+		<e:Image x="0" y="0" source="actorListBg_png" anchorOffsetX="0" width="671.58"/>
 		<e:Group id="_groupPage" width="200" height="27" anchorOffsetY="0" horizontalCenter="0" bottom="36" x="234" y="748" scaleX="1" scaleY="1">
 		<e:Image id="_imgPage1" source="actorList4_png" width="27" height="27" y="0" x="0"/>
 		<e:Image id="_imgPage2" source="actorList4_png" width="27" height="27" y="0" x="43"/>
@@ -163,7 +166,7 @@
 		</ns1:ScrollView>
 	</e:Group>
 	<e:Rect id="_maskRect" left="0" right="0" top="0" bottom="0" touchEnabled="false" visible="false"/>
-	<e:Button id="_btnFusion" label="" scaleX="1.2" scaleY="1.2" top="249" horizontalCenter="275.5" verticalCenter="-408">
+	<e:Button id="_btnFusion" label="" scaleX="1.2" scaleY="1.2" top="249" horizontalCenter="275.5" verticalCenter="-408" visible="false">
 		<e:skinName>
 		<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnLiwu_png"/>

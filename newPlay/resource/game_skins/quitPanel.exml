@@ -5,9 +5,15 @@
 			<tween:TweenItem target="{m_btnReturn}">
 				<tween:Set>
 					<tween:props>
-						<e:Object scaleY="{0.7}" y="{45}" scaleX="{0.7}" alpha="{0}"/>
+						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object scaleY="{0.7}" y="{45}" scaleX="{0.7}" alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+
 				<tween:To duration="250">
 					<tween:props>
 						<e:Object alpha="{1}" scaleX="{1.2}" scaleY="{1.2}"/>
@@ -22,9 +28,15 @@
 			<tween:TweenItem target="{m_btnContinue}">
 				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{0.7}" scaleY="{0.7}" alpha="{0}"/>
+						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object scaleX="{0.7}" scaleY="{0.7}" alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+
 				<tween:To duration="250">
 					<tween:props>
 						<e:Object alpha="{1}" scaleX="{1.2}" scaleY="{1.2}"/>
@@ -33,6 +45,18 @@
 				<tween:To duration="150">
 					<tween:props>
 						<e:Object scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{image}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1}" scaleY="{1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -62,17 +86,19 @@
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
+			<tween:TweenItem target="{image}">
+				<tween:Set/>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object scaleX="{0.9}" scaleY="{0.9}" alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
 	<e:Image source="mask_png" anchorOffsetY="0" left="0" right="0" top="-34" bottom="-29"/>
-	<e:Button label="" x="655" y="16">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="btnPause_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:Button>
+
+	<e:Image id="image" width="593" height="358" y="582.5" anchorOffsetX="0" horizontalCenter="-6.5" anchorOffsetY="0" source="button_BG_png"/>
 	<e:Group id="group" width="239" height="241" x="107" y="641">
 		<e:Button id="m_btnReturn" label="" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0" x="0" scaleX="1" scaleY="1" verticalCenter="0">
 			<e:skinName>

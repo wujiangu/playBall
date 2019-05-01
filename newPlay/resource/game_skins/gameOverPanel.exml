@@ -2,15 +2,274 @@
 <e:Skin class="victoryPanel" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
 	<w:Declarations>
 		<tween:TweenGroup id="Show">
-			<tween:TweenItem target="{m_groupGameOver}">
+			<tween:TweenItem target="{m_bg}">
 				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{0}" scaleY="{0}" alpha="{1}"/>
+						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="500" ease="backOut">
+				<tween:Wait duration="100"/>
+				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{1}" scaleY="{1}"/>
+						<e:Object alpha="{0}" scaleX="{0}" scaleY="{0}" y="{-93}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1}" scaleY="{1}" y="{93}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_crownIcon}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_scorebg}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_labScore}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="300">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{comboGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="450">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{recordBgGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="600">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{firstRecordIcon}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="800">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{firstRecordGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="800">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{sencondRecordIcon}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="950">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{secondRecordGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="950">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{thirdRecordIcon}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="1100">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{thirdRecordGroup}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:Wait duration="100"/>
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="1100">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -20,14 +279,20 @@
 						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="600">
+				<tween:Wait duration="100"/>
+				<tween:Set>
 					<tween:props>
 						<e:Object alpha="{0}"/>
 					</tween:props>
-				</tween:To>
-				<tween:To duration="250">
+				</tween:Set>
+				<tween:To duration="1050">
 					<tween:props>
-						<e:Object alpha="{1}"/>
+						<e:Object alpha="{0}" scaleX="{0}" scaleY="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1}" scaleY="{1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -37,40 +302,57 @@
 						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="600">
+				<tween:Wait duration="100"/>
+				<tween:Set>
 					<tween:props>
 						<e:Object alpha="{0}"/>
 					</tween:props>
+				</tween:Set>
+				<tween:To duration="1100">
+					<tween:props>
+						<e:Object alpha="{0}" scaleX="{0}" scaleY="{0}"/>
+					</tween:props>
 				</tween:To>
-				<tween:To duration="250">
+				<tween:To duration="200">
+					<tween:props>
+						<e:Object alpha="{1}" scaleX="{1}" scaleY="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_groupGameOver}">
+				<tween:Set/>
+				<tween:To duration="100">
 					<tween:props>
 						<e:Object alpha="{1}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
+
+
+
 		</tween:TweenGroup>
 		<tween:TweenGroup id="Hide">
 			<tween:TweenItem target="{m_btnReturn}">
 				<tween:Set/>
-				<tween:To duration="500">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{0}"/>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_btnAgain}">
 				<tween:Set/>
-				<tween:To duration="500">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{0}"/>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_groupGameOver}">
 				<tween:Set/>
-				<tween:To duration="500">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{0}"/>
+						<e:Object alpha="{0}" scaleX="{0.9}" scaleY="{0.9}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -79,33 +361,71 @@
 	<e:Image left="0" right="0" top="-15" bottom="-25" anchorOffsetY="0" source="mask_png"/>
 
 
-	<e:Group id="m_groupGameOver" width="596" height="902" horizontalCenter="0" verticalCenter="-65" anchorOffsetX="0" anchorOffsetY="0">
-		<e:Image anchorOffsetY="0" y="22.5" horizontalCenter="0.5" source="gameOver1_png"/>
+	<e:Group id="m_groupGameOver" width="596" height="902" anchorOffsetX="-2" anchorOffsetY="0.55" horizontalCenter="0" verticalCenter="-65">
+		<e:Image id="m_bg" anchorOffsetY="0" horizontalCenter="0" source="guankajiemian1_png" width="582" height="846" verticalCenter="65"/>
+		<e:Image id="m_crownIcon" x="257.13" y="113.03" source="crown_png"/>
+		<e:Image id="m_scorebg" width="481" height="205" x="57.68" y="183.34" anchorOffsetX="0" anchorOffsetY="0" source="scorebg_png"/>
+		<e:BitmapLabel id="m_labScore" y="217.84" text="1900" horizontalCenter="4.5" scaleX="0.8" scaleY="0.8" font="gameoverFnt_fnt"/>
 
-		<e:Button id="m_btnReturn" label="" x="0" y="732">
+		<e:Button id="m_btnReturn" label="" x="169.14" y="826.18" anchorOffsetX="113.64" anchorOffsetY="68.18">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.16" source.down="btnSheet1_json.17"/>
+				<e:Image width="100%" height="100%" source="home_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
-		<e:Button id="m_btnAgain" label="" x="338" y="732">
+		<e:Button id="m_btnAgain" label="" x="430.65" y="829.21" anchorOffsetX="115.15" anchorOffsetY="71.21">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="btnSheet1_json.18" source.down="btnSheet1_json.19"/>
+				<e:Image width="100%" height="100%" source="next_png"/>
 				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 				</e:Skin>
 			</e:skinName>
+
 		</e:Button>
-		<e:BitmapLabel id="m_labScore" y="175" text="1000" font="pingfenFnt_fnt" horizontalCenter="0" scaleX="0.8" scaleY="0.8"/>
-		<e:BitmapLabel id="m_labLianji" y="336" text="X100" font="lianjiFnt_fnt" left="179" letterSpacing="-3"/>
-		<e:BitmapLabel id="m_labPingfen" y="340" text="S+" left="405" font="pingjiFnt_fnt"/>
-		<e:Image source="gameOver2_png" x="126" y="330.44" anchorOffsetX="0" width="51" anchorOffsetY="0" height="58.56"/>
-		<e:Image source="gameOver3_png" x="337" y="339" anchorOffsetX="0" width="61.42" anchorOffsetY="0" height="55"/>
-		<e:Image source="gameOver4_png" x="163.5" y="475.28" anchorOffsetX="0" width="80" anchorOffsetY="0" height="90.91" scaleX="1.5" scaleY="1.5"/>
-		<e:Label text="X" x="282.5" y="527.46" fontFamily="Microsoft JhengHei" size="60" bold="true" visible="false"/>
-		<e:Label id="_labCandy" text="10" x="315.5" y="504.26" size="82" bold="true" fontFamily="Microsoft YaHei" scaleX="1.2" scaleY="1.2"/>
-		<e:Image source="gameOver5_png" x="264.5" y="40"/>
+
+
+		<e:Group id="comboGroup" horizontalCenter="20.5" verticalCenter="-19">
+			<e:Image x="0" y="21" anchorOffsetX="0" width="46" anchorOffsetY="0" height="65" source="UP_png"/>
+			<e:Label id="titlelbl" text="COMBO:" x="46.2" y="0" anchorOffsetX="0" width="214" anchorOffsetY="0" height="96" size="50" bold="true" textAlign="center" verticalAlign="middle" textColor="0xdec72e"/>
+			<e:Label id="m_labLianji" text="23" x="264.76" y="21" anchorOffsetX="0" width="138" anchorOffsetY="0" height="45" textAlign="left" verticalAlign="middle" bold="true" size="49"/>
+		</e:Group>
+
+
+
+		<e:BitmapLabel id="m_labPingfen" y="340" text="S+" left="405" font="pingjiFnt_fnt" visible="false"/>
+		<e:Group id="recordBgGroup" horizontalCenter="6" verticalCenter="91.5">
+			<e:Image id="recoredBg" width="480" height="121" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="recordBg_png"/>
+			<e:Image id="firstrecordbg" width="102" height="102" x="23.95" y="9.57" source="unsigninrecordbg_png"/>
+			<e:Image id="secondrecordbg" width="102" height="102" x="186.36" y="9.57" source="unsigninrecordbg_png"/>
+			<e:Image id="thirdrecordbg" width="102" height="102" x="356.27" y="11.58" source="unsigninrecordbg_png"/>
+		</e:Group>
+
+
+		<e:Image id="firstRecordIcon" source="gameOver4_png" x="107.5" y="506.57" anchorOffsetX="0" width="80" anchorOffsetY="0" height="90.91" scaleX="0.8" scaleY="0.8"/>
+
+		<e:Group id="firstRecordGroup" horizontalCenter="-163.5" verticalCenter="234">
+			<e:Label id="_labCandy" text="10" x="2.24" y="0" size="82" bold="true" fontFamily="Arial" scaleX="1" scaleY="1" textColor="0x94c401" verticalAlign="middle" textAlign="center" anchorOffsetY="0" height="78" anchorOffsetX="0" width="118"/>
+			<e:Label id="firstRecordTitle" text="Candy" x="0" y="82" anchorOffsetX="0" width="122.48" anchorOffsetY="0" height="43.64" textAlign="center" verticalAlign="middle" textColor="0x94c401" bold="true"/>
+		</e:Group>
+		<e:Image id="sencondRecordIcon" width="80" height="90" x="270.4" y="507.3" source="gameOver4_png" scaleX="0.8" scaleY="0.8"/>
+
+
+
+
+		<e:Group id="secondRecordGroup" horizontalCenter="8" verticalCenter="231.5">
+			<e:Label id="_lblCandySecond" text="20" x="0" y="0" anchorOffsetX="0" width="118" anchorOffsetY="0" height="78" verticalAlign="middle" textAlign="center" bold="true" textColor="0x94c401" size="82"/>
+			<e:Label id="secondRecordTitle" text="Candy" x="10.5" y="86.82" anchorOffsetX="0" width="97" anchorOffsetY="0" height="34" bold="true" textColor="0x94c401" verticalAlign="middle"/>
+		</e:Group>
+
+		<e:Image id="thirdRecordIcon" width="102" height="102" x="419.76" y="494.3" anchorOffsetX="0" anchorOffsetY="0" scaleX="1" scaleY="1" source="actorIcon10010_png"/>
+
+		<e:Group id="thirdRecordGroup" horizontalCenter="180.5" verticalCenter="231.5">
+			<e:Label id="_lblCandyThird" text="1" x="0" y="0" anchorOffsetX="0" width="118" anchorOffsetY="0" height="78" verticalAlign="middle" textAlign="center" bold="true" textColor="0x94C401" size="82"/>
+			<e:Label id="thirdRecordTitle0" text="Monster" x="0" y="86.82" anchorOffsetX="0" width="137" anchorOffsetY="0" height="34" bold="true" textColor="0x94C401" verticalAlign="middle" textAlign="center"/>
+		</e:Group>
+
 	</e:Group>
 </e:Skin>

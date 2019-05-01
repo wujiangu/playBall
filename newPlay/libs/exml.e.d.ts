@@ -60,9 +60,17 @@ declare class fuHUO extends eui.Skin{
 }
 declare class actorIR extends eui.Skin{
 }
+declare class NewFile extends eui.Skin{
+}
 declare class chongzhi extends eui.Skin{
 }
+declare class chooseOperationPanel extends eui.Skin{
+}
 declare class choujiang extends eui.Skin{
+}
+declare class dazhaotexiao extends eui.Skin{
+}
+declare class gameLosePanel extends eui.Skin{
 }
 declare class victoryPanel extends eui.Skin{
 }
