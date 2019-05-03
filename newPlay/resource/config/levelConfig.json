@@ -49,13 +49,6 @@
                 "summon": "", 
                 "id": "", 
                 "min": ""
-            }, 
-            {
-                "diff": "", 
-                "max": "", 
-                "summon": "", 
-                "id": "", 
-                "min": ""
             }
         ], 
         "addTime": 1800, 
@@ -80,12 +73,21 @@
             }
         ], 
         "level": 1, 
+        "elite": [
+            {
+                "diff": "", 
+                "max": "", 
+                "summon": "", 
+                "id": "", 
+                "min": ""
+            }
+        ], 
         "addTime": 1800, 
         "section": 1001, 
         "unlockItem": 0, 
         "normalCount": 1, 
         "candy": 0, 
-        "next": 10101, 
+        "next": 10003, 
         "mode": 2, 
         "key": 10002, 
         "speed": 1
@@ -98,11 +100,42 @@
                 "summon": 0, 
                 "id": 1001, 
                 "diff": -1, 
+                "prob": 100
+            }
+        ], 
+        "level": 1, 
+        "elite": [
+            {
+                "diff": "", 
+                "max": "", 
+                "summon": "", 
+                "id": "", 
+                "min": ""
+            }
+        ], 
+        "addTime": 1800, 
+        "section": 1001, 
+        "unlockItem": 0, 
+        "normalCount": 1, 
+        "candy": 0, 
+        "next": 10101, 
+        "mode": 2, 
+        "key": 10003, 
+        "speed": 1
+    }, 
+    {
+        "normal": [
+            {
+                "min": 1, 
+                "max": 2, 
+                "summon": 0, 
+                "id": 1001, 
+                "diff": -1, 
                 "prob": 60
             }, 
             {
-                "min": 1, 
-                "max": 1, 
+                "min": 2, 
+                "max": 2, 
                 "summon": 0, 
                 "id": 1004, 
                 "diff": -1, 
@@ -142,7 +175,7 @@
         "normal": [
             {
                 "min": 1, 
-                "max": 1, 
+                "max": 2, 
                 "summon": 0, 
                 "id": 1001, 
                 "diff": -1, 
@@ -157,7 +190,7 @@
                 "prob": 10
             }, 
             {
-                "min": 1, 
+                "min": 2, 
                 "max": 2, 
                 "summon": 0, 
                 "id": 1004, 
@@ -564,7 +597,7 @@
                 "diff": -1, 
                 "prob": 40
             }
-        ],  
+        ], 
         "level": 1, 
         "elite": [
             {
@@ -582,7 +615,7 @@
         "normalCount": 40, 
         "candy": 5, 
         "next": 10102, 
-        "mode": 1, 
+        "mode": "", 
         "key": 10101, 
         "speed": 1
     }, 
@@ -707,7 +740,7 @@
         "addTime": 1200, 
         "section": 1001, 
         "unlockItem": 0, 
-        "normalCount": 50, 
+        "normalCount": 40, 
         "candy": 5, 
         "next": 10105, 
         "mode": 1, 
@@ -840,11 +873,11 @@
         "level": 7, 
         "elite": [
             {
-                "min": 2, 
-                "max": 3, 
-                "summon": 1006, 
+                "min": 1, 
+                "max": 1, 
+                "summon": 1035, 
                 "id": 1010, 
-                "diff": 1, 
+                "diff": -1, 
                 "prob": 100
             }
         ], 
@@ -866,7 +899,7 @@
                 "summon": 0, 
                 "id": 1019, 
                 "diff": -1, 
-                "prob": 70
+                "prob": 60
             }, 
             {
                 "min": 1, 
@@ -874,7 +907,7 @@
                 "summon": 0, 
                 "id": 1040, 
                 "diff": 1, 
-                "prob": 30
+                "prob": 40
             }
         ], 
         "level": 1, 
@@ -882,7 +915,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1020, 
                 "diff": 1, 
                 "prob": 100
@@ -906,7 +939,7 @@
                 "summon": 0, 
                 "id": 1019, 
                 "diff": 1, 
-                "prob": 40
+                "prob": 50
             }, 
             {
                 "min": 2, 
@@ -914,7 +947,7 @@
                 "summon": 0, 
                 "id": 1035, 
                 "diff": -1, 
-                "prob": 60
+                "prob": 50
             }
         ], 
         "level": 2, 
@@ -922,7 +955,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1037, 
                 "diff": 1, 
                 "prob": 100
@@ -931,7 +964,7 @@
         "addTime": 1180, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 60, 
+        "normalCount": 50, 
         "candy": 5, 
         "next": 10203, 
         "mode": 1, 
@@ -946,7 +979,7 @@
                 "summon": 0, 
                 "id": 1040, 
                 "diff": -1, 
-                "prob": 50
+                "prob": 40
             }, 
             {
                 "min": 1, 
@@ -954,7 +987,7 @@
                 "summon": 0, 
                 "id": 1035, 
                 "diff": 1, 
-                "prob": 50
+                "prob": 60
             }
         ], 
         "level": 3, 
@@ -962,7 +995,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1039, 
                 "diff": 1, 
                 "prob": 100
@@ -971,7 +1004,7 @@
         "addTime": 1150, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 70, 
+        "normalCount": 50, 
         "candy": 5, 
         "next": 10204, 
         "mode": 1, 
@@ -1010,7 +1043,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1038, 
                 "diff": 1, 
                 "prob": 100
@@ -1019,7 +1052,7 @@
         "addTime": 1150, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 60, 
         "candy": 5, 
         "next": 10205, 
         "mode": 1, 
@@ -1058,7 +1091,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1046, 
                 "diff": 1, 
                 "prob": 100
@@ -1067,7 +1100,7 @@
         "addTime": 1150, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 60, 
         "candy": 5, 
         "next": 10206, 
         "mode": 1, 
@@ -1106,7 +1139,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1056, 
                 "diff": 1, 
                 "prob": 100
@@ -1115,7 +1148,7 @@
         "addTime": 1100, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 60, 
         "candy": 5, 
         "next": 10207, 
         "mode": 1, 
@@ -1154,7 +1187,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1004, 
                 "id": 1034, 
                 "diff": 1, 
                 "prob": 100
@@ -1163,7 +1196,7 @@
         "addTime": 1100, 
         "section": 1002, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 70, 
         "candy": 5, 
         "next": 10301, 
         "mode": 1, 
@@ -1178,7 +1211,7 @@
                 "summon": 0, 
                 "id": 1015, 
                 "diff": -1, 
-                "prob": 50
+                "prob": 30
             }, 
             {
                 "min": 1, 
@@ -1186,7 +1219,7 @@
                 "summon": 0, 
                 "id": 1012, 
                 "diff": 1, 
-                "prob": 50
+                "prob": 70
             }
         ], 
         "level": 1, 
@@ -1194,7 +1227,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1050, 
                 "diff": 1, 
                 "prob": 100
@@ -1215,10 +1248,10 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1019, 
                 "id": 1012, 
                 "diff": 1, 
-                "prob": 50
+                "prob": 70
             }, 
             {
                 "min": 2, 
@@ -1226,7 +1259,7 @@
                 "summon": 0, 
                 "id": 1021, 
                 "diff": -1, 
-                "prob": 50
+                "prob": 30
             }
         ], 
         "level": 2, 
@@ -1234,7 +1267,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1051, 
                 "diff": 1, 
                 "prob": 100
@@ -1274,7 +1307,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1052, 
                 "diff": 1, 
                 "prob": 100
@@ -1283,7 +1316,7 @@
         "addTime": 1100, 
         "section": 1003, 
         "unlockItem": 0, 
-        "normalCount": 70, 
+        "normalCount": 60, 
         "candy": 5, 
         "next": 10304, 
         "mode": 1, 
@@ -1311,7 +1344,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1019, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 10
@@ -1322,7 +1355,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1053, 
                 "diff": 1, 
                 "prob": 100
@@ -1331,7 +1364,7 @@
         "addTime": 1100, 
         "section": 1003, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 60, 
         "candy": 5, 
         "next": 10305, 
         "mode": 1, 
@@ -1359,7 +1392,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1019, 
                 "id": 1012, 
                 "diff": 1, 
                 "prob": 40
@@ -1370,7 +1403,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 1009, 
+                "summon": 1011, 
                 "id": 1054, 
                 "diff": 2, 
                 "prob": 100
@@ -1379,7 +1412,7 @@
         "addTime": 1100, 
         "section": 1003, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 70, 
         "candy": 5, 
         "next": 10306, 
         "mode": 1, 
@@ -1407,7 +1440,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1019, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 20
@@ -1417,9 +1450,9 @@
         "elite": [
             {
                 "min": 1, 
-                "max": 1, 
-                "summon": 1009, 
-                "id": 1055, 
+                "max": 2, 
+                "summon": 1011, 
+                "id": 1025, 
                 "diff": 2, 
                 "prob": 100
             }
@@ -1427,7 +1460,7 @@
         "addTime": 1050, 
         "section": 1003, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10307, 
         "mode": 1, 
@@ -1455,7 +1488,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1019, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 20
@@ -1466,8 +1499,8 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1009, 
-                "id": 1025, 
+                "summon": 1032, 
+                "id": 1055, 
                 "diff": 2, 
                 "prob": 100
             }
@@ -1475,7 +1508,7 @@
         "addTime": 1050, 
         "section": 1003, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10401, 
         "mode": 1, 
@@ -1505,8 +1538,8 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
-                "summon": 1009, 
+                "max": 3, 
+                "summon": 1011, 
                 "id": 1057, 
                 "diff": 1, 
                 "prob": 100
@@ -1515,7 +1548,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 60, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10402, 
         "mode": 1, 
@@ -1530,23 +1563,23 @@
                 "summon": 0, 
                 "id": 1014, 
                 "diff": 1, 
-                "prob": 70
+                "prob": 80
             }, 
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1028, 
                 "id": 1036, 
                 "diff": 2, 
-                "prob": 30
+                "prob": 20
             }
         ], 
         "level": 2, 
         "elite": [
             {
-                "min": 1, 
-                "max": 1, 
-                "summon": 1009, 
+                "min": 2, 
+                "max": 2, 
+                "summon": 1011, 
                 "id": 1058, 
                 "diff": 2, 
                 "prob": 100
@@ -1555,7 +1588,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 70, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10403, 
         "mode": 1, 
@@ -1575,7 +1608,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1028, 
                 "id": 1036, 
                 "diff": 2, 
                 "prob": 40
@@ -1585,8 +1618,8 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
-                "summon": 1009, 
+                "max": 3, 
+                "summon": 1011, 
                 "id": 1059, 
                 "diff": 1, 
                 "prob": 100
@@ -1595,7 +1628,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10404, 
         "mode": 1, 
@@ -1633,8 +1666,8 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
-                "summon": 1009, 
+                "max": 3, 
+                "summon": 1011, 
                 "id": 1060, 
                 "diff": 1, 
                 "prob": 100
@@ -1643,7 +1676,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10405, 
         "mode": 1, 
@@ -1663,7 +1696,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1028, 
                 "id": 1003, 
                 "diff": 2, 
                 "prob": 10
@@ -1680,8 +1713,8 @@
         "level": 5, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1061, 
                 "diff": 2, 
@@ -1691,7 +1724,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10406, 
         "mode": 1, 
@@ -1719,7 +1752,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1028, 
                 "id": 1036, 
                 "diff": 2, 
                 "prob": 20
@@ -1739,7 +1772,7 @@
         "addTime": 1100, 
         "section": 1004, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10407, 
         "mode": 1, 
@@ -1767,7 +1800,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1028, 
                 "id": 1036, 
                 "diff": 2, 
                 "prob": 30
@@ -1787,7 +1820,7 @@
         "addTime": 1000, 
         "section": 1004, 
         "unlockItem": 10060, 
-        "normalCount": 120, 
+        "normalCount": 10, 
         "candy": 5, 
         "next": 10501, 
         "mode": 1, 
@@ -1807,7 +1840,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": 2, 
                 "prob": 20
@@ -1816,8 +1849,8 @@
         "level": 1, 
         "elite": [
             {
-                "min": 1, 
-                "max": 1, 
+                "min": 2, 
+                "max": 2, 
                 "summon": 1004, 
                 "id": 1041, 
                 "diff": 2, 
@@ -1856,8 +1889,8 @@
         "level": 2, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1042, 
                 "diff": 2, 
@@ -1887,7 +1920,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1021, 
                 "id": 1023, 
                 "diff": 2, 
                 "prob": 40
@@ -1896,10 +1929,10 @@
         "level": 3, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
-                "id": 1043, 
+                "id": 1047, 
                 "diff": 2, 
                 "prob": 100
             }
@@ -1907,7 +1940,7 @@
         "addTime": 1100, 
         "section": 1005, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 70, 
         "candy": 5, 
         "next": 10504, 
         "mode": 1, 
@@ -1927,7 +1960,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": 2, 
                 "prob": 10
@@ -1947,7 +1980,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1004, 
-                "id": 1047, 
+                "id": 1048, 
                 "diff": 1, 
                 "prob": 100
             }
@@ -1955,7 +1988,7 @@
         "addTime": 1100, 
         "section": 1005, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10505, 
         "mode": 1, 
@@ -1975,7 +2008,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": 2, 
                 "prob": 10
@@ -1993,17 +2026,17 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
-                "summon": 1004, 
-                "id": 1048, 
-                "diff": 1, 
+                "max": 3, 
+                "summon": 1033, 
+                "id": 1049, 
+                "diff": 2, 
                 "prob": 100
             }
         ], 
         "addTime": 1100, 
         "section": 1005, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10506, 
         "mode": 1, 
@@ -2031,7 +2064,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1021, 
                 "id": 1023, 
                 "diff": 2, 
                 "prob": 20
@@ -2041,17 +2074,17 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
+                "max": 3, 
                 "summon": 1004, 
-                "id": 1049, 
-                "diff": 1, 
+                "id": 1024, 
+                "diff": 2, 
                 "prob": 100
             }
         ], 
         "addTime": 1100, 
         "section": 1005, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10507, 
         "mode": 1, 
@@ -2079,7 +2112,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1021, 
                 "id": 1023, 
                 "diff": 2, 
                 "prob": 30
@@ -2090,8 +2123,8 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1004, 
-                "id": 1024, 
+                "summon": 1036, 
+                "id": 1043, 
                 "diff": 4, 
                 "prob": 100
             }
@@ -2099,7 +2132,7 @@
         "addTime": 1000, 
         "section": 1005, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 100, 
         "candy": 5, 
         "next": 10601, 
         "mode": 1, 
@@ -2119,7 +2152,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 20
@@ -2128,9 +2161,9 @@
         "level": 1, 
         "elite": [
             {
-                "min": 1, 
-                "max": 1, 
-                "summon": 1010, 
+                "min": 2, 
+                "max": 3, 
+                "summon": 1013, 
                 "id": 1010, 
                 "diff": 1, 
                 "prob": 100
@@ -2168,8 +2201,8 @@
         "level": 2, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1032, 
                 "diff": 1, 
@@ -2208,8 +2241,8 @@
         "level": 3, 
         "elite": [
             {
-                "min": 2, 
-                "max": 2, 
+                "min": 3, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1033, 
                 "diff": 1, 
@@ -2219,7 +2252,7 @@
         "addTime": 1100, 
         "section": 1006, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 70, 
         "candy": 5, 
         "next": 10604, 
         "mode": 1, 
@@ -2239,7 +2272,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1005, 
                 "id": 1005, 
                 "diff": 2, 
                 "prob": 10
@@ -2256,8 +2289,8 @@
         "level": 4, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1031, 
                 "diff": 2, 
@@ -2267,7 +2300,7 @@
         "addTime": 1100, 
         "section": 1006, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10605, 
         "mode": 1, 
@@ -2287,7 +2320,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1003, 
                 "id": 1005, 
                 "diff": 2, 
                 "prob": 10
@@ -2304,8 +2337,8 @@
         "level": 5, 
         "elite": [
             {
-                "min": 1, 
-                "max": 2, 
+                "min": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1044, 
                 "diff": 2, 
@@ -2315,7 +2348,7 @@
         "addTime": 1100, 
         "section": 1006, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10606, 
         "mode": 1, 
@@ -2343,7 +2376,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 20
@@ -2353,7 +2386,7 @@
         "elite": [
             {
                 "min": 2, 
-                "max": 2, 
+                "max": 3, 
                 "summon": 1004, 
                 "id": 1045, 
                 "diff": 2, 
@@ -2363,7 +2396,7 @@
         "addTime": 1050, 
         "section": 1006, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10607, 
         "mode": 1, 
@@ -2378,7 +2411,7 @@
                 "summon": 0, 
                 "id": 1017, 
                 "diff": -1, 
-                "prob": 20
+                "prob": 30
             }, 
             {
                 "min": 2, 
@@ -2391,10 +2424,10 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": 2, 
-                "prob": 30
+                "prob": 20
             }
         ], 
         "level": 7, 
@@ -2402,16 +2435,16 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1010, 
+                "summon": 1016, 
                 "id": 1010, 
-                "diff": 4, 
+                "diff": 1, 
                 "prob": 100
             }
         ], 
         "addTime": 1050, 
         "section": 1006, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 100, 
         "candy": 5, 
         "next": 10701, 
         "mode": 1, 
@@ -2531,7 +2564,7 @@
         "addTime": 1100, 
         "section": 1007, 
         "unlockItem": 0, 
-        "normalCount": 80, 
+        "normalCount": 70, 
         "candy": 5, 
         "next": 10704, 
         "mode": 1, 
@@ -2579,7 +2612,7 @@
         "addTime": 1100, 
         "section": 1007, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10705, 
         "mode": 1, 
@@ -2627,7 +2660,7 @@
         "addTime": 1100, 
         "section": 1007, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10706, 
         "mode": 1, 
@@ -2675,7 +2708,7 @@
         "addTime": 1050, 
         "section": 1007, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10707, 
         "mode": 1, 
@@ -2723,7 +2756,7 @@
         "addTime": 1050, 
         "section": 1007, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 100, 
         "candy": 5, 
         "next": 10801, 
         "mode": 1, 
@@ -2743,7 +2776,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 20
@@ -2763,7 +2796,7 @@
         "addTime": 1100, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10802, 
         "mode": 1, 
@@ -2803,7 +2836,7 @@
         "addTime": 1100, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10803, 
         "mode": 1, 
@@ -2843,7 +2876,7 @@
         "addTime": 1100, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10804, 
         "mode": 1, 
@@ -2871,7 +2904,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": -1, 
                 "prob": 20
@@ -2891,7 +2924,7 @@
         "addTime": 1100, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10805, 
         "mode": 1, 
@@ -2919,7 +2952,7 @@
             {
                 "min": 2, 
                 "max": 3, 
-                "summon": 0, 
+                "summon": 1004, 
                 "id": 1012, 
                 "diff": 1, 
                 "prob": 10
@@ -2939,7 +2972,7 @@
         "addTime": 1100, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10806, 
         "mode": 1, 
@@ -2967,7 +3000,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 20
@@ -2979,7 +3012,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1004, 
-                "id": 1055, 
+                "id": 1025, 
                 "diff": 2, 
                 "prob": 100
             }
@@ -2987,7 +3020,7 @@
         "addTime": 1050, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10807, 
         "mode": 1, 
@@ -3027,7 +3060,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1007, 
-                "id": 1025, 
+                "id": 1055, 
                 "diff": 6, 
                 "prob": 100
             }
@@ -3035,7 +3068,7 @@
         "addTime": 1000, 
         "section": 1008, 
         "unlockItem": 0, 
-        "normalCount": 180, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 10901, 
         "mode": 1, 
@@ -3055,7 +3088,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1024, 
                 "id": 1022, 
                 "diff": 2, 
                 "prob": 20
@@ -3115,7 +3148,7 @@
         "addTime": 1100, 
         "section": 1009, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10903, 
         "mode": 1, 
@@ -3155,7 +3188,7 @@
         "addTime": 1100, 
         "section": 1009, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 10904, 
         "mode": 1, 
@@ -3183,7 +3216,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1023, 
                 "id": 1023, 
                 "diff": -1, 
                 "prob": 20
@@ -3203,7 +3236,7 @@
         "addTime": 1100, 
         "section": 1009, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10905, 
         "mode": 1, 
@@ -3242,7 +3275,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1008, 
+                "summon": 1033, 
                 "id": 1048, 
                 "diff": 2, 
                 "prob": 100
@@ -3251,7 +3284,7 @@
         "addTime": 1100, 
         "section": 1009, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10906, 
         "mode": 1, 
@@ -3291,7 +3324,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1049, 
+                "id": 1024, 
                 "diff": 6, 
                 "prob": 100
             }
@@ -3299,7 +3332,7 @@
         "addTime": 1100, 
         "section": 1009, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 10907, 
         "mode": 1, 
@@ -3339,7 +3372,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1024, 
+                "id": 1043, 
                 "diff": 3, 
                 "prob": 100
             }
@@ -3347,7 +3380,7 @@
         "addTime": 1000, 
         "section": 1009, 
         "unlockItem": 10140, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11001, 
         "mode": 1, 
@@ -3367,7 +3400,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": -1, 
                 "prob": 40
@@ -3378,7 +3411,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1010, 
+                "summon": 1016, 
                 "id": 1010, 
                 "diff": 2, 
                 "prob": 100
@@ -3399,7 +3432,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": -1, 
                 "prob": 60
@@ -3427,7 +3460,7 @@
         "addTime": 1100, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11003, 
         "mode": 1, 
@@ -3439,7 +3472,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1003, 
                 "id": 1005, 
                 "diff": -1, 
                 "prob": 50
@@ -3467,7 +3500,7 @@
         "addTime": 1100, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11004, 
         "mode": 1, 
@@ -3495,7 +3528,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 10
@@ -3515,7 +3548,7 @@
         "addTime": 1100, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11005, 
         "mode": 1, 
@@ -3543,7 +3576,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": -1, 
                 "prob": 40
@@ -3563,7 +3596,7 @@
         "addTime": 1100, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11006, 
         "mode": 1, 
@@ -3591,7 +3624,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 10
@@ -3611,7 +3644,7 @@
         "addTime": 1100, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11007, 
         "mode": 1, 
@@ -3631,7 +3664,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1031, 
                 "id": 1005, 
                 "diff": 1, 
                 "prob": 35
@@ -3650,7 +3683,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1010, 
+                "summon": 1017, 
                 "id": 1010, 
                 "diff": 4, 
                 "prob": 100
@@ -3659,7 +3692,7 @@
         "addTime": 1000, 
         "section": 1010, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11101, 
         "mode": 1, 
@@ -3739,7 +3772,7 @@
         "addTime": 1100, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11103, 
         "mode": 1, 
@@ -3779,7 +3812,7 @@
         "addTime": 1100, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11104, 
         "mode": 1, 
@@ -3827,7 +3860,7 @@
         "addTime": 1100, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11105, 
         "mode": 1, 
@@ -3875,7 +3908,7 @@
         "addTime": 1100, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11106, 
         "mode": 1, 
@@ -3923,7 +3956,7 @@
         "addTime": 1100, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11107, 
         "mode": 1, 
@@ -3971,7 +4004,7 @@
         "addTime": 1000, 
         "section": 1011, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11201, 
         "mode": 1, 
@@ -3991,7 +4024,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1004, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 40
@@ -4011,7 +4044,7 @@
         "addTime": 1150, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11202, 
         "mode": 1, 
@@ -4051,7 +4084,7 @@
         "addTime": 1150, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11203, 
         "mode": 1, 
@@ -4091,7 +4124,7 @@
         "addTime": 1100, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11204, 
         "mode": 1, 
@@ -4119,7 +4152,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1008, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 10
@@ -4139,7 +4172,7 @@
         "addTime": 1100, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11205, 
         "mode": 1, 
@@ -4167,7 +4200,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1008, 
                 "id": 1012, 
                 "diff": -1, 
                 "prob": 40
@@ -4178,7 +4211,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1008, 
+                "summon": 1010, 
                 "id": 1054, 
                 "diff": 6, 
                 "prob": 100
@@ -4187,7 +4220,7 @@
         "addTime": 1100, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 100, 
         "candy": 5, 
         "next": 11206, 
         "mode": 1, 
@@ -4215,7 +4248,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1010, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 10
@@ -4227,7 +4260,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1055, 
+                "id": 1025, 
                 "diff": 6, 
                 "prob": 100
             }
@@ -4235,7 +4268,7 @@
         "addTime": 1050, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11207, 
         "mode": 1, 
@@ -4263,7 +4296,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1010, 
                 "id": 1012, 
                 "diff": 3, 
                 "prob": 10
@@ -4274,8 +4307,8 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1007, 
-                "id": 1025, 
+                "summon": 1010, 
+                "id": 1055, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -4283,7 +4316,7 @@
         "addTime": 900, 
         "section": 1012, 
         "unlockItem": 0, 
-        "normalCount": 180, 
+        "normalCount": 120, 
         "candy": 5, 
         "next": 11301, 
         "mode": 1, 
@@ -4363,7 +4396,7 @@
         "addTime": 1150, 
         "section": 1013, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11303, 
         "mode": 1, 
@@ -4403,7 +4436,7 @@
         "addTime": 1100, 
         "section": 1013, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11304, 
         "mode": 1, 
@@ -4431,7 +4464,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1014, 
                 "id": 1036, 
                 "diff": 2, 
                 "prob": 10
@@ -4451,7 +4484,7 @@
         "addTime": 1100, 
         "section": 1013, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11305, 
         "mode": 1, 
@@ -4463,7 +4496,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1014, 
                 "id": 1014, 
                 "diff": 2, 
                 "prob": 10
@@ -4499,7 +4532,7 @@
         "addTime": 1100, 
         "section": 1013, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11306, 
         "mode": 1, 
@@ -4527,7 +4560,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1014, 
                 "id": 1036, 
                 "diff": 2, 
                 "prob": 10
@@ -4547,7 +4580,7 @@
         "addTime": 1050, 
         "section": 1013, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11307, 
         "mode": 1, 
@@ -4575,7 +4608,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1014, 
                 "id": 1036, 
                 "diff": 3, 
                 "prob": 15
@@ -4595,7 +4628,7 @@
         "addTime": 1050, 
         "section": 1013, 
         "unlockItem": 10190, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11401, 
         "mode": 1, 
@@ -4635,7 +4668,7 @@
         "addTime": 1100, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11402, 
         "mode": 1, 
@@ -4675,7 +4708,7 @@
         "addTime": 1100, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 140, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11403, 
         "mode": 1, 
@@ -4715,7 +4748,7 @@
         "addTime": 1100, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11404, 
         "mode": 1, 
@@ -4743,7 +4776,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1023, 
                 "id": 1023, 
                 "diff": 2, 
                 "prob": 10
@@ -4763,7 +4796,7 @@
         "addTime": 1100, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 150, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11405, 
         "mode": 1, 
@@ -4802,7 +4835,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1008, 
+                "summon": 1034, 
                 "id": 1048, 
                 "diff": 5, 
                 "prob": 100
@@ -4811,7 +4844,7 @@
         "addTime": 1100, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11406, 
         "mode": 1, 
@@ -4851,7 +4884,7 @@
                 "min": 2, 
                 "max": 2, 
                 "summon": 1008, 
-                "id": 1049, 
+                "id": 1024, 
                 "diff": 4, 
                 "prob": 100
             }
@@ -4859,7 +4892,7 @@
         "addTime": 1050, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 170, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11407, 
         "mode": 1, 
@@ -4887,7 +4920,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1023, 
                 "id": 1023, 
                 "diff": 3, 
                 "prob": 15
@@ -4899,7 +4932,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1024, 
+                "id": 1043, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -4907,7 +4940,7 @@
         "addTime": 1000, 
         "section": 1014, 
         "unlockItem": 0, 
-        "normalCount": 180, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11501, 
         "mode": 1, 
@@ -4917,9 +4950,9 @@
     {
         "normal": [
             {
-                "min": 2, 
+                "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1013, 
                 "id": 1005, 
                 "diff": 1, 
                 "prob": 60
@@ -4938,7 +4971,7 @@
             {
                 "min": 3, 
                 "max": 3, 
-                "summon": 1010, 
+                "summon": 1015, 
                 "id": 1010, 
                 "diff": 6, 
                 "prob": 100
@@ -4947,7 +4980,7 @@
         "addTime": 1000, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 90, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11502, 
         "mode": 1, 
@@ -4957,9 +4990,9 @@
     {
         "normal": [
             {
-                "min": 2, 
+                "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1008, 
                 "id": 1016, 
                 "diff": 1, 
                 "prob": 60
@@ -4979,7 +5012,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1010, 
+                "id": 1032, 
                 "diff": 6, 
                 "prob": 100
             }
@@ -4987,7 +5020,7 @@
         "addTime": 1000, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11503, 
         "mode": 1, 
@@ -4999,7 +5032,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1013, 
                 "id": 1005, 
                 "diff": 1, 
                 "prob": 50
@@ -5019,7 +5052,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1032, 
+                "id": 1033, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -5027,7 +5060,7 @@
         "addTime": 1000, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 80, 
         "candy": 5, 
         "next": 11504, 
         "mode": 1, 
@@ -5047,7 +5080,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1006, 
                 "id": 1005, 
                 "diff": 2, 
                 "prob": 15
@@ -5067,7 +5100,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1007, 
-                "id": 1033, 
+                "id": 1031, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -5075,7 +5108,7 @@
         "addTime": 1100, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11505, 
         "mode": 1, 
@@ -5095,7 +5128,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1006, 
                 "id": 1005, 
                 "diff": 2, 
                 "prob": 15
@@ -5115,7 +5148,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1031, 
+                "id": 1044, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -5123,7 +5156,7 @@
         "addTime": 1100, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11506, 
         "mode": 1, 
@@ -5151,7 +5184,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1031, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 10
@@ -5163,7 +5196,7 @@
                 "min": 2, 
                 "max": 2, 
                 "summon": 1008, 
-                "id": 1044, 
+                "id": 1045, 
                 "diff": 4, 
                 "prob": 100
             }
@@ -5171,7 +5204,7 @@
         "addTime": 1100, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11507, 
         "mode": 1, 
@@ -5199,7 +5232,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1030, 
                 "id": 1016, 
                 "diff": 2, 
                 "prob": 15
@@ -5210,8 +5243,8 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 1010, 
-                "id": 1045, 
+                "summon": 1018, 
+                "id": 1010, 
                 "diff": 4, 
                 "prob": 100
             }
@@ -5219,7 +5252,7 @@
         "addTime": 1000, 
         "section": 1015, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11601, 
         "mode": 1, 
@@ -5299,7 +5332,7 @@
         "addTime": 1000, 
         "section": 1016, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11603, 
         "mode": 1, 
@@ -5339,7 +5372,7 @@
         "addTime": 1000, 
         "section": 1016, 
         "unlockItem": 0, 
-        "normalCount": 100, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11604, 
         "mode": 1, 
@@ -5387,7 +5420,7 @@
         "addTime": 800, 
         "section": 1016, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 90, 
         "candy": 5, 
         "next": 11605, 
         "mode": 1, 
@@ -5435,7 +5468,7 @@
         "addTime": 900, 
         "section": 1016, 
         "unlockItem": 0, 
-        "normalCount": 110, 
+        "normalCount": 100, 
         "candy": 5, 
         "next": 11606, 
         "mode": 1, 
@@ -5483,7 +5516,7 @@
         "addTime": 1000, 
         "section": 1016, 
         "unlockItem": 0, 
-        "normalCount": 120, 
+        "normalCount": 110, 
         "candy": 5, 
         "next": 11607, 
         "mode": 1, 
@@ -5546,15 +5579,15 @@
                 "summon": 0, 
                 "id": 1015, 
                 "diff": 1, 
-                "prob": 60
+                "prob": 80
             }, 
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 2, 
-                "prob": 40
+                "prob": 20
             }
         ], 
         "level": 1, 
@@ -5583,10 +5616,10 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 2, 
-                "prob": 60
+                "prob": 30
             }, 
             {
                 "min": 2, 
@@ -5594,7 +5627,7 @@
                 "summon": 0, 
                 "id": 1021, 
                 "diff": 1, 
-                "prob": 40
+                "prob": 70
             }
         ], 
         "level": 2, 
@@ -5679,7 +5712,7 @@
             {
                 "min": 1, 
                 "max": 3, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 2, 
                 "prob": 10
@@ -5727,7 +5760,7 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": -1, 
                 "prob": 40
@@ -5775,7 +5808,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 3, 
                 "prob": 10
@@ -5787,7 +5820,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1010, 
-                "id": 1055, 
+                "id": 1025, 
                 "diff": 6, 
                 "prob": 100
             }
@@ -5823,7 +5856,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1011, 
                 "id": 1012, 
                 "diff": 3, 
                 "prob": 15
@@ -5835,7 +5868,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1009, 
-                "id": 1025, 
+                "id": 1055, 
                 "diff": 3, 
                 "prob": 100
             }
@@ -5863,7 +5896,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": 3, 
                 "prob": 10
@@ -5935,7 +5968,7 @@
             {
                 "min": 1, 
                 "max": 1, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": 3, 
                 "prob": 30
@@ -5991,7 +6024,7 @@
             {
                 "min": 1, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1021, 
                 "id": 1023, 
                 "diff": 3, 
                 "prob": 10
@@ -6048,11 +6081,11 @@
         "level": 5, 
         "elite": [
             {
-                "min": 3, 
-                "max": 3, 
-                "summon": 1009, 
+                "min": 2, 
+                "max": 2, 
+                "summon": 1034, 
                 "id": 1048, 
-                "diff": 5, 
+                "diff": 4, 
                 "prob": 100
             }
         ], 
@@ -6073,16 +6106,16 @@
                 "max": 2, 
                 "summon": 0, 
                 "id": 1001, 
-                "diff": 1, 
-                "prob": 50
+                "diff": 2, 
+                "prob": 30
             }, 
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": -1, 
-                "prob": 40
+                "prob": 60
             }, 
             {
                 "min": 1, 
@@ -6099,7 +6132,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1049, 
+                "id": 1024, 
                 "diff": 5, 
                 "prob": 100
             }
@@ -6122,15 +6155,15 @@
                 "summon": 0, 
                 "id": 1001, 
                 "diff": 1, 
-                "prob": 50
+                "prob": 35
             }, 
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
+                "summon": 1020, 
                 "id": 1022, 
                 "diff": -1, 
-                "prob": 35
+                "prob": 50
             }, 
             {
                 "min": 1, 
@@ -6147,7 +6180,7 @@
                 "min": 3, 
                 "max": 3, 
                 "summon": 1008, 
-                "id": 1024, 
+                "id": 1043, 
                 "diff": 5, 
                 "prob": 100
             }

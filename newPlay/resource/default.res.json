@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,fighting_png,titleline1_png,desLine_png,chapterdesBg_png,button_BG_png,UP_png,next_png,recordBg_png,fireworks_png,crown_png,home_png,scorebg_png,gameoverFnt_fnt,gameoverFnt_png,btnAd_png,signinitembg_png,signinicon_png,signinrecord1_png,signinrecord2_png,unsigninrecordbg_png,signinrecordbg_png,shadeimg_png,actorIcon10100_png,actorIcon10010_png,actorIcon10020_png,actorIcon10030_png,actorIcon10040_png,actorIcon10050_png,actorIcon10060_png,actorIcon10070_png,actorIcon10080_png,desbg_png,actorListBg_png,btnReturnIcon_png,gameLoseLine_png,gameLosebg_png,shaderImg_png,btnClose_png,btnAdImg_png,home1_png,continue_png,btnBaby_png,btnSound0_png,btnSound1_png,home2_png,continue1_png,btnAdImg1_png,candySignIn_png,btnBuyImg_png,btnCannotBuyImg_png,btnNoImg_png,btnYesImg_png,surePanelBg_png,jiansu0001_png,jiansu0002_png,jiansu0003_png,jiansu0004_png,jiansu0005_png,lei01_png,lei02_png,lei03_png,lei04_png,lei05_png,shuipo01_png,shuipo010_png,shuipo011_png,shuipo012_png,shuipo013_png,shuipo014_png,shuipo015_png,shuipo016_png,shuipo017_png,shuipo018_png,shuipo019_png,shuipo02_png,shuipo03_png,shuipo04_png,shuipo05_png,shuipo06_png,shuipo07_png,shuipo08_png,shuipo09_png,btnrReStart_png,signinrecord4_png,babySignIn_png,shaderImg2_png",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,fighting_png,titleline1_png,desLine_png,chapterdesBg_png,button_BG_png,UP_png,next_png,recordBg_png,fireworks_png,crown_png,home_png,scorebg_png,gameoverFnt_fnt,gameoverFnt_png,btnAd_png,signinitembg_png,signinicon_png,signinrecord1_png,signinrecord2_png,unsigninrecordbg_png,signinrecordbg_png,shadeimg_png,actorIcon10100_png,actorIcon10010_png,actorIcon10020_png,actorIcon10030_png,actorIcon10040_png,actorIcon10050_png,actorIcon10060_png,actorIcon10070_png,actorIcon10080_png,desbg_png,actorListBg_png,btnReturnIcon_png,gameLoseLine_png,gameLosebg_png,shaderImg_png,btnClose_png,btnAdImg_png,home1_png,continue_png,btnBaby_png,btnSound0_png,btnSound1_png,home2_png,continue1_png,btnAdImg1_png,candySignIn_png,btnBuyImg_png,btnCannotBuyImg_png,btnNoImg_png,btnYesImg_png,surePanelBg_png,jiansu0001_png,jiansu0002_png,jiansu0003_png,jiansu0004_png,jiansu0005_png,lei01_png,lei02_png,lei03_png,lei04_png,lei05_png,shuipo01_png,shuipo010_png,shuipo011_png,shuipo012_png,shuipo013_png,shuipo014_png,shuipo015_png,shuipo016_png,shuipo017_png,shuipo018_png,shuipo019_png,shuipo02_png,shuipo03_png,shuipo04_png,shuipo05_png,shuipo06_png,shuipo07_png,shuipo08_png,shuipo09_png,btnrReStart_png,signinrecord4_png,babySignIn_png,shaderImg2_png,levelRewardConfig_json",
 			"name": "preload"
 		}
 	],
@@ -3322,6 +3322,11 @@
 			"url": "assets/game/shaderImg.png",
 			"type": "image",
 			"name": "shaderImg2_png"
+		},
+		{
+			"name": "levelRewardConfig_json",
+			"type": "json",
+			"url": "config/levelRewardConfig.json"
 		}
 	]
 }

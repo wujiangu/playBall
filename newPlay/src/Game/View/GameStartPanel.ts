@@ -121,7 +121,7 @@ class GameStartPanel extends BasePanel {
 
 	private _onShow() {
 		this.touchChildren = true
-		if (GameConfig.sign == 0 && GameConfig.signCount <= 6 && GameConfig.guideIndex >= 3) {
+		if (GameConfig.sign == 0 && GameConfig.signCount <= 6 && GameConfig.guideIndex >= 4) {
 			Common.dispatchEvent(MainNotify.openSignPanel)
 		}
 	}

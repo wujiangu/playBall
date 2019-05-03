@@ -216,6 +216,7 @@ class Baby extends egret.DisplayObjectContainer{
 			let value = 0
 			for (let i = 0; i < actors.length; i++) {
 				let actor:BaseActor = actors[i]
+				Common.log(actor.state, actor.y)
 				if (actor.state == EMonsterState.Ready && actor.y >= 250) {
 					if (this.skillData.skillHang == ESkillHand.Ballon) {
 						for (let j = 0; j < actor.balloons.length; j++) {

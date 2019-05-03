@@ -548,5 +548,77 @@ var Common;
         }
     }
     Common.updateIsSignData = updateIsSignData;
+    /**获取章节分数 */
+    function getChapterScore() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.chapterMaxScore = JSON.parse(message);
+                }
+                else {
+                    GameConfig.chapterMaxScore = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "chapterMaxScore");
+        }
+        else {
+            var chapterMaxScore = NativeApi.getLocalData(GameConfig.game + "chapterMaxScore");
+            if (chapterMaxScore == null) {
+                GameConfig.chapterMaxScore = {};
+            }
+            else {
+                GameConfig.chapterMaxScore = JSON.parse(chapterMaxScore);
+            }
+        }
+    }
+    Common.getChapterScore = getChapterScore;
+    /**更新章节分数 */
+    function updateChapterScore(value) {
+        GameConfig.chapterMaxScore = value;
+        var strScore = JSON.stringify(value);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "chapterMaxScore:" + strScore);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "chapterMaxScore", strScore);
+        }
+    }
+    Common.updateChapterScore = updateChapterScore;
+    /**获取章节最高连击 */
+    function getChapterCombo() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.chapterMaxCombo = JSON.parse(message);
+                }
+                else {
+                    GameConfig.chapterMaxCombo = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "chapterMaxCombo");
+        }
+        else {
+            var chapterMaxCombo = NativeApi.getLocalData(GameConfig.game + "chapterMaxCombo");
+            if (chapterMaxCombo == null) {
+                GameConfig.chapterMaxCombo = {};
+            }
+            else {
+                GameConfig.chapterMaxCombo = JSON.parse(chapterMaxCombo);
+            }
+        }
+    }
+    Common.getChapterCombo = getChapterCombo;
+    /**更新章节连击 */
+    function updateChapterCombo(value) {
+        GameConfig.chapterMaxCombo = value;
+        var strScore = JSON.stringify(value);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "chapterMaxCombo:" + strScore);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "chapterMaxCombo", strScore);
+        }
+    }
+    Common.updateChapterCombo = updateChapterCombo;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

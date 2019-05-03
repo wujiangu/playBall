@@ -9,6 +9,8 @@ class GameConfig {
 	public static summonTable:any
 	public static levelConfig:Array<any>
 	public static levelTable:any
+	public static levelRewardConfig:Array<any>
+	public static levelRewardTable:any
 
 	public static gestureConfig:Array<any>
 	public static gestureTable:any
@@ -81,6 +83,8 @@ class GameConfig {
 	public static curBattleChapter = 0
 	// 章节最高分数
 	public static chapterMaxScore:any
+	// 章节最高连击
+	public static chapterMaxCombo:any
 
 	// 临时配置，后续修改
 	public static sceneType:number = 0
@@ -273,6 +277,19 @@ class GameConfig {
 			}
         }
 
+		this.levelRewardConfig = RES.getRes("levelRewardConfig_json")
+		this.levelRewardTable = {}
+		for (let i = 0; i < this.levelRewardConfig.length; i++) {
+            let config = this.levelRewardConfig[i]
+			let data = {}
+			data["key"] = config.key
+			data["condition"] = config.condition
+			data["count"] = config.count
+			data["reward"] = config.reward
+			data["value"] = config.value
+			this.levelRewardTable[config.key.toString()] = data
+        }
+
 		this.summonSkillTable = {}
         for (let i = 0; i < this.summonSkillConfig.length; i++) {
             let config = this.summonSkillConfig[i]
@@ -410,8 +427,12 @@ class GameConfig {
 			data["water"] = config.water
 			this.chapterTable[config.id.toString()] = data
 			let score = this.chapterMaxScore[config.id.toString()]
+			let combo = this.chapterMaxCombo[config.id.toString()]
 			if (score == null) {
 				this.chapterMaxScore[config.id.toString()] = 0
+			}
+			if (combo == null) {
+				this.chapterMaxCombo[config.id.toString()] = 0
 			}
 		}
 

@@ -207,6 +207,9 @@ var BaseActor = (function (_super) {
         get: function () {
             return this._state;
         },
+        set: function (value) {
+            this._state = value;
+        },
         enumerable: true,
         configurable: true
     });

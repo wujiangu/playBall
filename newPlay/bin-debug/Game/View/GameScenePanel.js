@@ -214,26 +214,31 @@ var GameScenePanel = (function (_super) {
         }
         else if (GameConfig.guideIndex == 3) {
             this.m_guideArmatureContainer.play("xinshouyindao3", 0);
+            this.m_guideArmatureContainer.x = 350;
+            this.m_guideArmatureContainer.y = -110;
+            this.power = 100;
         }
         else {
             this.m_guideArmatureContainer.play("xinshouyindao", 0);
         }
-        for (var i = 0; i < this.m_monsters.length; i++) {
-            var monster = this.m_monsters[i];
-            for (var j = 0; j < monster.balloons.length; j++) {
-                var balloon = monster.balloons[j];
-                balloon.guideStart();
+        if (GameConfig.guideIndex < 3) {
+            for (var i = 0; i < this.m_monsters.length; i++) {
+                var monster = this.m_monsters[i];
+                for (var j = 0; j < monster.balloons.length; j++) {
+                    var balloon = monster.balloons[j];
+                    balloon.guideStart();
+                }
             }
+            this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
+            Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
         }
-        this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
-        Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
     };
     GameScenePanel.prototype.guideEnd = function () {
         this._imgGuideTip.visible = false;
         this.m_rectWarning.visible = false;
         GameConfig.isGuide = false;
         this.power = 0;
-        Common.updateGuide(3);
+        Common.updateGuide(4);
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
         Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
     };
@@ -451,6 +456,9 @@ var GameScenePanel = (function (_super) {
     GameScenePanel.prototype.getAllActors = function () {
         this._data.allActors.length = 0;
         for (var i = 0; i < this.m_monsters.length; i++) {
+            if (GameConfig.isGuide && this.m_monsters[i].state == EMonsterState.Stop) {
+                this.m_monsters[i].state = EMonsterState.Ready;
+            }
             if (this.m_monsters[i].state == EMonsterState.Ready) {
                 this._data.allActors.push(this.m_monsters[i]);
             }
@@ -599,7 +607,7 @@ var GameScenePanel = (function (_super) {
                 this.score = 0;
                 this.SetRealScore(0);
                 this._imgGuide.visible = true;
-                if (GameConfig.guideIndex <= 1) {
+                if (GameConfig.guideIndex <= 2) {
                     // this.power = 90
                     GameConfig.guideIndex++;
                     this._imgGuide.source = "imgGuide" + GameConfig.guideIndex + "_png";
@@ -615,12 +623,12 @@ var GameScenePanel = (function (_super) {
                     Common.removeEventListener(MainNotify.gestureAction, this._onGesture, this);
                 }
                 else {
-                    this.m_guideArmatureContainer.stop(); //手指骨骼引导动画
-                    this.m_guideArmatureContainer.visible = false;
-                    this.updeLevelData(this._data.levelData.next, this._data.levelData.key);
-                    this._imgGuide.source = "imgGuide3_png";
-                    this.yindao.play(0);
-                    this.guideEnd(); //引导结束                                      
+                    // this.m_guideArmatureContainer.stop() //手指骨骼引导动画
+                    // this.m_guideArmatureContainer.visible = false
+                    // this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
+                    // // this._imgGuide.source = "imgGuide3_png"
+                    // // this.yindao.play(0)  
+                    // this.guideEnd();//引导结束                                      
                 }
                 // else{
                 //     //第三个引导怪物死掉之后，开始引导玩家点击技能按钮  
@@ -724,13 +732,14 @@ var GameScenePanel = (function (_super) {
             this.SetRealScore(this._data.realScore);
             this.actorDeadHandle();
             GameConfig.curCombo = Math.max(this.m_comboCount, GameConfig.curCombo);
+            if (this.m_comboCount > GameConfig.chapterMaxCombo[this._data.chapter.toString()]) {
+                GameConfig.chapterMaxCombo[this._data.chapter.toString()] = this.m_comboCount;
+                Common.updateChapterCombo(GameConfig.chapterMaxCombo);
+            }
         }
         else {
             this.m_comboCount = 0;
             this.m_isBoom = false;
-            // this.comboEnd.stop()
-            // this.comboMove.play(0)
-            // this.comboEnd.play(0)
         }
     };
     GameScenePanel.prototype.unlockEffect = function (id) {
@@ -785,19 +794,9 @@ var GameScenePanel = (function (_super) {
             if (GameConfig.gameMode == EBattleMode.Level) {
                 this._data.updateCandy(this._data.levelData.candy + this._data.extra);
                 this._data.extra = 0;
-                var id = this._data.levelData.unlockItem;
-                if (id > 0) {
-                    var index = GameConfig.babyUnlockList.indexOf(id);
-                    if (index >= 0) {
-                        // 已解锁
-                        GameManager.Instance.endLevel();
-                    }
-                    else {
-                        // 未解锁
-                        GameConfig.babyUnlockList.push(id);
-                        Common.updateUnlockBaby();
-                        this.unlockEffect(id);
-                    }
+                if (this._data.isChapterFinal()) {
+                    this._data.getLevelReward(0, 0, true);
+                    GameManager.Instance.endLevel();
                 }
                 else {
                     this.touchChildren = true;
@@ -806,13 +805,11 @@ var GameScenePanel = (function (_super) {
                     this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
                     Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
                     this.score = 0;
-                    this._data.updateCandy(this._data.levelData.candy);
+                    // this._data.updateCandy(this._data.levelData.candy)
                     // this.SetRealScore(0)
                     GameManager.Instance.start();
                     // this.updeLevelData(this._data.levelData.next, this._data.levelData.key)
-                    GameManager.Instance.endLevel();
                 }
-                // GameManager.Instance.endLevel()
             }
             else {
                 this.updeLevelData(this._data.levelData.next, this._data.levelData.key);
@@ -924,6 +921,12 @@ var GameScenePanel = (function (_super) {
             var actors = this.getAllActors();
             this.m_baby.selectRangeFrontToBack(actors);
             this.releaseSkill();
+            if (GameConfig.isGuide) {
+                this.m_guideArmatureContainer.stop(); //手指骨骼引导动画
+                this.m_guideArmatureContainer.visible = false;
+                this.updeLevelData(this._data.levelData.next, this._data.levelData.key);
+                this.guideEnd(); //引导结束
+            }
         }
     };
     GameScenePanel.prototype._onReadyComplete = function () {

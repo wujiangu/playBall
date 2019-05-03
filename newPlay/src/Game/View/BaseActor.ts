@@ -195,6 +195,10 @@ class BaseActor extends egret.DisplayObjectContainer {
 		return this._state
 	}
 
+	public set state(value:EMonsterState) {
+		this._state = value
+	}
+
 	public playEffect(data:any) {}
 
 	public ballExplosion(balloon:Balloon) {}

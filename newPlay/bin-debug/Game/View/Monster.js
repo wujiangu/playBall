@@ -159,6 +159,8 @@ var Monster = (function (_super) {
                 this._gestureData.push(GameConfig.gestureTable["1001"]);
             if (GameConfig.guideIndex == 2)
                 this._gestureData.push(GameConfig.gestureTable["1002"]);
+            if (GameConfig.guideIndex == 3)
+                this._gestureData.push(GameConfig.gestureTable["1001"]);
         }
         this._sumBalloon = 0;
     };

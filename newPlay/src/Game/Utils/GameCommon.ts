@@ -481,7 +481,7 @@ namespace Common{
 			NativeApi.setLocalData(GameConfig.game+"signCount", GameConfig.signCount.toString())
 		}
 	}
-/**是否刷新签到数据 */
+	/**是否刷新签到数据 */
 	export function getIsSignData() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
@@ -512,12 +512,12 @@ namespace Common{
 			NativeApi.setLocalData(GameConfig.game+"IsSignData", GameConfig.isSignData.toString())
 		}
 	}
-/**获取章节分数 */
+	/**获取章节分数 */
 	export function getChapterScore() {
 		if (!GameConfig.isWebView) {
 			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
 				if (message != null && message.length > 0) {
-					GameConfig.chapterMaxScore = parseInt(message)
+					GameConfig.chapterMaxScore = JSON.parse(message)
 				}else{
 					GameConfig.chapterMaxScore = {}
 				}
@@ -529,7 +529,7 @@ namespace Common{
 			if (chapterMaxScore == null) {
 				GameConfig.chapterMaxScore = {}
 			}else{
-				GameConfig.chapterMaxScore = parseInt(chapterMaxScore)
+				GameConfig.chapterMaxScore = JSON.parse(chapterMaxScore)
 			}
 		}
 	}
@@ -537,9 +537,44 @@ namespace Common{
 	/**更新章节分数 */
 	export function updateChapterScore(value:any) {
 		GameConfig.chapterMaxScore = value
+		let strScore = JSON.stringify(value)
 		if (!GameConfig.isWebView) {
-			egret.ExternalInterface.call("write", GameConfig.game+"chapterMaxScore:" + GameConfig.chapterMaxScore)
+			egret.ExternalInterface.call("write", GameConfig.game+"chapterMaxScore:" + strScore)
 		}else{
-			NativeApi.setLocalData(GameConfig.game+"chapterMaxScore", GameConfig.chapterMaxScore)
+			NativeApi.setLocalData(GameConfig.game+"chapterMaxScore", strScore)
 		}
-	}}
+	}
+
+	/**获取章节最高连击 */
+	export function getChapterCombo() {
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.chapterMaxCombo = JSON.parse(message)
+				}else{
+					GameConfig.chapterMaxCombo = {}
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"chapterMaxCombo")
+		}
+		else {
+			let chapterMaxCombo = NativeApi.getLocalData(GameConfig.game+"chapterMaxCombo")
+			if (chapterMaxCombo == null) {
+				GameConfig.chapterMaxCombo = {}
+			}else{
+				GameConfig.chapterMaxCombo = JSON.parse(chapterMaxCombo)
+			}
+		}
+	}
+
+	/**更新章节连击 */
+	export function updateChapterCombo(value:any) {
+		GameConfig.chapterMaxCombo = value
+		let strScore = JSON.stringify(value)
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"chapterMaxCombo:" + strScore)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"chapterMaxCombo", strScore)
+		}
+	}
+}

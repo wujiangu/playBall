@@ -211,6 +211,7 @@ var Baby = (function (_super) {
             var value = 0;
             for (var i = 0; i < actors.length; i++) {
                 var actor = actors[i];
+                Common.log(actor.state, actor.y);
                 if (actor.state == EMonsterState.Ready && actor.y >= 250) {
                     if (this.skillData.skillHang == ESkillHand.Ballon) {
                         for (var j = 0; j < actor.balloons.length; j++) {

@@ -66,6 +66,11 @@ class GameSelectLevel extends BasePanel {
 		Common.dispatchEvent(MainNotify.closeGameSelectLevel)
 		if (this._status == 1) {
 			// Common.dispatchEvent(MainNotify.closeGameStartPanel)
+			if (PanelManager.gameScenePanel != null) {
+				PanelManager.gameScenePanel.sceneData.continueCount = 0
+				PanelManager.gameScenePanel.sceneData.isScoreRewardGet = false
+				PanelManager.gameScenePanel.sceneData.isComboRewardGet = false
+			}
 			Common.dispatchEvent(MainNotify.openGamePanel)
 		}else{
 			Common.dispatchEvent(MainNotify.openGameStartPanel)
