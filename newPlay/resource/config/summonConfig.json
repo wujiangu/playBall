@@ -107,5 +107,23 @@
         "Animation": "summon1006", 
         "Speed": 11, 
         "ID": 1006
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "BF", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "BF", 
+        "Speed": 11, 
+        "ID": 1007
     }
 ]

@@ -49,6 +49,13 @@
                 "summon": "", 
                 "id": "", 
                 "min": ""
+            }, 
+            {
+                "diff": "", 
+                "max": "", 
+                "summon": "", 
+                "id": "", 
+                "min": ""
             }
         ], 
         "addTime": 1800, 
@@ -73,46 +80,6 @@
             }
         ], 
         "level": 1, 
-        "elite": [
-            {
-                "diff": "", 
-                "max": "", 
-                "summon": "", 
-                "id": "", 
-                "min": ""
-            }
-        ], 
-        "addTime": 1800, 
-        "section": 1001, 
-        "unlockItem": 0, 
-        "normalCount": 1, 
-        "candy": 0, 
-        "next": 10003, 
-        "mode": 2, 
-        "key": 10002, 
-        "speed": 1
-    }, 
-    {
-        "normal": [
-            {
-                "min": 1, 
-                "max": 1, 
-                "summon": 0, 
-                "id": 1001, 
-                "diff": -1, 
-                "prob": 100
-            }
-        ], 
-        "level": 1, 
-        "elite": [
-            {
-                "diff": "", 
-                "max": "", 
-                "summon": "", 
-                "id": "", 
-                "min": ""
-            }
-        ], 
         "addTime": 1800, 
         "section": 1001, 
         "unlockItem": 0, 
@@ -120,7 +87,7 @@
         "candy": 0, 
         "next": 10101, 
         "mode": 2, 
-        "key": 10003, 
+        "key": 10002, 
         "speed": 1
     }, 
     {
@@ -155,8 +122,8 @@
             {
                 "min": 2, 
                 "max": 2, 
-                "summon": 0, 
-                "id": 1007, 
+                "summon": 1040, 
+                "id": 1073, 
                 "diff": -1, 
                 "prob": 100
             }
