@@ -119,8 +119,10 @@ var EMonsterDifficult;
 (function (EMonsterDifficult) {
     EMonsterDifficult[EMonsterDifficult["Normal"] = 1] = "Normal";
     EMonsterDifficult[EMonsterDifficult["Elite"] = 2] = "Elite";
-    EMonsterDifficult[EMonsterDifficult["BOSS"] = 3] = "BOSS";
-    EMonsterDifficult[EMonsterDifficult["Summon"] = 4] = "Summon";
+    EMonsterDifficult[EMonsterDifficult["SpecialElite1"] = 3] = "SpecialElite1";
+    EMonsterDifficult[EMonsterDifficult["SpecialElite2"] = 4] = "SpecialElite2";
+    EMonsterDifficult[EMonsterDifficult["BOSS"] = 5] = "BOSS";
+    EMonsterDifficult[EMonsterDifficult["Summon"] = 6] = "Summon";
 })(EMonsterDifficult || (EMonsterDifficult = {}));
 // 召唤物类型
 var ESummonType;

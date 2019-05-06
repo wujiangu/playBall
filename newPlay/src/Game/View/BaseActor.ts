@@ -73,6 +73,9 @@ class BaseActor extends egret.DisplayObjectContainer {
 	}
 
 	public initData() {
+		this._summonCount = 0
+		this._summonWave = 0
+		this._summonBeKillCount = 0
 		this._unusualDelay = 0
 	}
 
@@ -199,6 +202,22 @@ class BaseActor extends egret.DisplayObjectContainer {
 		this._state = value
 	}
 
+	public get master() {
+		return this._master
+	}
+
+	public set master(value:BaseActor) {
+		this._master = value
+	}
+
+	public get summonCount() {
+		return this._summonCount
+	}
+
+	public set summonCount(value:number) {
+		this._summonCount = value
+	}
+
 	public playEffect(data:any) {}
 
 	public ballExplosion(balloon:Balloon) {}
@@ -244,6 +263,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 	}
 
 	public onEffectArmatureFram(event:dragonBones.EgretEvent) {}
+
+	public summonBeKill() {}
 
 	protected _destroyBalloon() {
 		this._sumBalloon = 0
@@ -352,4 +373,10 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected _summonType:number
 	/**异常状态计时 */
 	protected _unusualDelay:number
+	protected _master:BaseActor
+	protected _summonCount:number
+	/**召唤物波数 */
+	protected _summonWave:number
+	/**召唤物被消灭的数量 */
+	protected _summonBeKillCount:number
 }

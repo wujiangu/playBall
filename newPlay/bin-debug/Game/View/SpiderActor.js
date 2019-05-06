@@ -88,7 +88,7 @@ var SpiderActor = (function (_super) {
             }
         }
         this._sumBalloon = 0;
-        this._summonWave = 0;
+        this._summonWaves = 0;
         this._spitStage = 1;
         this._sumonDelay = -1;
     };
@@ -115,7 +115,7 @@ var SpiderActor = (function (_super) {
     SpiderActor.prototype.Summon = function (a_count) {
         if (a_count === void 0) { a_count = 2; }
         for (var i = 0; i < a_count; i++) {
-            PanelManager.gameScenePanel.createSummonActor(this._summonData, this._ePos, this.x - 100, this.y - 400, a_count, i, true);
+            PanelManager.gameScenePanel.createSummonActor(this, this._summonData, this._ePos, this.x - 100, this.y - 400, a_count, i, true);
         }
     };
     SpiderActor.prototype.gotoIdle = function () {
@@ -351,7 +351,7 @@ var SpiderActor = (function (_super) {
                 this.gotoAttack();
                 break;
             case EMonsterState.Attack:
-                if (this._summonWave >= 6) {
+                if (this._summonWaves >= 6) {
                     this.gotoSummonFinish();
                 }
                 else {
@@ -394,7 +394,7 @@ var SpiderActor = (function (_super) {
         }
         if (this._isSpit) {
             this._isSpit = false;
-            this._summonWave++;
+            this._summonWaves++;
             var count = MathUtils.getRandom(1, 2);
             var data = { "id": 1003, "diff": 1, "ids": [], "count": 2 };
             for (var i = 0; i < count; i++) {
@@ -405,7 +405,7 @@ var SpiderActor = (function (_super) {
     SpiderActor.prototype._spide = function (data, posX, posY, count, i) {
         var channel = GameVoice.spiderKingDrug.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
-        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i);
+        PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     return SpiderActor;
 }(BaseActor));

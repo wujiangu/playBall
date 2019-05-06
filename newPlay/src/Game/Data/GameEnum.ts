@@ -131,6 +131,8 @@ enum EMonsterDifficult
 {
     Normal = 1,
     Elite,
+    SpecialElite1,
+    SpecialElite2,
     BOSS,
     Summon,
 }

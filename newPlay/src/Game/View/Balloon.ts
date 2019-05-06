@@ -119,6 +119,7 @@ class Balloon extends egret.Sprite {
 			this._type = data[random].type
 			this._score = data[random].count
 			this._animationName = data[random].balloon
+			this._gestureIcon = data[random].path
 			data.splice(random, 1)
 			this._balloonArmatureContainer.play(this._animationName, 1)
 			this._balloonArmatureContainer.pause(this._animationName)
@@ -189,6 +190,17 @@ class Balloon extends egret.Sprite {
 		// egret.setTimeout(this._OnBalloonBoom, this, 200)
 	}
 
+	public changeToUnknown() {
+		this._lastType = this._type
+		this._type = 0
+		this._gesture.texture = RES.getRes("gestureSheet_json.gesture104")
+	}
+
+	public changeToKnown() {
+		this._type = this._lastType
+		this._gesture.texture = RES.getRes(this._gestureIcon)
+	}
+
 	private _onBalloonBoom() {
 		// this._boomSound.play(0, 1)
 	}
@@ -204,6 +216,18 @@ class Balloon extends egret.Sprite {
 
 	public get type() {
 		return this._type
+	}
+
+	public set type(value:number) {
+		this._type = value
+	}
+
+	public get lastType() {
+		return this._lastType
+	}
+
+	public set lastType(value:number) {
+		this._lastType = value
 	}
 
 	public get rop():egret.Bitmap {
@@ -254,14 +278,17 @@ class Balloon extends egret.Sprite {
 						this._gestureData.push(GameConfig.gestureConfig[i])
 					}
 				}
-				Common.log("_onEffectArmatureComplete")
+				
 				this.updateGesture(this._gestureData)
+				Common.log("_onEffectArmatureComplete", this._type)
 			break
 		}
 	}
 
 	private _gesture:egret.Bitmap
 	private _type:number
+	private _gestureIcon:string
+	private _lastType:number
 	private _score:number
 	private _rop:egret.Bitmap
 	private _root:BaseActor

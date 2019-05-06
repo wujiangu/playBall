@@ -22,6 +22,7 @@ var GameScenePanel = (function (_super) {
         _this.m_luckyActors = new Array();
         _this.m_summonActors = new Array();
         _this.m_spiderActors = new Array();
+        _this.m_eliteActors = new Array();
         _this._data = new GameSceneData();
         return _this;
     }
@@ -400,7 +401,7 @@ var GameScenePanel = (function (_super) {
         }
         this._changeLevel();
     };
-    GameScenePanel.prototype.removeBullet = function (a_bullet) {
+    GameScenePanel.prototype.removeEliteActor = function (a_eliteActor) {
     };
     GameScenePanel.prototype.removeLuckyActor = function (a_lucky) {
         for (var i = 0; i < this.m_luckyActors.length; i++) {
@@ -451,6 +452,11 @@ var GameScenePanel = (function (_super) {
             var spider = this.m_spiderActors.pop();
             spider.destroy();
             this.m_groupGame.removeChild(spider);
+        }
+        while (this.m_eliteActors.length > 0) {
+            var elite = this.m_eliteActors.pop();
+            elite.destroy();
+            this.m_groupGame.removeChild(elite);
         }
     };
     GameScenePanel.prototype.getAllActors = function () {
@@ -893,10 +899,17 @@ var GameScenePanel = (function (_super) {
             }
             for (var i = 0; i < this.m_summonActors.length; i++) {
                 var summon = this.m_summonActors[i];
-                if (summon.gestureType == GameConfig.gestureType) {
-                    summon.gotoDead();
-                    // this.boom = true
+                for (var j = 0; j < summon.balloons.length; j++) {
+                    var balloon = summon.balloons[j];
+                    if (balloon.type == GameConfig.gestureType) {
+                        summon.gotoDead();
+                        // this.boom = true
+                    }
                 }
+                // if (summon.gestureType == GameConfig.gestureType) {
+                //     summon.gotoDead()
+                //     // this.boom = true
+                // }
             }
             for (var i = 0; i < this.m_spiderActors.length; i++) {
                 var spider = this.m_spiderActors[i];
@@ -1036,10 +1049,41 @@ var GameScenePanel = (function (_super) {
         // this._particle.emitterY = y
     };
     GameScenePanel.prototype._createMonster = function () {
-        var monster = GameObjectPool.getInstance().createObject(Monster, "Monster");
-        monster.Init(this._data.levelData, this.m_levelState);
-        monster.updateEffectArmature(this.m_baby.skillData);
-        this.m_monsters.push(monster);
+        var monsterData = null;
+        var data = null;
+        switch (this.m_levelState) {
+            case ELevelType.Normal:
+                monsterData = this._data.levelData.normal;
+                var sumWeight = 0;
+                for (var i = 0; i < monsterData.length; i++) {
+                    sumWeight += monsterData[i].prob;
+                    monsterData[i].weight = sumWeight;
+                }
+                var random = MathUtils.getRandom(1, sumWeight);
+                for (var i = 0; i < monsterData.length; i++) {
+                    if (random <= monsterData[i].weight) {
+                        data = monsterData[i];
+                        break;
+                    }
+                }
+                break;
+            case ELevelType.Elite:
+                data = this.m_bossData;
+                break;
+        }
+        var monsterTableData = GameConfig.monsterTable[data.id.toString()];
+        if (monsterTableData.Difficult == EMonsterDifficult.Normal || monsterTableData.Difficult == EMonsterDifficult.Elite) {
+            var monster = GameObjectPool.getInstance().createObject(Monster, "Monster");
+            monster.Init(data, this.m_levelState);
+            monster.updateEffectArmature(this.m_baby.skillData);
+            this.m_monsters.push(monster);
+        }
+        else {
+            var monster = GameObjectPool.getInstance().createObject(EliteActor, "EliteActor");
+            monster.Init(data, this.m_levelState);
+            monster.updateEffectArmature(this.m_baby.skillData);
+            this.m_monsters.push(monster);
+        }
         for (var i = this.m_monsters.length - 1; i >= 0; i--) {
             this.m_groupGame.addChild(this.m_monsters[i]);
         }
@@ -1058,11 +1102,13 @@ var GameScenePanel = (function (_super) {
         this.m_spiderActors.push(spider);
         this.m_groupGame.addChild(spider);
     };
-    GameScenePanel.prototype.createSummonActor = function (a_data, pos, a_x, a_y, a_count, a_num, isBoss) {
+    GameScenePanel.prototype.createSummonActor = function (a_master, a_data, pos, a_x, a_y, a_count, a_num, isBoss) {
         if (a_count === void 0) { a_count = 0; }
         if (a_num === void 0) { a_num = 0; }
         if (isBoss === void 0) { isBoss = false; }
         var summon = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor");
+        summon.master = a_master;
+        a_master.summonCount += 1;
         var summonData = GameConfig.summonTable[a_data.id.toString()];
         var posX = this._data.getSummonTargetX(pos, a_x, a_count, a_num, summonData.Type, isBoss);
         var posY = a_y + MathUtils.getRandom(-20, 20);

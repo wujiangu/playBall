@@ -152,6 +152,7 @@ class SummonActor extends BaseActor {
 
 	public gotoDead() {
 		// if (this._state == EMonsterState.Ready && this.y >= 100) {
+			this._master.summonBeKill()
 			PanelManager.gameScenePanel.boom = true
 			this._gestureType = -1
 			this.m_gesture.visible = false

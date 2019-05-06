@@ -35,7 +35,7 @@ class Bullet extends egret.DisplayObjectContainer {
 		// Common.log(this.m_radian, this.rotation, distance)
 		if (distance <= 140) {
 			this.destroy()
-			PanelManager.gameScenePanel.removeBullet(this)
+			// PanelManager.gameScenePanel.removeBullet(this)
 			if (this._type == EEffectType.Fire) {
 				// this.m_target.playEffect()
 				let channel = GameVoice.burnSound.play(0, 1)

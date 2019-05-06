@@ -76,6 +76,9 @@ var BaseActor = (function (_super) {
         }
     };
     BaseActor.prototype.initData = function () {
+        this._summonCount = 0;
+        this._summonWave = 0;
+        this._summonBeKillCount = 0;
         this._unusualDelay = 0;
     };
     BaseActor.prototype.gotoIdle = function () {
@@ -213,6 +216,26 @@ var BaseActor = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(BaseActor.prototype, "master", {
+        get: function () {
+            return this._master;
+        },
+        set: function (value) {
+            this._master = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseActor.prototype, "summonCount", {
+        get: function () {
+            return this._summonCount;
+        },
+        set: function (value) {
+            this._summonCount = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     BaseActor.prototype.playEffect = function (data) { };
     BaseActor.prototype.ballExplosion = function (balloon) { };
     BaseActor.prototype.removeBalloon = function (balloon) { };
@@ -252,6 +275,7 @@ var BaseActor = (function (_super) {
         this._effectArmatureContainer.visible = false;
     };
     BaseActor.prototype.onEffectArmatureFram = function (event) { };
+    BaseActor.prototype.summonBeKill = function () { };
     BaseActor.prototype._destroyBalloon = function () {
         this._sumBalloon = 0;
         while (this._balloons.length > 0) {

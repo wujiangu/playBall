@@ -77,7 +77,7 @@ class SpiderActor extends BaseActor {
 		}
 
 		this._sumBalloon = 0
-		this._summonWave = 0
+		this._summonWaves = 0
 		this._spitStage = 1
 		this._sumonDelay = -1
 	}
@@ -108,7 +108,7 @@ class SpiderActor extends BaseActor {
 
 	public Summon(a_count:number = 2) {
 		for (let i = 0; i < a_count; i++) {
-			PanelManager.gameScenePanel.createSummonActor(this._summonData, this._ePos, this.x - 100, this.y - 400, a_count, i, true)
+			PanelManager.gameScenePanel.createSummonActor(this, this._summonData, this._ePos, this.x - 100, this.y - 400, a_count, i, true)
 		}
 	}
 
@@ -355,7 +355,7 @@ class SpiderActor extends BaseActor {
 				this.gotoAttack()
 			break
 			case EMonsterState.Attack:
-				if (this._summonWave >= 6) {
+				if (this._summonWaves >= 6) {
 					this.gotoSummonFinish()
 				}else{
 					this._spitStage++
@@ -400,7 +400,7 @@ class SpiderActor extends BaseActor {
 
 		if (this._isSpit) {
 			this._isSpit = false
-			this._summonWave++
+			this._summonWaves++
 			let count = MathUtils.getRandom(1, 2)
 			let data = {"id":1003, "diff":1, "ids":[], "count":2}
 			for (let i = 0; i < count; i++) {
@@ -412,13 +412,13 @@ class SpiderActor extends BaseActor {
 	private _spide(data, posX, posY, count, i) {
 		let channel = GameVoice.spiderKingDrug.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
-		PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i)
+		PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 
 	private _sumWeight:number
 	private _isSpit:boolean
 	private _spitStage:number
-	private _summonWave:number
+	private _summonWaves:number
 	private _sumonDelay:number
 	//////////////////////////////////////////////////////////////////
 	private _score:number

@@ -1061,19 +1061,19 @@
         "Difficult": 2
     }, 
     {
-        "Count": 0, 
-        "Scale": 1.2, 
+        "Count": 3, 
+        "Scale": 1, 
         "Name": "XD吸血鬼", 
         "Power": 5, 
         "Speed": 10, 
         "Score": 1, 
-        "Wave": 3, 
+        "Wave": 0, 
         "Width": 95, 
         "Animation": "xixuegui", 
-        "Height": 240, 
+        "Height": 280, 
         "Type": 2, 
         "ID": 1073, 
-        "Difficult": 3
+        "Difficult": 4
     }, 
     {
         "Count": 0, 

@@ -149,8 +149,10 @@ var Baby = (function (_super) {
         }
         for (var i = 0; i < this._influenceBalls.length; i++) {
             var ball = this._influenceBalls[i];
-            ball.updateEffectArmature(this.skillData);
-            ball.playEffect(this.skillData);
+            if (ball.type > 0) {
+                ball.updateEffectArmature(this.skillData);
+                ball.playEffect(this.skillData);
+            }
         }
     };
     Baby.prototype.selectRangeAll = function () {

@@ -156,8 +156,11 @@ class Baby extends egret.DisplayObjectContainer{
 
 		for (let i = 0; i < this._influenceBalls.length; i++) {
 			let ball:Balloon = this._influenceBalls[i]
-			ball.updateEffectArmature(this.skillData)
-			ball.playEffect(this.skillData)
+			if (ball.type > 0) {
+				ball.updateEffectArmature(this.skillData)
+				ball.playEffect(this.skillData)
+			}
+			
 		}
 	}
 

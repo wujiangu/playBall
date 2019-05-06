@@ -5,44 +5,54 @@ class Monster extends BaseActor {
 	}
 
 	public Init(data:any, type:ELevelType) {
-		let monsterData = null
+		// let monsterData = null
 		this._summonType = -1
+		this._gesturDiff = data.diff
+		this._balloonMin = data.min
+		this._balloonMax = data.max
+		let summonId = data.summon
+		if (summonId > 0) {
+			this._summonData = GameConfig.summonSkillTable[summonId]
+			this._summonType = this._summonData.type
+		}
+		this._data = GameConfig.monsterTable[data.id.toString()]
+		this._type = this._data.Difficult
 		switch (type) {
 			case ELevelType.Normal:
-				monsterData = data.normal
-				this._sumWeight = 0
-				for (let i = 0; i < monsterData.length; i++) {
-					this._sumWeight += monsterData[i].prob
-					monsterData[i].weight = this._sumWeight
-				}
-				let random = MathUtils.getRandom(1, this._sumWeight)
-				for (let i = 0; i < monsterData.length; i++) {
-					if (random <= monsterData[i].weight) {
-						this._gesturDiff = monsterData[i].diff
-						this._balloonMin = monsterData[i].min
-						this._balloonMax = monsterData[i].max
-						let summonId = monsterData[i].summon
-						if (summonId > 0) {
-							this._summonData = GameConfig.summonSkillTable[summonId]
-							this._summonType = this._summonData.type
-						}
-						this._data = GameConfig.monsterTable[monsterData[i].id.toString()]
-						this._type = this._data.Difficult
-						break
-					}
-				}
+				// monsterData = data.normal
+				// this._sumWeight = 0
+				// for (let i = 0; i < monsterData.length; i++) {
+				// 	this._sumWeight += monsterData[i].prob
+				// 	monsterData[i].weight = this._sumWeight
+				// }
+				// let random = MathUtils.getRandom(1, this._sumWeight)
+				// for (let i = 0; i < monsterData.length; i++) {
+				// 	if (random <= monsterData[i].weight) {
+				// 		this._gesturDiff = monsterData[i].diff
+				// 		this._balloonMin = monsterData[i].min
+				// 		this._balloonMax = monsterData[i].max
+				// 		let summonId = monsterData[i].summon
+				// 		if (summonId > 0) {
+				// 			this._summonData = GameConfig.summonSkillTable[summonId]
+				// 			this._summonType = this._summonData.type
+				// 		}
+				// 		this._data = GameConfig.monsterTable[monsterData[i].id.toString()]
+				// 		this._type = this._data.Difficult
+				// 		break
+				// 	}
+				// }
 			break
 			case ELevelType.Elite:
-				this._gesturDiff = PanelManager.gameScenePanel.boss.diff
-				this._balloonMin = PanelManager.gameScenePanel.boss.min
-				this._balloonMax = PanelManager.gameScenePanel.boss.max
-				let summonId = PanelManager.gameScenePanel.boss.summon
-				if (summonId > 0) {
-					this._summonData = GameConfig.summonSkillTable[summonId]
-					this._summonType = this._summonData.type
-				}
-				this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
-				this._type = this._data.Difficult
+				// this._gesturDiff = PanelManager.gameScenePanel.boss.diff
+				// this._balloonMin = PanelManager.gameScenePanel.boss.min
+				// this._balloonMax = PanelManager.gameScenePanel.boss.max
+				// let summonId = PanelManager.gameScenePanel.boss.summon
+				// if (summonId > 0) {
+				// 	this._summonData = GameConfig.summonSkillTable[summonId]
+				// 	this._summonType = this._summonData.type
+				// }
+				// this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
+				// this._type = this._data.Difficult
 				GameConfig.monsterPos = 3
 				let battleVolume = 0.8 * GameConfig.bgmValue / 100
 				egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
@@ -405,13 +415,13 @@ class Monster extends BaseActor {
 		}
 	}
 
-	private _spide(data, posX, posY, count, i) {
+	protected _spide(data, posX, posY, count, i) {
 		let channel = GameVoice.spideBall.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
-        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i)
+        PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 
-	private _onArmatureFrame(event:dragonBones.EgretEvent) {
+	protected _onArmatureFrame(event:dragonBones.EgretEvent) {
 		let evt:string = event.frameLabel
 		switch (evt) {
 			case "vomit":
@@ -428,13 +438,13 @@ class Monster extends BaseActor {
 		}
 	}
 
-	private _summon(data, posX, posY, count, i) {
+	protected _summon(data, posX, posY, count, i) {
 		let channel = GameVoice.summon.play(0, 1)
 		channel.volume = GameConfig.soundValue / 100
-        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i)
+        PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 
-	private _onArmatureComplet() {
+	protected _onArmatureComplet() {
 		if (this._state == EMonsterState.Dead) {
 			this._effectArmatureContainer.visible = false
 			if (this._summonData != null && this._summonType == 2) {
@@ -456,7 +466,7 @@ class Monster extends BaseActor {
 		}
 	}
 
-	private _randomMonsterData():any {
+	protected _randomMonsterData():any {
 		let random = MathUtils.getRandom(1, this._sumWeight)
 		for (let i = 0; i < GameConfig.monsterConfig.length; i++)
 		{
@@ -468,8 +478,8 @@ class Monster extends BaseActor {
 		return null
 	}
 
-	private _sumWeight:number
+	protected _sumWeight:number
 	//////////////////////////////////////////////////////////////////
-	private _score:number
-	private _summonData:any
+	protected _score:number
+	protected _summonData:any
 }

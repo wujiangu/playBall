@@ -121,6 +121,7 @@ var Balloon = (function (_super) {
             this._type = data[random].type;
             this._score = data[random].count;
             this._animationName = data[random].balloon;
+            this._gestureIcon = data[random].path;
             data.splice(random, 1);
             this._balloonArmatureContainer.play(this._animationName, 1);
             this._balloonArmatureContainer.pause(this._animationName);
@@ -186,6 +187,15 @@ var Balloon = (function (_super) {
         // }
         // egret.setTimeout(this._OnBalloonBoom, this, 200)
     };
+    Balloon.prototype.changeToUnknown = function () {
+        this._lastType = this._type;
+        this._type = 0;
+        this._gesture.texture = RES.getRes("gestureSheet_json.gesture104");
+    };
+    Balloon.prototype.changeToKnown = function () {
+        this._type = this._lastType;
+        this._gesture.texture = RES.getRes(this._gestureIcon);
+    };
     Balloon.prototype._onBalloonBoom = function () {
         // this._boomSound.play(0, 1)
     };
@@ -196,6 +206,19 @@ var Balloon = (function (_super) {
     Object.defineProperty(Balloon.prototype, "type", {
         get: function () {
             return this._type;
+        },
+        set: function (value) {
+            this._type = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Balloon.prototype, "lastType", {
+        get: function () {
+            return this._lastType;
+        },
+        set: function (value) {
+            this._lastType = value;
         },
         enumerable: true,
         configurable: true
@@ -259,8 +282,8 @@ var Balloon = (function (_super) {
                         this._gestureData.push(GameConfig.gestureConfig[i]);
                     }
                 }
-                Common.log("_onEffectArmatureComplete");
                 this.updateGesture(this._gestureData);
+                Common.log("_onEffectArmatureComplete", this._type);
                 break;
         }
     };

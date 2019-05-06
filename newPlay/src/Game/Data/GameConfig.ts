@@ -216,6 +216,8 @@ class GameConfig {
 			data["ID"] = config.ID
 			data["Type"] = config.Type
 			data["Difficult"] = config.Difficult
+			data["Wave"] = config.Wave
+			data["Count"] = config.Count
 			data["Animation"] = config.Animation
 			data["Actions"] = config.Actions
 			data["Speed"] = config.Speed

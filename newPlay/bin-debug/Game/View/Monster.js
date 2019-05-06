@@ -19,44 +19,54 @@ var Monster = (function (_super) {
         return _this;
     }
     Monster.prototype.Init = function (data, type) {
-        var monsterData = null;
+        // let monsterData = null
         this._summonType = -1;
+        this._gesturDiff = data.diff;
+        this._balloonMin = data.min;
+        this._balloonMax = data.max;
+        var summonId = data.summon;
+        if (summonId > 0) {
+            this._summonData = GameConfig.summonSkillTable[summonId];
+            this._summonType = this._summonData.type;
+        }
+        this._data = GameConfig.monsterTable[data.id.toString()];
+        this._type = this._data.Difficult;
         switch (type) {
             case ELevelType.Normal:
-                monsterData = data.normal;
-                this._sumWeight = 0;
-                for (var i = 0; i < monsterData.length; i++) {
-                    this._sumWeight += monsterData[i].prob;
-                    monsterData[i].weight = this._sumWeight;
-                }
-                var random = MathUtils.getRandom(1, this._sumWeight);
-                for (var i = 0; i < monsterData.length; i++) {
-                    if (random <= monsterData[i].weight) {
-                        this._gesturDiff = monsterData[i].diff;
-                        this._balloonMin = monsterData[i].min;
-                        this._balloonMax = monsterData[i].max;
-                        var summonId_1 = monsterData[i].summon;
-                        if (summonId_1 > 0) {
-                            this._summonData = GameConfig.summonSkillTable[summonId_1];
-                            this._summonType = this._summonData.type;
-                        }
-                        this._data = GameConfig.monsterTable[monsterData[i].id.toString()];
-                        this._type = this._data.Difficult;
-                        break;
-                    }
-                }
+                // monsterData = data.normal
+                // this._sumWeight = 0
+                // for (let i = 0; i < monsterData.length; i++) {
+                // 	this._sumWeight += monsterData[i].prob
+                // 	monsterData[i].weight = this._sumWeight
+                // }
+                // let random = MathUtils.getRandom(1, this._sumWeight)
+                // for (let i = 0; i < monsterData.length; i++) {
+                // 	if (random <= monsterData[i].weight) {
+                // 		this._gesturDiff = monsterData[i].diff
+                // 		this._balloonMin = monsterData[i].min
+                // 		this._balloonMax = monsterData[i].max
+                // 		let summonId = monsterData[i].summon
+                // 		if (summonId > 0) {
+                // 			this._summonData = GameConfig.summonSkillTable[summonId]
+                // 			this._summonType = this._summonData.type
+                // 		}
+                // 		this._data = GameConfig.monsterTable[monsterData[i].id.toString()]
+                // 		this._type = this._data.Difficult
+                // 		break
+                // 	}
+                // }
                 break;
             case ELevelType.Elite:
-                this._gesturDiff = PanelManager.gameScenePanel.boss.diff;
-                this._balloonMin = PanelManager.gameScenePanel.boss.min;
-                this._balloonMax = PanelManager.gameScenePanel.boss.max;
-                var summonId = PanelManager.gameScenePanel.boss.summon;
-                if (summonId > 0) {
-                    this._summonData = GameConfig.summonSkillTable[summonId];
-                    this._summonType = this._summonData.type;
-                }
-                this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()];
-                this._type = this._data.Difficult;
+                // this._gesturDiff = PanelManager.gameScenePanel.boss.diff
+                // this._balloonMin = PanelManager.gameScenePanel.boss.min
+                // this._balloonMax = PanelManager.gameScenePanel.boss.max
+                // let summonId = PanelManager.gameScenePanel.boss.summon
+                // if (summonId > 0) {
+                // 	this._summonData = GameConfig.summonSkillTable[summonId]
+                // 	this._summonType = this._summonData.type
+                // }
+                // this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
+                // this._type = this._data.Difficult
                 GameConfig.monsterPos = 3;
                 var battleVolume_1 = 0.8 * GameConfig.bgmValue / 100;
                 egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
@@ -403,7 +413,7 @@ var Monster = (function (_super) {
     Monster.prototype._spide = function (data, posX, posY, count, i) {
         var channel = GameVoice.spideBall.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
-        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i);
+        PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     Monster.prototype._onArmatureFrame = function (event) {
         var evt = event.frameLabel;
@@ -426,7 +436,7 @@ var Monster = (function (_super) {
     Monster.prototype._summon = function (data, posX, posY, count, i) {
         var channel = GameVoice.summon.play(0, 1);
         channel.volume = GameConfig.soundValue / 100;
-        PanelManager.gameScenePanel.createSummonActor(data, this._ePos, posX, posY, count, i);
+        PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     Monster.prototype._onArmatureComplet = function () {
         if (this._state == EMonsterState.Dead) {

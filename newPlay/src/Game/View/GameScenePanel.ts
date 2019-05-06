@@ -8,6 +8,7 @@ class GameScenePanel extends BasePanel {
         this.m_luckyActors = new Array()
         this.m_summonActors = new Array()
         this.m_spiderActors = new Array()
+        this.m_eliteActors = new Array()
         
         this._data = new GameSceneData()
 	}
@@ -417,7 +418,7 @@ class GameScenePanel extends BasePanel {
         this._changeLevel()
     }
 
-    public removeBullet(a_bullet:Bullet) {
+    public removeEliteActor(a_eliteActor:EliteActor) {
         
     }
 
@@ -476,6 +477,12 @@ class GameScenePanel extends BasePanel {
             let spider:SpiderActor = this.m_spiderActors.pop()
             spider.destroy()
             this.m_groupGame.removeChild(spider)
+        }
+
+        while(this.m_eliteActors.length > 0) {
+            let elite:EliteActor = this.m_eliteActors.pop()
+            elite.destroy()
+            this.m_groupGame.removeChild(elite)
         }
     }
 
@@ -914,10 +921,17 @@ class GameScenePanel extends BasePanel {
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
-                if (summon.gestureType == GameConfig.gestureType) {
-                    summon.gotoDead()
-                    // this.boom = true
-                }
+                for (let j = 0; j < summon.balloons.length; j++) {
+                    let balloon:Balloon = summon.balloons[j]
+                    if (balloon.type == GameConfig.gestureType) {
+                        summon.gotoDead()
+                        // this.boom = true
+                    }
+				}
+                // if (summon.gestureType == GameConfig.gestureType) {
+                //     summon.gotoDead()
+                //     // this.boom = true
+                // }
             }
 
             for (let i = 0 ; i < this.m_spiderActors.length; i++) {
@@ -1084,10 +1098,41 @@ class GameScenePanel extends BasePanel {
 	}
 
     private _createMonster() {
-        let monster:Monster = GameObjectPool.getInstance().createObject(Monster, "Monster")
-        monster.Init(this._data.levelData, this.m_levelState)
-        monster.updateEffectArmature(this.m_baby.skillData)
-        this.m_monsters.push(monster)
+        let monsterData = null
+        let data = null
+		switch (this.m_levelState) {
+			case ELevelType.Normal:
+				monsterData = this._data.levelData.normal
+				let sumWeight = 0
+				for (let i = 0; i < monsterData.length; i++) {
+					sumWeight += monsterData[i].prob
+					monsterData[i].weight = sumWeight
+				}
+				let random = MathUtils.getRandom(1, sumWeight)
+				for (let i = 0; i < monsterData.length; i++) {
+					if (random <= monsterData[i].weight) {
+                        data = monsterData[i]
+						break
+					}
+				}
+			break
+			case ELevelType.Elite:
+                data = this.m_bossData
+			break
+		}
+        let monsterTableData = GameConfig.monsterTable[data.id.toString()]
+        if (monsterTableData.Difficult == EMonsterDifficult.Normal || monsterTableData.Difficult == EMonsterDifficult.Elite) {
+            let monster:Monster = GameObjectPool.getInstance().createObject(Monster, "Monster")
+            monster.Init(data, this.m_levelState)
+            monster.updateEffectArmature(this.m_baby.skillData)
+            this.m_monsters.push(monster)
+        }else{
+            let monster:EliteActor = GameObjectPool.getInstance().createObject(EliteActor, "EliteActor")
+            monster.Init(data, this.m_levelState)
+            monster.updateEffectArmature(this.m_baby.skillData)
+            this.m_monsters.push(monster)
+        }
+        
         for (let i = this.m_monsters.length-1; i >= 0; i--) {
 			this.m_groupGame.addChild(this.m_monsters[i])
 		}
@@ -1107,8 +1152,10 @@ class GameScenePanel extends BasePanel {
         this.m_groupGame.addChild(spider)
     }
 
-    public createSummonActor(a_data:any, pos:EMonsterPos, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
+    public createSummonActor(a_master:BaseActor, a_data:any, pos:EMonsterPos, a_x:number, a_y:number, a_count:number = 0, a_num:number = 0, isBoss:boolean = false) {
         let summon:SummonActor = GameObjectPool.getInstance().createObject(SummonActor, "SummonActor")
+        summon.master = a_master
+        a_master.summonCount += 1
         let summonData = GameConfig.summonTable[a_data.id.toString()]
         let posX = this._data.getSummonTargetX(pos, a_x, a_count, a_num, summonData.Type, isBoss)
         let posY = a_y + MathUtils.getRandom(-20, 20)
@@ -1140,6 +1187,7 @@ class GameScenePanel extends BasePanel {
     private m_luckyActors:Array<LuckyActor>
     private m_summonActors:Array<SummonActor>
     private m_spiderActors:Array<SpiderActor>
+    private m_eliteActors:Array<EliteActor>
     
 
     private m_score:number
