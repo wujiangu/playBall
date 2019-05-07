@@ -128,6 +128,7 @@ var Balloon = (function (_super) {
         }
         this.scaleX = 1;
         this.scaleY = 1;
+        this._root.changeGestureType(this._type);
         if (data.length <= 0)
             this._root.resetGestureData();
     };
@@ -171,8 +172,10 @@ var Balloon = (function (_super) {
         this._gesture.visible = false;
         // this._balloon.play(1)
         this._balloonArmatureContainer.play(this._animationName, 1);
-        var channel = GameVoice.ballonBoomSound.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.ballonBoomSound.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         GameConfig.balloonScore += this._score;
         if (isSummon == false) {
             this._balloonArmatureContainer.addCompleteCallFunc(this._onBalloonComplete, this);
@@ -190,11 +193,15 @@ var Balloon = (function (_super) {
     Balloon.prototype.changeToUnknown = function () {
         this._lastType = this._type;
         this._type = 0;
-        this._gesture.texture = RES.getRes("gestureSheet_json.gesture104");
+        this._gesture.texture = RES.getRes("1_png");
+        this._gesture.anchorOffsetX = this._gesture.width / 2;
+        this._gesture.anchorOffsetY = this._gesture.height / 2;
     };
     Balloon.prototype.changeToKnown = function () {
         this._type = this._lastType;
         this._gesture.texture = RES.getRes(this._gestureIcon);
+        this._gesture.anchorOffsetX = this._gesture.width / 2;
+        this._gesture.anchorOffsetY = this._gesture.height / 2;
     };
     Balloon.prototype._onBalloonBoom = function () {
         // this._boomSound.play(0, 1)
@@ -263,7 +270,6 @@ var Balloon = (function (_super) {
         else {
             this._root.balloonExploreHandle();
             GameObjectPool.getInstance().destroyObject(this);
-            Common.log("_onBalloonComplete");
             this._root.removeBalloon(this);
         }
     };

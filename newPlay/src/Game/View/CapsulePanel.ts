@@ -44,7 +44,7 @@ class CapsulePanel extends BasePanel {
     public onExit():void{
 		this._btnDelay = -1
 		this._bgmChannel.stop()
-		GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0)
+		GameVoice.beginBGMChannel = GameVoice.beginBGMSound.play(0)		
 		if (this._data.isEnough == false) {
 			Common.dispatchEvent(MainNotify.openRechargePanel)
 		}
@@ -110,8 +110,10 @@ class CapsulePanel extends BasePanel {
 			this._hookMove.pause()
 			this._btnDelay = 0
 			this.zhua.play(0)
-			let channel = GameVoice.rewardVoice.play(0, 1)
-			channel.volume = GameConfig.soundValue / 100
+			if(GameConfig.isPlaySound){
+				let channel = GameVoice.rewardVoice.play(0, 1)
+				channel.volume = GameConfig.soundValue / 100
+			}			
 			this._hook.alpha = 1
 		}else{
 			this._btnDelay = 0

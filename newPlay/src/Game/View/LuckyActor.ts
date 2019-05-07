@@ -112,8 +112,10 @@ class LuckyActor extends BaseActor{
 	public updateGesture() {
 		// if (this._state == EMonsterState.Ready) {
 			this._balloon.updateColorAndGesture()
-			let channel = GameVoice.ballonBoomSound.play(0, 1)
-			channel.volume = GameConfig.soundValue / 100
+			if(GameConfig.isPlaySound){
+				let channel = GameVoice.ballonBoomSound.play(0, 1)
+				channel.volume = GameConfig.soundValue / 100
+			}			
 			GameConfig.balloonScore += this._balloon.score
 			PanelManager.gameScenePanel.boom = true
 			this.gotoHurt()

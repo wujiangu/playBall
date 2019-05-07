@@ -103,14 +103,16 @@ var SpiderActor = (function (_super) {
     SpiderActor.prototype.gotoArrival = function () {
         this._state = EMonsterState.Arrive;
         this._armatureContainer.play(DragonBonesAnimations.Arrive, 1);
-        var battleVolume = 0.8 * GameConfig.bgmValue / 100;
-        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
-            var channel = GameVoice.spiderKingArrive.play(0, 1);
-            channel.volume = 0;
-            egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
-                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume }, 500);
+        if (GameConfig.isPlaySound) {
+            var battleVolume_1 = 0.8 * GameConfig.bgmValue / 100;
+            egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
+                var channel = GameVoice.spiderKingArrive.play(0, 1);
+                channel.volume = 0;
+                egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
+                    egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume_1 }, 500);
+                });
             });
-        });
+        }
     };
     SpiderActor.prototype.Summon = function (a_count) {
         if (a_count === void 0) { a_count = 2; }
@@ -289,7 +291,8 @@ var SpiderActor = (function (_super) {
                 this._armatureContainer.visible = false;
                 var curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()];
                 if (curChapterData.water == 1) {
-                    GameVoice.fallDownWaterSound.play(0, 1);
+                    if (GameConfig.isPlaySound)
+                        GameVoice.fallDownWaterSound.play(0, 1);
                 }
                 else {
                     var sound = RES.getRes("fallDownGround_mp3");
@@ -403,8 +406,10 @@ var SpiderActor = (function (_super) {
         }
     };
     SpiderActor.prototype._spide = function (data, posX, posY, count, i) {
-        var channel = GameVoice.spiderKingDrug.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.spiderKingDrug.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     return SpiderActor;

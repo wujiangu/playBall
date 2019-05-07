@@ -33,7 +33,6 @@ var GameLosePanel = (function (_super) {
         this.touchChildren = false;
         this.countDown = 5;
         this.Show.play(0);
-        PanelManager.gameScenePanel.sceneData.addCandy = 0;
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -90,6 +89,7 @@ var GameLosePanel = (function (_super) {
         this._lblCountDown.text = "5";
     };
     GameLosePanel.prototype._onHide = function () {
+        GameConfig.isShowPanelNow = false;
         this._lblCountDown.visible = false;
         this._lblCountDown.text = "5";
         Common.gameScene().uiLayer.removeChild(this);

@@ -163,14 +163,22 @@ class Main extends eui.UILayer {
             Common.getCurLevel()
             Common.getCurCandy()
             Common.getlastLoginTime()
-            Common.getSign()
+            Common.getSign()   
+            Common.getIsSignData()
+            Common.getSignCount()         
             Common.getBabylistIndex()
             Common.getChapterScore()
-            Common.getChapterCombo()
+            Common.getChapterCombo()   
+            Common.getIsChapterPass()         
             if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
                 Common.updateSign(0)
             }
-            Common.getSignCount()
+            if(GameConfig.signCount >= 7) {
+                Common.updateIsSignData(1)
+                Common.updateSignCount(0)                 
+                Common.getIsSignData()
+                Common.getSignCount()
+            }
             this.startCreateScene()
         }
     }

@@ -95,15 +95,16 @@ class SpiderActor extends BaseActor {
 	public gotoArrival() {
 		this._state = EMonsterState.Arrive
 		this._armatureContainer.play(DragonBonesAnimations.Arrive, 1)
-		let battleVolume = 0.8 * GameConfig.bgmValue / 100
-		
-		egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
-			let channel = GameVoice.spiderKingArrive.play(0, 1)
-			channel.volume = 0
-			egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
-				egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+		if(GameConfig.isPlaySound){
+			let battleVolume = 0.8 * GameConfig.bgmValue / 100		
+			egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
+				let channel = GameVoice.spiderKingArrive.play(0, 1)
+				channel.volume = 0
+				egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
+					egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+				})	
 			})
-		})
+		}		
 	}
 
 	public Summon(a_count:number = 2) {
@@ -287,7 +288,7 @@ class SpiderActor extends BaseActor {
 				this._armatureContainer.visible = false
 				let curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()]
 				if (curChapterData.water == 1) {
-					GameVoice.fallDownWaterSound.play(0, 1)
+				    if(GameConfig.isPlaySound)		GameVoice.fallDownWaterSound.play(0, 1)
 				}else{
 					let sound:egret.Sound = RES.getRes("fallDownGround_mp3")
 					let channel = sound.play(0, 1)
@@ -410,8 +411,11 @@ class SpiderActor extends BaseActor {
 	}
 
 	private _spide(data, posX, posY, count, i) {
-		let channel = GameVoice.spiderKingDrug.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound){
+			let channel = GameVoice.spiderKingDrug.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+		}
+		
 		PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 

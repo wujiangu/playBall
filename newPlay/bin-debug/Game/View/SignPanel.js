@@ -187,7 +187,7 @@ var SignIR = (function (_super) {
         this.m_timenum.text = signIndex + "DAY";
         if (data.rewardType == EReward.Candy) {
             this.m_labCount.text = "+" + data.reward;
-            this.m_imgReward.source = "signinrecord1_png";
+            this.m_imgReward.source = this._RefrenceRecordImg(data.reward, false);
             this._lblRecordName.text = "Candy";
         }
         else {
@@ -284,7 +284,7 @@ var SignIR = (function (_super) {
         this.m_imgMask.visible = true;
         // this.m_imgCheckIn.visible = true
         if (this.data.rewardType == EReward.Candy) {
-            this.m_imgReward.source = "candySignIn_png";
+            this.m_imgReward.source = this._RefrenceRecordImg(this.data.reward, true);
         }
         else {
             this.m_imgReward.source = "babySignIn_png";
@@ -335,6 +335,26 @@ var SignIR = (function (_super) {
     SignIR.prototype._onComplete = function () {
         // this.m_imgBg.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSign, this)
         // Common.addTouchBegin(this.m_imgBg)
+    };
+    SignIR.prototype._RefrenceRecordImg = function (candyNum, isSign) {
+        if (candyNum > 0) {
+            if (!isSign) {
+                if (candyNum >= 200) {
+                    return "icon5_png";
+                }
+                else {
+                    return "icon4_png";
+                }
+            }
+            else {
+                if (candyNum >= 200) {
+                    return "icon5greyState_png";
+                }
+                else {
+                    return "icon4greyState_png";
+                }
+            }
+        }
     };
     return SignIR;
 }(eui.Component));

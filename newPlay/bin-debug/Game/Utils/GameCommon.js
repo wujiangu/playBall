@@ -9,7 +9,8 @@ var Common;
     }
     Common.gameScene = gameScene;
     function onTouchBegin() {
-        GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound)
+            GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100;
     }
     function addTouchBegin(target) {
         target.addEventListener(egret.TouchEvent.TOUCH_BEGIN, onTouchBegin, Common);
@@ -620,5 +621,41 @@ var Common;
         }
     }
     Common.updateChapterCombo = updateChapterCombo;
+    /**获取章节是否通过**/
+    function getIsChapterPass() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.isChapterPass = JSON.parse(message);
+                }
+                else {
+                    GameConfig.isChapterPass = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "isChapterPass");
+        }
+        else {
+            var isChapterPass = NativeApi.getLocalData(GameConfig.game + "isChapterPass");
+            if (isChapterPass == null) {
+                GameConfig.isChapterPass = {};
+            }
+            else {
+                GameConfig.isChapterPass = JSON.parse(isChapterPass);
+            }
+        }
+    }
+    Common.getIsChapterPass = getIsChapterPass;
+    /**更新章节是否通过**/
+    function updateIsChapterPass(value) {
+        GameConfig.isChapterPass = value;
+        var isChapterPass = JSON.stringify(value);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "isChapterPass:" + isChapterPass);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "isChapterPass", isChapterPass);
+        }
+    }
+    Common.updateIsChapterPass = updateIsChapterPass;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

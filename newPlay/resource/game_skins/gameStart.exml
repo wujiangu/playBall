@@ -11,7 +11,7 @@
 				</tween:Set>
 				<tween:To duration="500">
 					<tween:props>
-						<e:Object y="{3}"/>
+						<e:Object y="{15}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -23,7 +23,7 @@
 				</tween:Set>
 				<tween:To duration="500">
 					<tween:props>
-						<e:Object y="{-1}"/>
+						<e:Object y="{15}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
@@ -213,10 +213,10 @@
 			</tween:TweenItem>
 		</tween:TweenGroup>
 	</w:Declarations>
-	<e:Group id="groupTang" width="310" height="87" y="2" anchorOffsetY="0" anchorOffsetX="0">
+	<e:Group id="groupTang" width="310" height="87" y="15" anchorOffsetY="0" anchorOffsetX="0" x="7">
 		<e:Image source="icon3_png" x="16.16" y="9.5" anchorOffsetX="0" width="59" anchorOffsetY="0" height="68"/>
 		<e:Label id="m_labCandy" text="5500" x="90" y="10" fontFamily="Microsoft YaHei" size="61" textAlign="left" bold="true" anchorOffsetX="0"/>
-		<e:Button id="m_btnAddCandy" label="" x="243" y="13">
+		<e:Button id="m_btnAddCandy" label="" x="243" y="13" visible="false">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" width.down="90%" height.down="90%" horizontalCenter="0" verticalCenter="0" source="btnAdd_png"/>
@@ -225,7 +225,7 @@
 		</e:skinName>
 		</e:Button>
 	</e:Group>
-	<e:Group id="groupTopRight" width="356" height="88" x="372" y="2" anchorOffsetX="0" anchorOffsetY="0">
+	<e:Group id="groupTopRight" width="356" height="88" y="15" anchorOffsetX="0" anchorOffsetY="0" right="0">
 		<e:Button id="m_btnBaby" label="" x="41.5" y="9.5" alpha="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -268,7 +268,7 @@
 
 		</e:Button>
 	</e:Group>
-	<e:Group id="groupChapter" width="539" height="96" x="95" y="522" anchorOffsetY="0" anchorOffsetX="0">
+	<e:Group id="groupChapter" width="539" height="96" x="95" y="522" anchorOffsetY="0" anchorOffsetX="0" visible="false">
 		<e:Image source="gameStart2_png" x="63" y="20" anchorOffsetX="0" anchorOffsetY="0" scaleX="0.8" scaleY="0.8"/>
 		<e:Image source="gameStart3_png" x="244" y="16" anchorOffsetX="0" width="42" anchorOffsetY="0" height="42"/>
 		<e:Image source="gameStart1_png" x="297" y="21" anchorOffsetX="0" anchorOffsetY="0" scaleX="0.8" scaleY="0.8"/>

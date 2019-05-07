@@ -7,38 +7,38 @@
         "key": 1001
     }, 
     {
-        "count": 0, 
-        "value": 100, 
+        "count": 2500, 
+        "value": 60, 
         "reward": 1000, 
-        "condition": 1, 
+        "condition": 2, 
         "key": 1002
     }, 
     {
         "count": 0, 
-        "value": 100, 
+        "value": 60, 
         "reward": 1000, 
         "condition": 1, 
         "key": 1003
     }, 
     {
-        "count": 2500, 
-        "value": 500, 
+        "count": 0, 
+        "value": 120, 
         "reward": 1000, 
-        "condition": 2, 
+        "condition": 1, 
         "key": 1004
     }, 
     {
-        "count": 10, 
-        "value": 500, 
+        "count": 0, 
+        "value": 100, 
         "reward": 1000, 
-        "condition": 3, 
+        "condition": 1, 
         "key": 1005
     }, 
     {
-        "count": 0, 
+        "count": 5000, 
         "value": 1, 
         "reward": 10060, 
-        "condition": 4, 
+        "condition": 2, 
         "key": 1006
     }, 
     {
@@ -47,5 +47,383 @@
         "reward": 1000, 
         "condition": 5, 
         "key": 1007
+    }, 
+    {
+        "count": 4500, 
+        "value": 1, 
+        "reward": 10110, 
+        "condition": 2, 
+        "key": 1008
+    }, 
+    {
+        "count": 50, 
+        "value": 1, 
+        "reward": 10020, 
+        "condition": 3, 
+        "key": 1009
+    }, 
+    {
+        "count": 5000, 
+        "value": 1, 
+        "reward": 10040, 
+        "condition": 2, 
+        "key": 1010
+    }, 
+    {
+        "count": 80, 
+        "value": 1, 
+        "reward": 10190, 
+        "condition": 3, 
+        "key": 1020
+    }, 
+    {
+        "count": 6000, 
+        "value": 1, 
+        "reward": 13030, 
+        "condition": 2, 
+        "key": 1030
+    }, 
+    {
+        "count": 80, 
+        "value": 1, 
+        "reward": 10090, 
+        "condition": 3, 
+        "key": 1040
+    }, 
+    {
+        "count": 6000, 
+        "value": 1, 
+        "reward": 13040, 
+        "condition": 2, 
+        "key": 1050
+    }, 
+    {
+        "count": 50, 
+        "value": 1, 
+        "reward": 10160, 
+        "condition": 3, 
+        "key": 1060
+    }, 
+    {
+        "count": 6000, 
+        "value": 1, 
+        "reward": 10170, 
+        "condition": 2, 
+        "key": 1070
+    }, 
+    {
+        "count": 90, 
+        "value": 1, 
+        "reward": 13050, 
+        "condition": 3, 
+        "key": 1080
+    }, 
+    {
+        "count": 80, 
+        "value": 1, 
+        "reward": 10100, 
+        "condition": 3, 
+        "key": 1090
+    }, 
+    {
+        "count": 10000, 
+        "value": 1, 
+        "reward": 13060, 
+        "condition": 2, 
+        "key": 1100
+    }, 
+    {
+        "count": 30, 
+        "value": 80, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1110
+    }, 
+    {
+        "count": 0, 
+        "value": 80, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1120
+    }, 
+    {
+        "count": 0, 
+        "value": 140, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1130
+    }, 
+    {
+        "count": 50, 
+        "value": 160, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1140
+    }, 
+    {
+        "count": 0, 
+        "value": 160, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1150
+    }, 
+    {
+        "count": 0, 
+        "value": 180, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1160
+    }, 
+    {
+        "count": 0, 
+        "value": 200, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1170
+    }, 
+    {
+        "count": 0, 
+        "value": 220, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1180
+    }, 
+    {
+        "count": 0, 
+        "value": 240, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1190
+    }, 
+    {
+        "count": 0, 
+        "value": 260, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1200
+    }, 
+    {
+        "count": 0, 
+        "value": 300, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1210
+    }, 
+    {
+        "count": 0, 
+        "value": 340, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1220
+    }, 
+    {
+        "count": 0, 
+        "value": 380, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1230
+    }, 
+    {
+        "count": 0, 
+        "value": 420, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1240
+    }, 
+    {
+        "count": 0, 
+        "value": 460, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1250
+    }, 
+    {
+        "count": 0, 
+        "value": 500, 
+        "reward": 1000, 
+        "condition": 1, 
+        "key": 1260
+    }, 
+    {
+        "count": 50, 
+        "value": 240, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1270
+    }, 
+    {
+        "count": 3000, 
+        "value": 140, 
+        "reward": 1000, 
+        "condition": 2, 
+        "key": 1280
+    }, 
+    {
+        "count": 30000, 
+        "value": 1, 
+        "reward": 10120, 
+        "condition": 2, 
+        "key": 1290
+    }, 
+    {
+        "count": 100, 
+        "value": 1, 
+        "reward": 10200, 
+        "condition": 3, 
+        "key": 1300
+    }, 
+    {
+        "count": 10000, 
+        "value": 400, 
+        "reward": 1000, 
+        "condition": 2, 
+        "key": 1310
+    }, 
+    {
+        "count": 20000, 
+        "value": 800, 
+        "reward": 1000, 
+        "condition": 2, 
+        "key": 1320
+    }, 
+    {
+        "count": 50, 
+        "value": 500, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1330
+    }, 
+    {
+        "count": 80, 
+        "value": 800, 
+        "reward": 1000, 
+        "condition": 3, 
+        "key": 1340
+    }, 
+    {
+        "count": 0, 
+        "value": 40, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1501
+    }, 
+    {
+        "count": 0, 
+        "value": 50, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1502
+    }, 
+    {
+        "count": 0, 
+        "value": 60, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1503
+    }, 
+    {
+        "count": 0, 
+        "value": 70, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1504
+    }, 
+    {
+        "count": 0, 
+        "value": 80, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1505
+    }, 
+    {
+        "count": 0, 
+        "value": 100, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1506
+    }, 
+    {
+        "count": 0, 
+        "value": 115, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1507
+    }, 
+    {
+        "count": 0, 
+        "value": 135, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1508
+    }, 
+    {
+        "count": 0, 
+        "value": 155, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1509
+    }, 
+    {
+        "count": 0, 
+        "value": 175, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1510
+    }, 
+    {
+        "count": 0, 
+        "value": 195, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1511
+    }, 
+    {
+        "count": 0, 
+        "value": 220, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1512
+    }, 
+    {
+        "count": 0, 
+        "value": 240, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1513
+    }, 
+    {
+        "count": 0, 
+        "value": 265, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1514
+    }, 
+    {
+        "count": 0, 
+        "value": 290, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1515
+    }, 
+    {
+        "count": 0, 
+        "value": 315, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1516
+    }, 
+    {
+        "count": 0, 
+        "value": 355, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1517
+    }, 
+    {
+        "count": 0, 
+        "value": 420, 
+        "reward": 1000, 
+        "condition": 5, 
+        "key": 1518
     }
 ]

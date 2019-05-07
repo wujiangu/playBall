@@ -11,7 +11,7 @@ namespace Common{
 	export var curPanel:BasePanel
 
 	function onTouchBegin() {
-		GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound)  GameVoice.btnSound.play(0, 1).volume = GameConfig.soundValue / 100
 	}
 
 	export function addTouchBegin(target:eui.Button) {
@@ -577,4 +577,37 @@ namespace Common{
 			NativeApi.setLocalData(GameConfig.game+"chapterMaxCombo", strScore)
 		}
 	}
+
+	/**获取章节是否通过**/
+	export function getIsChapterPass(){
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+				if (message != null && message.length > 0) {
+					GameConfig.isChapterPass = JSON.parse(message)
+				}else{
+					GameConfig.isChapterPass = {}
+				}
+        	})
+        	egret.ExternalInterface.call("read", GameConfig.game+"isChapterPass")
+		}
+		else {
+			let isChapterPass = NativeApi.getLocalData(GameConfig.game+"isChapterPass")
+			if (isChapterPass == null) {
+				GameConfig.isChapterPass = {}
+			}else{
+				GameConfig.isChapterPass = JSON.parse(isChapterPass)
+			}
+		}
+	}
+	/**更新章节是否通过**/
+	export function updateIsChapterPass(value:any){
+		GameConfig.isChapterPass = value
+		let isChapterPass = JSON.stringify(value)
+		if (!GameConfig.isWebView) {
+			egret.ExternalInterface.call("write", GameConfig.game+"isChapterPass:" + isChapterPass)
+		}else{
+			NativeApi.setLocalData(GameConfig.game+"isChapterPass", isChapterPass)
+		}
+	}
+
 }

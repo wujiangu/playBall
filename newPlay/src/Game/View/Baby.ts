@@ -71,8 +71,10 @@ class Baby extends egret.DisplayObjectContainer{
 		this._state = EBabyState.Attack
 		this._actorArmatureContainer.play("fangdazhao", 1)
 		let voice:egret.Sound = RES.getRes(this.skillData.music)
-		let channel = voice.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound){
+			let channel = voice.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+		}
 	}
 
 	public gotoTired() {
@@ -87,10 +89,10 @@ class Baby extends egret.DisplayObjectContainer{
 		if (a_power >= 100 && this.skillData.method == a_method) {
 			switch (this.skillData.method) {
 				case ESkillReleaseType.Immediately:
-					this.releaseImmediately()
+					// this.releaseImmediately()
 				break
 				case ESkillReleaseType.Range:
-					this.releaseRange(a_monster)
+					// this.releaseRange(a_monster)
 				break
 				default:
 				break
@@ -156,15 +158,16 @@ class Baby extends egret.DisplayObjectContainer{
 
 		for (let i = 0; i < this._influenceBalls.length; i++) {
 			let ball:Balloon = this._influenceBalls[i]
-			if (ball.type > 0) {
-				ball.updateEffectArmature(this.skillData)
-				ball.playEffect(this.skillData)
-			}
-			
+			ball.updateEffectArmature(this.skillData)
+			ball.playEffect(this.skillData)
 		}
 	}
 
 	public selectRangeAll() {
+		let actors:Array<BaseActor> = PanelManager.gameScenePanel.getAllActors()
+		for (let i = 0; i < actors.length; i++) {
+			if (actors[i].state == EMonsterState.Ready) this._influenceActors.push(actors[i])
+		}
 		switch (this.skillData.result) {
 			case ESkillResult.ContinuedKill:
 				// 全体范围内持续
@@ -175,6 +178,12 @@ class Baby extends egret.DisplayObjectContainer{
 				PanelManager.gameScenePanel.setSkillDuration()
 			break
 		}
+	}
+
+	public isInfluence(a_actor:BaseActor) {
+		if (!a_actor.isBoss()) return true
+		if (a_actor.isBoss() && this.skillData.boss) return true
+		return false
 	}
 
 	public selectRangeRandom(actors:Array<BaseActor>) {
@@ -190,10 +199,13 @@ class Baby extends egret.DisplayObjectContainer{
 				for (let i = 0; i < this._actorsIndex.length; i++) {
 					let random = this._actorsIndex[i]
 					let actor:BaseActor = actors[random]
-					if (actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 250) {
+					// xiugaiwu
+					if (this.isInfluence(actor) && actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 100) {
 						for (let j = 0; j < actor.balloons.length; j++) {
 							if (this._influenceBalls.length >= count) break
-							this._influenceBalls.push(actor.balloons[j])
+							if (actor.balloons[j].type > 0) {
+								this._influenceBalls.push(actor.balloons[j])
+							}
 						}
 					}
 				}
@@ -201,7 +213,8 @@ class Baby extends egret.DisplayObjectContainer{
 				for (let i = 0; i < count; i++) {
 					let random = this._actorsIndex[i]
 					let actor:BaseActor = actors[random]
-					if (actor.state == EMonsterState.Ready && actor.y >= 250) this._influenceActors.push(actor)
+					// xiugaiwu
+					if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100) this._influenceActors.push(actor)
 				}
 			}
 		}
@@ -219,13 +232,14 @@ class Baby extends egret.DisplayObjectContainer{
 			let value = 0
 			for (let i = 0; i < actors.length; i++) {
 				let actor:BaseActor = actors[i]
-				Common.log(actor.state, actor.y)
-				if (actor.state == EMonsterState.Ready && actor.y >= 250) {
+				if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100) {
 					if (this.skillData.skillHang == ESkillHand.Ballon) {
 						for (let j = 0; j < actor.balloons.length; j++) {
 							if (value >= count) break
-							this._influenceBalls.push(actor.balloons[j])
-							value++
+							if (actor.balloons[j].type > 0) {
+								this._influenceBalls.push(actor.balloons[j])
+								value++
+							}
 						}
 					}else{
 						if (value >= count) break

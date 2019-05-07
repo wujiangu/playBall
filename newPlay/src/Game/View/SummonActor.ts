@@ -49,7 +49,7 @@ class SummonActor extends BaseActor {
 			}
 			else if (this._data.Type == ESummonType.Monster) {
 				this.x = a_x
-				this.y = beginY
+				this.y = beginY - this.master.actorTableData.Height / 2
 			}
         	// Common.log("位置", this._endX, this._endY)
 		}else{
@@ -166,12 +166,15 @@ class SummonActor extends BaseActor {
 			if (this._data.Type == ESummonType.Balloon) {
 				GameConfig.balloonScore += this._score
 				PanelManager.gameScenePanel.boom = true
-				let channel = GameVoice.ballonBoomSound.play(0, 1)
-				channel.volume = GameConfig.soundValue / 100
+				if(GameConfig.isPlaySound){
+					let channel = GameVoice.ballonBoomSound.play(0, 1)
+					channel.volume = GameConfig.soundValue / 100
+				}				
 			}
 			else if (this._data.Type == ESummonType.Monster) {
-				// Common.log("")
-				this._balloons[0].balloonExplore(true)
+				if (this._balloons[0] != null) {
+					this._balloons[0].balloonExplore(true)
+				}
 			}
 		// }
 	}
@@ -222,6 +225,10 @@ class SummonActor extends BaseActor {
 		return this._gestureType
 	}
 
+	public set gestureType(value:number) {
+		this._gestureType = value
+	}
+
 	/**
 	 * 更新怪物身上的特效动画
 	 */
@@ -233,7 +240,9 @@ class SummonActor extends BaseActor {
 		if (this._state == EMonsterState.Ready) {
 			this._effectArmatureContainer.visible = true
 			this._effectArmatureContainer.play(data.skill, 1)
-			this._state = EMonsterState.Stop
+			if (data.result != ESkillResult.SlowSpeed) {
+				this._state = EMonsterState.Stop
+			}
 		}
 		// if (this._effectData.type == EEffectType.Fire) {
 		// 	this.m_gesture.visible = false
@@ -246,12 +255,23 @@ class SummonActor extends BaseActor {
 		// }
 	}
 
+	public changeGestureType(a_gestureType:number) {
+		this.gestureType = a_gestureType
+	}
+
 	public onEffectArmatureComplete() {
 		super.onEffectArmatureComplete()
 	}
 
 	public onEffectArmatureFram(event:dragonBones.EgretEvent) {
-		
+		super.onEffectArmatureFram(event)
+		let evt:string = event.frameLabel
+		switch (evt) {
+			case "xiaoshi":
+				this._destroyBalloon()
+				this._armatureContainer.visible = false
+			break
+		}
 	}
 
 	private _onArmatureComplet() {
@@ -273,8 +293,6 @@ class SummonActor extends BaseActor {
 	private _score:number
 
 	private m_gesture:egret.Bitmap
-
-	private _gestureType:number
 
 	private _animations:Array<string>
 

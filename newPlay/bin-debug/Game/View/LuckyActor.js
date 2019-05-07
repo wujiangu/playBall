@@ -114,8 +114,10 @@ var LuckyActor = (function (_super) {
     LuckyActor.prototype.updateGesture = function () {
         // if (this._state == EMonsterState.Ready) {
         this._balloon.updateColorAndGesture();
-        var channel = GameVoice.ballonBoomSound.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.ballonBoomSound.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         GameConfig.balloonScore += this._balloon.score;
         PanelManager.gameScenePanel.boom = true;
         this.gotoHurt();

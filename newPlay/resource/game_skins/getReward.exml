@@ -63,6 +63,6 @@
 		<e:Group id="_babyGroup" width="200" height="200" horizontalCenter="-1" verticalCenter="43">
 		</e:Group>
 		<e:Image id="_imgItem" source="icon3_png" scaleX="2" scaleY="2" horizontalCenter="0" verticalCenter="0"/>
-		<e:Label id="_candCount" text="x50" x="329" y="779" fontFamily="Microsoft YaHei" size="60" bold="true" textColor="0xffec11"/>
+		<e:Label id="_candCount" text="x50" x="329" y="780" fontFamily="Microsoft YaHei" size="60" bold="true" textColor="0xffffff"/>
 	</e:Group>
 </e:Skin>

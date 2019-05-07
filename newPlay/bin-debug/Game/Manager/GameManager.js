@@ -57,10 +57,10 @@ var GameManager = (function (_super) {
     };
     // 关卡模式打完一关
     GameManager.prototype.endLevel = function () {
-        Common.log("关卡结束", this._gameState);
         if (this._gameState == EGameState.Start) {
             this._gameState = EGameState.EndLevel;
             PanelManager.gameScenePanel.exit();
+            GameConfig.isChapterPassShow = true;
             Common.dispatchEvent(MainNotify.openGameOverPanel);
         }
     };
@@ -154,7 +154,10 @@ var GameManager = (function (_super) {
         if (this._gameState == EGameState.End) {
             switch (GameConfig.gameMode) {
                 case EBattleMode.Level:
-                    Common.dispatchEvent(MainNotify.openGameLosePanel);
+                    if (!GameConfig.isShowPanelNow) {
+                        Common.dispatchEvent(MainNotify.openGameLosePanel);
+                        GameConfig.isShowPanelNow = true;
+                    }
                     break;
                 case EBattleMode.Endless:
                     Common.dispatchEvent(MainNotify.openGameOverPanel);

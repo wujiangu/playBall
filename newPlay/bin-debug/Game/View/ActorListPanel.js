@@ -167,7 +167,7 @@ var ActorListPanel = (function (_super) {
         Common.dispatchEvent(MainNotify.openGameStartPanel);
     };
     ActorListPanel.prototype._onBtnAddCandy = function () {
-        Common.dispatchEvent(MainNotify.openRechargePanel);
+        // Common.dispatchEvent(MainNotify.openRechargePanel)
     };
     ActorListPanel.prototype._onBtnFusion = function () {
         GameConfig.sceneType = 1;
@@ -192,7 +192,6 @@ var ActorListPanel = (function (_super) {
         this._actorState = EMonsterState.Attack;
     };
     ActorListPanel.prototype._actorArmatureComplete = function () {
-        Common.log(this._actorState);
         if (this._actorState == EMonsterState.Attack) {
             this._actorArmatureContainer.play("idle", 0);
             this._actorState = EMonsterState.Ready;

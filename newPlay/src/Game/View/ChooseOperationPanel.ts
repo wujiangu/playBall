@@ -20,7 +20,7 @@ class ChooseOperationPanel extends BasePanel {
 		this.touchChildren = false
 		this.m_isAgain = false		
 		this.Show.play(0)		
-		PanelManager.gameScenePanel.sceneData.addCandy = 0
+		// PanelManager.gameScenePanel.sceneData.addCandy = 0
         Common.gameScene().uiLayer.addChild(this)
     }
 

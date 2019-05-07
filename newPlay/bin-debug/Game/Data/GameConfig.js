@@ -8,6 +8,7 @@ var GameConfig = (function () {
      * 初始化骨骼的动画数据
      */
     GameConfig.initBattleDragonBones = function (name) {
+        Common.log("fdsfds", name);
         var skeletonData = RES.getRes(name + "_ske_json");
         var textureData = RES.getRes(name + "_tex_json");
         var texture = RES.getRes(name + "_tex_png");
@@ -117,9 +118,9 @@ var GameConfig = (function () {
             var data = {};
             data["ID"] = config.ID;
             data["Type"] = config.Type;
-            data["Difficult"] = config.Difficult;
             data["Wave"] = config.Wave;
             data["Count"] = config.Count;
+            data["Difficult"] = config.Difficult;
             data["Animation"] = config.Animation;
             data["Actions"] = config.Actions;
             data["Speed"] = config.Speed;
@@ -269,6 +270,8 @@ var GameConfig = (function () {
             data["petPrice"] = config.petPrice;
             data["name"] = config.name;
             data["unlockDesc"] = config.unlockDesc;
+            data["recordIcon"] = config.recordIcon;
+            data["getRecordIcon"] = config.getRecordIcon;
             data["desc"] = config.desc;
             data["action"] = config.action;
             data["icon"] = config.icon;
@@ -315,6 +318,8 @@ var GameConfig = (function () {
             data["cloud1"] = config.cloud1;
             data["cloud2"] = config.cloud2;
             data["water"] = config.water;
+            data["reward"] = config.reward;
+            data["candy"] = config.candy;
             this.chapterTable[config.id.toString()] = data;
             var score = this.chapterMaxScore[config.id.toString()];
             var combo = this.chapterMaxCombo[config.id.toString()];
@@ -324,7 +329,14 @@ var GameConfig = (function () {
             if (combo == null) {
                 this.chapterMaxCombo[config.id.toString()] = 0;
             }
+            var isPass = this.isChapterPass[config.id.toString()];
+            if (isPass == null) {
+                this.isChapterPass[config.id.toString()] = 0;
+            }
         }
+        Common.updateChapterScore(this.chapterMaxScore);
+        Common.updateChapterCombo(this.chapterMaxCombo);
+        Common.updateIsChapterPass(this.isChapterPass);
         var babySkillConfig = RES.getRes("babySkillConfig_json");
         this.babySkillTable = {};
         for (var i = 0; i < babySkillConfig.length; i++) {
@@ -364,8 +376,8 @@ var GameConfig = (function () {
             data["isGet"] = false;
             if (i < this.signCount || (i >= 7 && ((i - 7) < this.signCount)))
                 data["isGet"] = true;
+            Common.log(data["isGet"], this.signCount);
             // if (i == this.signCount && this.sign == 1) data["isGet"] = true
-            Common.log("sign", i, this.signCount, this.sign, config.rewardType);
             this.signTable[config.id.toString()] = data;
         }
         this.capsuleConfig = RES.getRes("capsuleConfig_json");
@@ -407,6 +419,10 @@ var GameConfig = (function () {
     GameConfig.isSignData = 0;
     // 当前挑战的章节
     GameConfig.curBattleChapter = 0;
+    //当前是否显示结算面板
+    GameConfig.isShowPanelNow = false;
+    //是否章节过关结算
+    GameConfig.isChapterPassShow = false;
     // 临时配置，后续修改
     GameConfig.sceneType = 0;
     return GameConfig;

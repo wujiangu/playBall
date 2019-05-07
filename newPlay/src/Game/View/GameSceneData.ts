@@ -1,6 +1,7 @@
 class GameSceneData {
 	public constructor() {
 		this.allActors = new Array()
+		this.recordBabySource = new Array()
 	}
 
 	public allActors:Array<BaseActor>
@@ -32,6 +33,8 @@ class GameSceneData {
 	public isScoreRewardGet = false
 	/**连击奖励是否领取 */
 	public isComboRewardGet = false
+	/**奖励宠物图片资源**/
+	public recordBabySource:Array<string>
 
 	// 获取召唤物目标X值
 	public getSummonTargetX(e_pos:EMonsterPos, a_x:number, a_count:number = 0, a_num:number = 0, type:ESummonType = ESummonType.Balloon, isBoss:boolean = false) {
@@ -88,7 +91,6 @@ class GameSceneData {
 					else {
 						if (a_num <= 0) target += this.leftRightOffset
 						else target -= this.leftRightOffset * a_num
-						// Common.log(target, a_num)
 					}
 				}else{
 					if (type == ESummonType.Monster) target += 80 * a_num - 120
@@ -187,9 +189,9 @@ class GameSceneData {
 	/**获取关卡奖励 */
 	public getLevelReward(score:number, combo:number, isEnd:boolean = false) {
 		let chapterData = GameConfig.chapterTable[this.chapter.toString()]
-		if (chapterData.rewards && chapterData.rewards[0] > 0) {
-			for (let i = 0; i < chapterData.rewards.length; i++) {
-				let rewardId = chapterData.rewards[i]
+		if (chapterData.reward && chapterData.reward[0] > 0) {
+			for (let i = 0; i < chapterData.reward.length; i++) {
+				let rewardId = chapterData.reward[i]
 				let rewardData = GameConfig.levelRewardTable[rewardId]
 				switch (rewardData.condition) {
 					case ELevelRewardCondition.Finish:
@@ -233,6 +235,8 @@ class GameSceneData {
 		}else{
 			if (rewardId > 0) {
 				this.unlockBaby(rewardId)
+				let data = GameConfig.actorTable[rewardId] //保存奖励对应图片
+				this.recordBabySource.push(data.recordIcon);
 			}
 		}
 	}
@@ -254,7 +258,6 @@ class GameSceneData {
 		let index = GameConfig.babyUnlockList.indexOf(id)
 		if (index < 0) {
 			// 未解锁
-			Common.log("宝宝", id)
 			GameConfig.babyUnlockList.push(id)
 			Common.updateUnlockBaby()
 			PanelManager.gameScenePanel.unlockEffect(id)

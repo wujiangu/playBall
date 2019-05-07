@@ -19,8 +19,14 @@ var EliteActor = (function (_super) {
     EliteActor.prototype.Init = function (data, type) {
         _super.prototype.Init.call(this, data, type);
         this._changeToUnknown();
+        this._isArrive = true;
+        this._speedY = 0.3;
     };
     EliteActor.prototype.update = function (timeElapsed) {
+        if (this.y > this.actorTableData.Height && this.state == EMonsterState.Ready) {
+            this._isArrive = false;
+            this._speedY = this._baseSpeedY;
+        }
         _super.prototype.update.call(this, timeElapsed);
         if (this._knownTime >= 0) {
             this._knownTime += timeElapsed;
@@ -36,7 +42,7 @@ var EliteActor = (function (_super) {
         }
         this._summonCount = Math.max(0, this._summonCount);
         if (this._data.Difficult == EMonsterDifficult.SpecialElite1 && this._summonCount <= 0) {
-            if (this._summonWave < this._data.Wave) {
+            if (this._summonWave <= this._data.Wave) {
                 this._changeToKnown();
             }
         }
@@ -54,8 +60,10 @@ var EliteActor = (function (_super) {
         }
     };
     EliteActor.prototype._spide = function (data, posX, posY, count, i) {
-        var channel = GameVoice.spideBall.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.spideBall.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     EliteActor.prototype._eliteSummon = function () {
@@ -74,10 +82,10 @@ var EliteActor = (function (_super) {
         var evt = event.frameLabel;
         switch (evt) {
             case "vomit":
-                if (this.y < 200)
+                if (this._isArrive)
                     return;
                 if (this._data.Difficult == EMonsterDifficult.SpecialElite1) {
-                    if (this._summonCount <= 0 && this._summonWave < this._data.Wave) {
+                    if (this._summonCount <= 0 && this._summonWave < this._data.Wave && !this._isExistKnown() && this.state == EMonsterState.Ready) {
                         this._summonWave += 1;
                         this._eliteSummon();
                     }
@@ -101,7 +109,16 @@ var EliteActor = (function (_super) {
         if (this._data.Difficult == EMonsterDifficult.SpecialElite2) {
             this._knownTime = 0;
         }
-        this._balloons[0].changeToKnown();
+        if (this._balloons[0] != null)
+            this._balloons[0].changeToKnown();
+    };
+    EliteActor.prototype._isExistKnown = function () {
+        for (var i = 0; i < this._balloons.length; i++) {
+            if (this._balloons[i].type > 0) {
+                return true;
+            }
+        }
+        return false;
     };
     return EliteActor;
 }(Monster));

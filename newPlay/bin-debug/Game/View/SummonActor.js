@@ -63,7 +63,7 @@ var SummonActor = (function (_super) {
             }
             else if (this._data.Type == ESummonType.Monster) {
                 this.x = a_x;
-                this.y = beginY;
+                this.y = beginY - this.master.actorTableData.Height / 2;
             }
             // Common.log("位置", this._endX, this._endY)
         }
@@ -173,12 +173,15 @@ var SummonActor = (function (_super) {
         if (this._data.Type == ESummonType.Balloon) {
             GameConfig.balloonScore += this._score;
             PanelManager.gameScenePanel.boom = true;
-            var channel = GameVoice.ballonBoomSound.play(0, 1);
-            channel.volume = GameConfig.soundValue / 100;
+            if (GameConfig.isPlaySound) {
+                var channel = GameVoice.ballonBoomSound.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
+            }
         }
         else if (this._data.Type == ESummonType.Monster) {
-            // Common.log("")
-            this._balloons[0].balloonExplore(true);
+            if (this._balloons[0] != null) {
+                this._balloons[0].balloonExplore(true);
+            }
         }
         // }
     };
@@ -226,6 +229,9 @@ var SummonActor = (function (_super) {
         get: function () {
             return this._gestureType;
         },
+        set: function (value) {
+            this._gestureType = value;
+        },
         enumerable: true,
         configurable: true
     });
@@ -239,7 +245,9 @@ var SummonActor = (function (_super) {
         if (this._state == EMonsterState.Ready) {
             this._effectArmatureContainer.visible = true;
             this._effectArmatureContainer.play(data.skill, 1);
-            this._state = EMonsterState.Stop;
+            if (data.result != ESkillResult.SlowSpeed) {
+                this._state = EMonsterState.Stop;
+            }
         }
         // if (this._effectData.type == EEffectType.Fire) {
         // 	this.m_gesture.visible = false
@@ -251,10 +259,21 @@ var SummonActor = (function (_super) {
         // 	PanelManager.gameScenePanel.updateBatter()
         // }
     };
+    SummonActor.prototype.changeGestureType = function (a_gestureType) {
+        this.gestureType = a_gestureType;
+    };
     SummonActor.prototype.onEffectArmatureComplete = function () {
         _super.prototype.onEffectArmatureComplete.call(this);
     };
     SummonActor.prototype.onEffectArmatureFram = function (event) {
+        _super.prototype.onEffectArmatureFram.call(this, event);
+        var evt = event.frameLabel;
+        switch (evt) {
+            case "xiaoshi":
+                this._destroyBalloon();
+                this._armatureContainer.visible = false;
+                break;
+        }
     };
     SummonActor.prototype._onArmatureComplet = function () {
         if (this._state == EMonsterState.Dead) {

@@ -50,11 +50,11 @@ class GameManager extends egret.Sprite{
 	// 关卡模式打完一关
 	public endLevel():void
 	{
-		Common.log("关卡结束", this._gameState)
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.EndLevel
 			PanelManager.gameScenePanel.exit()
-			Common.dispatchEvent(MainNotify.openGameOverPanel)
+			GameConfig.isChapterPassShow = true
+			Common.dispatchEvent(MainNotify.openGameOverPanel)			
 		}
 	}
 
@@ -156,8 +156,11 @@ class GameManager extends egret.Sprite{
 	private _onshake() {
 		if (this._gameState == EGameState.End) {
 				switch (GameConfig.gameMode) {
-					case EBattleMode.Level:
-						Common.dispatchEvent(MainNotify.openGameLosePanel)
+					case EBattleMode.Level:	
+						if(!GameConfig.isShowPanelNow){
+							Common.dispatchEvent(MainNotify.openGameLosePanel)	
+							GameConfig.isShowPanelNow = true;
+						}												
 					break
 					case EBattleMode.Endless:
 						Common.dispatchEvent(MainNotify.openGameOverPanel)
@@ -173,7 +176,7 @@ class GameManager extends egret.Sprite{
 	private _startTime:number
 	private _lastTime:number
 	private _time:number
-	private _gameState:EGameState
+	public _gameState:EGameState
 	private _lastStage:EGameState
 	private _gameSpeed:number
 	private _gameSlowDelay:number

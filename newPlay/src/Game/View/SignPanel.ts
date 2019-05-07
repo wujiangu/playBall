@@ -206,7 +206,7 @@ class SignIR extends eui.Component {
 		this.m_timenum.text = signIndex + "DAY";
 		if (data.rewardType == EReward.Candy) {
 			this.m_labCount.text = "+" + data.reward
-			this.m_imgReward.source = "signinrecord1_png";
+			this.m_imgReward.source = this._RefrenceRecordImg(data.reward, false);
 			this._lblRecordName.text = "Candy";
 		}
 		else
@@ -309,8 +309,8 @@ class SignIR extends eui.Component {
 	private _showMask() {
 		this.m_imgMask.visible = true
 		// this.m_imgCheckIn.visible = true
-		if (this.data.rewardType == EReward.Candy) {
-			this.m_imgReward.source = "candySignIn_png";
+		if (this.data.rewardType == EReward.Candy) {			
+			this.m_imgReward.source = this._RefrenceRecordImg(this.data.reward, true);
 		}
 		else
 		{
@@ -363,6 +363,27 @@ class SignIR extends eui.Component {
 		// this.m_imgBg.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnSign, this)
 		// Common.addTouchBegin(this.m_imgBg)
 	}
+
+	private _RefrenceRecordImg(candyNum:number,isSign:boolean): string{
+		if(candyNum > 0){
+			if(!isSign){
+				if(candyNum >= 200){
+					return "icon5_png"
+				}else{
+					return "icon4_png"
+				}
+			}else{
+				if(candyNum >= 200){
+					return "icon5greyState_png"
+				}else{
+					return "icon4greyState_png"
+				}
+			}
+			
+		}
+		
+	}
+
 
 	private m_imgBg:eui.Image
 	private m_imgTime:eui.Image

@@ -34,12 +34,13 @@ class GameScenePanel extends BasePanel {
         this.clearAllActor()
         this.touchChildren = false
         this.readyAnimate.play(0)
-        GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100
+        if(GameConfig.isPlaySound)   GameVoice.readyGoSound.play(0, 1).volume = GameConfig.soundValue / 100
         this.m_imgEffectMask.visible = false
         this.m_rectWarning.visible = false
         this.m_bitLabScore.visible = false
         this.m_fntCombo.visible = false
         this.m_fntComboCount.visible = false
+        this._commbGrop.visible = false
         this.m_spiderWebArmatureContainer.visible = false
         this.m_imgBossWarning.visible = false
         this.itemUnlockGroup.visible = false
@@ -49,6 +50,7 @@ class GameScenePanel extends BasePanel {
         this.m_normalCount = 0
         this._data.soreIndex = 1
         this._data.comboIndex = 1
+        this.m_exSkillEffect.hide()
         this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture)
         Common.addEventListener(MainNotify.gestureAction, this._onGesture, this)
         this.initData()
@@ -57,21 +59,34 @@ class GameScenePanel extends BasePanel {
             case EBattleMode.Level:
                 let chapterData = GameConfig.chapterTable[this._data.levelData.section.toString()]
                 let voice:egret.Sound = RES.getRes(chapterData.bgm)
-                GameVoice.battleBGMChannel = voice.play(0)
+                if(GameConfig.isPlaySound)  GameVoice.battleBGMChannel = voice.play(0)
                 this.m_groupGrogress.visible = true
                 this._curLevel.visible = true
+                if(this._data.levelData.level < 7){//显示关卡信息
+                    this._nextLevel.visible = true
+                    this.m_nextBg.visible = true
+                    this.m_nextBg.source = "battleBg02_png";
+                    this._imgBossIcon.visible = false
+                    this._nextLevel.text = (this._data.levelData.level + 1).toString()                    
+                }else{
+                    this.m_nextBg.visible = false
+                    this._nextLevel.visible = false
+                    this._imgBossIcon.visible = true                    
+                }                
             break
             case EBattleMode.Endless:
-                GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
+                if(GameConfig.isPlaySound)  GameVoice.battleBGMChannel = GameVoice.battleBGMSound.play(0)
                 this.m_groupGrogress.visible = false
                 this._curLevel.visible = false
+                this._nextLevel.visible = false
+                this.m_nextBg.visible = false
             break
             case EBattleMode.Timelimite:
             break
             default:
             break
-        }
-        GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100
+        }        
+        if(GameConfig.isPlaySound)     GameVoice.battleBGMChannel.volume = 0.8 * GameConfig.bgmValue / 100
     }
 
     public continueLevel() {
@@ -96,6 +111,10 @@ class GameScenePanel extends BasePanel {
                 GameManager.Instance.start()
             }
         }
+    }
+
+    public playExSkillEffect(a_id:number) {
+        this.m_exSkillEffect.playEffect(a_id)
     }
 
     public returnSelectLevel() {
@@ -164,6 +183,14 @@ class GameScenePanel extends BasePanel {
                     this._data.lastScore = lastLevelData.normalCount
                 }
                 this._curLevel.text = this._data.levelData.level.toString()
+                if(this._data.levelData.level < 7){//显示关卡信息
+                    this.m_nextBg.source = "battleBg02_png";
+                    this._nextLevel.text = (this._data.levelData.level + 1).toString()                    
+                }else{
+                    this.m_nextBg.visible = false
+                    this._nextLevel.visible = false
+                    this._imgBossIcon.visible = true                    
+                }
                 GameManager.Instance.updateSceneBg(chapterData.bg, chapterData.water)
                 GameManager.Instance.updateSceneCloud(chapterData.cloud1, chapterData.cloud2)
                 GameManager.Instance.updateSceneSun(chapterData.sun)
@@ -248,9 +275,9 @@ class GameScenePanel extends BasePanel {
         this.clearAllActor()
 		Common.gameScene().uiLayer.removeChild(this)
         this.exit()
-        GameVoice.battleBGMChannel.stop()
+        if(GameConfig.isPlaySound)    GameVoice.battleBGMChannel.stop()
 
-        Common.log("怪物数量", GameObjectPool.getInstance().count, GameObjectPool.getInstance().balloon)
+        // Common.log("怪物数量", GameObjectPool.getInstance().count, GameObjectPool.getInstance().balloon)
     }
 
     public setSkillDuration() {
@@ -675,7 +702,7 @@ class GameScenePanel extends BasePanel {
         let batterScore = 0
         if (this.m_isBoom) {
             if (GameConfig.isGuide) {
-                GameVoice.gestureVoice.play(0, 1).volume = GameConfig.soundValue / 100
+                 if(GameConfig.isPlaySound)   GameVoice.gestureVoice.play(0, 1).volume = GameConfig.soundValue / 100
             }
             this.m_comboDelay = 0
             this.m_comboCount += 1
@@ -684,36 +711,38 @@ class GameScenePanel extends BasePanel {
                 this.m_fntCombo.visible = true
                 this.m_fntComboCount.visible = true
                 this.m_fntComboCount.text = "X" + this.m_comboCount
+                this._commbGrop.visible = true
+                this.lianjitexiao.play(0)
                 this.m_comboArmatureContainer.y = 80
                 this.m_comboArmatureContainer.visible = true
                 if (this.m_comboCount < 6) {
                     this.m_fntCombo.font = RES.getRes("comboBlueFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboBlueFnt_fnt")
                     this.m_comboArmatureContainer.play("lan", 1)
-                    GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    if(GameConfig.isPlaySound)   GameVoice.combo2Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 else if (this.m_comboCount >= 6 && this.m_comboCount < 11) {
                     this.m_fntCombo.font = RES.getRes("comboYellowFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboYellowFnt_fnt")
                     this.m_comboArmatureContainer.play("lan", 1)
-                    GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    if(GameConfig.isPlaySound)   GameVoice.combo3Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 else if (this.m_comboCount >= 11 && this.m_comboCount < 16) {
                     this.m_fntCombo.font = RES.getRes("comboRedFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboRedFnt_fnt")
                     this.m_comboArmatureContainer.play("huang", 1)
-                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    if(GameConfig.isPlaySound)   GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
                 else if (this.m_comboCount >= 16 && this.m_comboCount < 26) {
                     this.m_fntCombo.font = RES.getRes("comboPurpleFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboPurpleFnt_fnt")
                     this.m_comboArmatureContainer.play("hong", 1)
-                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    if(GameConfig.isPlaySound)   GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }else{
                     this.m_fntCombo.font = RES.getRes("comboGreenFnt_fnt")
                     this.m_fntComboCount.font = RES.getRes("comboGreenFnt_fnt")
                     this.m_comboArmatureContainer.play("hong", 1)
-                    GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
+                    if(GameConfig.isPlaySound)   GameVoice.combo4Sound.play(0, 1).volume = GameConfig.soundValue / 100
                 }
 
 
@@ -773,6 +802,7 @@ class GameScenePanel extends BasePanel {
 
     public updateExtarCandy(value:number) {
         this._labCandy.text = "X"+value
+        this._data.updateCandy(value);
         this._groupCandy.visible = true
         this.candyAnimate.play(0)
     }
@@ -794,11 +824,16 @@ class GameScenePanel extends BasePanel {
      */
     public releaseSkill() {
         if (this.m_power >= 100) {
+            if (this.baby.skillData.sceneEffect != undefined && this.baby.skillData.sceneEffect > 0) {
+                this.playExSkillEffect(this.baby.skillData.sceneEffect)
+            }
             this.m_imgEffectMask.visible = true
             this.effectMask.play(0)
             GameManager.Instance.pause(true)
-            let channel = GameVoice.skillBeginSound.play(0, 1)
-		    channel.volume = GameConfig.soundValue / 100
+            if(GameConfig.isPlaySound){
+                let channel = GameVoice.skillBeginSound.play(0, 1)
+		        channel.volume = GameConfig.soundValue / 100
+            }            
             this.power = 0
             this.m_baby.gotoAttack()
         }
@@ -807,7 +842,7 @@ class GameScenePanel extends BasePanel {
     private _onItemUnlock() {
         if (GameConfig.gameMode == EBattleMode.Level) {
             this.itemUnlockGroup.visible = false
-            GameManager.Instance.endLevel()
+            // GameManager.Instance.endLevel()
         }
     }
 
@@ -815,7 +850,7 @@ class GameScenePanel extends BasePanel {
      * 进入下一关
      */
     private _changeLevel() {
-        Common.log("进入下一关_changeLevel", this.m_monsters.length, this.m_summonActors.length, this.m_spiderActors.length, this.m_levelState)
+        // Common.log("进入下一关_changeLevel", this.m_monsters.length, this.m_summonActors.length, this.m_spiderActors.length, this.m_levelState)
         if (this.m_monsters.length <= 0 
             && this.m_summonActors.length <= 0 
             && this.m_spiderActors.length <= 0
@@ -827,6 +862,17 @@ class GameScenePanel extends BasePanel {
                 if (this._data.isChapterFinal()) {
                     this._data.getLevelReward(0, 0, true)
                     GameManager.Instance.endLevel()
+
+                    let nextLevel = this._data.levelData.next
+                    if (nextLevel != null && nextLevel > 0) {
+                        let levelData = GameConfig.levelTable[nextLevel.toString()]
+                        Common.updateCurLevel(nextLevel)
+                        Common.updateCurChpter(levelData.section)
+                    }
+
+                    //一章结束，记录该章过关
+                    GameConfig.isChapterPass[this._data.chapter.toString()] = 1;
+                    Common.updateIsChapterPass(GameConfig.isChapterPass)
                 }else{
                     this.touchChildren = true
                     this.m_baby.gotoRun()
@@ -853,7 +899,8 @@ class GameScenePanel extends BasePanel {
     private _enterWarning() {
         this.m_imgBossWarning.visible = true
         this.bossWarning.play(0)
-        GameVoice.bossWarning.play(0, 1)
+        this.m_nextBg.source = "battleBg01_png";
+        if(GameConfig.isPlaySound)   GameVoice.bossWarning.play(0, 1)
         // egret.setTimeout(this._enterBoss, this, 2000)
     }
 
@@ -921,17 +968,17 @@ class GameScenePanel extends BasePanel {
 
             for (let i = 0; i < this.m_summonActors.length; i++) {
                 let summon:SummonActor = this.m_summonActors[i]
-                for (let j = 0; j < summon.balloons.length; j++) {
-                    let balloon:Balloon = summon.balloons[j]
-                    if (balloon.type == GameConfig.gestureType) {
-                        summon.gotoDead()
-                        // this.boom = true
-                    }
-				}
-                // if (summon.gestureType == GameConfig.gestureType) {
-                //     summon.gotoDead()
-                //     // this.boom = true
-                // }
+                // for (let j = 0; j < summon.balloons.length; j++) {
+                //     let balloon:Balloon = summon.balloons[j]
+                //     if (balloon.type == GameConfig.gestureType) {
+                //         summon.gotoDead()
+                //         // this.boom = true
+                //     }
+				// }
+                if (summon.gestureType == GameConfig.gestureType) {
+                    summon.gotoDead()
+                    // this.boom = true
+                }
             }
 
             for (let i = 0 ; i < this.m_spiderActors.length; i++) {
@@ -955,11 +1002,11 @@ class GameScenePanel extends BasePanel {
 
     private _onPowerClick()
     {
-        Common.log("点击技能按钮  GameConfig.isGuide : " + GameConfig.isGuide);
         if(this.power >= 100 || GameConfig.isGuide)
         {
-            let actors:Array<BaseActor> = this.getAllActors()
-            this.m_baby.selectRangeFrontToBack(actors)
+            // let actors:Array<BaseActor> = this.getAllActors()
+            // this.m_baby.selectRangeFrontToBack(actors)
+            this.m_baby.canRelease()
             this.releaseSkill()
             if (GameConfig.isGuide) {
                 this.m_guideArmatureContainer.stop() //手指骨骼引导动画
@@ -1171,8 +1218,9 @@ class GameScenePanel extends BasePanel {
 		
     }
 
-    private _data:GameSceneData
+    public _data:GameSceneData
     private _particleLayer:egret.Sprite
+    private m_exSkillEffect:GameExSkillEffect
     
     // private _particle:particle.GravityParticleSystem
     /**生成怪物时间 */ 
@@ -1223,6 +1271,8 @@ class GameScenePanel extends BasePanel {
     private itemIcon:eui.Image
     private itemUnlock:egret.tween.TweenGroup
     private _curLevel:eui.Label
+    private m_nextBg:eui.Image
+    private _nextLevel:eui.Label
 
 	private m_bitLabScore:eui.BitmapLabel
     private m_imgEffectMask:eui.Image
@@ -1241,6 +1291,7 @@ class GameScenePanel extends BasePanel {
     private comboEnd:egret.tween.TweenGroup
     private comboMove:egret.tween.TweenGroup
     private bossWarning:egret.tween.TweenGroup
+    private lianjitexiao:egret.tween.TweenGroup
     private m_imgBossWarning:eui.Image
 
 	private m_groupScore:eui.Group
@@ -1252,6 +1303,7 @@ class GameScenePanel extends BasePanel {
     private m_gestureShape:egret.Shape
 	private m_gesture:Gesture
     private _groupCandy:eui.Group
+    private _commbGrop:eui.Group
     private _labCandy:eui.Label
 
     private candyAnimate:egret.tween.TweenGroup

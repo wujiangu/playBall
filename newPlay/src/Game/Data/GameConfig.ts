@@ -85,7 +85,12 @@ class GameConfig {
 	public static chapterMaxScore:any
 	// 章节最高连击
 	public static chapterMaxCombo:any
-
+	//当前是否显示结算面板
+	public static isShowPanelNow:boolean = false;
+	//是否章节过关结算
+	public static isChapterPassShow:boolean = false
+	//章节是否通过 (0 未通过 1 通过)
+	public static isChapterPass:any
 	// 临时配置，后续修改
 	public static sceneType:number = 0
 
@@ -93,6 +98,7 @@ class GameConfig {
      * 初始化骨骼的动画数据
      */
     public static initBattleDragonBones(name:string):void {
+		Common.log("fdsfds", name)
 		let skeletonData = RES.getRes(name+"_ske_json")
         let textureData = RES.getRes(name+"_tex_json")
         let texture = RES.getRes(name+"_tex_png")
@@ -215,9 +221,9 @@ class GameConfig {
 			let data = {}
 			data["ID"] = config.ID
 			data["Type"] = config.Type
-			data["Difficult"] = config.Difficult
 			data["Wave"] = config.Wave
 			data["Count"] = config.Count
+			data["Difficult"] = config.Difficult
 			data["Animation"] = config.Animation
 			data["Actions"] = config.Actions
 			data["Speed"] = config.Speed
@@ -381,6 +387,8 @@ class GameConfig {
 			data["petPrice"] = config.petPrice
 			data["name"] = config.name
 			data["unlockDesc"] = config.unlockDesc
+			data["recordIcon"] = config.recordIcon
+			data["getRecordIcon"] = config.getRecordIcon
 			data["desc"] = config.desc
 			data["action"] = config.action
 			data["icon"] = config.icon
@@ -427,16 +435,25 @@ class GameConfig {
 			data["cloud1"] = config.cloud1
 			data["cloud2"] = config.cloud2
 			data["water"] = config.water
+			data["reward"] = config.reward
+			data["candy"] = config.candy
 			this.chapterTable[config.id.toString()] = data
 			let score = this.chapterMaxScore[config.id.toString()]
 			let combo = this.chapterMaxCombo[config.id.toString()]
 			if (score == null) {
-				this.chapterMaxScore[config.id.toString()] = 0
+				this.chapterMaxScore[config.id.toString()] = 0	
 			}
 			if (combo == null) {
 				this.chapterMaxCombo[config.id.toString()] = 0
 			}
+			let isPass = this.isChapterPass[config.id.toString()]
+			if(isPass == null){
+				this.isChapterPass[config.id.toString()] = 0
+			}
 		}
+		Common.updateChapterScore(this.chapterMaxScore)
+		Common.updateChapterCombo(this.chapterMaxCombo)	
+		Common.updateIsChapterPass(this.isChapterPass)
 
 		let babySkillConfig:Array<any> = RES.getRes("babySkillConfig_json")
 		this.babySkillTable = {}
@@ -477,8 +494,8 @@ class GameConfig {
 			data["icon"] = config.icon
 			data["isGet"] = false
 			if (i < this.signCount ||(i >= 7 && ((i-7) < this.signCount))) data["isGet"] = true
+			Common.log(data["isGet"],this.signCount);
 			// if (i == this.signCount && this.sign == 1) data["isGet"] = true
-			Common.log("sign", i, this.signCount, this.sign, config.rewardType)
 			this.signTable[config.id.toString()] = data
 		}
 

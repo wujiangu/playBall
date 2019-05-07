@@ -175,7 +175,7 @@ class ActorListPanel extends BasePanel {
 	}
 
 	private _onBtnAddCandy() {
-		Common.dispatchEvent(MainNotify.openRechargePanel)
+		// Common.dispatchEvent(MainNotify.openRechargePanel)
 	}
 
 	private _onBtnFusion() {
@@ -210,7 +210,6 @@ class ActorListPanel extends BasePanel {
 	}
 
 	private _actorArmatureComplete() {
-		Common.log(this._actorState)
 		if (this._actorState == EMonsterState.Attack) {
 			this._actorArmatureContainer.play("idle", 0)
 			this._actorState = EMonsterState.Ready
@@ -395,5 +394,5 @@ class ActorIR extends eui.Component {
 
 	private _imgActor:eui.Image
 	private _imgBox:eui.Image
-	private _id:number
+	public _id:number
 }

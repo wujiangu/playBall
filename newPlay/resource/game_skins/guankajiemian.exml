@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="guankajiemian" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*">
+<e:Skin class="guankajiemian" width="730" height="1392" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:tween="egret.tween.*" xmlns:ns1="*">
 	<w:Declarations>
 		<tween:TweenGroup id="show">
 
@@ -134,19 +134,22 @@
 
 
 		<e:Group x="118" y="634.58">
-			<e:Label id="higestscoretitle" text="HIGHEST SCORE:" x="0" y="0" anchorOffsetX="0" width="324" anchorOffsetY="0" height="57.27" verticalAlign="middle" textAlign="center" bold="true" fontFamily="Arial" size="30"/>
-			<e:Label id="bombatitle" text="BOMBA:" x="54.02" y="52.72" anchorOffsetX="0" width="219.45" anchorOffsetY="0" height="39.09" verticalAlign="middle" textAlign="center" bold="true"/>
-			<e:Label id="_lblhighestscore" text="1500" x="304.94" y="4.55" anchorOffsetX="0" width="230.06" anchorOffsetY="0" height="48.18" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16"/>
-			<e:Label id="_lblbomba" text="28" x="268.7" y="48.17" anchorOffsetX="0" width="208.85" anchorOffsetY="0" height="43.64" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16"/>
+			<e:Label id="higestscoretitle" text="HIGHEST SCORE:" x="-10.03" y="2.55" anchorOffsetX="0" width="330" anchorOffsetY="0" height="57.27" verticalAlign="middle" textAlign="center" bold="true" fontFamily="Arial" size="38"/>
+			<e:Label id="bombatitle" text="BOMBA:" x="54.02" y="50.72" anchorOffsetX="0" width="219.45" anchorOffsetY="0" height="39.09" verticalAlign="middle" textAlign="center" bold="true" size="35"/>
+			<e:Label id="_lblhighestscore" text="0" x="330.94" y="8.55" anchorOffsetX="0" width="230.06" anchorOffsetY="0" height="48.18" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16" size="38"/>
+			<e:Label id="_lblbomba" text="0" x="261" y="49.72" anchorOffsetX="0" width="208.85" anchorOffsetY="0" height="43.64" verticalAlign="middle" textAlign="left" bold="true" textColor="0xd4ad16" size="35"/>
 		</e:Group>
-		<e:Label id="chaptermodetitle" text="CHAPTER" x="153.5" y="133.11" anchorOffsetX="0" width="328" anchorOffsetY="0" height="43.32" textAlign="center" bold="true" textColor="0x000000" size="30" verticalAlign="middle"/>
-		<e:Label id="endlessmodetitle" text="ENDLESS MODE" x="135" y="759" anchorOffsetX="0" width="396" anchorOffsetY="0" height="42" verticalAlign="middle" textAlign="center" size="30" bold="true" textColor="0x000000"/>
+		<e:Label id="chaptermodetitle" text="CHAPTER" x="153.18" y="130.84" anchorOffsetX="0" width="328" anchorOffsetY="0" height="43.32" textAlign="center" bold="true" textColor="0x000000" size="40" verticalAlign="middle"/>
+		<e:Label id="endlessmodetitle" text="ENDLESS MODE" x="135" y="759" anchorOffsetX="0" width="396" anchorOffsetY="0" height="42" verticalAlign="middle" textAlign="center" size="40" bold="true" textColor="0x000000"/>
 	</e:Group>
+	<ns1:ScrollView id="_srollView" width="494" height="406" x="94" y="47" scaleX="1.1" scaleY="1.1" anchorOffsetX="0" anchorOffsetY="0" visible="false">
+		<e:Group/>
+	</ns1:ScrollView>
 	<e:Group id="groupChater" width="532" height="451" horizontalCenter="-0.5" scaleX="0.9" scaleY="0.9" y="536" anchorOffsetX="271.11" anchorOffsetY="220">
 		<e:Image id="m_imgChapter" x="-27.67" y="-25.05" scaleX="1.1111111111111112" scaleY="1.1111111111111112" alpha="1" source="chapterIcon1001_png" width="532" height="451"/>
-		<e:Image x="-8.22" y="329.89" scaleX="1.1111111111111112" scaleY="1.1111111111111112" source="chapterdesBg_png"/>
+		<e:Image x="-10.44" y="327.67" scaleX="1.1111111111111112" scaleY="1.1111111111111112" source="chapterdesBg_png"/>
 		<e:Image id="m_imgIcon" source="guankajiemian13_png" x="208" y="126" touchEnabled="false" scaleX="1" scaleY="1"/>
-		<e:Label id="m_labChapter" text="100" x="200.48" y="263.84" bold="true" size="45" fontFamily="Microsoft YaHei" verticalAlign="middle" textAlign="center" anchorOffsetX="0" width="121.34" scaleX="1.1111111111111112" scaleY="1.1111111111111112"/>
+		<e:Label id="m_labChapter" text="18-7" x="73.78" y="346.13" bold="true" size="45" fontFamily="Microsoft YaHei" verticalAlign="middle" textAlign="center" anchorOffsetX="0" width="130.34" scaleX="1.1111111111111112" scaleY="1.1111111111111112"/>
 		<e:Button id="m_btnLast" label="" x="-125.78" y="162" scaleX="1.1111111111111112" scaleY="1.1111111111111112">
 			<e:skinName>
 			<e:Skin states="up,down,disabled">
@@ -163,9 +166,9 @@
 			</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Label text="HIGHEST" x="19.19" y="348.78" anchorOffsetX="0" width="274" anchorOffsetY="0" height="83.33" verticalAlign="middle" textAlign="center" bold="true" size="50" fontFamily="Arial"/>
+		<e:Label text="CHAPTER" x="37.67" y="393.92" anchorOffsetX="0" width="215.08" anchorOffsetY="0" height="68.18" verticalAlign="middle" textAlign="center" bold="true" size="30" fontFamily="Arial"/>
 		<e:Image id="m_btnRecordIconBg0" width="102" height="102" x="302.22" y="339.45" source="signinrecordbg_png" touchEnabled="true"/>
-		<e:Image id="m_recordIcon0" width="102" height="102" x="302.22" y="339.45" source="actorIcon10100_png" touchEnabled="false"/>
+		<e:Image id="m_recordIcon0" width="102" height="102" x="302.96" y="339.45" touchEnabled="false" source="actorIcon10110_png"/>
 		<e:Image id="m_btnRecordIconBg1" width="102" height="102" x="421.89" y="339.45" source="signinrecordbg_png" touchEnabled="true"/>
 		<e:Image id="m_recordIcon1" width="102" height="102" x="421.89" y="339.45" source="actorIcon10080_png" touchEnabled="false"/>
 

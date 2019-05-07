@@ -109,7 +109,7 @@
         "ID": 1006
     }, 
     {
-        "Scale": 0.5, 
+        "Scale": 0.8, 
         "Name": "BF", 
         "Power": 2, 
         "Type": 2, 
@@ -123,7 +123,79 @@
         "Height": 100, 
         "Width": 60, 
         "Animation": "BF", 
-        "Speed": 11, 
+        "Speed": 5, 
         "ID": 1007
+    }, 
+    {
+        "Scale": 0.5, 
+        "Name": "huazi", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "huazi", 
+        "Speed": 5, 
+        "ID": 1008
+    }, 
+    {
+        "Scale": 0.7, 
+        "Name": "ziren", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "ziren", 
+        "Speed": 5, 
+        "ID": 1009
+    }, 
+    {
+        "Scale": 0.6, 
+        "Name": "yun", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "yun", 
+        "Speed": 5, 
+        "ID": 1010
+    }, 
+    {
+        "Scale": 0.6, 
+        "Name": "qiu", 
+        "Power": 2, 
+        "Type": 2, 
+        "Score": 0, 
+        "Actions": [
+            "idle", 
+            "dead", 
+            "arrive", 
+            "run"
+        ], 
+        "Height": 100, 
+        "Width": 60, 
+        "Animation": "qiu", 
+        "Speed": 5, 
+        "ID": 1011
     }
 ]

@@ -1,7 +1,7 @@
 {
 	"native": {
 		"path_ignore": [],
-		"android_as_path": "../../testAndroid1"
+		"android_as_path": "demo57"
 	},
 	"publish": {
 		"web": 0,

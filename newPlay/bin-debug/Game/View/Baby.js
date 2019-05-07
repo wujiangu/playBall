@@ -73,8 +73,10 @@ var Baby = (function (_super) {
         this._state = EBabyState.Attack;
         this._actorArmatureContainer.play("fangdazhao", 1);
         var voice = RES.getRes(this.skillData.music);
-        var channel = voice.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = voice.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
     };
     Baby.prototype.gotoTired = function () {
         this._state = EBabyState.Tired;
@@ -87,10 +89,10 @@ var Baby = (function (_super) {
         if (a_power >= 100 && this.skillData.method == a_method) {
             switch (this.skillData.method) {
                 case ESkillReleaseType.Immediately:
-                    this.releaseImmediately();
+                    // this.releaseImmediately()
                     break;
                 case ESkillReleaseType.Range:
-                    this.releaseRange(a_monster);
+                    // this.releaseRange(a_monster)
                     break;
                 default:
                     break;
@@ -149,13 +151,16 @@ var Baby = (function (_super) {
         }
         for (var i = 0; i < this._influenceBalls.length; i++) {
             var ball = this._influenceBalls[i];
-            if (ball.type > 0) {
-                ball.updateEffectArmature(this.skillData);
-                ball.playEffect(this.skillData);
-            }
+            ball.updateEffectArmature(this.skillData);
+            ball.playEffect(this.skillData);
         }
     };
     Baby.prototype.selectRangeAll = function () {
+        var actors = PanelManager.gameScenePanel.getAllActors();
+        for (var i = 0; i < actors.length; i++) {
+            if (actors[i].state == EMonsterState.Ready)
+                this._influenceActors.push(actors[i]);
+        }
         switch (this.skillData.result) {
             case ESkillResult.ContinuedKill:
                 // 全体范围内持续
@@ -166,6 +171,13 @@ var Baby = (function (_super) {
                 PanelManager.gameScenePanel.setSkillDuration();
                 break;
         }
+    };
+    Baby.prototype.isInfluence = function (a_actor) {
+        if (!a_actor.isBoss())
+            return true;
+        if (a_actor.isBoss() && this.skillData.boss)
+            return true;
+        return false;
     };
     Baby.prototype.selectRangeRandom = function (actors) {
         for (var i = 0; i < actors.length; i++) {
@@ -181,11 +193,14 @@ var Baby = (function (_super) {
                 for (var i = 0; i < this._actorsIndex.length; i++) {
                     var random = this._actorsIndex[i];
                     var actor = actors[random];
-                    if (actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 250) {
+                    // xiugaiwu
+                    if (this.isInfluence(actor) && actor.balloons.length > 0 && actor.state == EMonsterState.Ready && actor.y >= 100) {
                         for (var j = 0; j < actor.balloons.length; j++) {
                             if (this._influenceBalls.length >= count)
                                 break;
-                            this._influenceBalls.push(actor.balloons[j]);
+                            if (actor.balloons[j].type > 0) {
+                                this._influenceBalls.push(actor.balloons[j]);
+                            }
                         }
                     }
                 }
@@ -194,7 +209,8 @@ var Baby = (function (_super) {
                 for (var i = 0; i < count; i++) {
                     var random = this._actorsIndex[i];
                     var actor = actors[random];
-                    if (actor.state == EMonsterState.Ready && actor.y >= 250)
+                    // xiugaiwu
+                    if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100)
                         this._influenceActors.push(actor);
                 }
             }
@@ -213,14 +229,15 @@ var Baby = (function (_super) {
             var value = 0;
             for (var i = 0; i < actors.length; i++) {
                 var actor = actors[i];
-                Common.log(actor.state, actor.y);
-                if (actor.state == EMonsterState.Ready && actor.y >= 250) {
+                if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100) {
                     if (this.skillData.skillHang == ESkillHand.Ballon) {
                         for (var j = 0; j < actor.balloons.length; j++) {
                             if (value >= count)
                                 break;
-                            this._influenceBalls.push(actor.balloons[j]);
-                            value++;
+                            if (actor.balloons[j].type > 0) {
+                                this._influenceBalls.push(actor.balloons[j]);
+                                value++;
+                            }
                         }
                     }
                     else {

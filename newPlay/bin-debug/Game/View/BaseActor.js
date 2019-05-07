@@ -172,6 +172,7 @@ var BaseActor = (function (_super) {
     };
     BaseActor.prototype.resetGestureData = function () {
     };
+    BaseActor.prototype.changeGestureType = function (a_gestureType) { };
     BaseActor.prototype.setVertical = function (addNum) {
         if (this._speedY <= 0)
             return;
@@ -256,6 +257,9 @@ var BaseActor = (function (_super) {
                         this._state = EMonsterState.Ready;
                         break;
                     case ESkillResult.ChangeLucky:
+                        if (this.type == EMonsterDifficult.Summon) {
+                            this.master.summonBeKill();
+                        }
                         PanelManager.gameScenePanel.createLuckyActor(this.x, this.y);
                         this.destroyAndRemove();
                         break;
@@ -288,6 +292,12 @@ var BaseActor = (function (_super) {
                 balloon.parent.removeChild(balloon);
             }
         }
+    };
+    BaseActor.prototype.isBoss = function () {
+        if (this.type == EMonsterDifficult.Normal || this.type == EMonsterDifficult.Summon) {
+            return false;
+        }
+        return true;
     };
     BaseActor.prototype.balloonExploreHandle = function () {
         if (this._balloons.length <= 0) {

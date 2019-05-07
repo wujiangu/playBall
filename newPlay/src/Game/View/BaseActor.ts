@@ -158,6 +158,8 @@ class BaseActor extends egret.DisplayObjectContainer {
 		
 	}
 
+	public changeGestureType(a_gestureType:number) {}
+
 	public setVertical(addNum:number) {
 		if (this._speedY <= 0) return
 		this.resetVertical()
@@ -241,6 +243,9 @@ class BaseActor extends egret.DisplayObjectContainer {
 						this._state = EMonsterState.Ready
 					break
 					case ESkillResult.ChangeLucky:
+						if (this.type == EMonsterDifficult.Summon) {
+							this.master.summonBeKill()
+						}
 						PanelManager.gameScenePanel.createLuckyActor(this.x, this.y)
 						this.destroyAndRemove()
 					break
@@ -278,6 +283,13 @@ class BaseActor extends egret.DisplayObjectContainer {
 			}
 			
 		}
+	}
+
+	public isBoss() {
+		if (this.type == EMonsterDifficult.Normal || this.type == EMonsterDifficult.Summon) {
+			return false
+		}
+		return true
 	}
 
 	public balloonExploreHandle() {
@@ -379,4 +391,6 @@ class BaseActor extends egret.DisplayObjectContainer {
 	protected _summonWave:number
 	/**召唤物被消灭的数量 */
 	protected _summonBeKillCount:number
+
+	protected _gestureType:number
 }

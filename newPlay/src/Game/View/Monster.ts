@@ -54,14 +54,16 @@ class Monster extends BaseActor {
 				// this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
 				// this._type = this._data.Difficult
 				GameConfig.monsterPos = 3
-				let battleVolume = 0.8 * GameConfig.bgmValue / 100
-				egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{
-					let channel = GameVoice.smallBossSound.play(0, 1)
-					channel.volume = 0
-					egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
-						egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+				if(GameConfig.isPlaySound){
+					let battleVolume = 0.8 * GameConfig.bgmValue / 100
+					egret.Tween.get(GameVoice.battleBGMChannel).to({volume:0.2}, 500).call(()=>{						
+						let channel = GameVoice.smallBossSound.play(0, 1)
+						channel.volume = 0
+						egret.Tween.get(channel).to({volume:GameConfig.soundValue / 100}, 2000).call(()=>{
+							egret.Tween.get(GameVoice.battleBGMChannel).to({volume:battleVolume}, 500)
+						})			
 					})
-				})
+				}
 			break
 		}
 		if (this._data) {
@@ -93,7 +95,7 @@ class Monster extends BaseActor {
 		this._state = EMonsterState.Ready
 		this._addNum = 0
 		this._speedY = this._data.Speed / 100 * GameConfig.gameSpeedPercent
-		this._baseSpeedY = this._speedX
+		this._baseSpeedY = this._speedY
 		this._spFall = 0.9
 		this._speedX = 0.2
 
@@ -282,7 +284,9 @@ class Monster extends BaseActor {
 	public playEffect(data:any) {
 		this._effectArmatureContainer.visible = true
 		this._effectArmatureContainer.play(data.skill, 1)
-		if (this._state == EMonsterState.Ready) this._state = EMonsterState.Stop
+		if (data.result != ESkillResult.SlowSpeed) {
+			if (this._state == EMonsterState.Ready) this._state = EMonsterState.Stop
+		}
 	}
 
 	public ballExplosion(a_ball:Balloon) {
@@ -343,7 +347,7 @@ class Monster extends BaseActor {
 
 				let curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()]
 				if (curChapterData.water == 1) {
-					GameVoice.fallDownWaterSound.play(0, 1)
+				     if(GameConfig.isPlaySound)  	GameVoice.fallDownWaterSound.play(0, 1)
 				}else{
 					let sound:egret.Sound = RES.getRes("fallDownGround_mp3")
 					let channel = sound.play(0, 1)
@@ -416,8 +420,10 @@ class Monster extends BaseActor {
 	}
 
 	protected _spide(data, posX, posY, count, i) {
-		let channel = GameVoice.spideBall.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound){
+			let channel = GameVoice.spideBall.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+		}		
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 
@@ -439,8 +445,10 @@ class Monster extends BaseActor {
 	}
 
 	protected _summon(data, posX, posY, count, i) {
-		let channel = GameVoice.summon.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound){
+			let channel = GameVoice.summon.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+		}		
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 

@@ -6,9 +6,16 @@ class EliteActor extends Monster {
 	public Init(data:any, type:ELevelType) {
 		super.Init(data, type)
 		this._changeToUnknown()
+		this._isArrive = true
+		this._speedY = 0.3
 	}
 
 	public update(timeElapsed:number) {
+		if (this.y > this.actorTableData.Height && this.state == EMonsterState.Ready) {
+			this._isArrive = false
+			this._speedY = this._baseSpeedY
+		}
+
 		super.update(timeElapsed)
 		if (this._knownTime >= 0) {
 			this._knownTime += timeElapsed
@@ -16,6 +23,8 @@ class EliteActor extends Monster {
 				this._changeToUnknown()
 			}
 		}
+
+
 	}
 
 	public summonBeKill() {
@@ -25,7 +34,7 @@ class EliteActor extends Monster {
 		}
 		this._summonCount = Math.max(0, this._summonCount)
 		if (this._data.Difficult == EMonsterDifficult.SpecialElite1 && this._summonCount <= 0) {
-			if (this._summonWave < this._data.Wave) {
+			if (this._summonWave <= this._data.Wave) {
 				this._changeToKnown()
 			}
 		}
@@ -45,8 +54,10 @@ class EliteActor extends Monster {
 	}
 
 	protected _spide(data, posX, posY, count, i) {
-		let channel = GameVoice.spideBall.play(0, 1)
-		channel.volume = GameConfig.soundValue / 100
+		if(GameConfig.isPlaySound){
+			let channel = GameVoice.spideBall.play(0, 1)
+			channel.volume = GameConfig.soundValue / 100
+		}		
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i)
 	}
 
@@ -65,9 +76,9 @@ class EliteActor extends Monster {
 		let evt:string = event.frameLabel
 		switch (evt) {
 			case "vomit":
-				if (this.y < 200) return
+				if (this._isArrive) return
 				if (this._data.Difficult == EMonsterDifficult.SpecialElite1) {
-					if (this._summonCount <= 0 && this._summonWave < this._data.Wave) {
+					if (this._summonCount <= 0 && this._summonWave < this._data.Wave && !this._isExistKnown() && this.state == EMonsterState.Ready) {
 						this._summonWave += 1
 						this._eliteSummon()
 					}
@@ -91,8 +102,19 @@ class EliteActor extends Monster {
 		if (this._data.Difficult == EMonsterDifficult.SpecialElite2) {
 			this._knownTime = 0
 		}
-		this._balloons[0].changeToKnown()
+		if (this._balloons[0] != null) this._balloons[0].changeToKnown()
+		
+	}
+
+	private _isExistKnown() {
+		for (let i = 0; i < this._balloons.length; i++) {
+			if (this._balloons[i].type > 0) {
+				return true
+			}
+		}
+		return false
 	}
 
 	private _knownTime:number
+	private _isArrive:boolean
 }

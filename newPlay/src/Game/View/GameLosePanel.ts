@@ -19,8 +19,7 @@ class GameLosePanel extends BasePanel {
     public onEnter():void{
 		this.touchChildren = false
 		this.countDown = 5;
-		this.Show.play(0)		
-		PanelManager.gameScenePanel.sceneData.addCandy = 0
+		this.Show.play(0)
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -94,6 +93,7 @@ class GameLosePanel extends BasePanel {
 	}
 
 	private _onHide() {
+		GameConfig.isShowPanelNow = false;
 		this._lblCountDown.visible = false;	
 		this._lblCountDown.text = "5";
 		Common.gameScene().uiLayer.removeChild(this)

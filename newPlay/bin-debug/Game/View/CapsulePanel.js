@@ -112,8 +112,10 @@ var CapsulePanel = (function (_super) {
             this._hookMove.pause();
             this._btnDelay = 0;
             this.zhua.play(0);
-            var channel = GameVoice.rewardVoice.play(0, 1);
-            channel.volume = GameConfig.soundValue / 100;
+            if (GameConfig.isPlaySound) {
+                var channel = GameVoice.rewardVoice.play(0, 1);
+                channel.volume = GameConfig.soundValue / 100;
+            }
             this._hook.alpha = 1;
         }
         else {

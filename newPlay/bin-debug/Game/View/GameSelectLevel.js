@@ -15,6 +15,7 @@ var GameSelectLevel = (function (_super) {
     __extends(GameSelectLevel, _super);
     function GameSelectLevel() {
         var _this = _super.call(this) || this;
+        _this._recordTipMessages = new Array();
         _this.addEventListener(eui.UIEvent.COMPLETE, _this._onComplete, _this);
         _this.skinName = "resource/game_skins/guankajiemian.exml";
         return _this;
@@ -25,11 +26,9 @@ var GameSelectLevel = (function (_super) {
     // 初始化面板数据
     GameSelectLevel.prototype.initData = function () {
         this.groupTip.visible = false;
-        // this._srollView.itemNum = a_pageCount
-        // this._srollView.reset(this._imgPages)
-        // this._srollView.spacing = 20
         this._curChapterIndex = GameConfig.curChpter % 1000;
         this._curSelectChapter = GameConfig.curChpter;
+        this._ChangeChapter();
         this._updateChapterInfo();
         if (this._curSelectChapter == GameConfig.curChpter && GameConfig.isOpenNewChapter == true) {
             this.m_imgIcon.visible = false;
@@ -46,6 +45,9 @@ var GameSelectLevel = (function (_super) {
     };
     // 进入面板
     GameSelectLevel.prototype.onEnter = function () {
+        Common.getChapterScore();
+        Common.getChapterCombo();
+        Common.getIsChapterPass();
         this.touchChildren = false;
         this.initData();
         this.show.play(0);
@@ -92,6 +94,21 @@ var GameSelectLevel = (function (_super) {
         this.m_imgIcon.visible = true;
         var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
         this.m_imgChapter.source = chapterData.icon;
+        // if(chapterData.candy == 0){//不需要购买，但是未解锁，需要提示通关上一章
+        // 	TipsManager.show("通关上一章!")
+        // }
+        // else if(chapterData.candy > 0)
+        // {
+        // 	//判断自己的糖果是否足够
+        // 	if(GameConfig.candy >= chapterData.candy)
+        // 	{
+        // 		Common.dispatchEvent(MainNotify.openBuyConfirmPanel)								
+        // 	}
+        // 	else
+        // 	{
+        // 		TipsManager.show(`Insufficient candy!`);
+        // 	}
+        // }
     };
     GameSelectLevel.prototype._onMaskClick = function () {
         this.touchChildren = false;
@@ -163,6 +180,7 @@ var GameSelectLevel = (function (_super) {
             this._curSelectChapter++;
             this._curChapterIndex++;
             this._updateChapterInfo();
+            this._ChangeChapter();
         }
     };
     GameSelectLevel.prototype._onLastClick = function () {
@@ -170,29 +188,99 @@ var GameSelectLevel = (function (_super) {
             this._curChapterIndex--;
             this._curSelectChapter--;
             this._updateChapterInfo();
+            this._ChangeChapter();
         }
     };
     GameSelectLevel.prototype._onRecordIconBg0Begin = function () {
-        this._showTip("Get 100 combos in this chapter \n\t\tto get this pet");
+        this._showTip(this._recordTipMessages[0]);
     };
     GameSelectLevel.prototype._onRecordIconBg0End = function () {
         this.groupTip.visible = false;
     };
     GameSelectLevel.prototype._onRecordIconBg0Click = function () {
         //显示对应提示
-        this._showTip("Get 100 combos in this chapter \n\t\tto get this pet");
+        this._onRecordIconBg0Begin();
         this.timeNum.start();
     };
     GameSelectLevel.prototype._onRecordIconBg1Begin = function () {
-        this._showTip("Get 100 combos in this chapter \n\t\tto get this pet");
+        this._showTip(this._recordTipMessages[1]);
     };
     GameSelectLevel.prototype._onRecordIconBg1End = function () {
         this.groupTip.visible = false;
     };
     GameSelectLevel.prototype._onRecordIconBg1Click = function () {
         //显示对应提示
-        this._showTip("Get 100 combos in this chapter \n\t\tto get this pet");
+        this._onRecordIconBg1Begin();
         this.timeNum.start();
+    };
+    GameSelectLevel.prototype._ChangeChapter = function () {
+        this._recordTipMessages.length = 0;
+        var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
+        for (var i = 0; i < chapterData.reward.length; i++) {
+            var levelData = GameConfig.levelRewardTable[chapterData.reward[i]];
+            if (levelData.condition != 4 || levelData.condition != 5) {
+                if (levelData.reward == 1000) {
+                    var recordNameStr = void 0;
+                    if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1) {
+                        if (levelData.value >= 200) {
+                            recordNameStr = "icon5greyState_png";
+                        }
+                        else {
+                            if (levelData.value > 0)
+                                recordNameStr = "icon4greyState_png";
+                        }
+                    }
+                    if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0) {
+                        if (levelData.value >= 200) {
+                            recordNameStr = "icon5_png";
+                        }
+                        else {
+                            if (levelData.value > 0)
+                                recordNameStr = "icon4_png";
+                        }
+                    }
+                    if (i == 0) {
+                        this.m_recordIcon0.source = recordNameStr;
+                        this._recordTipMessages[0] = "Get " + levelData.value + " candies through\n\t\tchapters";
+                    }
+                    else if (i == 1) {
+                        this.m_recordIcon1.source = recordNameStr;
+                        this._recordTipMessages[1] = "Get " + levelData.value + " candies through\n\t\tchapters";
+                    }
+                }
+                else {
+                    if (levelData.reward > 0) {
+                        var data = GameConfig.actorTable[levelData.reward];
+                        if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1) {
+                            if (i == 0) {
+                                this.m_recordIcon0.source = data.getRecordIcon;
+                                this._recordTipMessages[0] = data.unlockDesc;
+                            }
+                            else {
+                                if (i == 1) {
+                                    this.m_recordIcon1.source = data.getRecordIcon;
+                                    this._recordTipMessages[1] = data.unlockDesc;
+                                }
+                            }
+                        }
+                        if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0) {
+                            if (i == 0) {
+                                this.m_recordIcon0.source = data.recordIcon;
+                                this._recordTipMessages[0] = data.unlockDesc;
+                            }
+                            else {
+                                if (i == 1) {
+                                    this.m_recordIcon1.source = data.recordIcon;
+                                    this._recordTipMessages[1] = data.unlockDesc;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this._lblhighestscore.text = GameConfig.chapterMaxScore[(this._curChapterIndex + 1000)];
+        this._lblbomba.text = GameConfig.chapterMaxCombo[(this._curChapterIndex + 1000)];
     };
     GameSelectLevel.prototype._showTip = function (message) {
         this._lblBabyDescribe.text = message;
@@ -206,14 +294,6 @@ var GameSelectLevel = (function (_super) {
     };
     GameSelectLevel.prototype._onComplete = function () {
         this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this);
-        /*
-            egret.TouchEvent.TOUCH_BEGIN 当用户第一次触摸启用触摸的设备时（例如，用手指触摸配有触摸屏的移动电话或平板电脑）调度；
-            egret.TouchEvent.TOUCH_END  当用户移除与启用触摸的设备的接触时（例如，将手指从配有触摸屏的移动电话或平板电脑上抬起）调度；
-            egret.TouchEvent.TOUCH_RELEASE_OUTSIDE  当用户在启用触摸设备上的已启动接触的不同 DisplayObject 实例上抬起接触点时
-            （例如，在配有触摸屏的移动电话或平板电脑的显示对象上的某一点处按下并释放手指）调度；
-            egret.TouchEvent.TOUCH_TAP 当用户在启用触摸设备上的已启动接触的同一 DisplayObject 实例上抬起接触点时
-            （例如，在配有触摸屏的移动电话或平板电脑的显示对象上的某一点处按下并释放手指）调度 ；
-         */
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onChapterBegin, this);
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_END, this._onChapterEnd, this);
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._onChapterEnd, this);

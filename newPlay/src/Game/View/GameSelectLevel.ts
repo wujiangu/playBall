@@ -13,11 +13,10 @@ class GameSelectLevel extends BasePanel {
     // 初始化面板数据
     public initData():void{
 		this.groupTip.visible = false
-		// this._srollView.itemNum = a_pageCount
-		// this._srollView.reset(this._imgPages)
-		// this._srollView.spacing = 20
 		this._curChapterIndex = GameConfig.curChpter % 1000
 		this._curSelectChapter = GameConfig.curChpter
+		this._ChangeChapter()		
+		
 		this._updateChapterInfo()
 		if (this._curSelectChapter == GameConfig.curChpter && GameConfig.isOpenNewChapter == true) {
 			this.m_imgIcon.visible = false
@@ -36,7 +35,10 @@ class GameSelectLevel extends BasePanel {
 
     // 进入面板
     public onEnter():void{
-
+		Common.getChapterScore()
+        Common.getChapterCombo()
+		Common.getIsChapterPass()
+		
 		this.touchChildren = false
 		this.initData()
 		this.show.play(0)
@@ -82,6 +84,21 @@ class GameSelectLevel extends BasePanel {
 		this.m_imgIcon.visible = true
 		let chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()]
 		this.m_imgChapter.source = chapterData.icon
+		// if(chapterData.candy == 0){//不需要购买，但是未解锁，需要提示通关上一章
+		// 	TipsManager.show("通关上一章!")
+		// }
+		// else if(chapterData.candy > 0)
+		// {
+		// 	//判断自己的糖果是否足够
+		// 	if(GameConfig.candy >= chapterData.candy)
+		// 	{
+		// 		Common.dispatchEvent(MainNotify.openBuyConfirmPanel)								
+		// 	}
+		// 	else
+		// 	{
+		// 		TipsManager.show(`Insufficient candy!`);
+		// 	}
+		// }
 	}
 
 	private _onMaskClick() {
@@ -97,7 +114,6 @@ class GameSelectLevel extends BasePanel {
 	private _onChapterEnd() {
 		this.m_imgChapter.alpha = 1
 	}
-
 	private _onChapterClick() {
 		if (!this._isLock()) {
 			this._beforeEnterBattle()
@@ -158,8 +174,7 @@ class GameSelectLevel extends BasePanel {
 		if (this._isLock()) {
 			this.m_imgChapter.source = chapterData.unlockIcon
 			this.m_imgIcon.source = "guankajiemian14_png"
-		}
-		
+		}	
 	}
 
 	private _onNextClick() {
@@ -167,6 +182,7 @@ class GameSelectLevel extends BasePanel {
 			this._curSelectChapter++
 			this._curChapterIndex++
 			this._updateChapterInfo()
+			this._ChangeChapter()
 		} 
 	}
 
@@ -175,13 +191,13 @@ class GameSelectLevel extends BasePanel {
 			this._curChapterIndex--
 			this._curSelectChapter--
 			this._updateChapterInfo()
+			this._ChangeChapter()
 		}
 	}
 
 	private _onRecordIconBg0Begin()
-	{
-		this._showTip(`Get 100 combos in this chapter 
-		to get this pet`);
+	{		
+		this._showTip(this._recordTipMessages[0]);
 	}
 	private _onRecordIconBg0End()
 	{
@@ -190,15 +206,13 @@ class GameSelectLevel extends BasePanel {
 	private _onRecordIconBg0Click()
 	{
 		//显示对应提示
-		this._showTip(`Get 100 combos in this chapter 
-		to get this pet`);
+		this._onRecordIconBg0Begin()
 		this.timeNum.start();
 	}
 
 	private _onRecordIconBg1Begin()
 	{
-		this._showTip(`Get 100 combos in this chapter 
-		to get this pet`);
+		this._showTip(this._recordTipMessages[1]);
 	}
 
 	private _onRecordIconBg1End()
@@ -209,9 +223,74 @@ class GameSelectLevel extends BasePanel {
 	private _onRecordIconBg1Click()
 	{
 		//显示对应提示
-		this._showTip(`Get 100 combos in this chapter 
-		to get this pet`);
+		this._onRecordIconBg1Begin()
 		this.timeNum.start();
+	}
+
+	private _ChangeChapter()
+	{
+		this._recordTipMessages.length = 0
+		let chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()]
+		for(let i = 0; i < chapterData.reward.length; i++){
+			let levelData = GameConfig.levelRewardTable[chapterData.reward[i]]
+			if(levelData.condition != 4 || levelData.condition != 5){
+				if(levelData.reward == 1000){
+					let recordNameStr:string
+					if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1){//通章
+						if(levelData.value >= 200){//糖果数量大于200显示糖果盒子
+						recordNameStr = "icon5greyState_png"
+						}else{
+							if(levelData.value > 0)  recordNameStr = "icon4greyState_png"
+						}
+					}
+					if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0){//未通章
+						if(levelData.value >= 200){//糖果数量大于200显示糖果盒子
+							recordNameStr = "icon5_png"
+						}else{
+							if(levelData.value > 0)  recordNameStr = "icon4_png"
+						}
+					}
+					if(i == 0){					
+						this.m_recordIcon0.source = recordNameStr;
+						this._recordTipMessages[0] = "Get "+ levelData.value +` candies through
+		chapters`;
+					}else if(i == 1){
+						this.m_recordIcon1.source = recordNameStr;
+						this._recordTipMessages[1] = "Get "+ levelData.value +` candies through
+		chapters`;
+					}
+				}else {
+					if(levelData.reward > 0 ){
+						let data = GameConfig.actorTable[levelData.reward]
+						if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1){//通章
+							if(i == 0){
+							this.m_recordIcon0.source = data.getRecordIcon;
+							this._recordTipMessages[0] = data.unlockDesc;
+							}else{
+								if(i == 1){
+									this.m_recordIcon1.source = data.getRecordIcon;
+									this._recordTipMessages[1] = data.unlockDesc;
+								}							
+							}
+						}
+						if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0){//未通章
+							if(i == 0){
+								this.m_recordIcon0.source = data.recordIcon;
+								this._recordTipMessages[0] = data.unlockDesc;
+							}else{
+								if(i == 1){
+									this.m_recordIcon1.source = data.recordIcon;
+									this._recordTipMessages[1] = data.unlockDesc;
+								}							
+							}
+						}
+						
+					}					
+				}
+			}			
+		}
+		this._lblhighestscore.text = <string>GameConfig.chapterMaxScore[(this._curChapterIndex + 1000)]
+		this._lblbomba.text = <string>GameConfig.chapterMaxCombo[(this._curChapterIndex + 1000)]
 	}
 
 	private _showTip(message:string)
@@ -230,14 +309,6 @@ class GameSelectLevel extends BasePanel {
 
 	private _onComplete() {
 		this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this)
-		/*
-			egret.TouchEvent.TOUCH_BEGIN 当用户第一次触摸启用触摸的设备时（例如，用手指触摸配有触摸屏的移动电话或平板电脑）调度；
-			egret.TouchEvent.TOUCH_END  当用户移除与启用触摸的设备的接触时（例如，将手指从配有触摸屏的移动电话或平板电脑上抬起）调度；
-			egret.TouchEvent.TOUCH_RELEASE_OUTSIDE  当用户在启用触摸设备上的已启动接触的不同 DisplayObject 实例上抬起接触点时
-			（例如，在配有触摸屏的移动电话或平板电脑的显示对象上的某一点处按下并释放手指）调度；
-			egret.TouchEvent.TOUCH_TAP 当用户在启用触摸设备上的已启动接触的同一 DisplayObject 实例上抬起接触点时
-			（例如，在配有触摸屏的移动电话或平板电脑的显示对象上的某一点处按下并释放手指）调度 ；
-		 */
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onChapterBegin, this)
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_END, this._onChapterEnd, this)
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._onChapterEnd, this)
@@ -276,8 +347,12 @@ class GameSelectLevel extends BasePanel {
 	private m_imgIcon:eui.Image
 	private m_imgEndlessBg:eui.Image
 	private m_imgEndlessIcon:eui.Image
+	private m_recordIcon0:eui.Image //章节第一个奖励
+	private m_recordIcon1:eui.Image	//章节第二个奖励
 
 	private m_labChapter:eui.Label
+	private _lblhighestscore:eui.Label
+	private _lblbomba:eui.Label
 
 	private m_btnNext:eui.Button
 	private m_btnLast:eui.Button
@@ -296,5 +371,6 @@ class GameSelectLevel extends BasePanel {
 	private _curSelectChapter:number
 	private timeNum:egret.Timer
 
-	private _srollView:ScrollView
+	private _recordTipMessages:Array<string> = new Array()
+	// private _srollView:ScrollView
 }

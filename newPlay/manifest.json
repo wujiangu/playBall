@@ -11,9 +11,9 @@
 	],
 	"game": [
 		"bin-debug/Game/View/BaseActor.js",
-		"bin-debug/Game/View/Monster.js",
 		"bin-debug/Game/Data/GameEnum.js",
 		"bin-debug/Game/View/BasePanel.js",
+		"bin-debug/Game/View/Monster.js",
 		"bin-debug/Game/View/CapsuleData.js",
 		"bin-debug/Component/RingScrollView.js",
 		"bin-debug/Component/ScrollView.js",
@@ -42,10 +42,11 @@
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/Game/View/BuyConfirmPanel.js",
-		"bin-debug/Utils/ShakeTools.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/Game/View/CapsulePanel.js",
 		"bin-debug/Game/View/ChooseOperationPanel.js",
 		"bin-debug/Game/View/EliteActor.js",
+		"bin-debug/Game/View/GameExSkillEffect.js",
 		"bin-debug/Game/View/GameLosePanel.js",
 		"bin-debug/Game/View/GameOverPanel.js",
 		"bin-debug/Game/View/GamePausePanel.js",
@@ -73,6 +74,6 @@
 		"bin-debug/Utils/MathUtils.js",
 		"bin-debug/Utils/md5.js",
 		"bin-debug/Utils/NativeApi.js",
-		"bin-debug/LoadingUI.js"
+		"bin-debug/Utils/ShakeTools.js"
 	]
 }

@@ -68,14 +68,16 @@ var Monster = (function (_super) {
                 // this._data = GameConfig.monsterTable[PanelManager.gameScenePanel.boss.id.toString()]
                 // this._type = this._data.Difficult
                 GameConfig.monsterPos = 3;
-                var battleVolume_1 = 0.8 * GameConfig.bgmValue / 100;
-                egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
-                    var channel = GameVoice.smallBossSound.play(0, 1);
-                    channel.volume = 0;
-                    egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
-                        egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume_1 }, 500);
+                if (GameConfig.isPlaySound) {
+                    var battleVolume_1 = 0.8 * GameConfig.bgmValue / 100;
+                    egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: 0.2 }, 500).call(function () {
+                        var channel = GameVoice.smallBossSound.play(0, 1);
+                        channel.volume = 0;
+                        egret.Tween.get(channel).to({ volume: GameConfig.soundValue / 100 }, 2000).call(function () {
+                            egret.Tween.get(GameVoice.battleBGMChannel).to({ volume: battleVolume_1 }, 500);
+                        });
                     });
-                });
+                }
                 break;
         }
         if (this._data) {
@@ -106,7 +108,7 @@ var Monster = (function (_super) {
         this._state = EMonsterState.Ready;
         this._addNum = 0;
         this._speedY = this._data.Speed / 100 * GameConfig.gameSpeedPercent;
-        this._baseSpeedY = this._speedX;
+        this._baseSpeedY = this._speedY;
         this._spFall = 0.9;
         this._speedX = 0.2;
         this._armatureContainer.scaleX = this._data.Scale;
@@ -281,8 +283,10 @@ var Monster = (function (_super) {
     Monster.prototype.playEffect = function (data) {
         this._effectArmatureContainer.visible = true;
         this._effectArmatureContainer.play(data.skill, 1);
-        if (this._state == EMonsterState.Ready)
-            this._state = EMonsterState.Stop;
+        if (data.result != ESkillResult.SlowSpeed) {
+            if (this._state == EMonsterState.Ready)
+                this._state = EMonsterState.Stop;
+        }
     };
     Monster.prototype.ballExplosion = function (a_ball) {
         if ((this.y >= 200 && this._state == EMonsterState.Ready) || GameConfig.isGuide) {
@@ -340,7 +344,8 @@ var Monster = (function (_super) {
                 this._armatureContainer.visible = false;
                 var curChapterData = GameConfig.chapterTable[PanelManager.gameSelectLevel.selectChater.toString()];
                 if (curChapterData.water == 1) {
-                    GameVoice.fallDownWaterSound.play(0, 1);
+                    if (GameConfig.isPlaySound)
+                        GameVoice.fallDownWaterSound.play(0, 1);
                 }
                 else {
                     var sound = RES.getRes("fallDownGround_mp3");
@@ -411,8 +416,10 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype._spide = function (data, posX, posY, count, i) {
-        var channel = GameVoice.spideBall.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.spideBall.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     Monster.prototype._onArmatureFrame = function (event) {
@@ -434,8 +441,10 @@ var Monster = (function (_super) {
         }
     };
     Monster.prototype._summon = function (data, posX, posY, count, i) {
-        var channel = GameVoice.summon.play(0, 1);
-        channel.volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            var channel = GameVoice.summon.play(0, 1);
+            channel.volume = GameConfig.soundValue / 100;
+        }
         PanelManager.gameScenePanel.createSummonActor(this, data, this._ePos, posX, posY, count, i);
     };
     Monster.prototype._onArmatureComplet = function () {

@@ -30,7 +30,6 @@ var GetRewardUI = (function (_super) {
         this.touchChildren = false;
         this._lightShow.play(0);
         this._lightLoop.stop();
-        Common.log(GameConfig.rewardType);
         if (GameConfig.rewardType == EReward.Candy) {
             this._imgItem.visible = false;
             this._babyGroup.visible = false;

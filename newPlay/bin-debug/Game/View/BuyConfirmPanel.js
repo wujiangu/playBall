@@ -42,18 +42,19 @@ var BuyConfirmPanel = (function (_super) {
     };
     BuyConfirmPanel.prototype._onbtnSureBuy = function () {
         this.touchChildren = false;
-        Common.log("this.babyData.id : " + this.babyData.id + ",this.babyData.petPrice:" + this.babyData.petPrice + ",GameConfig.candy:" + GameConfig.candy);
         //更新自己的糖果数目
         Common.updateAfterBuyCurCandy(GameConfig.candy - this.babyData.petPrice);
-        //刷新宠物面板 获得改宠物
-        PanelManager.actorListPanel.updateBabyInfo(this.babyData.id);
-        if (this.babyIndex < 0) {
-            Common.updateCurBaby(this.babyData.id);
-        }
         GameConfig.babyUnlockList.push(this.babyData.id);
         Common.updateUnlockBaby();
         this.Hide.play(0);
-        Common.dispatchEvent(MainNotify.openActorListPanel);
+        //刷新宠物面板 获得改宠物
+        PanelManager.actorListPanel.updateBabyInfo(this.babyData.id);
+        PanelManager.actorListPanel._currentChooseBaby = this.babyData.id;
+        // 判断是否在已解锁列表中
+        var index = GameConfig.babyUnlockList.indexOf(this.babyData.id);
+        if (index >= 0) {
+            Common.updateCurBaby(this.babyData.id);
+        }
     };
     BuyConfirmPanel.prototype._onShow = function () {
         this.touchChildren = true;

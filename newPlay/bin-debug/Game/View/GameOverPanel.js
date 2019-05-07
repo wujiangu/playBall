@@ -29,7 +29,13 @@ var GameOverPanel = (function (_super) {
     GameOverPanel.prototype.onEnter = function () {
         this.touchChildren = false;
         this.m_isAgain = false;
-        this.m_labScore.text = PanelManager.gameScenePanel.sceneData.realScore.toString();
+        if (GameConfig.isChapterPassShow) {
+            this._caiDaiGroup.visible = true;
+            this.caidai.play(0);
+            GameConfig.isChapterPassShow = false;
+        }
+        this._scoreEffect(0, PanelManager.gameScenePanel.sceneData.realScore, 10);
+        this._recordShowPos();
         this.m_labLianji.text = "X" + GameConfig.curCombo.toString();
         var comboScore = "C";
         if (GameConfig.curCombo <= 3)
@@ -55,11 +61,13 @@ var GameOverPanel = (function (_super) {
                 break;
         }
         this.Show.play(0);
-        if (GameManager.Instance.gameState == EGameState.EndLevel) {
-            GameVoice.vectory.play(0, 1).volume = GameConfig.soundValue / 100;
-        }
-        else {
-            GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
+        if (GameConfig.isPlaySound) {
+            if (GameManager.Instance.gameState == EGameState.EndLevel) {
+                GameVoice.vectory.play(0, 1).volume = GameConfig.soundValue / 100;
+            }
+            else {
+                GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
+            }
         }
         this._labCandy.text = PanelManager.gameScenePanel.sceneData.addCandy.toString();
         PanelManager.gameScenePanel.sceneData.addCandy = 0;
@@ -72,6 +80,7 @@ var GameOverPanel = (function (_super) {
     };
     GameOverPanel.prototype._onBtnReturn = function () {
         this.touchChildren = false;
+        // PanelManager.gameScenePanel.updeLevelData(PanelManager.gameScenePanel._data.levelData.next, PanelManager.gameScenePanel._data.levelData.key)
         Common.dispatchEvent(MainNotify.closeGameOverPanel);
     };
     GameOverPanel.prototype._onBtnAgain = function () {
@@ -111,6 +120,60 @@ var GameOverPanel = (function (_super) {
     };
     GameOverPanel.prototype._onResize = function (event) {
         if (event === void 0) { event = null; }
+    };
+    //数字累加效果
+    GameOverPanel.prototype._scoreEffect = function (MinScoreNum, MaxScoreNum, speed) {
+        var delta;
+        if (MaxScoreNum > 100) {
+            delta = Math.floor((MaxScoreNum - MinScoreNum) / (speed * 10));
+        }
+        else {
+            delta = 1;
+            if (MaxScoreNum < 50)
+                speed = 50;
+        }
+        var result = 0;
+        result = MinScoreNum;
+        var thisTemp = this;
+        var thisTime;
+        thisTime = setInterval(function () {
+            if (result < MaxScoreNum) {
+                result += delta;
+                thisTemp.m_labScore.text = result.toString();
+            }
+            else {
+                clearInterval(Number(thisTime));
+                thisTemp.m_labScore.text = MaxScoreNum.toString();
+            }
+        }, speed);
+    };
+    //奖励显示位置
+    GameOverPanel.prototype._recordShowPos = function () {
+        if (PanelManager.gameScenePanel.sceneData.addCandy > 0) {
+            switch (PanelManager.gameScenePanel.sceneData.recordBabySource.length) {
+                case 0://一个奖励
+                    this.m_recoredBg.width = 200;
+                    this.firstRecordGroup.x = 232;
+                    this.thirdRecordGroup.visible = false;
+                    break;
+                case 1://两个奖励
+                    this.m_recoredBg.width = 400;
+                    this.firstRecordGroup.x = 150;
+                    this.thirdRecordGroup.visible = true;
+                    this.m_thirdRecordIcon.source = PanelManager.gameScenePanel.sceneData.recordBabySource[0];
+                    break;
+                case 2://三个奖励
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            this.firstRecordGroup.visible = false;
+            this.thirdRecordGroup.visible = false;
+            this.m_recoredBg.visible = false;
+        }
+        PanelManager.gameScenePanel.sceneData.recordBabySource.length = 0; //清空
     };
     return GameOverPanel;
 }(BasePanel));

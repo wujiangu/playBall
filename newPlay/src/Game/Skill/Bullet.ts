@@ -38,8 +38,10 @@ class Bullet extends egret.DisplayObjectContainer {
 			// PanelManager.gameScenePanel.removeBullet(this)
 			if (this._type == EEffectType.Fire) {
 				// this.m_target.playEffect()
-				let channel = GameVoice.burnSound.play(0, 1)
-				channel.volume = GameConfig.soundValue / 100
+				if(GameConfig.isPlaySound){
+					let channel = GameVoice.burnSound.play(0, 1)
+					channel.volume = GameConfig.soundValue / 100
+				}				
 			}
 			return
 		}

@@ -26,6 +26,7 @@ var GameSceneData = (function () {
         /**连击奖励是否领取 */
         this.isComboRewardGet = false;
         this.allActors = new Array();
+        this.recordBabySource = new Array();
     }
     // 获取召唤物目标X值
     GameSceneData.prototype.getSummonTargetX = function (e_pos, a_x, a_count, a_num, type, isBoss) {
@@ -109,7 +110,6 @@ var GameSceneData = (function () {
                             target += this.leftRightOffset;
                         else
                             target -= this.leftRightOffset * a_num;
-                        // Common.log(target, a_num)
                     }
                 }
                 else {
@@ -216,9 +216,9 @@ var GameSceneData = (function () {
     GameSceneData.prototype.getLevelReward = function (score, combo, isEnd) {
         if (isEnd === void 0) { isEnd = false; }
         var chapterData = GameConfig.chapterTable[this.chapter.toString()];
-        if (chapterData.rewards && chapterData.rewards[0] > 0) {
-            for (var i = 0; i < chapterData.rewards.length; i++) {
-                var rewardId = chapterData.rewards[i];
+        if (chapterData.reward && chapterData.reward[0] > 0) {
+            for (var i = 0; i < chapterData.reward.length; i++) {
+                var rewardId = chapterData.reward[i];
                 var rewardData = GameConfig.levelRewardTable[rewardId];
                 switch (rewardData.condition) {
                     case ELevelRewardCondition.Finish:
@@ -262,6 +262,8 @@ var GameSceneData = (function () {
         else {
             if (rewardId > 0) {
                 this.unlockBaby(rewardId);
+                var data = GameConfig.actorTable[rewardId]; //保存奖励对应图片
+                this.recordBabySource.push(data.recordIcon);
             }
         }
     };
@@ -281,7 +283,6 @@ var GameSceneData = (function () {
         var index = GameConfig.babyUnlockList.indexOf(id);
         if (index < 0) {
             // 未解锁
-            Common.log("宝宝", id);
             GameConfig.babyUnlockList.push(id);
             Common.updateUnlockBaby();
             PanelManager.gameScenePanel.unlockEffect(id);

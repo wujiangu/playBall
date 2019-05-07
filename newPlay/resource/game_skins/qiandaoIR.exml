@@ -3,11 +3,11 @@
 	<e:Image id="m_imgBg" x="-0.85" y="0" source="signinitembg_png" alpha="1"/>
 	<e:Image id="m_recordiconbg" width="102" height="102" x="21.74" y="20.4" source="unsigninrecordbg_png" scaleX="0.8" scaleY="0.8"/>
 	<e:Image id="m_imgTime" x="107" y="32.5" touchEnabled="false" source="qiandao_json.qiandao6" anchorOffsetY="0" height="56" anchorOffsetX="0" width="148" visible="false"/>
-	<e:Label id="m_timenum" text="1Day" x="111" y="30" anchorOffsetX="0" width="136" anchorOffsetY="0" height="63" verticalAlign="middle" bold="true" textAlign="left" size="45" textColor="0xc8c07d"/>
-	<e:Image id="m_imgReward" x="21.87" y="20.52" touchEnabled="false" width="102" height="102" source="signinrecord1_png" scaleX="0.8" scaleY="0.8"/>
+	<e:Label id="m_timenum" text="1Day" x="111" y="30" anchorOffsetX="0" width="136" anchorOffsetY="0" height="63" verticalAlign="middle" bold="true" textAlign="left" size="50" textColor="0xc8c07d"/>
+	<e:Image id="m_imgReward" x="21.87" y="20.52" touchEnabled="false" width="102" height="102" scaleX="0.8" scaleY="0.8" source="icon4_png"/>
 	<e:Label id="m_labDay" text="candy" y="73.12" fontFamily="Microsoft YaHei" size="40" textAlign="center" horizontalCenter="171" touchEnabled="false" bold="true" textColor="0x047547" visible="false"/>
-	<e:Label id="m_labCount" text="+20" y="10" fontFamily="Microsoft YaHei" size="60" verticalAlign="middle" bold="true" right="6" touchEnabled="false" anchorOffsetY="0" height="71" anchorOffsetX="0" width="186" textAlign="center" textColor="0x94c401"/>
+	<e:Label id="m_labCount" text="+20" y="10" fontFamily="Microsoft YaHei" size="65" verticalAlign="middle" bold="true" right="6" touchEnabled="false" anchorOffsetY="0" height="71" anchorOffsetX="0" width="186" textAlign="center" textColor="0x94c401"/>
 	<e:Image id="m_imgMask" x="-0.29" y="0.34" touchEnabled="false" anchorOffsetX="0" width="482" anchorOffsetY="0" height="121" source="shadeimg_png" visible="false"/>
 	<e:Image id="m_imgCheckIn" source="qiandao_json.qiandao14" x="317" y="78.01" rotation="-20" scaleX="0.6" scaleY="0.6" visible="false"/>
-	<e:Label id="_lblRecordName" text="Candy" x="317" y="74" anchorOffsetX="0" width="157.67" anchorOffsetY="0" height="38.67" verticalAlign="middle" textAlign="center" bold="true" textColor="0x94c401"/>
+	<e:Label id="_lblRecordName" text="Candy" x="326" y="74" anchorOffsetX="0" width="157.67" anchorOffsetY="0" height="38.67" verticalAlign="middle" textAlign="center" bold="true" textColor="0x94c401"/>
 </e:Skin>
