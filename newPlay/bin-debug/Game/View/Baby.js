@@ -231,6 +231,9 @@ var Baby = (function (_super) {
                 var actor = actors[i];
                 if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100) {
                     if (this.skillData.skillHang == ESkillHand.Ballon) {
+                        if (actor.type == EMonsterDifficult.Summon && actor.actorTableData.Type == ESummonType.Balloon) {
+                            this._influenceActors.push(actor);
+                        }
                         for (var j = 0; j < actor.balloons.length; j++) {
                             if (value >= count)
                                 break;

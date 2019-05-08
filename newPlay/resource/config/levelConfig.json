@@ -56,6 +56,13 @@
                 "summon": "", 
                 "id": "", 
                 "min": ""
+            }, 
+            {
+                "diff": "", 
+                "max": "", 
+                "summon": "", 
+                "id": "", 
+                "min": ""
             }
         ], 
         "addTime": 1800, 
@@ -85,9 +92,31 @@
         "unlockItem": 0, 
         "normalCount": 1, 
         "candy": 0, 
-        "next": 10101, 
+        "next": 10003, 
         "mode": 2, 
         "key": 10002, 
+        "speed": 1
+    }, 
+    {
+        "normal": [
+            {
+                "min": 1, 
+                "max": 1, 
+                "summon": 0, 
+                "id": 1001, 
+                "diff": -1, 
+                "prob": 100
+            }
+        ], 
+        "level": 1, 
+        "addTime": 1800, 
+        "section": 1001, 
+        "unlockItem": 0, 
+        "normalCount": 1, 
+        "candy": 0, 
+        "next": 10101, 
+        "mode": 2, 
+        "key": 10003, 
         "speed": 1
     }, 
     {
@@ -2404,7 +2433,7 @@
                 "max": 3, 
                 "summon": 1056, 
                 "id": 1083, 
-                "diff": 1, 
+                "diff": 2, 
                 "prob": 100
             }
         ], 

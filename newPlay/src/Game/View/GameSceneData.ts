@@ -170,8 +170,24 @@ class GameSceneData {
 
 	/**更新糖果 */
 	public updateCandy(value:number) {
+		let skillData = PanelManager.gameScenePanel.baby.skillData
+		if (skillData.result == ESkillResult.ExtraCandy) {
+			// 额外增加糖果
+			Common.log("before candy", value)
+			value = Common.extraReward(skillData, value)
+			Common.log("after candy", value)
+		}
 		this.addCandy += value
 		Common.updateCurCandy(value)
+	}
+
+	/**判断是否本章第一关 */
+	public isChapterBegin() {
+		let chapterData = GameConfig.chapterTable[this.chapter.toString()]
+		if (this.level == chapterData.begin) {
+			return true
+		}
+		return false
 	}
 
 	/**判断是否本章最后一关 */
@@ -197,28 +213,43 @@ class GameSceneData {
 					case ELevelRewardCondition.Finish:
 						if (isEnd == true && this.isChapterFinal() && this.chapter == GameConfig.curChpter) {
 							this._rewardHandle(rewardData.reward, rewardData.value)
+							Common.log("通关奖励：" + rewardData.condition,chapterData.id,i);
+							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
 						}
 					break
 					case ELevelRewardCondition.EnoughScore:
 						if (!this.isScoreRewardGet && score >= rewardData.count) {
 							this.isScoreRewardGet = true
 							this._rewardHandle(rewardData.reward, rewardData.value)
+							Common.log("达到一定分数奖励：" + rewardData.condition,chapterData.id,i);
+							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
 						}
 					break
 					case ELevelRewardCondition.EnoughCombo:
 						if (!this.isComboRewardGet && combo >= rewardData.count) {
 							this.isComboRewardGet = true
 							this._rewardHandle(rewardData.reward, rewardData.value)
+							Common.log("达到一定连击奖励：" + rewardData.condition,chapterData.id,i);
+							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
 						}
 					break
 					case ELevelRewardCondition.OnesFinish:
 						if (isEnd == true && this.isChapterFinal() && this.continueCount <= 0 && this.chapter == GameConfig.curChpter) {
 							this._rewardHandle(rewardData.reward, rewardData.value)
+							Common.log("一次性通关奖励：" + rewardData.condition,chapterData.id,i);
+							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
 						}
 					break
 					case ELevelRewardCondition.RepeatFinish:
 						if (isEnd == true && this.isChapterFinal() && this.chapter < GameConfig.curChpter) {
 							this._rewardHandle(rewardData.reward, rewardData.value)
+							Common.log("反复通关通关奖励：" + rewardData.condition,chapterData.id,i);
+							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
 						}
 					break
 				}
@@ -231,12 +262,12 @@ class GameSceneData {
 		if (rewardId == 1000) {
 			this.extra += value
 			this.updateCandy(value)
-			PanelManager.gameScenePanel.updateExtarCandy(value)
+			PanelManager.gameScenePanel.updateExtarCandy(value)			
 		}else{
 			if (rewardId > 0) {
 				this.unlockBaby(rewardId)
 				let data = GameConfig.actorTable[rewardId] //保存奖励对应图片
-				this.recordBabySource.push(data.recordIcon);
+				this.recordBabySource.push(data.recordIcon);				
 			}
 		}
 	}

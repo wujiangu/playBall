@@ -8,7 +8,7 @@ var GameConfig = (function () {
      * 初始化骨骼的动画数据
      */
     GameConfig.initBattleDragonBones = function (name) {
-        Common.log("fdsfds", name);
+        //Common.log("fdsfds", name)
         var skeletonData = RES.getRes(name + "_ske_json");
         var textureData = RES.getRes(name + "_tex_json");
         var texture = RES.getRes(name + "_tex_png");
@@ -323,20 +323,35 @@ var GameConfig = (function () {
             this.chapterTable[config.id.toString()] = data;
             var score = this.chapterMaxScore[config.id.toString()];
             var combo = this.chapterMaxCombo[config.id.toString()];
+            var lastScore = this.chapterLastScore[config.id.toString()];
             if (score == null) {
                 this.chapterMaxScore[config.id.toString()] = 0;
             }
             if (combo == null) {
                 this.chapterMaxCombo[config.id.toString()] = 0;
             }
+            if (lastScore == null) {
+                this.chapterLastScore[config.id.toString()] = 0;
+            }
             var isPass = this.isChapterPass[config.id.toString()];
             if (isPass == null) {
                 this.isChapterPass[config.id.toString()] = 0;
+            }
+            if (this.isGetChapterRecord[config.id.toString()] == null) {
+                this.isGetChapterRecord[config.id.toString()] = [];
+                for (var i_1 = 0; i_1 < config.reward.length; i_1++) {
+                    var isGet = this.isGetChapterRecord[config.id.toString()][i_1];
+                    if (isGet == null) {
+                        this.isGetChapterRecord[config.id.toString()][i_1] = 0;
+                    }
+                }
             }
         }
         Common.updateChapterScore(this.chapterMaxScore);
         Common.updateChapterCombo(this.chapterMaxCombo);
         Common.updateIsChapterPass(this.isChapterPass);
+        Common.updateIsGetChapterRecord(this.isGetChapterRecord);
+        Common.updateLastScore(this.chapterLastScore);
         var babySkillConfig = RES.getRes("babySkillConfig_json");
         this.babySkillTable = {};
         for (var i = 0; i < babySkillConfig.length; i++) {
@@ -376,7 +391,6 @@ var GameConfig = (function () {
             data["isGet"] = false;
             if (i < this.signCount || (i >= 7 && ((i - 7) < this.signCount)))
                 data["isGet"] = true;
-            Common.log(data["isGet"], this.signCount);
             // if (i == this.signCount && this.sign == 1) data["isGet"] = true
             this.signTable[config.id.toString()] = data;
         }
@@ -420,7 +434,9 @@ var GameConfig = (function () {
     // 当前挑战的章节
     GameConfig.curBattleChapter = 0;
     //当前是否显示结算面板
-    GameConfig.isShowPanelNow = false;
+    GameConfig.isShowGameLosePanelNow = false;
+    //无尽模式是否显示结算面板
+    GameConfig.isShowEndlessModePanelNow = false;
     //是否章节过关结算
     GameConfig.isChapterPassShow = false;
     // 临时配置，后续修改

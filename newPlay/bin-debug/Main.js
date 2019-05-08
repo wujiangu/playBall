@@ -170,7 +170,9 @@ var Main = (function (_super) {
             Common.getBabylistIndex();
             Common.getChapterScore();
             Common.getChapterCombo();
+            Common.getLastScore();
             Common.getIsChapterPass();
+            Common.getIsGetChapterRecord();
             if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
                 Common.updateSign(0);
             }

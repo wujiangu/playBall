@@ -168,8 +168,10 @@ class Main extends eui.UILayer {
             Common.getSignCount()         
             Common.getBabylistIndex()
             Common.getChapterScore()
-            Common.getChapterCombo()   
-            Common.getIsChapterPass()         
+            Common.getChapterCombo()
+            Common.getLastScore()   
+            Common.getIsChapterPass()   
+            Common.getIsGetChapterRecord()      
             if (!Common.isTowDataSame(GameConfig.lastLoginTime) && GameConfig.sign == 1) {
                 Common.updateSign(0)
             }

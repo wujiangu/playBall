@@ -191,7 +191,8 @@ var Balloon = (function (_super) {
         // egret.setTimeout(this._OnBalloonBoom, this, 200)
     };
     Balloon.prototype.changeToUnknown = function () {
-        this._lastType = this._type;
+        if (this._type > 0)
+            this._lastType = this._type;
         this._type = 0;
         this._gesture.texture = RES.getRes("1_png");
         this._gesture.anchorOffsetX = this._gesture.width / 2;

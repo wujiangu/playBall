@@ -197,4 +197,5 @@
 		<e:Image id="m_tipBg" width="476" height="166.91" x="2.65" y="67.78" source="desbg_png" scale9Grid="88,23,532,145" anchorOffsetY="0" anchorOffsetX="0"/>
 		<e:Label id="_lblBabyDescribe" text="  Get 100 combos in this chapter   to get this b  " x="17.69" y="81.69" anchorOffsetX="0" width="446.74" anchorOffsetY="0" height="139.09" verticalAlign="middle" textAlign="center"/>
 	</e:Group>
+	<e:Image id="m_btnReturn" width="156" height="126" x="14" y="13" source="btnReturnIcon_png" scaleX="0.8" scaleY="0.8"/>
 </e:Skin>

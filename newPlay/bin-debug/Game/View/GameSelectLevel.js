@@ -213,6 +213,7 @@ var GameSelectLevel = (function (_super) {
         this._onRecordIconBg1Begin();
         this.timeNum.start();
     };
+    //切换章节界面奖励显示状态
     GameSelectLevel.prototype._ChangeChapter = function () {
         this._recordTipMessages.length = 0;
         var chapterData = GameConfig.chapterTable[this._curSelectChapter.toString()];
@@ -221,7 +222,7 @@ var GameSelectLevel = (function (_super) {
             if (levelData.condition != 4 || levelData.condition != 5) {
                 if (levelData.reward == 1000) {
                     var recordNameStr = void 0;
-                    if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1) {
+                    if (GameConfig.isGetChapterRecord[chapterData.id][i] == 1) {
                         if (levelData.value >= 200) {
                             recordNameStr = "icon5greyState_png";
                         }
@@ -230,7 +231,7 @@ var GameSelectLevel = (function (_super) {
                                 recordNameStr = "icon4greyState_png";
                         }
                     }
-                    if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0) {
+                    if (GameConfig.isGetChapterRecord[chapterData.id][i] == 0) {
                         if (levelData.value >= 200) {
                             recordNameStr = "icon5_png";
                         }
@@ -239,40 +240,49 @@ var GameSelectLevel = (function (_super) {
                                 recordNameStr = "icon4_png";
                         }
                     }
+                    var tipmessageStr = void 0;
+                    switch (levelData.condition) {
+                        case ELevelRewardCondition.Finish:
+                            tipmessageStr = "Get " + levelData.value + " candies through\n\t\t\tchapters.";
+                            break;
+                        case ELevelRewardCondition.EnoughScore:
+                            tipmessageStr = "Getting " + levelData.value + " candy requires\n\t\t\ta score of " + levelData.count + ".";
+                            break;
+                        case ELevelRewardCondition.EnoughCombo:
+                            tipmessageStr = "Getting " + levelData.value + " candy requires\n\t\t\ta combo of " + levelData.count + ".";
+                            break;
+                        case ELevelRewardCondition.OnesFinish:
+                            break;
+                        case ELevelRewardCondition.RepeatFinish:
+                            break;
+                    }
                     if (i == 0) {
                         this.m_recordIcon0.source = recordNameStr;
-                        this._recordTipMessages[0] = "Get " + levelData.value + " candies through\n\t\tchapters";
+                        this._recordTipMessages[0] = tipmessageStr;
                     }
                     else if (i == 1) {
                         this.m_recordIcon1.source = recordNameStr;
-                        this._recordTipMessages[1] = "Get " + levelData.value + " candies through\n\t\tchapters";
+                        this._recordTipMessages[1] = tipmessageStr;
                     }
                 }
                 else {
                     if (levelData.reward > 0) {
                         var data = GameConfig.actorTable[levelData.reward];
-                        if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1) {
-                            if (i == 0) {
-                                this.m_recordIcon0.source = data.getRecordIcon;
-                                this._recordTipMessages[0] = data.unlockDesc;
-                            }
-                            else {
-                                if (i == 1) {
-                                    this.m_recordIcon1.source = data.getRecordIcon;
-                                    this._recordTipMessages[1] = data.unlockDesc;
-                                }
-                            }
+                        var recordNameStr = void 0;
+                        if (GameConfig.isGetChapterRecord[chapterData.id][i] == 1) {
+                            recordNameStr = data.getRecordIcon;
                         }
-                        if (GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0) {
-                            if (i == 0) {
-                                this.m_recordIcon0.source = data.recordIcon;
-                                this._recordTipMessages[0] = data.unlockDesc;
-                            }
-                            else {
-                                if (i == 1) {
-                                    this.m_recordIcon1.source = data.recordIcon;
-                                    this._recordTipMessages[1] = data.unlockDesc;
-                                }
+                        if (GameConfig.isGetChapterRecord[chapterData.id][i] == 0) {
+                            recordNameStr = data.recordIcon;
+                        }
+                        if (i == 0) {
+                            this.m_recordIcon0.source = recordNameStr;
+                            this._recordTipMessages[0] = data.unlockDesc;
+                        }
+                        else {
+                            if (i == 1) {
+                                this.m_recordIcon1.source = recordNameStr;
+                                this._recordTipMessages[1] = data.unlockDesc;
                             }
                         }
                     }
@@ -293,7 +303,8 @@ var GameSelectLevel = (function (_super) {
         }
     };
     GameSelectLevel.prototype._onComplete = function () {
-        this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this);
+        // this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this)
+        this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this);
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onChapterBegin, this);
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_END, this._onChapterEnd, this);
         this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._onChapterEnd, this);

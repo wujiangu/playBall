@@ -234,6 +234,9 @@ class Baby extends egret.DisplayObjectContainer{
 				let actor:BaseActor = actors[i]
 				if (this.isInfluence(actor) && actor.state == EMonsterState.Ready && actor.y >= 100) {
 					if (this.skillData.skillHang == ESkillHand.Ballon) {
+						if (actor.type == EMonsterDifficult.Summon && actor.actorTableData.Type == ESummonType.Balloon) {
+							this._influenceActors.push(actor)
+						}
 						for (let j = 0; j < actor.balloons.length; j++) {
 							if (value >= count) break
 							if (actor.balloons[j].type > 0) {

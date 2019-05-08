@@ -190,6 +190,8 @@ var BaseActor = (function (_super) {
      */
     BaseActor.prototype.updateEffectArmature = function (data) {
         this._effectArmatureContainer.clear();
+        if (data.skillFile == null || data.skillFile == "")
+            return;
         var armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile);
         if (this._effectArmature == null) {
             this._effectArmature = new DragonBonesArmature(armatureDisplay);

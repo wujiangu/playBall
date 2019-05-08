@@ -86,19 +86,24 @@ class GameConfig {
 	// 章节最高连击
 	public static chapterMaxCombo:any
 	//当前是否显示结算面板
-	public static isShowPanelNow:boolean = false;
+	public static isShowGameLosePanelNow:boolean = false;
+	//无尽模式是否显示结算面板
+	public static isShowEndlessModePanelNow:boolean = false;
 	//是否章节过关结算
 	public static isChapterPassShow:boolean = false
 	//章节是否通过 (0 未通过 1 通过)
 	public static isChapterPass:any
+	//章节两个奖励是否获得
+	public static isGetChapterRecord:any
 	// 临时配置，后续修改
 	public static sceneType:number = 0
+	public static chapterLastScore:any
 
 	/**
      * 初始化骨骼的动画数据
      */
     public static initBattleDragonBones(name:string):void {
-		Common.log("fdsfds", name)
+		//Common.log("fdsfds", name)
 		let skeletonData = RES.getRes(name+"_ske_json")
         let textureData = RES.getRes(name+"_tex_json")
         let texture = RES.getRes(name+"_tex_png")
@@ -440,20 +445,35 @@ class GameConfig {
 			this.chapterTable[config.id.toString()] = data
 			let score = this.chapterMaxScore[config.id.toString()]
 			let combo = this.chapterMaxCombo[config.id.toString()]
+			let lastScore = this.chapterLastScore[config.id.toString()]
 			if (score == null) {
 				this.chapterMaxScore[config.id.toString()] = 0	
 			}
 			if (combo == null) {
 				this.chapterMaxCombo[config.id.toString()] = 0
 			}
+			if (lastScore == null) {
+				this.chapterLastScore[config.id.toString()] = 0
+			}
 			let isPass = this.isChapterPass[config.id.toString()]
 			if(isPass == null){
 				this.isChapterPass[config.id.toString()] = 0
 			}
+			if(this.isGetChapterRecord[config.id.toString()] == null){
+				this.isGetChapterRecord[config.id.toString()] = []
+				for(let i = 0; i< config.reward.length;i++){
+					let isGet = this.isGetChapterRecord[config.id.toString()][i]
+					if(isGet == null){
+						this.isGetChapterRecord[config.id.toString()][i] = 0
+					}
+				}
+			}  			
 		}
 		Common.updateChapterScore(this.chapterMaxScore)
 		Common.updateChapterCombo(this.chapterMaxCombo)	
 		Common.updateIsChapterPass(this.isChapterPass)
+		Common.updateIsGetChapterRecord(this.isGetChapterRecord)
+		Common.updateLastScore(this.chapterLastScore)
 
 		let babySkillConfig:Array<any> = RES.getRes("babySkillConfig_json")
 		this.babySkillTable = {}
@@ -494,7 +514,6 @@ class GameConfig {
 			data["icon"] = config.icon
 			data["isGet"] = false
 			if (i < this.signCount ||(i >= 7 && ((i-7) < this.signCount))) data["isGet"] = true
-			Common.log(data["isGet"],this.signCount);
 			// if (i == this.signCount && this.sign == 1) data["isGet"] = true
 			this.signTable[config.id.toString()] = data
 		}

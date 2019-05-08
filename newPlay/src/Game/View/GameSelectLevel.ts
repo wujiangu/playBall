@@ -227,6 +227,7 @@ class GameSelectLevel extends BasePanel {
 		this.timeNum.start();
 	}
 
+	//切换章节界面奖励显示状态
 	private _ChangeChapter()
 	{
 		this._recordTipMessages.length = 0
@@ -234,57 +235,69 @@ class GameSelectLevel extends BasePanel {
 		for(let i = 0; i < chapterData.reward.length; i++){
 			let levelData = GameConfig.levelRewardTable[chapterData.reward[i]]
 			if(levelData.condition != 4 || levelData.condition != 5){
-				if(levelData.reward == 1000){
+				if(levelData.reward == 1000){//糖果
 					let recordNameStr:string
-					if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1){//通章
+					if(GameConfig.isGetChapterRecord[chapterData.id][i] == 1){//获取
 						if(levelData.value >= 200){//糖果数量大于200显示糖果盒子
 						recordNameStr = "icon5greyState_png"
 						}else{
 							if(levelData.value > 0)  recordNameStr = "icon4greyState_png"
 						}
 					}
-					if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0){//未通章
+					if(GameConfig.isGetChapterRecord[chapterData.id][i] == 0){//未获取
 						if(levelData.value >= 200){//糖果数量大于200显示糖果盒子
 							recordNameStr = "icon5_png"
 						}else{
 							if(levelData.value > 0)  recordNameStr = "icon4_png"
 						}
 					}
+					let tipmessageStr:string
+					switch (levelData.condition) {
+						case ELevelRewardCondition.Finish:
+							tipmessageStr = "Get "+ levelData.value +` candies through
+			chapters.`;
+						break
+						case ELevelRewardCondition.EnoughScore:
+							tipmessageStr = "Getting "+levelData.value+` candy requires
+			a score of `+ levelData.count +".";
+						break
+						case ELevelRewardCondition.EnoughCombo:
+							tipmessageStr = "Getting "+levelData.value+` candy requires
+			a combo of `+ levelData.count +".";
+						break
+						case ELevelRewardCondition.OnesFinish:
+
+						break
+						case ELevelRewardCondition.RepeatFinish:
+
+						break
+					}
 					if(i == 0){					
 						this.m_recordIcon0.source = recordNameStr;
-						this._recordTipMessages[0] = "Get "+ levelData.value +` candies through
-		chapters`;
+						this._recordTipMessages[0] = tipmessageStr
 					}else if(i == 1){
 						this.m_recordIcon1.source = recordNameStr;
-						this._recordTipMessages[1] = "Get "+ levelData.value +` candies through
-		chapters`;
+						this._recordTipMessages[1] = tipmessageStr
 					}
-				}else {
+				}else {//宠物
 					if(levelData.reward > 0 ){
 						let data = GameConfig.actorTable[levelData.reward]
-						if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 1){//通章
-							if(i == 0){
-							this.m_recordIcon0.source = data.getRecordIcon;
+						let recordNameStr:string
+						if(GameConfig.isGetChapterRecord[chapterData.id][i] == 1){//获取
+							recordNameStr = data.getRecordIcon;
+						}
+						if(GameConfig.isGetChapterRecord[chapterData.id][i] == 0){//未获取
+							recordNameStr = data.recordIcon;
+						}
+						if(i == 0){
+							this.m_recordIcon0.source = recordNameStr;
 							this._recordTipMessages[0] = data.unlockDesc;
-							}else{
-								if(i == 1){
-									this.m_recordIcon1.source = data.getRecordIcon;
-									this._recordTipMessages[1] = data.unlockDesc;
-								}							
-							}
-						}
-						if(GameConfig.isChapterPass[this._curSelectChapter.toString()] == 0){//未通章
-							if(i == 0){
-								this.m_recordIcon0.source = data.recordIcon;
-								this._recordTipMessages[0] = data.unlockDesc;
-							}else{
-								if(i == 1){
-									this.m_recordIcon1.source = data.recordIcon;
-									this._recordTipMessages[1] = data.unlockDesc;
-								}							
-							}
-						}
-						
+						}else{
+							if(i == 1){
+								this.m_recordIcon1.source = recordNameStr;
+								this._recordTipMessages[1] = data.unlockDesc;
+							}							
+						}						
 					}					
 				}
 			}			
@@ -308,7 +321,8 @@ class GameSelectLevel extends BasePanel {
 	}
 
 	private _onComplete() {
-		this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this)
+		// this.m_imgMask.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this)
+		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onMaskClick, this)		
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this._onChapterBegin, this)
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_END, this._onChapterEnd, this)
 		this.m_imgChapter.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this._onChapterEnd, this)
@@ -343,6 +357,7 @@ class GameSelectLevel extends BasePanel {
 	}
 
 	private m_imgMask:eui.Image
+	private m_btnReturn:eui.Image
 	private m_imgChapter:eui.Image
 	private m_imgIcon:eui.Image
 	private m_imgEndlessBg:eui.Image

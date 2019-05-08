@@ -44,6 +44,7 @@ var BuyConfirmPanel = (function (_super) {
         this.touchChildren = false;
         //更新自己的糖果数目
         Common.updateAfterBuyCurCandy(GameConfig.candy - this.babyData.petPrice);
+        Common.dispatchEvent(MainNotify.updateCandy);
         GameConfig.babyUnlockList.push(this.babyData.id);
         Common.updateUnlockBaby();
         this.Hide.play(0);

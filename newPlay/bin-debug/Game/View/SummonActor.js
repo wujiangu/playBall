@@ -245,8 +245,12 @@ var SummonActor = (function (_super) {
         if (this._state == EMonsterState.Ready) {
             this._effectArmatureContainer.visible = true;
             this._effectArmatureContainer.play(data.skill, 1);
-            if (data.result != ESkillResult.SlowSpeed) {
+            if (data.result != ESkillResult.SlowSpeed && data.result != ESkillResult.GestureChange) {
                 this._state = EMonsterState.Stop;
+            }
+            if (data.result == ESkillResult.GestureChange) {
+                this._gestureType = -1;
+                this._changeType = data.param[1];
             }
         }
         // if (this._effectData.type == EEffectType.Fire) {
@@ -264,6 +268,15 @@ var SummonActor = (function (_super) {
     };
     SummonActor.prototype.onEffectArmatureComplete = function () {
         _super.prototype.onEffectArmatureComplete.call(this);
+        if (this._data.Type == ESummonType.Balloon && this._state == EMonsterState.Ready && this._effectResult == ESkillResult.GestureChange) {
+            this._gestureData.length = 0;
+            for (var i = 0; i < GameConfig.gestureConfig.length; i++) {
+                if (GameConfig.gestureConfig[i].type == this._changeType) {
+                    this._gestureData.push(GameConfig.gestureConfig[i]);
+                }
+            }
+            this.updateGesture();
+        }
     };
     SummonActor.prototype.onEffectArmatureFram = function (event) {
         _super.prototype.onEffectArmatureFram.call(this, event);

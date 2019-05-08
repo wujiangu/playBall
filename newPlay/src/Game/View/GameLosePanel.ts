@@ -19,6 +19,7 @@ class GameLosePanel extends BasePanel {
     public onEnter():void{
 		this.touchChildren = false
 		this.countDown = 5;
+		this.sumNum = -1
 		this.Show.play(0)
         Common.gameScene().uiLayer.addChild(this)
     }
@@ -32,33 +33,38 @@ class GameLosePanel extends BasePanel {
 	
 	public update(time:number)//每帧执行
 	{
+		if (this.sumNum < 0) return
 		this.sumNum += time;
 		if(this.sumNum >= 1000)
 		{
+			this.sumNum = 0
 			if(this.isStartCountDown)
 			{
 				if(this.countDown > 0)
-				{					
-					this._lblCountDown.text = this.countDown.toString();	
-					this.countDown --;											
+				{
+					this.countDown --;					
+					this._lblCountDown.text = this.countDown.toString();											
 				}
 				else
 				{
+					// this._lblCountDown.text = "0"
+					this.sumNum = -1
 					this.isStartCountDown = false;
 					//倒计时结束，跳转到选择界面
 					if(!this.isShowConflict)
 					{
-						Common.dispatchEvent(MainNotify.closeGameLosePanel);
-						Common.dispatchEvent(MainNotify.openGameOverPanel);
+						Common.dispatchEvent(MainNotify.closeGameLosePanel)	
+						Common.dispatchEvent(MainNotify.openGameOverPanel)				
 					}
 				}
+				
 			}
-			this.sumNum = 0;
 		}		
 	}
 
 	private _onBtnReturn() {
 		this.touchChildren = false
+		this.sumNum = -1
 		Common.dispatchEvent(MainNotify.closeGameLosePanel)
 		
 	}
@@ -85,17 +91,19 @@ class GameLosePanel extends BasePanel {
 	}
 
 	private _onShow() {
-		this.touchChildren = true	
+		this.touchChildren = true
 		this.isStartCountDown = true;	
 		this.isShowConflict = false;
+		this.sumNum = 0
 		this._lblCountDown.visible = true;
 		this._lblCountDown.text = "5";			
 	}
 
 	private _onHide() {
-		GameConfig.isShowPanelNow = false;
+		GameConfig.isShowGameLosePanelNow = false;
 		this._lblCountDown.visible = false;	
 		this._lblCountDown.text = "5";
+		Common.log("GameLose remove")
 		Common.gameScene().uiLayer.removeChild(this)
 	}
 

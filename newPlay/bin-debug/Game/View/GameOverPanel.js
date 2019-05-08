@@ -36,7 +36,7 @@ var GameOverPanel = (function (_super) {
         }
         this._scoreEffect(0, PanelManager.gameScenePanel.sceneData.realScore, 10);
         this._recordShowPos();
-        this.m_labLianji.text = "X" + GameConfig.curCombo.toString();
+        this.m_labLianji.text = GameConfig.curCombo.toString();
         var comboScore = "C";
         if (GameConfig.curCombo <= 3)
             comboScore = "C";
@@ -80,7 +80,6 @@ var GameOverPanel = (function (_super) {
     };
     GameOverPanel.prototype._onBtnReturn = function () {
         this.touchChildren = false;
-        // PanelManager.gameScenePanel.updeLevelData(PanelManager.gameScenePanel._data.levelData.next, PanelManager.gameScenePanel._data.levelData.key)
         Common.dispatchEvent(MainNotify.closeGameOverPanel);
     };
     GameOverPanel.prototype._onBtnAgain = function () {
@@ -93,6 +92,7 @@ var GameOverPanel = (function (_super) {
     };
     GameOverPanel.prototype._onHide = function () {
         Common.gameScene().uiLayer.removeChild(this);
+        GameConfig.isShowEndlessModePanelNow = false;
         if (this.m_isAgain) {
             if (GameManager.Instance.gameState == EGameState.EndLevel) {
                 PanelManager.gameScenePanel.continueLevel();
@@ -149,6 +149,7 @@ var GameOverPanel = (function (_super) {
     };
     //奖励显示位置
     GameOverPanel.prototype._recordShowPos = function () {
+        Common.log("结算界面糖果：" + PanelManager.gameScenePanel.sceneData.addCandy);
         if (PanelManager.gameScenePanel.sceneData.addCandy > 0) {
             switch (PanelManager.gameScenePanel.sceneData.recordBabySource.length) {
                 case 0://一个奖励

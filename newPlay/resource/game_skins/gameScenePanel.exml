@@ -93,44 +93,53 @@
 		</tween:TweenGroup>
 		<tween:TweenGroup id="combo">
 			<tween:TweenItem target="{m_fntComboCount}">
-				<tween:Set/>
-				<tween:To duration="250" ease="circOut">
+				<tween:Set>
 					<tween:props>
-						<e:Object scaleX="{1}" scaleY="{1}"/>
+						<e:Object scaleX="{0.6}" scaleY="{0.6}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="250">
+					<tween:props>
+						<e:Object scaleX="{0.8}" scaleY="{0.8}" y="{-75}" x="{405}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="250" ease="circIn">
+				<tween:To duration="250">
 					<tween:props>
 						<e:Object scaleX="{0.6}" scaleY="{0.6}"/>
 					</tween:props>
 				</tween:To>
+
+
 			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="comboBegin">
 			<tween:TweenItem target="{m_fntCombo}">
-				<tween:Set>
+				<tween:Set/>
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{0}" x="{126}" scaleX="{0.3}" scaleY="{0.3}" y="{-122}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="250" ease="circOut">
-					<tween:props>
-						<e:Object alpha="{1}" scaleX="{0.62}" scaleY="{0.62}"/>
+						<e:Object scaleX="{0.5}" scaleY="{0.5}" alpha="{0}" x="{178}"/>
 					</tween:props>
 				</tween:To>
+
+
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_fntComboCount}">
-				<tween:Set>
+				<tween:Set/>
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object alpha="{0}" x="{174}" y="{-36}" scaleX="{0.3}" scaleY="{0.3}"/>
-					</tween:props>
-				</tween:Set>
-				<tween:To duration="250" ease="circOut">
-					<tween:props>
-						<e:Object alpha="{1}" scaleX="{0.62}" scaleY="{0.62}"/>
+						<e:Object scaleX="{0.5}" scaleY="{0.5}" alpha="{0}" x="{375}"/>
 					</tween:props>
 				</tween:To>
+
+
 			</tween:TweenItem>
+
+
+
+
+
+
+
 		</tween:TweenGroup>
 		<tween:TweenGroup id="comboEnd">
 			<tween:TweenItem target="{m_fntComboCount}">
@@ -141,9 +150,10 @@
 				</tween:Set>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object scaleX="{1.1}" alpha="{0}" scaleY="{0.4}"/>
+						<e:Object scaleX="{0.8}" scaleY="{0.2}" x="{465}" alpha="{0}"/>
 					</tween:props>
 				</tween:To>
+
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_fntCombo}">
 				<tween:Set>
@@ -153,65 +163,80 @@
 				</tween:Set>
 				<tween:To duration="250">
 					<tween:props>
-						<e:Object scaleX="{1.1}" alpha="{0}" scaleY="{0.4}"/>
+						<e:Object scaleX="{0.8}" scaleY="{0.2}" x="{150}" alpha="{0}"/>
 					</tween:props>
 				</tween:To>
+
 			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="comboMove">
 			<tween:TweenItem target="{m_fntCombo}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{6}" y="{-122}"/>
+						<e:Object alpha="{1}" x="{-58}" y="{-98}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="200">
+				<tween:To duration="300">
 					<tween:props>
-						<e:Object y="{-127}"/>
+						<e:Object x="{-58}" y="{-75}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="200">
+				<tween:To duration="300">
 					<tween:props>
-						<e:Object x="{6}" y="{-122}"/>
+						<e:Object y="{-98}" x="{-58}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="200">
+				<tween:To duration="300">
 					<tween:props>
-						<e:Object y="{-127}"/>
+						<e:Object x="{-58}" y="{-75}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="150">
+				<tween:To duration="350">
 					<tween:props>
-						<e:Object x="{6}" y="{-122}"/>
+						<e:Object x="{-58}" y="{-98}"/>
 					</tween:props>
 				</tween:To>
+
+
+
+
+
+
+
+
+
 			</tween:TweenItem>
 			<tween:TweenItem target="{m_fntComboCount}">
 				<tween:Set>
 					<tween:props>
-						<e:Object x="{102}" y="{-36}"/>
+						<e:Object alpha="{1}"/>
 					</tween:props>
 				</tween:Set>
-				<tween:To duration="200">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{-41}"/>
+						<e:Object y="{-90}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="200">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object x="{102}" y="{-36}"/>
+						<e:Object y="{-76}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="200">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object y="{-41}"/>
+						<e:Object y="{-90}"/>
 					</tween:props>
 				</tween:To>
-				<tween:To duration="150">
+				<tween:To duration="250">
 					<tween:props>
-						<e:Object x="{102}" y="{-36}"/>
+						<e:Object y="{-76}"/>
 					</tween:props>
 				</tween:To>
+
+
+
+
+
 			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="bossWarning">
@@ -496,16 +521,21 @@
 
 
 		<e:Image id="_imgGuide" horizontalCenter="0" verticalCenter="8" source="imgGuide3_png" x="-54" y="222" scaleX="1" scaleY="1"/>
-		<e:BitmapLabel id="m_fntCombo" width="643.64" height="150" font="comboBlueFnt_fnt" text="COMBO" scaleX="0.62" scaleY="0.62" y="-128" anchorOffsetX="0" letterSpacing="-45" x="-47"/>
-		<e:BitmapLabel id="m_fntComboCount" font="comboBlueFnt_fnt" text="X10" scaleX="0.62" scaleY="0.62" y="-124" letterSpacing="-60" x="297.26"/>
+		<e:BitmapLabel id="m_fntCombo" text="COMBOX100" scaleX="0.45" scaleY="0.45" letterSpacing="-45" font="comboYellowFnt_fnt" horizontalCenter="0" y="-98" anchorOffsetY="79"/>
+		<e:BitmapLabel id="m_fntComboCount" font="comboBlueFnt_fnt" text="X10" scaleX="0.62" scaleY="0.62" y="-75" letterSpacing="-60" x="405.26" anchorOffsetX="174.19" anchorOffsetY="79.03" visible="false"/>
 		<e:Group id="_commbGrop" width="414" height="96" x="47" y="-87" anchorOffsetY="0" anchorOffsetX="0">
-			<e:Image id="image" source="lianji001_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image5" source="lianji007_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image4" source="lianji006_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image3" source="lianji005_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image2" source="lianji004_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image1" source="lianji003_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
-			<e:Image id="image0" source="lianji002_png" x="-114" y="-12.5" scaleX="1" scaleY="1"/>
+			<e:Image id="image" source="lianji001_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image0" source="lianji002_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image1" source="lianji003_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image2" source="lianji004_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image3" source="lianji005_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image4" source="lianji006_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+			<e:Image id="image5" source="lianji007_png" x="-147" y="-4.5" scaleX="1.1" scaleY="1.1"/>
+
+
+
+
+
 		</e:Group>
 	</e:Group>
 	<e:Group id="m_groupGameEffect" left="0" right="0" top="0" bottom="0">
@@ -540,9 +570,9 @@
 			<e:Label id="_nextLevel" text="10" scaleX="1" scaleY="1" fontFamily="Microsoft YaHei" size="36" verticalAlign="middle" textAlign="center" x="301" y="23" anchorOffsetX="0" width="45" anchorOffsetY="0" height="45"/>
 
 		</e:Group>
-		<e:Group id="_groupCandy" width="258" height="81" y="183" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false" visible="false">
+		<e:Group id="_groupCandy" width="258" height="81" y="183" anchorOffsetY="0" anchorOffsetX="0" horizontalCenter="0" touchEnabled="false">
 			<e:Image source="tangguo_png" scaleX="2" scaleY="2" horizontalCenter="-72" verticalCenter="0"/>
-			<e:Label id="_labCandy" text="X50" fontFamily="Microsoft YaHei" size="80" verticalCenter="0" left="118" textColor="0xffffff"/>
+			<e:Label id="_labCandy" text="x50" fontFamily="Microsoft YaHei" size="80" verticalCenter="0.5" left="117" textColor="0xffffff" bold="true"/>
 		</e:Group>
 	</e:Group>
 	<e:Group id="m_groupGesture" anchorOffsetY="0" left="0" right="0" top="0" bottom="1" touchThrough="false" touchEnabled="true" touchChildren="true">

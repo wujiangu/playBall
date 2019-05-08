@@ -26,7 +26,7 @@ class GameOverPanel extends BasePanel {
 		}
 		this._scoreEffect(0,PanelManager.gameScenePanel.sceneData.realScore,10);
 		this._recordShowPos()
-		this.m_labLianji.text = "X" + GameConfig.curCombo.toString()
+		this.m_labLianji.text = GameConfig.curCombo.toString()
 		let comboScore:string = "C"
 		if (GameConfig.curCombo <= 3) comboScore = "C"
 		else if (GameConfig.curCombo > 3 && GameConfig.curCombo <= 6) comboScore = "B"
@@ -72,7 +72,6 @@ class GameOverPanel extends BasePanel {
 
 	private _onBtnReturn() {
 		this.touchChildren = false
-		// PanelManager.gameScenePanel.updeLevelData(PanelManager.gameScenePanel._data.levelData.next, PanelManager.gameScenePanel._data.levelData.key)
 		Common.dispatchEvent(MainNotify.closeGameOverPanel)		
 	}
 
@@ -88,6 +87,7 @@ class GameOverPanel extends BasePanel {
 
 	private _onHide() {
 		Common.gameScene().uiLayer.removeChild(this)
+		GameConfig.isShowEndlessModePanelNow = false;
 		if (this.m_isAgain) {
 			if (GameManager.Instance.gameState == EGameState.EndLevel) {
 				PanelManager.gameScenePanel.continueLevel()
@@ -147,6 +147,7 @@ class GameOverPanel extends BasePanel {
 
 	//奖励显示位置
 	private _recordShowPos(){
+		Common.log("结算界面糖果："+PanelManager.gameScenePanel.sceneData.addCandy);
 		if(PanelManager.gameScenePanel.sceneData.addCandy > 0){//奖励至少有一个
 			switch(PanelManager.gameScenePanel.sceneData.recordBabySource.length){
 				case 0://一个奖励

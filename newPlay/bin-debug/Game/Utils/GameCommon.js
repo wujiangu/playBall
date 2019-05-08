@@ -657,5 +657,96 @@ var Common;
         }
     }
     Common.updateIsChapterPass = updateIsChapterPass;
+    /**获取章节奖励是否领取**/
+    function getIsGetChapterRecord() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.isGetChapterRecord = JSON.parse(message);
+                }
+                else {
+                    GameConfig.isGetChapterRecord = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "isGetChapterRecord");
+        }
+        else {
+            var isGetChapterRecord = NativeApi.getLocalData(GameConfig.game + "isGetChapterRecord");
+            if (isGetChapterRecord == null) {
+                GameConfig.isGetChapterRecord = {};
+            }
+            else {
+                GameConfig.isGetChapterRecord = JSON.parse(isGetChapterRecord);
+            }
+        }
+    }
+    Common.getIsGetChapterRecord = getIsGetChapterRecord;
+    /**更新章节奖励是否领取**/
+    function updateIsGetChapterRecord(value) {
+        GameConfig.isGetChapterRecord = value;
+        var isGetChapterRecord = JSON.stringify(value);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "isGetChapterRecord:" + isGetChapterRecord);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "isGetChapterRecord", isGetChapterRecord);
+        }
+    }
+    Common.updateIsGetChapterRecord = updateIsGetChapterRecord;
+    /**额外奖励 */
+    function extraReward(skillData, value) {
+        var type = parseInt(skillData.param[0]);
+        var count = parseInt(skillData.param[1]);
+        if (value > 0) {
+            switch (type) {
+                case EExtraType.Plus:
+                    value = value + count;
+                    break;
+                case EExtraType.Mul:
+                    value *= count;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return value;
+    }
+    Common.extraReward = extraReward;
+    /**获取章节上次分数 */
+    function getLastScore() {
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.addCallback("sendToEgret", function (message) {
+                if (message != null && message.length > 0) {
+                    GameConfig.chapterLastScore = JSON.parse(message);
+                }
+                else {
+                    GameConfig.chapterLastScore = {};
+                }
+            });
+            egret.ExternalInterface.call("read", GameConfig.game + "chapterLastScore");
+        }
+        else {
+            var chapterLastScore = NativeApi.getLocalData(GameConfig.game + "chapterLastScore");
+            if (chapterLastScore == null) {
+                GameConfig.chapterLastScore = {};
+            }
+            else {
+                GameConfig.chapterLastScore = JSON.parse(chapterLastScore);
+            }
+        }
+    }
+    Common.getLastScore = getLastScore;
+    /**更新章节上次分数 */
+    function updateLastScore(value) {
+        GameConfig.chapterLastScore = value;
+        var strScore = JSON.stringify(value);
+        if (!GameConfig.isWebView) {
+            egret.ExternalInterface.call("write", GameConfig.game + "chapterLastScore:" + strScore);
+        }
+        else {
+            NativeApi.setLocalData(GameConfig.game + "chapterLastScore", strScore);
+        }
+    }
+    Common.updateLastScore = updateLastScore;
 })(Common || (Common = {}));
 //# sourceMappingURL=GameCommon.js.map

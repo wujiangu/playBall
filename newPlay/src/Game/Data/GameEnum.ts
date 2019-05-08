@@ -66,6 +66,16 @@ enum ESkillResult
     SlowSpeed,
     StopSpeed,
     ChangeLucky,
+    ExtraCandy,
+    ExtraCombo,
+    ExtraScore,
+}
+
+// 额外加成
+enum EExtraType
+{
+    Plus = 1,
+    Mul
 }
 
 // 技能挂载

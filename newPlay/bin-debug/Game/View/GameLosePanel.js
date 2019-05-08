@@ -32,6 +32,7 @@ var GameLosePanel = (function (_super) {
     GameLosePanel.prototype.onEnter = function () {
         this.touchChildren = false;
         this.countDown = 5;
+        this.sumNum = -1;
         this.Show.play(0);
         Common.gameScene().uiLayer.addChild(this);
     };
@@ -41,14 +42,19 @@ var GameLosePanel = (function (_super) {
         this.Hide.play(0);
     };
     GameLosePanel.prototype.update = function (time) {
+        if (this.sumNum < 0)
+            return;
         this.sumNum += time;
         if (this.sumNum >= 1000) {
+            this.sumNum = 0;
             if (this.isStartCountDown) {
                 if (this.countDown > 0) {
-                    this._lblCountDown.text = this.countDown.toString();
                     this.countDown--;
+                    this._lblCountDown.text = this.countDown.toString();
                 }
                 else {
+                    // this._lblCountDown.text = "0"
+                    this.sumNum = -1;
                     this.isStartCountDown = false;
                     //倒计时结束，跳转到选择界面
                     if (!this.isShowConflict) {
@@ -57,11 +63,11 @@ var GameLosePanel = (function (_super) {
                     }
                 }
             }
-            this.sumNum = 0;
         }
     };
     GameLosePanel.prototype._onBtnReturn = function () {
         this.touchChildren = false;
+        this.sumNum = -1;
         Common.dispatchEvent(MainNotify.closeGameLosePanel);
     };
     GameLosePanel.prototype._onBtnAgain = function () {
@@ -85,13 +91,15 @@ var GameLosePanel = (function (_super) {
         this.touchChildren = true;
         this.isStartCountDown = true;
         this.isShowConflict = false;
+        this.sumNum = 0;
         this._lblCountDown.visible = true;
         this._lblCountDown.text = "5";
     };
     GameLosePanel.prototype._onHide = function () {
-        GameConfig.isShowPanelNow = false;
+        GameConfig.isShowGameLosePanelNow = false;
         this._lblCountDown.visible = false;
         this._lblCountDown.text = "5";
+        Common.log("GameLose remove");
         Common.gameScene().uiLayer.removeChild(this);
     };
     GameLosePanel.prototype.onComplete = function () {

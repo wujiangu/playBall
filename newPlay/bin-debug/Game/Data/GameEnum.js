@@ -60,7 +60,16 @@ var ESkillResult;
     ESkillResult[ESkillResult["SlowSpeed"] = 4] = "SlowSpeed";
     ESkillResult[ESkillResult["StopSpeed"] = 5] = "StopSpeed";
     ESkillResult[ESkillResult["ChangeLucky"] = 6] = "ChangeLucky";
+    ESkillResult[ESkillResult["ExtraCandy"] = 7] = "ExtraCandy";
+    ESkillResult[ESkillResult["ExtraCombo"] = 8] = "ExtraCombo";
+    ESkillResult[ESkillResult["ExtraScore"] = 9] = "ExtraScore";
 })(ESkillResult || (ESkillResult = {}));
+// 额外加成
+var EExtraType;
+(function (EExtraType) {
+    EExtraType[EExtraType["Plus"] = 1] = "Plus";
+    EExtraType[EExtraType["Mul"] = 2] = "Mul";
+})(EExtraType || (EExtraType = {}));
 // 技能挂载
 var ESkillHand;
 (function (ESkillHand) {

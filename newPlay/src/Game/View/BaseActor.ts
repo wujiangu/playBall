@@ -178,6 +178,7 @@ class BaseActor extends egret.DisplayObjectContainer {
 	 */
 	public updateEffectArmature(data:any) {
 		this._effectArmatureContainer.clear()
+		if (data.skillFile == null || data.skillFile == "") return
 		let armatureDisplay = DragonBonesFactory.getInstance().buildArmatureDisplay(data.skillFile, data.skillFile)
 		if (this._effectArmature == null) {
 			this._effectArmature = new DragonBonesArmature(armatureDisplay)

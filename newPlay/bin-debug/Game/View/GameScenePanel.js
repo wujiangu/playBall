@@ -58,6 +58,7 @@ var GameScenePanel = (function (_super) {
         this.itemUnlockGroup.visible = false;
         this._imgGuide.visible = false;
         this._imgGuideTip.visible = false;
+        this._imgGuideTip.source = "imgGuide4_png";
         this._groupCandy.visible = false;
         this.m_normalCount = 0;
         this._data.soreIndex = 1;
@@ -163,9 +164,21 @@ var GameScenePanel = (function (_super) {
         this.m_baby.initData();
         this._data.addCandy = 0;
         this._data.extra = 0;
+        var result = this.m_baby.skillData.result;
+        if (result == ESkillResult.ExtraCandy || result == ESkillResult.ExtraCombo || result == ESkillResult.ExtraScore) {
+            this._powerGroup.visible = false;
+            this.m_btnPower.visible = false;
+        }
+        else {
+            this._powerGroup.visible = true;
+            this.m_btnPower.visible = true;
+        }
         var level = this._data.level;
         this.score = 0;
-        this.SetRealScore(0);
+        this.SetRealScore(GameConfig.chapterLastScore[this._data.chapter.toString()]);
+        if (this._data.isChapterBegin()) {
+            this.SetRealScore(0);
+        }
         this.updeLevelData(level, null);
     };
     GameScenePanel.prototype.updeLevelData = function (a_levelId, a_curId) {
@@ -246,6 +259,7 @@ var GameScenePanel = (function (_super) {
             this.m_guideArmatureContainer.play("xinshouyindao4", 0);
         }
         else if (GameConfig.guideIndex == 3) {
+            this._imgGuideTip.source = "imgGuide5_png";
             this.m_guideArmatureContainer.play("xinshouyindao3", 0);
             this.m_guideArmatureContainer.x = 350;
             this.m_guideArmatureContainer.y = -110;
@@ -527,10 +541,6 @@ var GameScenePanel = (function (_super) {
         this._data.realScore = value;
         this.m_bitLabScore.text = this._data.realScore.toString();
         this._data.scoreUnlock(value);
-        if (value > GameConfig.chapterMaxScore[this._data.chapter.toString()]) {
-            GameConfig.chapterMaxScore[this._data.chapter.toString()] = value;
-            Common.updateChapterScore(GameConfig.chapterMaxScore);
-        }
     };
     Object.defineProperty(GameScenePanel.prototype, "score", {
         get: function () {
@@ -680,6 +690,11 @@ var GameScenePanel = (function (_super) {
             else {
                 this.m_levelState = ELevelType.End;
                 this._enterWarning();
+                // if (this._data.isChapterFinal()) {
+                //     this._enterWarning()
+                // }else{
+                //     this._bossArrive()
+                // }
             }
         }
     };
@@ -705,9 +720,15 @@ var GameScenePanel = (function (_super) {
             this.m_comboCount += 1;
             this.m_isBoom = false;
             if (this.m_comboCount >= 2) {
+                if (this.baby.skillData.result == ESkillResult.ExtraCombo) {
+                    Common.log("befor combo", this.m_comboCount);
+                    this.m_comboCount = Common.extraReward(this.baby.skillData, this.m_comboCount);
+                    Common.log("after combo", this.m_comboCount);
+                }
+                this.m_fntComboCount.visible = false;
                 this.m_fntCombo.visible = true;
-                this.m_fntComboCount.visible = true;
-                this.m_fntComboCount.text = "X" + this.m_comboCount;
+                // this.m_fntComboCount.text = "X" + this.m_comboCount
+                this.m_fntCombo.text = "COMBOX" + this.m_comboCount;
                 this._commbGrop.visible = true;
                 this.lianjitexiao.play(0);
                 this.m_comboArmatureContainer.y = 80;
@@ -755,7 +776,7 @@ var GameScenePanel = (function (_super) {
                 // else batterScore = 4
                 batterScore = this.m_comboCount;
                 GameConfig.balloonScore += batterScore;
-                var addSpeed = Math.min(6, this.m_comboCount) * 0.02;
+                var addSpeed = Math.min(6, this.m_comboCount) * 0.01;
                 for (var i = 0; i < this.m_monsters.length; i++) {
                     var monster = this.m_monsters[i];
                     if (monster.type == EMonsterDifficult.Normal) {
@@ -775,6 +796,9 @@ var GameScenePanel = (function (_super) {
                 GameConfig.comboDelay = 1000;
             if (this.m_levelState == ELevelType.Normal)
                 this.score += (GameConfig.balloonScore - batterScore);
+            if (this.baby.skillData.result == ESkillResult.ExtraScore) {
+                GameConfig.balloonScore = Common.extraReward(this.baby.skillData, GameConfig.balloonScore);
+            }
             this._data.realScore += GameConfig.balloonScore;
             this.SetRealScore(this._data.realScore);
             this.actorDeadHandle();
@@ -859,6 +883,10 @@ var GameScenePanel = (function (_super) {
                     //一章结束，记录该章过关
                     GameConfig.isChapterPass[this._data.chapter.toString()] = 1;
                     Common.updateIsChapterPass(GameConfig.isChapterPass);
+                    if (this._data.realScore > GameConfig.chapterMaxScore[this._data.chapter.toString()]) {
+                        GameConfig.chapterMaxScore[this._data.chapter.toString()] = this._data.realScore;
+                        Common.updateChapterScore(GameConfig.chapterMaxScore);
+                    }
                 }
                 else {
                     this.touchChildren = true;
@@ -867,6 +895,8 @@ var GameScenePanel = (function (_super) {
                     this.m_gesture.addEvent(this.m_gestureShape, this.m_groupGesture);
                     Common.addEventListener(MainNotify.gestureAction, this._onGesture, this);
                     this.score = 0;
+                    GameConfig.chapterLastScore[this._data.chapter.toString()] = this._data.realScore;
+                    Common.updateLastScore(GameConfig.chapterLastScore);
                     // this._data.updateCandy(this._data.levelData.candy)
                     // this.SetRealScore(0)
                     GameManager.Instance.start();
@@ -987,7 +1017,7 @@ var GameScenePanel = (function (_super) {
         GameManager.Instance.pause();
     };
     GameScenePanel.prototype._onPowerClick = function () {
-        if (this.power >= 100 || GameConfig.isGuide) {
+        if (this.power >= 100) {
             // let actors:Array<BaseActor> = this.getAllActors()
             // this.m_baby.selectRangeFrontToBack(actors)
             this.m_baby.canRelease();

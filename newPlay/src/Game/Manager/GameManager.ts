@@ -157,13 +157,16 @@ class GameManager extends egret.Sprite{
 		if (this._gameState == EGameState.End) {
 				switch (GameConfig.gameMode) {
 					case EBattleMode.Level:	
-						if(!GameConfig.isShowPanelNow){
+						if(!GameConfig.isShowGameLosePanelNow){
 							Common.dispatchEvent(MainNotify.openGameLosePanel)	
-							GameConfig.isShowPanelNow = true;
+							GameConfig.isShowGameLosePanelNow = true;
 						}												
 					break
 					case EBattleMode.Endless:
-						Common.dispatchEvent(MainNotify.openGameOverPanel)
+						if(!GameConfig.isShowEndlessModePanelNow){
+							Common.dispatchEvent(MainNotify.openGameOverPanel)
+							GameConfig.isShowEndlessModePanelNow = true;
+						}
 					break
 					case EBattleMode.Timelimite:
 					break

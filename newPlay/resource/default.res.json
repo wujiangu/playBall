@@ -5,7 +5,7 @@
 			"name": "enter"
 		},
 		{
-			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,fighting_png,titleline1_png,desLine_png,chapterdesBg_png,button_BG_png,UP_png,next_png,recordBg_png,fireworks_png,crown_png,home_png,scorebg_png,gameoverFnt_fnt,gameoverFnt_png,btnAd_png,signinitembg_png,signinicon_png,signinrecord2_png,unsigninrecordbg_png,signinrecordbg_png,shadeimg_png,actorIcon10100_png,actorIcon10020_png,actorIcon10030_png,actorIcon10040_png,actorIcon10060_png,actorIcon10070_png,actorIcon10080_png,desbg_png,actorListBg_png,btnReturnIcon_png,gameLoseLine_png,gameLosebg_png,shaderImg_png,btnClose_png,btnAdImg_png,home1_png,continue_png,btnBaby_png,btnSound0_png,btnSound1_png,home2_png,continue1_png,btnAdImg1_png,btnBuyImg_png,btnCannotBuyImg_png,btnNoImg_png,btnYesImg_png,surePanelBg_png,jiansu0001_png,jiansu0002_png,jiansu0003_png,jiansu0004_png,jiansu0005_png,lei01_png,lei02_png,lei03_png,lei04_png,lei05_png,shuipo01_png,shuipo010_png,shuipo011_png,shuipo012_png,shuipo013_png,shuipo014_png,shuipo015_png,shuipo016_png,shuipo017_png,shuipo018_png,shuipo019_png,shuipo02_png,shuipo03_png,shuipo04_png,shuipo05_png,shuipo06_png,shuipo07_png,shuipo08_png,shuipo09_png,btnrReStart_png,signinrecord4_png,babySignIn_png,shaderImg2_png,xixuegui_ske_json,xixuegui_tex_json,xixuegui_tex_png,BF_ske_json,BF_tex_json,BF_tex_png,huawang_tex_json,huawang_tex_png,huawang_ske_json,JQR_tex_png,JQR_ske_json,JQR_tex_json,actor10204_tex_png,actor10203_ske_json,actor10203_tex_json,actor10203_tex_png,actor10204_ske_json,actor10204_tex_json,actor10203_ske2_json,actor10203_tex2_json,actor10203_tex2_png,actor10204_ske2_json,actor10204_tex2_json,actor10204_tex2_png,BF_ske2_json,BF_tex2_json,BF_tex2_png,JQR_ske2_json,JQR_tex2_json,JQR_tex2_png,huawang_ske2_json,huawang_tex2_json,huawang_tex2_png,xixuegui_ske2_json,xixuegui_tex2_json,xixuegui_tex2_png,actorIcon10090_png,actorIcon10104_png,actorIcon10110_png,actorIcon10120_png,actorIcon10130_png,actorIcon10140_png,actorIcon10150_png,actorIcon10160_png,actorIcon10170_png,actorIcon10103_png,icon4_png,1_png,huazi_ske_json,huazi_tex_json,huazi_tex_png,ziren_ske_json,ziren_tex_json,ziren_tex_png,shanpangxiewang_ske2_json,shanpangxiewang_tex2_json,shanpangxiewang_tex2_png,yun_tex_png,yun_ske_json,yun_tex_json,qiu_ske_json,qiu_tex_json,qiu_tex_png,icon5_png,icon1greyState_png,icon4greyState_png,icon5greyState_png,caidai001_png,caidai002_png,caidai003_png,caidai004_png,caidai005_png,caidai006_png,caidai007_png,caidai008_png,caidai009_png,caidai0010_png,lianji001_png,lianji002_png,lianji003_png,lianji004_png,lianji005_png,lianji006_png,lianji007_png,actorIconGreyState10010_png,actorIconGreyState10020_png,actorIconGreyState10030_png,actorIconGreyState10040_png,actorIconGreyState10060_png,actorIconGreyState10070_png,actorIconGreyState10080_png,actorIconGreyState10090_png,actorIconGreyState10100_png,actorIconGreyState10103_png,actorIconGreyState10104_png,actorIconGreyState10110_png,actorIconGreyState10130_png,actorIconGreyState10140_png,actorIconGreyState10150_png,actorIconGreyState10160_png,actorIconGreyState10170_png,huoshao_tex_png,bing_ske_json,bing_tex_json,bing_tex_png,dian_ske_json,dian_tex_json,dian_tex_png,huoshao_ske_json,huoshao_tex_json,tuzi_tex_png,du_ske_json,du_tex_json,du_tex_png,tuzi_ske_json,tuzi_tex_json",
+			"keys": "loading_04_png,loading_02_png,loadBg_png,huoyedoudong_tex_png,huoyedoudong_ske_json,huoyedoudong_tex_json,black_png,fighting_png,titleline1_png,desLine_png,chapterdesBg_png,button_BG_png,UP_png,next_png,recordBg_png,fireworks_png,crown_png,home_png,scorebg_png,gameoverFnt_fnt,gameoverFnt_png,btnAd_png,signinitembg_png,signinicon_png,signinrecord2_png,unsigninrecordbg_png,signinrecordbg_png,shadeimg_png,actorIcon10100_png,actorIcon10020_png,actorIcon10030_png,actorIcon10040_png,actorIcon10060_png,actorIcon10070_png,actorIcon10080_png,desbg_png,actorListBg_png,btnReturnIcon_png,gameLoseLine_png,gameLosebg_png,shaderImg_png,btnClose_png,btnAdImg_png,home1_png,continue_png,btnBaby_png,btnSound0_png,btnSound1_png,home2_png,continue1_png,btnAdImg1_png,btnBuyImg_png,btnCannotBuyImg_png,btnNoImg_png,btnYesImg_png,surePanelBg_png,jiansu0001_png,jiansu0002_png,jiansu0003_png,jiansu0004_png,jiansu0005_png,lei01_png,lei02_png,lei03_png,lei04_png,lei05_png,shuipo01_png,shuipo010_png,shuipo011_png,shuipo012_png,shuipo013_png,shuipo014_png,shuipo015_png,shuipo016_png,shuipo017_png,shuipo018_png,shuipo019_png,shuipo02_png,shuipo03_png,shuipo04_png,shuipo05_png,shuipo06_png,shuipo07_png,shuipo08_png,shuipo09_png,btnrReStart_png,signinrecord4_png,babySignIn_png,shaderImg2_png,xixuegui_ske_json,xixuegui_tex_json,xixuegui_tex_png,BF_ske_json,BF_tex_json,BF_tex_png,huawang_tex_json,huawang_tex_png,huawang_ske_json,JQR_tex_png,JQR_ske_json,JQR_tex_json,actor10204_tex_png,actor10203_ske_json,actor10203_tex_json,actor10203_tex_png,actor10204_ske_json,actor10204_tex_json,actor10203_ske2_json,actor10203_tex2_json,actor10203_tex2_png,actor10204_ske2_json,actor10204_tex2_json,actor10204_tex2_png,BF_ske2_json,BF_tex2_json,BF_tex2_png,JQR_ske2_json,JQR_tex2_json,JQR_tex2_png,huawang_ske2_json,huawang_tex2_json,huawang_tex2_png,xixuegui_ske2_json,xixuegui_tex2_json,xixuegui_tex2_png,actorIcon10090_png,actorIcon10104_png,actorIcon10110_png,actorIcon10120_png,actorIcon10130_png,actorIcon10140_png,actorIcon10150_png,actorIcon10160_png,actorIcon10170_png,actorIcon10103_png,icon4_png,1_png,huazi_ske_json,huazi_tex_json,huazi_tex_png,ziren_ske_json,ziren_tex_json,ziren_tex_png,shanpangxiewang_ske2_json,shanpangxiewang_tex2_json,shanpangxiewang_tex2_png,yun_tex_png,yun_ske_json,yun_tex_json,qiu_ske_json,qiu_tex_json,qiu_tex_png,icon5_png,icon1greyState_png,icon4greyState_png,icon5greyState_png,caidai001_png,caidai002_png,caidai003_png,caidai004_png,caidai005_png,caidai006_png,caidai007_png,caidai008_png,caidai009_png,caidai0010_png,lianji001_png,lianji002_png,lianji003_png,lianji004_png,lianji005_png,lianji006_png,lianji007_png,actorIconGreyState10020_png,actorIconGreyState10030_png,actorIconGreyState10040_png,actorIconGreyState10060_png,actorIconGreyState10070_png,actorIconGreyState10080_png,actorIconGreyState10090_png,actorIconGreyState10100_png,actorIconGreyState10103_png,actorIconGreyState10104_png,actorIconGreyState10110_png,actorIconGreyState10130_png,actorIconGreyState10140_png,actorIconGreyState10150_png,actorIconGreyState10160_png,actorIconGreyState10170_png,huoshao_tex_png,bing_ske_json,bing_tex_json,bing_tex_png,dian_ske_json,dian_tex_json,dian_tex_png,huoshao_ske_json,huoshao_tex_json,tuzi_tex_png,du_ske_json,du_tex_json,du_tex_png,tuzi_ske_json,tuzi_tex_json,actorIconGreyState10120_png,imgGuide5_png",
 			"name": "preload"
 		}
 	],
@@ -3489,349 +3489,364 @@
 			"name": "actorList10140_png"
 		},
 		{
-			"name": "1_png",
+			"url": "assets/gesture/1.png",
 			"type": "image",
-			"url": "assets/gesture/1.png"
+			"name": "1_png"
 		},
 		{
-			"name": "huazi_ske_json",
+			"url": "assets/bones/huazi_ske.json",
 			"type": "json",
-			"url": "assets/bones/huazi_ske.json"
+			"name": "huazi_ske_json"
 		},
 		{
-			"name": "huazi_tex_json",
+			"url": "assets/bones/huazi_tex.json",
 			"type": "json",
-			"url": "assets/bones/huazi_tex.json"
+			"name": "huazi_tex_json"
 		},
 		{
-			"name": "huazi_tex_png",
+			"url": "assets/bones/huazi_tex.png",
 			"type": "image",
-			"url": "assets/bones/huazi_tex.png"
+			"name": "huazi_tex_png"
 		},
 		{
-			"name": "ziren_ske_json",
+			"url": "assets/bones/ziren_ske.json",
 			"type": "json",
-			"url": "assets/bones/ziren_ske.json"
+			"name": "ziren_ske_json"
 		},
 		{
-			"name": "ziren_tex_json",
+			"url": "assets/bones/ziren_tex.json",
 			"type": "json",
-			"url": "assets/bones/ziren_tex.json"
+			"name": "ziren_tex_json"
 		},
 		{
-			"name": "ziren_tex_png",
+			"url": "assets/bones/ziren_tex.png",
 			"type": "image",
-			"url": "assets/bones/ziren_tex.png"
+			"name": "ziren_tex_png"
 		},
 		{
-			"name": "shanpangxiewang_ske2_json",
+			"url": "assets/bones/shanpangxiewang_ske.json",
 			"type": "json",
-			"url": "assets/bones/shanpangxiewang_ske.json"
+			"name": "shanpangxiewang_ske2_json"
 		},
 		{
-			"name": "shanpangxiewang_tex2_json",
+			"url": "assets/bones/shanpangxiewang_tex.json",
 			"type": "json",
-			"url": "assets/bones/shanpangxiewang_tex.json"
+			"name": "shanpangxiewang_tex2_json"
 		},
 		{
-			"name": "shanpangxiewang_tex2_png",
+			"url": "assets/bones/shanpangxiewang_tex.png",
 			"type": "image",
-			"url": "assets/bones/shanpangxiewang_tex.png"
+			"name": "shanpangxiewang_tex2_png"
 		},
 		{
-			"name": "yun_tex_png",
+			"url": "assets/bones/yun_tex.png",
 			"type": "image",
-			"url": "assets/bones/yun_tex.png"
+			"name": "yun_tex_png"
 		},
 		{
-			"name": "yun_ske_json",
+			"url": "assets/bones/yun_ske.json",
 			"type": "json",
-			"url": "assets/bones/yun_ske.json"
+			"name": "yun_ske_json"
 		},
 		{
-			"name": "yun_tex_json",
+			"url": "assets/bones/yun_tex.json",
 			"type": "json",
-			"url": "assets/bones/yun_tex.json"
+			"name": "yun_tex_json"
 		},
 		{
-			"name": "qiu_ske_json",
+			"url": "assets/bones/qiu_ske.json",
 			"type": "json",
-			"url": "assets/bones/qiu_ske.json"
+			"name": "qiu_ske_json"
 		},
 		{
-			"name": "qiu_tex_json",
+			"url": "assets/bones/qiu_tex.json",
 			"type": "json",
-			"url": "assets/bones/qiu_tex.json"
+			"name": "qiu_tex_json"
 		},
 		{
-			"name": "qiu_tex_png",
+			"url": "assets/bones/qiu_tex.png",
 			"type": "image",
-			"url": "assets/bones/qiu_tex.png"
+			"name": "qiu_tex_png"
 		},
 		{
-			"name": "icon5_png",
+			"url": "assets/Icon/icon5.png",
 			"type": "image",
-			"url": "assets/Icon/icon5.png"
+			"name": "icon5_png"
 		},
 		{
-			"name": "icon1greyState_png",
+			"url": "assets/Icon/icon1greyState.png",
 			"type": "image",
-			"url": "assets/Icon/icon1greyState.png"
+			"name": "icon1greyState_png"
 		},
 		{
-			"name": "icon4greyState_png",
+			"url": "assets/Icon/icon4greyState.png",
 			"type": "image",
-			"url": "assets/Icon/icon4greyState.png"
+			"name": "icon4greyState_png"
 		},
 		{
-			"name": "icon5greyState_png",
+			"url": "assets/Icon/icon5greyState.png",
 			"type": "image",
-			"url": "assets/Icon/icon5greyState.png"
+			"name": "icon5greyState_png"
 		},
 		{
-			"name": "caidai001_png",
+			"url": "assets/gameOver/caidai001.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai001.png"
+			"name": "caidai001_png"
 		},
 		{
-			"name": "caidai002_png",
+			"url": "assets/gameOver/caidai002.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai002.png"
+			"name": "caidai002_png"
 		},
 		{
-			"name": "caidai003_png",
+			"url": "assets/gameOver/caidai003.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai003.png"
+			"name": "caidai003_png"
 		},
 		{
-			"name": "caidai004_png",
+			"url": "assets/gameOver/caidai004.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai004.png"
+			"name": "caidai004_png"
 		},
 		{
-			"name": "caidai005_png",
+			"url": "assets/gameOver/caidai005.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai005.png"
+			"name": "caidai005_png"
 		},
 		{
-			"name": "caidai006_png",
+			"url": "assets/gameOver/caidai006.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai006.png"
+			"name": "caidai006_png"
 		},
 		{
-			"name": "caidai007_png",
+			"url": "assets/gameOver/caidai007.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai007.png"
+			"name": "caidai007_png"
 		},
 		{
-			"name": "caidai008_png",
+			"url": "assets/gameOver/caidai008.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai008.png"
+			"name": "caidai008_png"
 		},
 		{
-			"name": "caidai009_png",
+			"url": "assets/gameOver/caidai009.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai009.png"
+			"name": "caidai009_png"
 		},
 		{
-			"name": "caidai0010_png",
+			"url": "assets/gameOver/caidai0010.png",
 			"type": "image",
-			"url": "assets/gameOver/caidai0010.png"
+			"name": "caidai0010_png"
 		},
 		{
-			"name": "lianji001_png",
+			"url": "assets/game/lianji001.png",
 			"type": "image",
-			"url": "assets/game/lianji001.png"
+			"name": "lianji001_png"
 		},
 		{
-			"name": "lianji002_png",
+			"url": "assets/game/lianji002.png",
 			"type": "image",
-			"url": "assets/game/lianji002.png"
+			"name": "lianji002_png"
 		},
 		{
-			"name": "lianji003_png",
+			"url": "assets/game/lianji003.png",
 			"type": "image",
-			"url": "assets/game/lianji003.png"
+			"name": "lianji003_png"
 		},
 		{
-			"name": "lianji004_png",
+			"url": "assets/game/lianji004.png",
 			"type": "image",
-			"url": "assets/game/lianji004.png"
+			"name": "lianji004_png"
 		},
 		{
-			"name": "lianji005_png",
+			"url": "assets/game/lianji005.png",
 			"type": "image",
-			"url": "assets/game/lianji005.png"
+			"name": "lianji005_png"
 		},
 		{
-			"name": "lianji006_png",
+			"url": "assets/game/lianji006.png",
 			"type": "image",
-			"url": "assets/game/lianji006.png"
+			"name": "lianji006_png"
 		},
 		{
-			"name": "lianji007_png",
+			"url": "assets/game/lianji007.png",
 			"type": "image",
-			"url": "assets/game/lianji007.png"
+			"name": "lianji007_png"
 		},
 		{
-			"name": "actorIconGreyState10010_png",
+			"url": "assets/actorList/actorIconGreyState10020.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10010.png"
+			"name": "actorIconGreyState10020_png"
 		},
 		{
-			"name": "actorIconGreyState10020_png",
+			"url": "assets/actorList/actorIconGreyState10030.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10020.png"
+			"name": "actorIconGreyState10030_png"
 		},
 		{
-			"name": "actorIconGreyState10030_png",
+			"url": "assets/actorList/actorIconGreyState10040.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10030.png"
+			"name": "actorIconGreyState10040_png"
 		},
 		{
-			"name": "actorIconGreyState10040_png",
+			"url": "assets/actorList/actorIconGreyState10060.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10040.png"
+			"name": "actorIconGreyState10060_png"
 		},
 		{
-			"name": "actorIconGreyState10060_png",
+			"url": "assets/actorList/actorIconGreyState10070.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10060.png"
+			"name": "actorIconGreyState10070_png"
 		},
 		{
-			"name": "actorIconGreyState10070_png",
+			"url": "assets/actorList/actorIconGreyState10080.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10070.png"
+			"name": "actorIconGreyState10080_png"
 		},
 		{
-			"name": "actorIconGreyState10080_png",
+			"url": "assets/actorList/actorIconGreyState10090.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10080.png"
+			"name": "actorIconGreyState10090_png"
 		},
 		{
-			"name": "actorIconGreyState10090_png",
+			"url": "assets/actorList/actorIconGreyState10100.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10090.png"
+			"name": "actorIconGreyState10100_png"
 		},
 		{
-			"name": "actorIconGreyState10100_png",
+			"url": "assets/actorList/actorIconGreyState10103.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10100.png"
+			"name": "actorIconGreyState10103_png"
 		},
 		{
-			"name": "actorIconGreyState10103_png",
+			"url": "assets/actorList/actorIconGreyState10104.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10103.png"
+			"name": "actorIconGreyState10104_png"
 		},
 		{
-			"name": "actorIconGreyState10104_png",
+			"url": "assets/actorList/actorIconGreyState10110.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10104.png"
+			"name": "actorIconGreyState10110_png"
 		},
 		{
-			"name": "actorIconGreyState10110_png",
+			"url": "assets/actorList/actorIconGreyState10130.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10110.png"
+			"name": "actorIconGreyState10130_png"
 		},
 		{
-			"name": "actorIconGreyState10130_png",
+			"url": "assets/actorList/actorIconGreyState10140.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10130.png"
+			"name": "actorIconGreyState10140_png"
 		},
 		{
-			"name": "actorIconGreyState10140_png",
+			"url": "assets/actorList/actorIconGreyState10150.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10140.png"
+			"name": "actorIconGreyState10150_png"
 		},
 		{
-			"name": "actorIconGreyState10150_png",
+			"url": "assets/actorList/actorIconGreyState10160.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10150.png"
+			"name": "actorIconGreyState10160_png"
 		},
 		{
-			"name": "actorIconGreyState10160_png",
+			"url": "assets/actorList/actorIconGreyState10170.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10160.png"
+			"name": "actorIconGreyState10170_png"
 		},
 		{
-			"name": "actorIconGreyState10170_png",
+			"url": "assets/bones/huoshao_tex.png",
 			"type": "image",
-			"url": "assets/actorList/actorIconGreyState10170.png"
+			"name": "huoshao_tex_png"
 		},
 		{
-			"name": "huoshao_tex_png",
-			"type": "image",
-			"url": "assets/bones/huoshao_tex.png"
-		},
-		{
-			"name": "bing_ske_json",
+			"url": "assets/bones/bing_ske.json",
 			"type": "json",
-			"url": "assets/bones/bing_ske.json"
+			"name": "bing_ske_json"
 		},
 		{
-			"name": "bing_tex_json",
+			"url": "assets/bones/bing_tex.json",
 			"type": "json",
-			"url": "assets/bones/bing_tex.json"
+			"name": "bing_tex_json"
 		},
 		{
-			"name": "bing_tex_png",
+			"url": "assets/bones/bing_tex.png",
 			"type": "image",
-			"url": "assets/bones/bing_tex.png"
+			"name": "bing_tex_png"
 		},
 		{
-			"name": "dian_ske_json",
+			"url": "assets/bones/dian_ske.json",
 			"type": "json",
-			"url": "assets/bones/dian_ske.json"
+			"name": "dian_ske_json"
 		},
 		{
-			"name": "dian_tex_json",
+			"url": "assets/bones/dian_tex.json",
 			"type": "json",
-			"url": "assets/bones/dian_tex.json"
+			"name": "dian_tex_json"
 		},
 		{
-			"name": "dian_tex_png",
+			"url": "assets/bones/dian_tex.png",
 			"type": "image",
-			"url": "assets/bones/dian_tex.png"
+			"name": "dian_tex_png"
 		},
 		{
-			"name": "huoshao_ske_json",
+			"url": "assets/bones/huoshao_ske.json",
 			"type": "json",
-			"url": "assets/bones/huoshao_ske.json"
+			"name": "huoshao_ske_json"
 		},
 		{
-			"name": "huoshao_tex_json",
+			"url": "assets/bones/huoshao_tex.json",
 			"type": "json",
-			"url": "assets/bones/huoshao_tex.json"
+			"name": "huoshao_tex_json"
 		},
 		{
-			"name": "tuzi_tex_png",
+			"url": "assets/bones/tuzi_tex.png",
 			"type": "image",
-			"url": "assets/bones/tuzi_tex.png"
+			"name": "tuzi_tex_png"
 		},
 		{
-			"name": "du_ske_json",
+			"url": "assets/bones/du_ske.json",
 			"type": "json",
-			"url": "assets/bones/du_ske.json"
+			"name": "du_ske_json"
 		},
 		{
-			"name": "du_tex_json",
+			"url": "assets/bones/du_tex.json",
 			"type": "json",
-			"url": "assets/bones/du_tex.json"
+			"name": "du_tex_json"
 		},
 		{
-			"name": "du_tex_png",
+			"url": "assets/bones/du_tex.png",
 			"type": "image",
-			"url": "assets/bones/du_tex.png"
+			"name": "du_tex_png"
 		},
 		{
-			"name": "tuzi_ske_json",
+			"url": "assets/bones/tuzi_ske.json",
 			"type": "json",
-			"url": "assets/bones/tuzi_ske.json"
+			"name": "tuzi_ske_json"
 		},
 		{
-			"name": "tuzi_tex_json",
+			"url": "assets/bones/tuzi_tex.json",
 			"type": "json",
-			"url": "assets/bones/tuzi_tex.json"
+			"name": "tuzi_tex_json"
+		},
+		{
+			"url": "assets/actorList/QactorList13040.png",
+			"type": "image",
+			"name": "QactorList13040_png"
+		},
+		{
+			"url": "assets/actorList/QactorList13030.png",
+			"type": "image",
+			"name": "QactorList13030_png"
+		},
+		{
+			"name": "actorIconGreyState10120_png",
+			"type": "image",
+			"url": "assets/actorList/actorIconGreyState10120.png"
+		},
+		{
+			"name": "imgGuide5_png",
+			"type": "image",
+			"url": "assets/game/imgGuide5.png"
 		}
 	]
 }
