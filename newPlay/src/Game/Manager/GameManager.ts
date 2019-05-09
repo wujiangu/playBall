@@ -53,8 +53,8 @@ class GameManager extends egret.Sprite{
 		if (this._gameState == EGameState.Start) {
 			this._gameState = EGameState.EndLevel
 			PanelManager.gameScenePanel.exit()
-			GameConfig.isChapterPassShow = true
-			Common.dispatchEvent(MainNotify.openGameOverPanel)			
+			GameConfig.isChapterPassShow = true		
+			Common.dispatchEvent(MainNotify.openGameOverPanel)	
 		}
 	}
 

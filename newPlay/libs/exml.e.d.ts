@@ -92,6 +92,8 @@ declare class qiandaoIR extends eui.Skin{
 }
 declare class quitPanel extends eui.Skin{
 }
+declare class rewardIR extends eui.Skin{
+}
 declare class sceneEffect extends eui.Skin{
 }
 declare class settingPanel extends eui.Skin{

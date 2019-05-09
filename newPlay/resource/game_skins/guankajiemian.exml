@@ -49,6 +49,23 @@
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnReturn}">
+				<tween:Set>
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:Set>
+				<tween:To duration="400">
+					<tween:props>
+						<e:Object alpha="{0}"/>
+					</tween:props>
+				</tween:To>
+				<tween:To duration="150">
+					<tween:props>
+						<e:Object alpha="{1}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
 		</tween:TweenGroup>
 		<tween:TweenGroup id="hide">
 
@@ -73,6 +90,14 @@
 				<tween:To duration="250">
 					<tween:props>
 						<e:Object alpha="{0}" scaleX="{1.4}" scaleY="{1.4}" x="{-96}" y="{-98}"/>
+					</tween:props>
+				</tween:To>
+			</tween:TweenItem>
+			<tween:TweenItem target="{m_btnReturn}">
+				<tween:Set/>
+				<tween:To duration="100">
+					<tween:props>
+						<e:Object alpha="{0}"/>
 					</tween:props>
 				</tween:To>
 			</tween:TweenItem>

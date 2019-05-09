@@ -21,6 +21,7 @@ var GameOverPanel = (function (_super) {
     }
     // 初始化面板
     GameOverPanel.prototype.initPanel = function () {
+        this._rewardGroups = new Array();
     };
     // 初始化面板数据
     GameOverPanel.prototype.initData = function () {
@@ -69,8 +70,6 @@ var GameOverPanel = (function (_super) {
                 GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100;
             }
         }
-        this._labCandy.text = PanelManager.gameScenePanel.sceneData.addCandy.toString();
-        PanelManager.gameScenePanel.sceneData.addCandy = 0;
         Common.gameScene().uiLayer.addChild(this);
     };
     // 退出面板
@@ -149,34 +148,141 @@ var GameOverPanel = (function (_super) {
     };
     //奖励显示位置
     GameOverPanel.prototype._recordShowPos = function () {
-        Common.log("结算界面糖果：" + PanelManager.gameScenePanel.sceneData.addCandy);
-        if (PanelManager.gameScenePanel.sceneData.addCandy > 0) {
+        //有宠物或者是糖果
+        Common.log(PanelManager.gameScenePanel.sceneData.addCandy, PanelManager.gameScenePanel.sceneData.recordBabySource.length);
+        this.m_rewardGroup.removeChildren();
+        this.m_recoredBg.visible = true;
+        if (PanelManager.gameScenePanel.sceneData.addCandy != 0) {
+            var rewardIR_1 = new RewardIR();
+            rewardIR_1.init(1000, PanelManager.gameScenePanel.sceneData.addCandy);
             switch (PanelManager.gameScenePanel.sceneData.recordBabySource.length) {
-                case 0://一个奖励
-                    this.m_recoredBg.width = 200;
-                    this.firstRecordGroup.x = 232;
-                    this.thirdRecordGroup.visible = false;
+                case 0://一个奖励	
+                    this.m_recoredBg.width = 150;
+                    rewardIR_1.x = 175;
+                    rewardIR_1.y = 14;
                     break;
                 case 1://两个奖励
-                    this.m_recoredBg.width = 400;
-                    this.firstRecordGroup.x = 150;
-                    this.thirdRecordGroup.visible = true;
-                    this.m_thirdRecordIcon.source = PanelManager.gameScenePanel.sceneData.recordBabySource[0];
+                    this.m_recoredBg.width = 300;
+                    rewardIR_1.x = 90;
+                    rewardIR_1.y = 14;
+                    var rewardIR11 = new RewardIR();
+                    rewardIR11.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1);
+                    rewardIR11.x = 260;
+                    rewardIR11.y = 14;
+                    this.m_rewardGroup.addChild(rewardIR11);
+                    this._rewardGroups.push(rewardIR11);
                     break;
                 case 2://三个奖励
+                    this.m_recoredBg.width = 450;
+                    rewardIR_1.x = 50;
+                    rewardIR_1.y = 14;
+                    var rewardIR21 = new RewardIR();
+                    rewardIR21.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1);
+                    rewardIR21.x = 175;
+                    rewardIR21.y = 14;
+                    this.m_rewardGroup.addChild(rewardIR21);
+                    this._rewardGroups.push(rewardIR21);
+                    var rewardIR22 = new RewardIR();
+                    rewardIR22.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1);
+                    rewardIR22.x = 300;
+                    rewardIR22.y = 14;
+                    this.m_rewardGroup.addChild(rewardIR22);
+                    this._rewardGroups.push(rewardIR22);
                     break;
                 default:
                     break;
             }
+            this.m_rewardGroup.addChild(rewardIR_1);
+            this._rewardGroups.push(rewardIR_1);
         }
         else {
-            this.firstRecordGroup.visible = false;
-            this.thirdRecordGroup.visible = false;
+            if (PanelManager.gameScenePanel.sceneData.recordBabySource.length != 0) {
+                switch (PanelManager.gameScenePanel.sceneData.recordBabySource.length) {
+                    case 1://一个奖励
+                        this.m_recoredBg.width = 150;
+                        var rewardIR1 = new RewardIR();
+                        rewardIR1.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1);
+                        rewardIR1.x = 175;
+                        rewardIR1.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR1);
+                        this._rewardGroups.push(rewardIR1);
+                        break;
+                    case 2://两个奖励
+                        this.m_recoredBg.width = 300;
+                        var rewardIR21 = new RewardIR();
+                        rewardIR21.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1);
+                        rewardIR21.x = 90;
+                        rewardIR21.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR21);
+                        this._rewardGroups.push(rewardIR21);
+                        var rewardIR22 = new RewardIR();
+                        rewardIR22.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1);
+                        rewardIR22.x = 260;
+                        rewardIR22.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR22);
+                        this._rewardGroups.push(rewardIR22);
+                        break;
+                    case 3://三个奖励
+                        this.m_recoredBg.width = 450;
+                        var rewardIR31 = new RewardIR();
+                        rewardIR31.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1);
+                        rewardIR31.x = 50;
+                        rewardIR31.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR31);
+                        this._rewardGroups.push(rewardIR31);
+                        var rewardIR32 = new RewardIR();
+                        rewardIR32.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1);
+                        rewardIR32.x = 175;
+                        rewardIR32.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR32);
+                        this._rewardGroups.push(rewardIR32);
+                        var rewardIR33 = new RewardIR();
+                        rewardIR33.init(PanelManager.gameScenePanel.sceneData.recordBabySource[2], 1);
+                        rewardIR33.x = 300;
+                        rewardIR33.y = 14;
+                        this.m_rewardGroup.addChild(rewardIR33);
+                        this._rewardGroups.push(rewardIR33);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if (PanelManager.gameScenePanel.sceneData.recordBabySource.length == 0 && PanelManager.gameScenePanel.sceneData.addCandy == 0) {
             this.m_recoredBg.visible = false;
         }
-        PanelManager.gameScenePanel.sceneData.recordBabySource.length = 0; //清空
+        PanelManager.gameScenePanel.sceneData.addCandy = 0;
+        PanelManager.gameScenePanel.sceneData.recordBabySource.length = 0;
     };
     return GameOverPanel;
 }(BasePanel));
 __reflect(GameOverPanel.prototype, "GameOverPanel");
+var RewardIR = (function (_super) {
+    __extends(RewardIR, _super);
+    function RewardIR() {
+        var _this = _super.call(this) || this;
+        _this.addEventListener(eui.UIEvent.COMPLETE, _this._onComplete, _this);
+        _this.skinName = "resource/game_skins/rewardIR.exml";
+        return _this;
+    }
+    //初始化奖项
+    RewardIR.prototype.init = function (rewardType, rewardNum) {
+        if (rewardType == 1000) {
+            this.m_rewardIcon.source = "icon4_png";
+            this._lblRewardName.text = "Candy";
+        }
+        else {
+            if (rewardType > 0) {
+                var data = GameConfig.actorTable[rewardType];
+                this.m_rewardIcon.source = data.recordIcon;
+                this._lblRewardName.text = "Monster";
+            }
+        }
+        this._lblRewardNum.text = rewardNum.toString();
+    };
+    RewardIR.prototype._onComplete = function () {
+    };
+    return RewardIR;
+}(eui.Component));
+__reflect(RewardIR.prototype, "RewardIR");
 //# sourceMappingURL=GameOverPanel.js.map

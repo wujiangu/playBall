@@ -7,7 +7,7 @@ class GameOverPanel extends BasePanel {
 
 	// 初始化面板
     public initPanel():void{
-        
+        this._rewardGroups = new Array()
     }
 
     // 初始化面板数据
@@ -58,9 +58,6 @@ class GameOverPanel extends BasePanel {
 				GameVoice.jiesuanSound.play(0, 1).volume = GameConfig.soundValue / 100
 			}
 		}
-
-		this._labCandy.text = PanelManager.gameScenePanel.sceneData.addCandy.toString()
-		PanelManager.gameScenePanel.sceneData.addCandy = 0
         Common.gameScene().uiLayer.addChild(this)
     }
 
@@ -104,7 +101,7 @@ class GameOverPanel extends BasePanel {
 	}
 
 	private onComplete() {
-		this._onResize()
+		this._onResize()	
 		this.m_btnReturn.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnReturn, this)
 		this.m_btnAgain.addEventListener(egret.TouchEvent.TOUCH_TAP, this._onBtnAgain, this)
 		Common.addTouchBegin(this.m_btnReturn)
@@ -147,33 +144,110 @@ class GameOverPanel extends BasePanel {
 
 	//奖励显示位置
 	private _recordShowPos(){
-		Common.log("结算界面糖果："+PanelManager.gameScenePanel.sceneData.addCandy);
-		if(PanelManager.gameScenePanel.sceneData.addCandy > 0){//奖励至少有一个
+		//有宠物或者是糖果
+		Common.log(PanelManager.gameScenePanel.sceneData.addCandy, PanelManager.gameScenePanel.sceneData.recordBabySource.length)
+		this.m_rewardGroup.removeChildren()
+		this.m_recoredBg.visible = true;
+		if(PanelManager.gameScenePanel.sceneData.addCandy != 0){
+			let rewardIR = new RewardIR()
+			rewardIR.init(1000, PanelManager.gameScenePanel.sceneData.addCandy)
 			switch(PanelManager.gameScenePanel.sceneData.recordBabySource.length){
-				case 0://一个奖励
-					this.m_recoredBg.width = 200;
-					this.firstRecordGroup.x = 232;
-					this.thirdRecordGroup.visible = false;
+				case 0://一个奖励	
+					this.m_recoredBg.width = 150;				
+					rewardIR.x = 175
+					rewardIR.y = 14										
 				break;
 				case 1://两个奖励
-					this.m_recoredBg.width = 400;
-					this.firstRecordGroup.x = 150;
-					this.thirdRecordGroup.visible = true;
-					this.m_thirdRecordIcon.source = PanelManager.gameScenePanel.sceneData.recordBabySource[0];					
+					this.m_recoredBg.width = 300;	
+					rewardIR.x = 90
+					rewardIR.y = 14
+					let rewardIR11 = new RewardIR()
+					rewardIR11.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1)
+					rewardIR11.x = 260
+					rewardIR11.y = 14
+					this.m_rewardGroup.addChild(rewardIR11)
+					this._rewardGroups.push(rewardIR11)				
 				break;
 				case 2://三个奖励
-
+					this.m_recoredBg.width = 450;	
+					rewardIR.x = 50
+					rewardIR.y = 14
+					let rewardIR21 = new RewardIR()
+					rewardIR21.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1)
+					rewardIR21.x = 175
+					rewardIR21.y = 14
+					this.m_rewardGroup.addChild(rewardIR21)
+					this._rewardGroups.push(rewardIR21)
+					let rewardIR22 = new RewardIR()
+					rewardIR22.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1)
+					rewardIR22.x = 300
+					rewardIR22.y = 14
+					this.m_rewardGroup.addChild(rewardIR22)
+					this._rewardGroups.push(rewardIR22)
 				break;
 				default:
 				break;
-			}		
-		}else{//没有奖励
-			this.firstRecordGroup.visible = false;
-			this.thirdRecordGroup.visible = false;			
+			}
+			this.m_rewardGroup.addChild(rewardIR)
+			this._rewardGroups.push(rewardIR)						
+		}else{//没有糖果的情况下
+			if(PanelManager.gameScenePanel.sceneData.recordBabySource.length != 0){			
+				switch(PanelManager.gameScenePanel.sceneData.recordBabySource.length){
+					case 1://一个奖励
+						this.m_recoredBg.width = 150;	
+						let rewardIR1 = new RewardIR()
+						rewardIR1.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1)
+						rewardIR1.x = 175
+						rewardIR1.y = 14
+						this.m_rewardGroup.addChild(rewardIR1)
+						this._rewardGroups.push(rewardIR1)		
+					break;
+					case 2://两个奖励
+						this.m_recoredBg.width = 300;	
+						let rewardIR21 = new RewardIR()
+						rewardIR21.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1)
+						rewardIR21.x = 90
+						rewardIR21.y = 14
+						this.m_rewardGroup.addChild(rewardIR21)
+						this._rewardGroups.push(rewardIR21)
+						let rewardIR22 = new RewardIR()
+						rewardIR22.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1)
+						rewardIR22.x = 260
+						rewardIR22.y = 14
+						this.m_rewardGroup.addChild(rewardIR22)
+						this._rewardGroups.push(rewardIR22)
+					break;
+					case 3://三个奖励
+						this.m_recoredBg.width = 450;	
+						let rewardIR31 = new RewardIR()
+						rewardIR31.init(PanelManager.gameScenePanel.sceneData.recordBabySource[0], 1)
+						rewardIR31.x = 50
+						rewardIR31.y = 14
+						this.m_rewardGroup.addChild(rewardIR31)
+						this._rewardGroups.push(rewardIR31)
+						let rewardIR32 = new RewardIR()
+						rewardIR32.init(PanelManager.gameScenePanel.sceneData.recordBabySource[1], 1)
+						rewardIR32.x = 175
+						rewardIR32.y = 14
+						this.m_rewardGroup.addChild(rewardIR32)
+						this._rewardGroups.push(rewardIR32)
+						let rewardIR33 = new RewardIR()
+						rewardIR33.init(PanelManager.gameScenePanel.sceneData.recordBabySource[2], 1)
+						rewardIR33.x = 300
+						rewardIR33.y = 14
+						this.m_rewardGroup.addChild(rewardIR33)
+						this._rewardGroups.push(rewardIR33)
+					break;
+					default:
+					break;
+				}				
+			}
+		}
+		if(PanelManager.gameScenePanel.sceneData.recordBabySource.length == 0 && PanelManager.gameScenePanel.sceneData.addCandy == 0){
 			this.m_recoredBg.visible = false;
 		}
-
-		PanelManager.gameScenePanel.sceneData.recordBabySource.length = 0;//清空
+		PanelManager.gameScenePanel.sceneData.addCandy = 0
+		PanelManager.gameScenePanel.sceneData.recordBabySource.length = 0
 	}
 
 
@@ -187,17 +261,53 @@ class GameOverPanel extends BasePanel {
 	private thirdRecordGroup:eui.Group
 	private _caiDaiGroup:eui.Group
 	private m_recoredBg:eui.Image
+	private m_rewardGroup:eui.Group
+	private _rewardGroups:Array<RewardIR>
 
 	/**本次得分 */
 	private m_labScore:eui.BitmapLabel
 
 	private m_labPingfen:eui.BitmapLabel
 	private m_labLianji:eui.BitmapLabel
-	private _labCandy:eui.Label
 
 	private Show:egret.tween.TweenGroup
 	private Hide:egret.tween.TweenGroup
 	private caidai:egret.tween.TweenGroup
 
 	private channel:egret.SoundChannel
+}
+
+class RewardIR extends eui.Component {
+	public constructor() {
+		super()
+		this.addEventListener(eui.UIEvent.COMPLETE, this._onComplete, this)
+        this.skinName = "resource/game_skins/rewardIR.exml"
+	}
+
+	public index:number
+	public data:any
+
+	//初始化奖项
+	public init(rewardType:number, rewardNum:number) {
+		if(rewardType == 1000){//糖果
+			this.m_rewardIcon.source = "icon4_png";
+			this._lblRewardName.text = "Candy";
+		}else{
+			if(rewardType > 0){
+				let data = GameConfig.actorTable[rewardType] 
+				this.m_rewardIcon.source = data.recordIcon;
+				this._lblRewardName.text = "Monster";
+			}
+		}
+		this._lblRewardNum.text = rewardNum.toString();
+	}
+
+	private _onComplete() {
+
+	}
+
+	private m_rewardBg:eui.Image //奖励背景
+	private m_rewardIcon:eui.Image //奖励图标
+	private _lblRewardNum:eui.Label //奖励数量
+	private _lblRewardName:eui.Label //奖励名字
 }

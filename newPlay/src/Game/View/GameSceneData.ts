@@ -34,7 +34,7 @@ class GameSceneData {
 	/**连击奖励是否领取 */
 	public isComboRewardGet = false
 	/**奖励宠物图片资源**/
-	public recordBabySource:Array<string>
+	public recordBabySource:Array<number>
 
 	// 获取召唤物目标X值
 	public getSummonTargetX(e_pos:EMonsterPos, a_x:number, a_count:number = 0, a_num:number = 0, type:ESummonType = ESummonType.Balloon, isBoss:boolean = false) {
@@ -212,13 +212,14 @@ class GameSceneData {
 				switch (rewardData.condition) {
 					case ELevelRewardCondition.Finish:
 						if (isEnd == true && this.isChapterFinal() && this.chapter == GameConfig.curChpter) {
-							this._rewardHandle(rewardData.reward, rewardData.value)
 							Common.log("通关奖励：" + rewardData.condition,chapterData.id,i);
+							this._rewardHandle(rewardData.reward, rewardData.value)
 							GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
-							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
+							Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);								
 						}
 					break
 					case ELevelRewardCondition.EnoughScore:
+						if(GameConfig.isGetChapterRecord[chapterData.id][i] == 1) return;//如果已经获得糖果奖励就返回 
 						if (!this.isScoreRewardGet && score >= rewardData.count) {
 							this.isScoreRewardGet = true
 							this._rewardHandle(rewardData.reward, rewardData.value)
@@ -267,10 +268,11 @@ class GameSceneData {
 			if (rewardId > 0) {
 				this.unlockBaby(rewardId)
 				let data = GameConfig.actorTable[rewardId] //保存奖励对应图片
-				this.recordBabySource.push(data.recordIcon);				
+				this.recordBabySource.push(rewardId);				
 			}
 		}
-	}
+
+	}	
 
 	/**根据连击数获取糖果奖励
 	 * @param value 连击数

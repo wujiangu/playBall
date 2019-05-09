@@ -238,13 +238,15 @@ var GameSceneData = (function () {
                 switch (rewardData.condition) {
                     case ELevelRewardCondition.Finish:
                         if (isEnd == true && this.isChapterFinal() && this.chapter == GameConfig.curChpter) {
-                            this._rewardHandle(rewardData.reward, rewardData.value);
                             Common.log("通关奖励：" + rewardData.condition, chapterData.id, i);
+                            this._rewardHandle(rewardData.reward, rewardData.value);
                             GameConfig.isGetChapterRecord[chapterData.id][i] = 1;
                             Common.updateIsGetChapterRecord(GameConfig.isGetChapterRecord);
                         }
                         break;
                     case ELevelRewardCondition.EnoughScore:
+                        if (GameConfig.isGetChapterRecord[chapterData.id][i] == 1)
+                            return; //如果已经获得糖果奖励就返回 
                         if (!this.isScoreRewardGet && score >= rewardData.count) {
                             this.isScoreRewardGet = true;
                             this._rewardHandle(rewardData.reward, rewardData.value);
@@ -293,7 +295,7 @@ var GameSceneData = (function () {
             if (rewardId > 0) {
                 this.unlockBaby(rewardId);
                 var data = GameConfig.actorTable[rewardId]; //保存奖励对应图片
-                this.recordBabySource.push(data.recordIcon);
+                this.recordBabySource.push(rewardId);
             }
         }
     };

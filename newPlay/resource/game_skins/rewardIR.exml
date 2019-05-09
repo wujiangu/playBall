@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="rewardIR" width="224" height="284" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group width="224" height="285" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0">
+		<e:Image id="m_rewardBg" width="102" height="102" x="61" y="9" source="unsigninrecordbg_png" scaleX="1" scaleY="1"/>
+		<e:Image id="m_rewardIcon" width="102" height="102" x="61" y="10" source="icon4_png" scaleX="1" scaleY="1"/>
+		<e:Label id="_lblRewardNum" text="1000" x="0" y="134.73" anchorOffsetX="0" width="223" anchorOffsetY="0" height="80" textAlign="center" verticalAlign="middle" size="82" bold="true" textColor="0x94c401" scaleX="1" scaleY="1"/>
+		<e:Label id="_lblRewardName" text="Candy" x="3" y="215.7" verticalAlign="middle" textAlign="center" anchorOffsetX="0" width="220" anchorOffsetY="0" height="56" bold="true" textColor="0x94c401" scaleX="1" scaleY="1"/>
+	</e:Group>
+</e:Skin>
