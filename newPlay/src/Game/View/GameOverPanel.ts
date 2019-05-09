@@ -34,8 +34,6 @@ class GameOverPanel extends BasePanel {
 		else if (GameConfig.curCombo > 10 && GameConfig.curCombo <= 15) comboScore = "S"
 		else comboScore = "S+"
 		
-		this.m_labPingfen.text = comboScore
-
 		switch (GameConfig.gameMode) {
 			case EBattleMode.Level:
 				Common.updateMaxScore(PanelManager.gameScenePanel.sceneData.realScore)
@@ -266,8 +264,6 @@ class GameOverPanel extends BasePanel {
 
 	/**本次得分 */
 	private m_labScore:eui.BitmapLabel
-
-	private m_labPingfen:eui.BitmapLabel
 	private m_labLianji:eui.BitmapLabel
 
 	private Show:egret.tween.TweenGroup

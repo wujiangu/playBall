@@ -49,7 +49,6 @@ var GameOverPanel = (function (_super) {
             comboScore = "S";
         else
             comboScore = "S+";
-        this.m_labPingfen.text = comboScore;
         switch (GameConfig.gameMode) {
             case EBattleMode.Level:
                 Common.updateMaxScore(PanelManager.gameScenePanel.sceneData.realScore);

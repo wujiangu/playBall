@@ -11,9 +11,9 @@
 	],
 	"game": [
 		"bin-debug/Game/View/BaseActor.js",
-		"bin-debug/Game/Data/GameEnum.js",
 		"bin-debug/Game/View/BasePanel.js",
 		"bin-debug/Game/View/Monster.js",
+		"bin-debug/Game/Data/GameEnum.js",
 		"bin-debug/Game/View/CapsuleData.js",
 		"bin-debug/Component/RingScrollView.js",
 		"bin-debug/Component/ScrollView.js",
